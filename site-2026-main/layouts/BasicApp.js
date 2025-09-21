@@ -1,6 +1,5 @@
 import Footer from '@/footer';
 import Header from '@/header';
-import { useAuth } from "@clerk/nextjs";
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 
@@ -46,11 +45,9 @@ const HEADER_ITEMS = [
 
 export default function BasicApp({ Component, pageProps }) {
   const router = useRouter()
-  const { isLoaded, userId, sessionId, getToken } = useAuth()
-
   return (
     <Fragment>
-      {isLoaded && (
+      {(
         <div>
           <Header
             headerItems={HEADER_ITEMS}

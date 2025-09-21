@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 
 export default function HomeVideo() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
-
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);

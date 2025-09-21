@@ -1,4 +1,3 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import { Doppio_One, Montserrat } from 'next/font/google';
 import { Fragment } from "react";
 import "tailwindcss/tailwind.css";
@@ -54,9 +53,7 @@ function EOHApp(props) {
       ></link>
       <main className={`${montserrat.variable} ${doppioOne.variable} font-sans`}>
         <QueryParamProvider adapter={NextAdapterApp}>
-          <ClerkProvider {...props}>
-            <BasicApp {...props} />
-          </ClerkProvider>
+          <BasicApp {...props} />
         </QueryParamProvider>
       </main>
     </Fragment>

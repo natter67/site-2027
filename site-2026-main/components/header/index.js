@@ -2,13 +2,10 @@ import { Fragment, useState } from "react"
 import Button from "@/button"
 import Link from "next/link"
 import MobileMenu from "@/mobile-menu"
-import { useClerk, useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 
 export default function Header({ headerItems }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const { isSignedIn, isLoaded } = useUser()
-  const { signOut } = useClerk()
   const router = useRouter()
 
   // hardcore js right here
@@ -83,21 +80,6 @@ export default function Header({ headerItems }) {
                   {text}
                 </Button>
               ))}
-              {isLoaded && isSignedIn && (
-                <Button
-                  className={`${
-                    typeof type === "undefined" ? "mr-6" : "mr-3"
-                  } uppercase text-center font-montserrat`}
-                  flyoutClassName={
-                    "uppercase text-center font-bold text-sm hover:text-theme-red transition delay-150 duration-200 ease-in-out font-montserrat"
-                  }
-                  style={{ fontWeight: 700, fontSize: 14 }}
-                  multiline
-                  onClick={() => signOut(() => router.push("/"))}
-                >
-                  Sign Out
-                </Button>
-              )}
             </div>
           </nav>
         </div>
