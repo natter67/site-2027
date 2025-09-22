@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
 import Content from "@/content"
 import EventCard from "@/eventCard"
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+// Need to use SSR otherwise get a window not defined error and a can't change object with only a getter issue on most versions
+const ResponsiveMasonry = dynamic(
+  () => import("react-responsive-masonry").then(mod => mod.ResponsiveMasonry),
+  { ssr: false }
+)
+const Masonry = dynamic(
+  () => import("react-responsive-masonry").then(mod => mod.default),
+  { ssr: false }
+)
 
 export default function StartupShowcasePage() {
   const [events, setEvents] = useState([])
