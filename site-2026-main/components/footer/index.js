@@ -11,7 +11,7 @@ const footerSections = [
   {
     heading: "Get Involved",
     links: [
-      { text: "Linktree", href: "https://linktr.ee/eoh2025" },
+      { text: "Linktree", href: "https://linktr.ee/EOHuiuc" },
     ],
   },
   {

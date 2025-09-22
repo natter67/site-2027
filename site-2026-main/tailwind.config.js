@@ -40,20 +40,11 @@ module.exports = {
         160: "40rem",
       },
       colors: {
-        "theme-purp": "#c578d6",
-        "theme-teal": "#a2d3c2",
-        "theme-grey": "#eae2b7",
-        "theme-orange": "#ff8400", //
-        "theme-red": "#d62828",
-
-        // "theme-grey": "#474747",
-        "theme-orange-dark": "#edae49", //
-        // "theme-red": "#356790",
-        "theme-red-dark": "#003054", //
-        // "theme-white": "#ffffff",
-        // "theme-teal": "#f16087",
-        // "theme-yellow": "#fade99", //
-        // b0413e red
+        "theme-dark-purple": "#452566",
+        "theme-orange": "#ed7c47",
+        "theme-green": "#cafaaf",
+        "theme-light-purple": "#cabce6", //
+        "theme-yellow": "#fcd579",
         primary: {
           brown: "#473335",
         },

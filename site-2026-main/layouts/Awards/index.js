@@ -111,6 +111,7 @@ export default function Awards() {
         {
           awards.map((a, idx) =>
             <button
+  key={a.title ?? idx}
   onClick={() => setAward(a)}
   className={`w-72 ${slotGradients[idx % Object.keys(slotGradients).length]} 
             rounded-lg p-4 text-white 

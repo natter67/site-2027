@@ -4,16 +4,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
-    "postinstall": "prisma generate"
+    "export": "next export"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
-    "@prisma/client": "5.9.1",
-    "@prisma/extension-accelerate": "0.6.3",
     "@sendgrid/mail": "^8.1.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "dayjs": "^1.11.10",
@@ -22,7 +19,6 @@
     "lucide-react": "^0.476.0",
     "next": "^13.5.7",
     "next-query-params": "^5.0.0",
-    "prisma": "5.9.1",
     "react": "^18.2.0",
     "react-alice-carousel": "^2.7.0",
     "react-collapsible": "2.10.0",

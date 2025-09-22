@@ -191,7 +191,7 @@ export default class Exhibits extends Component {
 			<div>
 				<div className="grid grid-cols-3 lg:grid-cols-5 gap-4">
 					<div className="relative text-center col-span-3">
-						<span className="relative inline-block date uppercase font-medium text-theme-purp text-xl">
+						<span className="relative inline-block date uppercase font-medium text-theme-light-purple text-xl">
 							Map
 						</span>
 						<br />
@@ -214,7 +214,7 @@ export default class Exhibits extends Component {
 							onCancelSearch={(e) => this.setState({ query: '' })}
 						/>
 						<br />
-						{/* <span className="relative inline-block date uppercase font-medium text-theme-purp text-xl mb-5">
+						{/* <span className="relative inline-block date uppercase font-medium text-theme-light-purple text-xl mb-5">
 							Filters
 						</span>
 						<br /> */}

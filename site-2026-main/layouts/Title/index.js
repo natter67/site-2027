@@ -111,7 +111,7 @@ export default function HomeVideo() {
       }}
     >
       {/* Scattered Elements */}
-      <div className="scattered-elements">
+      {windowWidth > 0 && (<div className="scattered-elements">
         {filteredElements.map((element, index) => (
           <img
             key={index}
@@ -130,7 +130,7 @@ export default function HomeVideo() {
             }}
           />
         ))}
-      </div>
+      </div>)}
 
       {/* Centered Title Area */}
       <header
@@ -174,7 +174,7 @@ export default function HomeVideo() {
             marginBottom: "1rem",
           }}
         >
-          The Age of Innovation
+          Forging the Future
         </h2>
         <p
           className="date"
@@ -185,7 +185,7 @@ export default function HomeVideo() {
             marginBottom: "1rem",
           }}
         >
-          April 4th & April 5th, 2025
+          April 10th & April 11th, 2026
         </p>
       </header>
 
@@ -194,7 +194,7 @@ export default function HomeVideo() {
         <a
           target="_blank"
           href="/vv"
-          className="flex justify-between items-center px-6 py-3 bg-theme-teal text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
+          className="flex justify-between items-center px-6 py-3 bg-theme-orange text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
           style={{ minWidth: "200px" }}
         >
           Exhibits & Campus Map
@@ -203,7 +203,7 @@ export default function HomeVideo() {
 
         <button
           onClick={() => setShowModal(true)} // 👈 open modal
-          className="flex justify-between items-center px-6 py-3 bg-theme-teal text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
+          className="flex justify-between items-center px-6 py-3 bg-theme-orange text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
           style={{ minWidth: "200px" }}
         >
           Parking Info
