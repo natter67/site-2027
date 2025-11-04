@@ -75,7 +75,7 @@ const awards = [
   }
 ];
 
-export default function Awards() {
+export default function () {
   const [award, setAward] = useState(null);
   return (
     <>

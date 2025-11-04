@@ -29,7 +29,7 @@ export default function Header({ headerItems }) {
         <div className="flex justify-center flex-row w-full">
           <Link href="/">
             <img
-              src="/assets/logo/eohlogo2025.png"
+              src="/assets/logo/eohheader.svg"
               className="absolute left-6 top-0 h-16 w-min mt-3 cursor-pointer object-contain "
             />
           </Link>
@@ -53,8 +53,8 @@ export default function Header({ headerItems }) {
           <nav className="flex flex-row w-full">
             <Link href="/">
               <img
-                src="/assets/logo/eohlogo2025.png"
-                className="h-16 w-30 mt-2.5 cursor-pointer"
+                src="/assets/logo/eohheader.svg"
+                className="h-20 mt-2 cursor-pointer"
                 draggable={false}
               />
             </Link>

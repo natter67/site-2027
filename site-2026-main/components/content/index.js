@@ -6,7 +6,7 @@ export default function Content({ title, metaTitle, children, wide }) {
     <Fragment>
       <Head>
         <title>{metaTitle || title}</title>
-        <link rel="icon" href="/favicon_black_outline.ico" />
+        <link rel="icon" href="/eoh2026.ico" />
       </Head>
       <main className={`text-center flex flex-col justify-center w-10/12 ${wide ? "lg:max-w-7xl" : "lg:max-w-4xl"} mx-auto mt-36 lg:mt-32`}>
         {title &&

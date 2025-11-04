@@ -13,6 +13,16 @@
   src: url("/assets/fonts/Glacial Indifference.otf");
 }
 
+@font-face {
+  font-family: "Barbaro";
+  src: url("/assets/fonts/barbaro.roman.ttf");
+}
+
+@font-face {
+  font-family: "Iron Forge";
+  src: url("/assets/fonts/ironforgeexpand.ttf");
+}
+
 .hero-bg1 {
   background: rgb(255,197,213);
   background: linear-gradient(159deg, rgba(255,197,213,1) 0%, rgba(0,146,255,1) 100%);
