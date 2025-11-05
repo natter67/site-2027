@@ -15,6 +15,7 @@ export default function HomeVideo() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // REPLACE with new graphics soon
   const elements = [
     {
       src: "/assets/gifs/satellite.gif",
@@ -102,16 +103,98 @@ export default function HomeVideo() {
     : elements;
 
   return (
-    <div
-      className="relative flex flex-col justify-center items-center min-h-screen bg-gradient-to-r from-indigo-100 via-white to-blue-100 overflow-hidden"
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-        background: "linear-gradient(to right, #ebf4ff, #ffffff, #cce4ff)",
-      }}
-    >
+<div className="relative flex flex-col-reverse md:flex-row min-h-screen items-center justify-between px-6 md:px-20 overflow-hidden text-white bg-gradient-to-br from-orange-100 via-orange-200 to-orange-300">
+      {/* === Animated Lava Gradient Triangle === */}
+      <div className="absolute inset-0">
+        <svg
+          viewBox="0 0 100 100"
+          className="w-full h-full"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            {/* Main animated lava gradient */}
+            <linearGradient id="leftGradient" x1="0%" y1="0%" x2="120%" y2="100%">
+              <stop offset="0%" stopColor="#fbbf24">
+                <animate
+                  attributeName="stop-color"
+                  values="#fbbf24;#f59e0b;#f97316;#fb923c;#fbbf24"
+                  dur="6s"
+                  repeatCount="indefinite"
+                />
+              </stop>
+              <stop offset="50%" stopColor="#f59e0b">
+                <animate
+                  attributeName="stop-color"
+                  values="#f59e0b;#f97316;#fb923c;#f59e0b"
+                  dur="6s"
+                  repeatCount="indefinite"
+                />
+              </stop>
+              <stop offset="100%" stopColor="#f97316">
+                <animate
+                  attributeName="stop-color"
+                  values="#f97316;#fb923c;#f59e0b;#f97316"
+                  dur="6s"
+                  repeatCount="indefinite"
+                />
+              </stop>
+            </linearGradient>
+
+            {/* Soft glow filter */}
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="1.2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* Triangular curved shape shifted left */}
+          <path
+            id="lavaPath"
+            d="M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z"
+            fill="url(#leftGradient)"
+          >
+            <animate
+              attributeName="d"
+              values="
+                M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z;
+                M 0,0 L 0,100 L 52,100 Q 52,50 37,0 Z;
+                M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z
+              "
+              dur="7s"
+              repeatCount="indefinite"
+            />
+          </path>
+
+          {/* Smooth flowing glowing border */}
+          <path
+            d="M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z"
+            fill="none"
+            stroke="url(#glowGradient)"
+            strokeWidth="1.5"
+            filter="url(#glow)"
+            opacity="0.9"
+          >
+            <animate
+              attributeName="stroke-width"
+              values="1.2;1.6;1.2"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="opacity"
+              values="0.9;0.7;0.9"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </svg>
+      </div>
+
       {/* Scattered Elements */}
-      {windowWidth > 0 && (<div className="scattered-elements">
+      {/* {windowWidth > 0 && (<div className="scattered-elements">
         {filteredElements.map((element, index) => (
           <img
             key={index}
@@ -130,22 +213,24 @@ export default function HomeVideo() {
             }}
           />
         ))}
-      </div>)}
+      </div>)} */}
 
-      {/* Centered Title Area */}
+      <img
+        src="/assets/logo/EOHlogo2026.svg"
+        className="z-10 w-3/4 md:w-2/5 mb-6 md:mb-0"
+        alt="EOH Logo"
+      />
+    {/* Centered Title Area */}
       <header
-        style={{
-          position: "relative",
-          textAlign: "center",
-          zIndex: 0,
-          padding: "2rem 1rem",
-        }}
+        className="relative text-center z-0 px-4 md:px-0 w-full md:w-1/2 mt-20 md:mt-0"
+        style={{ padding: "2rem 1rem" }}
       >
+
         <h1
           className="title"
           style={{
             fontFamily: "'Norwester', sans-serif",
-            fontSize: windowWidth < 768 ? "2rem" : "2.5rem",
+            fontSize: windowWidth < 768 ? "3rem" : "3rem",
             fontWeight: "800",
             color: "#333",
             marginBottom: "1rem",
@@ -167,10 +252,11 @@ export default function HomeVideo() {
         <h2
           className="highlight"
           style={{
-            fontFamily: "'Norwester', san-serif",
-            fontSize: windowWidth < 768 ? "2rem" : "2.5rem",
-            fontWeight: "700",
-            color: "#c578d6",
+            fontFamily: "'Iron Forge', san-serif",
+            fontSize: windowWidth < 768 ? "3rem" : "6rem",
+            // fontWeight: "700",
+            lineHeight: "100%",
+            color: "#452566",
             marginBottom: "1rem",
           }}
         >
@@ -189,66 +275,6 @@ export default function HomeVideo() {
         </p>
       </header>
 
-{/* Buttons */}
-<div className="flex justify-center gap-8 z-10 flex-wrap">
-        <a
-          target="_blank"
-          href="/vv"
-          className="flex justify-between items-center px-6 py-3 bg-theme-orange text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
-          style={{ minWidth: "200px" }}
-        >
-          Exhibits & Campus Map
-          <Icon icon="icon-park-outline:right" className="ml-auto text-xl" />
-        </a>
-
-        <button
-          onClick={() => setShowModal(true)} // 👈 open modal
-          className="flex justify-between items-center px-6 py-3 bg-theme-orange text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
-          style={{ minWidth: "200px" }}
-        >
-          Parking Info
-          <Icon icon="icon-park-outline:right" className="ml-auto text-xl" />
-        </button>
-      </div>
-
-      {/* Modal */}
-      {showModal && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4">
-    <div className="bg-white rounded-xl p-6 max-w-2xl shadow-lg relative w-full max-h-[90vh] overflow-y-auto">
-      <button
-        onClick={() => setShowModal(false)}
-        className="absolute top-2 right-3 text-gray-500 hover:text-black text-2xl font-bold"
-      >
-        &times;
-      </button>
-      <h3 className="text-xl font-bold mb-4">Parking Information</h3>
-
-      <p className="mb-2 font-semibold">On Friday, visitors can park in these lots:</p>
-      <ul className="list-disc pl-6 mb-4">
-        <li>
-          <strong>Lot E-14</strong>: Near State Farm Center. Can be used for all-day parking on Friday April 4th. The shuttle will pick people up from E-14 and send them to the Bardeen Quad/other exhibits.
-        </li>
-        <li>
-          <strong>Lot B-4</strong>: North campus, can also be used for all-day parking April 4th. There is no shuttle stop here, so attendees will have to walk to Bardeen Quad (closest stop would be B-22).
-        </li>
-      </ul>
-
-      <p className="mb-2 font-semibold">On Saturday, visitors can park in:</p>
-      <ul className="list-disc pl-6 space-y-1">
-        <li><strong>Lot B-1</strong>: Springfield Avenue between Mathews and Goodwin</li>
-        <li><strong>Lot B-17</strong>: Harvey Street between Clark and Main</li>
-        <li><strong>Lot C-09</strong>: Chalmers and Sixth</li>
-        <li><strong>Lot D-09</strong>: Illinois and Lincoln</li>
-        <li><strong>Lot E-14</strong>: First Street and Kirby</li>
-        <li><strong>Lot F-23</strong>: Lincoln Avenue and Florida</li>
-        <li><strong>Lot F-28</strong>: Peabody and Dorner Drive</li>
-        <li><strong>Lot B-4</strong>: University and Mathews</li>
-        <li><strong>Lot F-29</strong>: Gregory and Dorner Drive</li>
-      </ul>
-    </div>
-  </div>
-)}
-
 
       {/* Inline Keyframes */}
       <style>{`
@@ -260,6 +286,8 @@ export default function HomeVideo() {
             transform: translateY(-10px);
           }
         }
+
+      
 
         @keyframes fly-across {
           0% {
@@ -287,7 +315,77 @@ export default function HomeVideo() {
             transform: rotate(360deg);
           }
         }
+
+        @keyframes lavaFlowTriangle {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-lava-triangle {
+          animation: lavaFlowTriangle 18s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
 }
+
+
+{/* Buttons */}
+    //   <div className="flex justify-center gap-8 z-10 flex-wrap">
+    //     <a
+    //       target="_blank"
+    //       href="/vv"
+    //       className="flex justify-between items-center px-6 py-3 bg-theme-orange text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
+    //       style={{ minWidth: "200px" }}
+    //     >
+    //       Exhibits & Campus Map
+    //       <Icon icon="icon-park-outline:right" className="ml-auto text-xl" />
+    //     </a>
+
+    //     <button
+    //       onClick={() => setShowModal(true)} // 👈 open modal
+    //       className="flex justify-between items-center px-6 py-3 bg-theme-orange text-white text-lg font-semibold rounded-lg shadow-md transition-transform transform hover:scale-110 mb-1"
+    //       style={{ minWidth: "200px" }}
+    //     >
+    //       Parking Info
+    //       <Icon icon="icon-park-outline:right" className="ml-auto text-xl" />
+    //     </button>
+    //   </div>
+
+    //   {/* Modal */}
+    //   {showModal && (
+    //   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4">
+    //     <div className="bg-white rounded-xl p-6 max-w-2xl shadow-lg relative w-full max-h-[90vh] overflow-y-auto">
+    //       <button
+    //         onClick={() => setShowModal(false)}
+    //         className="absolute top-2 right-3 text-gray-500 hover:text-black text-2xl font-bold"
+    //       >
+    //         &times;
+    //       </button>
+    //       <h3 className="text-xl font-bold mb-4">Parking Information</h3>
+
+    //       <p className="mb-2 font-semibold">On Friday, visitors can park in these lots:</p>
+    //       <ul className="list-disc pl-6 mb-4">
+    //         <li>
+    //           <strong>Lot E-14</strong>: Near State Farm Center. Can be used for all-day parking on Friday April 4th. The shuttle will pick people up from E-14 and send them to the Bardeen Quad/other exhibits.
+    //         </li>
+    //         <li>
+    //           <strong>Lot B-4</strong>: North campus, can also be used for all-day parking April 4th. There is no shuttle stop here, so attendees will have to walk to Bardeen Quad (closest stop would be B-22).
+    //         </li>
+    //       </ul>
+
+    //       <p className="mb-2 font-semibold">On Saturday, visitors can park in:</p>
+    //       <ul className="list-disc pl-6 space-y-1">
+    //         <li><strong>Lot B-1</strong>: Springfield Avenue between Mathews and Goodwin</li>
+    //         <li><strong>Lot B-17</strong>: Harvey Street between Clark and Main</li>
+    //         <li><strong>Lot C-09</strong>: Chalmers and Sixth</li>
+    //         <li><strong>Lot D-09</strong>: Illinois and Lincoln</li>
+    //         <li><strong>Lot E-14</strong>: First Street and Kirby</li>
+    //         <li><strong>Lot F-23</strong>: Lincoln Avenue and Florida</li>
+    //         <li><strong>Lot F-28</strong>: Peabody and Dorner Drive</li>
+    //         <li><strong>Lot B-4</strong>: University and Mathews</li>
+    //         <li><strong>Lot F-29</strong>: Gregory and Dorner Drive</li>
+    //       </ul>
+    //     </div>
+    //   </div>
+    // )}
