@@ -24,14 +24,14 @@ export default function Home() {
 
       <main>
         <Title />
+        <Section color="white" title="Forge the Future with Us - Exhibits 2026" id="exhibit-application">
+          <ExhibitApplication />
+        </Section>
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
         <Section color="white" title="EOH 2025 Awards" id="awards">
           <Awards />
         </Section> 
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
-        <Section color="white" title="Forge the Future with Us - Exhibits 2026" id="exhibit-application">
-          <ExhibitApplication />
-        </Section>
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
