@@ -19,7 +19,6 @@ export default function ExhibitApplication() {
         <div className="text-left md:text-center text-[#5a2a00] font-medium">
           <p className="mb-1">Remaining Town Halls:</p>
           <ul className="space-y-1">
-            <li>Wednesday, November 5, 2025 – 6–7 PM, Engineering Hall 106B1</li>
             <li>Sunday, November 16, 2025 – 6–7 PM, Digital Computer Laboratory 1320</li>
           </ul>
         </div>
@@ -42,7 +41,7 @@ export default function ExhibitApplication() {
     {/* Countdown */}
     <div className="mt-16 text-center">
     <h3 className="text-3xl md:text-4xl font-extrabold text-theme-dark-purple mb-6">
-        Countdown to First Town Hall
+        Countdown to Second Town Hall
     </h3>
     <Countdown
         date={new Date('2025-11-16T18:00:00')}
