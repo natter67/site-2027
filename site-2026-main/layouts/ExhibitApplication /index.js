@@ -45,12 +45,12 @@ export default function ExhibitApplication() {
         Countdown to First Town Hall
     </h3>
     <Countdown
-        date={new Date('2025-11-05T18:00:00')}
+        date={new Date('2025-11-16T18:00:00')}
         renderer={({ days, hours, minutes, seconds, completed }) => {
         if (completed) {
             return (
             <div className="text-xl md:text-2xl font-semibold bg-theme-dark-purple text-white px-10 py-6 rounded-3xl shadow-lg inline-block">
-                The first town hall has started!
+                The second town hall has started!
             </div>
             );
         }
