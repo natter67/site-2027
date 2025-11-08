@@ -25,7 +25,7 @@ export default function ExhibitApplication() {
 
         <p className="mt-4 text-base md:text-lg">
           Applications are live and will be due <strong>December 21 at 11:59 PM</strong>. 
-          It is highly recommended you attend one of the town halls prior to the application process!
+          It is required you attend one of the town halls prior to the application process!
         </p>
 
         <div className="mt-6">
