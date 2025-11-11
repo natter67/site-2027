@@ -1,17 +1,16 @@
-import Section from "@/section"
-import Interest from "@layouts/Interest"
-import Sponsors from "@layouts/Sponsors"
-import Title from "@layouts/Title"
-import Head from "next/head.js"
-import { Fragment } from "react"
-import CorporateSponsorLayout from "../layouts/CorporateSponsorLayout/index.js"
-import Directors from "../layouts/Directors/index.js"
-import EventList from "../layouts/EventList/index.js"
-import { KeynoteSpeaker } from "../layouts/Keynote/index.js"
-import ScheduleSection from "../layouts/Schedule/index.js"
-import Visitors from "../layouts/Visitors/index.js"
-import Awards from "../layouts/Awards/index.js"
-import ExhibitApplication from "@layouts/ExhibitApplication /index.js"
+import Section from "@/section";
+import Sponsors from "@layouts/Sponsors";
+import Title from "@layouts/Title";
+import Head from "next/head.js";
+import { Fragment } from "react";
+import CorporateSponsorLayout from "../layouts/CorporateSponsorLayout/index.js";
+import Directors from "../layouts/Directors/index.js";
+import EventList from "../layouts/EventList/index.js";
+import { KeynoteSpeaker } from "../layouts/Keynote/index.js";
+import ScheduleSection from "../layouts/Schedule/index.js";
+import Visitors from "../layouts/Visitors/index.js";
+import Awards from "../layouts/Awards/index.js";
+import ExhibitApplication from "@layouts/ExhibitApplication /index.js";
 
 export default function Home() {
   return (
@@ -19,42 +18,43 @@ export default function Home() {
       <Head>
         <title>EOH 2026</title>
         <link rel="icon" href="/eoh2026.ico" />
-        <meta name="google-site-verification" content="N_zq-IzUiNIJFGldY3CVIn-PDSYtHkdklYt2VuMSa4E" />
+        <meta
+          name="google-site-verification"
+          content="N_zq-IzUiNIJFGldY3CVIn-PDSYtHkdklYt2VuMSa4E"
+        />
       </Head>
 
       <main>
         <Title />
-        <Section color="white" title="Forge the Future with Us - Exhibits 2026" id="exhibit-application">
+        <Section color="white" id="exhibit-application">
           <ExhibitApplication />
         </Section>
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
         <Section color="white" title="EOH 2025 Awards" id="awards">
           <Awards />
-        </Section> 
+        </Section>
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
         <Section
-  color="bg-cover bg-center"
-  id="keynote"
-  title={
-    <span className="block text-center font-bold">
-      {/* Mobile version: with <br> */}
-      <span className="block sm:hidden">
-        Keynote from<br />Anna Oldani
-      </span>
-      {/* Desktop version: no <br> */}
-      <span className="hidden sm:inline">
-        Keynote from Anna Oldani
-      </span>
-    </span>
-  }
->
-  <KeynoteSpeaker />
-</Section>
-
-
+          color="bg-cover bg-center"
+          id="keynote"
+          title={
+            <span className="block text-center font-bold">
+              {/* Mobile version: with <br> */}
+              <span className="block sm:hidden">
+                Keynote from
+                <br />
+                Anna Oldani
+              </span>
+              {/* Desktop version: no <br> */}
+              <span className="hidden sm:inline">Keynote from Anna Oldani</span>
+            </span>
+          }
+        >
+          <KeynoteSpeaker />
+        </Section>
 
         <Section
           title="Featured Events"
@@ -101,9 +101,9 @@ export default function Home() {
         {/* <Section color="white" title="EOH 2024 Awards" id="awards">
           <Awards />
         </Section> */}
-        
+
         <div className="h-12"></div>
       </main>
     </Fragment>
-  )
+  );
 }
