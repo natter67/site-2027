@@ -97,10 +97,20 @@ export default function ExhibitApplication() {
 
         <div className="relative z-10">
           <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-black mb-10 flex items-center justify-center gap-4">
-            <span>Town Hall Countdown</span>
+            <span>Research Showcase</span>
           </h3>
 
-          <Countdown
+        <a href="https://forms.illinois.edu/sec/729549617" target="_blank">
+          <div className="text-xl sm:text-2xl md:text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-500 text-white px-10 sm:px-14 py-8 sm:py-10 rounded-3xl shadow-[0_20px_50px_rgba(16,185,129,0.5)] inline-flex items-center gap-4 animate-pulse">
+            <Icon
+                icon="mdi:clipboard-outline"
+                className="text-4xl md:text-5xl"
+            />
+            Click Here to Sign Up!
+          </div>
+        </a>
+
+          {/* <Countdown
             date={new Date("2025-11-16T18:00:00")}
             renderer={({ days, hours, minutes, seconds, completed }) => {
               if (completed) {
@@ -147,7 +157,7 @@ export default function ExhibitApplication() {
                 </div>
               );
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

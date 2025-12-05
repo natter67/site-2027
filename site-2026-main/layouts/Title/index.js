@@ -163,8 +163,7 @@ export default function HomeVideo() {
         </p>
       </header>
 
-      <style>{`
-        @keyframes float {
+      <style jsx global>{`@keyframes float {
           0%, 100% {
             transform: translateY(0);
           }
@@ -300,8 +299,7 @@ export default function HomeVideo() {
           -webkit-text-fill-color: transparent;
           animation: shimmer 2s linear infinite;
           z-index: 1;
-        }
-      `}</style>
+        }`}</style>
     </div>
   );
 }
