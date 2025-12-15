@@ -1,8 +1,8 @@
 import Profile from '@/profile';
 import Content from '@/content';
 
-const csv = require('csvtojson');
-const csvFilePath = "./pages/about-us/meet-the-committee/people.csv"
+// const csv = require('csvtojson');
+// const csvFilePath = "./pages/about-us/meet-the-committee/people.csv"
 
 // csv()
 //     .fromFile(csvFilePath)
@@ -62,7 +62,7 @@ const COMMITTEE_HEADSHOTS = [
     Major: 'Computer Engineering'
   },
   {
-    img: 'shivaditya.jpg',
+    img: 'shiv.jpg',
     Name: 'Shivaditya Gohil',
     Position: 'Senior Corporate Director',
     Class: 'Graduate Student',
@@ -111,7 +111,7 @@ const COMMITTEE_HEADSHOTS = [
     Major: 'Bioengineering'
   },
   {
-    img: 'riya.jpg',
+    img: 'riya.jpeg',
     Name: 'Riya Karkhanis',
     Position: 'Director of Marketing',
     Class: 'Junior',
@@ -125,7 +125,7 @@ const COMMITTEE_HEADSHOTS = [
     Major: 'Bioengineering'
   },
   {
-    img: 'lillian.jpg',
+    img: 'lillian.jpeg',
     Name: 'Lillian Wang',
     Position: "Visitor's Information Director",
     Class: 'Sophomore',
@@ -167,7 +167,7 @@ const COMMITTEE_HEADSHOTS = [
     Major: 'Computer Engineering'
   },
   {
-    img: 'divya.jpg',
+    img: 'divya.jpeg',
     Name: 'Divya Bendigeri',
     Position: 'Senior Director of Hospitality',
     Class: 'Senior',
