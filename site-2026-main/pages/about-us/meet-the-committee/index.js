@@ -118,13 +118,6 @@ const COMMITTEE_HEADSHOTS = [
     Major: 'Computer Engineering'
   },
   {
-    img: 'ved.jpg',
-    Name: 'Ved Law',
-    Position: "Visitor's Information Director",
-    Class: 'Junior',
-    Major: 'Bioengineering'
-  },
-  {
     img: 'lillian.jpeg',
     Name: 'Lillian Wang',
     Position: "Visitor's Information Director",
