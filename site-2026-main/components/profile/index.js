@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Profile({ img, Name, Position, Class, Major }) {
   return (
-    <div className="p-4 w-[100%] sm:w-[33%] md:w-[20%] flex justify-center items-center flex-col sm:justify-start sm:items-start">
+    <div className="p-4 w-[100%] sm:w-[33%] md:w-[20%] flex justify-center items-center flex-col sm:justify-start sm:items-start text-left">
       <img
         src={`assets/headshots/${img}`}
         alt="headshot"
