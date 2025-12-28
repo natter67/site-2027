@@ -1,85 +1,165 @@
-import Button from '@/button';
-import { Modal } from '../../components/modal/index.js';
-import { useState } from 'react';
-import { Icon } from '@iconify/react';
-import Countdown from 'react-countdown';
+import { Icon } from "@iconify/react";
+import Countdown from "react-countdown";
 
 export default function ExhibitApplication() {
   return (
-    <div className="flex flex-col items-center justify-center text-center px-6 md:px-16 py-12">
+    <div
+      className="w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 py-12 md:py-20"
+      style={{ maxWidth: "100%", boxSizing: "border-box" }}
+    >
+      <div className="relative bg-gradient-to-br from-white via-orange-50/30 to-purple-50/40 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_60px_rgba(75,0,130,0.15)] p-8 md:p-14 text-[#333] w-full max-w-5xl leading-relaxed border border-white/60 mb-20 overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-orange-400/10 to-purple-400/10 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-purple-400/10 to-orange-400/10 rounded-full blur-3xl -z-10"></div>
 
-      {/* Description Card */}
-      <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-6 md:p-10 text-[#333] max-w-3xl leading-relaxed border border-white/40">
-        <p className="text-base md:text-lg mb-4">
-          Join us for an Exhibits Town Hall to learn about the application process, exhibitor expectations, and safety. 
-          Each exhibit is required to have <strong>at least one representative attend</strong> Exhibits Town Hall 
-          <strong> prior to submitting</strong> the application in order to participate in EOH 2026.
-        </p>
-
-        <div className="text-left md:text-center text-[#5a2a00] font-medium">
-          <p className="mb-1">Remaining Town Halls:</p>
-          <ul className="space-y-1">
-            <li>Wednesday, November 5, 2025 – 6–7 PM, Engineering Hall 106B1</li>
-            <li>Sunday, November 16, 2025 – 6–7 PM, Digital Computer Laboratory 1320</li>
-          </ul>
+        <div className="relative z-10 mb-10">
+          <h2 className="text-4xl md:text-5xl font-black text-orange-500 mb-6 leading-tight">
+            Join Our Exhibits Town Hall
+          </h2>
+          <p className="text-base md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            Learn about the application process, exhibitor expectations, and
+            safety requirements. Each exhibit{" "}
+            <span className="font-extrabold text-purple-900">
+              must have at least one representative attend
+            </span>{" "}
+            an Exhibits Town Hall{" "}
+            <span className="font-extrabold text-purple-900">
+              before submitting
+            </span>{" "}
+            their application for EOH 2026.
+          </p>
         </div>
 
-        <p className="mt-4 text-base md:text-lg">
-          Applications are live and will be due <strong>December 21 at 11:59 PM</strong>. 
-          It is highly recommended you attend one of the town halls prior to the application process!
-        </p>
+        <div className="relative z-10 grid md:grid-cols-2 gap-6 mb-10">
+          <div className="group bg-gradient-to-br from-orange-100 to-orange-50 rounded-2xl p-6 md:p-8 border-2 border-orange-200 hover:border-orange-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Icon
+                  icon="mdi:calendar-clock"
+                  className="text-3xl text-white"
+                />
+              </div>
+              <h3 className="text-xl md:text-2xl font-black text-[#5a2a00]">
+                Town Hall
+              </h3>
+            </div>
+            <div className="text-base md:text-lg font-bold text-[#5a2a00] mb-2">
+              Sunday, November 16, 2025
+            </div>
+            <div className="text-sm md:text-base text-gray-700 font-medium">
+              6:00 PM – 7:00 PM
+            </div>
+            <div className="text-sm md:text-base text-gray-700 font-medium">
+              DCL 1320
+            </div>
+          </div>
 
-        <div className="mt-6">
+          <div className="group bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl p-6 md:p-8 border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="bg-gradient-to-br from-purple-600 to-purple-700 p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Icon
+                  icon="mdi:clock-alert-outline"
+                  className="text-3xl text-white"
+                />
+              </div>
+              <h3 className="text-xl md:text-2xl font-black text-[#4b0082]">
+                Deadline
+              </h3>
+            </div>
+            <div className="text-base md:text-lg font-bold text-[#4b0082] mb-2">
+              December 21 at 11:59 PM
+            </div>
+            <div className="text-sm md:text-base text-gray-700 font-medium">
+              Town hall attendance required before applying
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 mt-12">
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSd0tk0y6-JgCthtNGlDVeQbjXIK_JgufToRxqqjHNT-GhFxyQ/viewform?pli=1"
-            target='_blank'
-            className="inline-block bg-gradient-to-r from-[#ff7b00] to-[#ffb347] text-white font-bold py-3 px-8 rounded-full shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-200"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 bg-gradient-to-r from-[#ff7b00] via-[#ff9500] to-[#ffb347] text-white font-black py-5 px-12 rounded-full shadow-[0_10px_30px_rgba(255,123,0,0.4)] hover:shadow-[0_15px_40px_rgba(255,123,0,0.6)] hover:scale-105 transition-all duration-300 text-base md:text-xl relative overflow-hidden z-[50]"
           >
-            APPLY TO BE AN EXHIBITOR
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
+            <span className="relative z-10">APPLY TO BE AN EXHIBITOR</span>
+            <Icon
+              icon="mdi:arrow-right"
+              className="text-2xl relative z-10 group-hover:translate-x-1 transition-transform duration-300"
+            />
           </a>
         </div>
-    </div>
-    {/* Countdown */}
-    <div className="mt-16 text-center">
-    <h3 className="text-3xl md:text-4xl font-extrabold text-theme-dark-purple mb-6">
-        Countdown to First Town Hall
-    </h3>
-    <Countdown
-        date={new Date('2025-11-05T18:00:00')}
-        renderer={({ days, hours, minutes, seconds, completed }) => {
-        if (completed) {
-            return (
-            <div className="text-xl md:text-2xl font-semibold bg-theme-dark-purple text-white px-10 py-6 rounded-3xl shadow-lg inline-block">
-                The first town hall has started!
-            </div>
-            );
-        }
-        return (
-            <div className="inline-flex flex-col items-center justify-center bg-[#4b0082] text-white text-4xl md:text-6xl font-bold px-12 py-8 rounded-3xl shadow-2xl tracking-wider space-y-3 md:space-y-5">
-            <div className="flex gap-8 md:gap-14">
-                <div className="flex flex-col items-center">
-                <span className="text-6xl md:text-7xl">{days}</span>
-                <span className="text-sm md:text-base uppercase opacity-80 mt-2">Days</span>
+      </div>
+
+      <div className="w-full max-w-6xl relative">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.1),transparent_50%)] pointer-events-none -z-10"></div>
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,rgba(249,115,22,0.08),transparent_50%)] pointer-events-none -z-10"></div>
+
+        <div className="relative z-10">
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-black mb-10 flex items-center justify-center gap-4">
+            <span>Research Showcase</span>
+          </h3>
+
+        <a href="https://forms.illinois.edu/sec/729549617" target="_blank">
+          <div className="text-xl sm:text-2xl md:text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-500 text-white px-10 sm:px-14 py-8 sm:py-10 rounded-3xl shadow-[0_20px_50px_rgba(16,185,129,0.5)] inline-flex items-center gap-4 animate-pulse">
+            <Icon
+                icon="mdi:clipboard-outline"
+                className="text-4xl md:text-5xl"
+            />
+            Click Here to Sign Up!
+          </div>
+        </a>
+
+          {/* <Countdown
+            date={new Date("2025-11-16T18:00:00")}
+            renderer={({ days, hours, minutes, seconds, completed }) => {
+              if (completed) {
+                return (
+                  <div className="text-xl sm:text-2xl md:text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-500 text-white px-10 sm:px-14 py-8 sm:py-10 rounded-3xl shadow-[0_20px_50px_rgba(16,185,129,0.5)] inline-flex items-center gap-4 animate-pulse">
+                    <Icon
+                      icon="mdi:check-circle"
+                      className="text-4xl md:text-5xl"
+                    />
+                    The town hall has started!
+                  </div>
+                );
+              }
+
+              return (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8 w-full">
+                  {[
+                    { value: days, label: "Days", icon: "mdi:calendar" },
+                    { value: hours, label: "Hours", icon: "mdi:clock-outline" },
+                    {
+                      value: minutes,
+                      label: "Minutes",
+                      icon: "mdi:timer-outline",
+                    },
+                    { value: seconds, label: "Seconds", icon: "mdi:timer" },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="group relative flex flex-col items-center bg-gradient-to-br from-purple-500 to-purple-800 text-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] p-5 sm:p-6 md:p-9 hover:scale-110 hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] transition-all duration-300 border border-white/20"
+                    >
+                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded-2xl transition-all duration-300 pointer-events-none"></div>
+                      <Icon
+                        icon={item.icon}
+                        className="text-2xl md:text-3xl mb-3 opacity-70 group-hover:opacity-100 transition-opacity duration-300 relative z-10"
+                      />
+                      <span className="text-5xl sm:text-6xl md:text-7xl font-black mb-2 drop-shadow-lg relative z-10 tabular-nums">
+                        {String(item.value).padStart(2, "0")}
+                      </span>
+                      <span className="text-xs sm:text-sm md:text-base uppercase font-black tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-300 relative z-10">
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex flex-col items-center">
-                <span className="text-6xl md:text-7xl">{hours}</span>
-                <span className="text-sm md:text-base uppercase opacity-80 mt-2">Hours</span>
-                </div>
-                <div className="flex flex-col items-center">
-                <span className="text-6xl md:text-7xl">{minutes}</span>
-                <span className="text-sm md:text-base uppercase opacity-80 mt-2">Minutes</span>
-                </div>
-                <div className="flex flex-col items-center">
-                <span className="text-6xl md:text-7xl">{seconds}</span>
-                <span className="text-sm md:text-base uppercase opacity-80 mt-2">Seconds</span>
-                </div>
-            </div>
-            </div>
-        );
-        }}
-    />
-    </div>
-    
+              );
+            }}
+          /> */}
+        </div>
+      </div>
     </div>
   );
 }
