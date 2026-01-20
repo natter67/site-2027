@@ -191,7 +191,7 @@ export default function Volunteer() {
   <div>
     <p className="font-semibold">📣 Required Sign Ups</p>
     <p className="text-sm mt-1">
-      If you were not able to attend a Town Hall please Slack, Text, or Email Hospitality Directors <strong>Arryan</strong> (217-649-5875) or <strong>Kate</strong> (847-532-2909) by <strong>Monday 11:59PM</strong> to schedule a meeting time! 
+      If you were not able to attend a Town Hall please Slack, Text, or Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or <strong>Mohannad</strong> (984-325-7002) to schedule a meeting time! 
     </p>
   </div>
 
@@ -200,7 +200,7 @@ export default function Volunteer() {
     <p className="text-sm mt-1">
       Make sure to read the guide before your shift. <br />
       <a
-        href="https://docs.google.com/document/d/1bAC8b2-VK7Y-jxBrhISY9rC_hndycAWxqviNPZNY3ik/edit?usp=sharing"
+        href="https://docs.google.com/document/d/1kTTXVVkWIa97ATUofiHJ5s6RpGVXGTbLpIfqihlnYZo/edit?usp=sharing"
         target="_blank"
         rel="noopener noreferrer"
         className="text-blue-600 underline"
@@ -215,7 +215,7 @@ export default function Volunteer() {
     <p className="text-sm mt-1">
       Stay updated and ask questions in our Slack group. <br />
       <a
-        href="https://join.slack.com/t/eohvolunteeri-vec8800/shared_invite/zt-301htu91v-1aXOcbbJMOKwAtdu_KehxA"
+        href="https://join.slack.com/t/eohvolunteering2026/shared_invite/zt-3n582k8qd-dcb3Asc1e5U4pk_Dh7uiXw"
         target="_blank"
         rel="noopener noreferrer"
         className="text-blue-600 underline"
@@ -225,7 +225,7 @@ export default function Volunteer() {
     </p>
   </div>
 </div>
-      <h1 className="font-bold text-3xl">Volunteer Sign Up</h1>
+      <h1 className="font-bold text-3xl">Volunteer Sign Up (Coming Soon!)</h1>
       <br />
       {user ? (
         <div className="w-7/12">
@@ -270,7 +270,7 @@ export default function Volunteer() {
       ) : (
         <div className="relative">
           <p className="text-center">Please sign in to volunteer</p>
-          <button onClick={handleSignIn} className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
+          <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded"> {/* THIS SHOULD BE onClick={handleSignIn} */}
             Sign In with Google
           </button>
         </div>
