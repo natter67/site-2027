@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { auth, provider, firestore, signInWithPopup, signOut, collection, getDocs, doc, getDoc, updateDoc, arrayUnion } from "/utilities/firebase";
+import { auth, firestore, provider } from "../../firebaseConfig";
 
 
 export default function Volunteer() {
