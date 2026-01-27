@@ -30,6 +30,10 @@ const HEADER_ITEMS = [
     text: "Field Trips",
     href: "/field-trips"
   },
+    {
+    text: "Judging",
+    href: "/judging"
+  },
   {
     text: "Visitor Guide",
     href: "/guide.pdf",

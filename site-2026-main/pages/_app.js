@@ -4,8 +4,6 @@ import "tailwindcss/tailwind.css";
 import BasicApp from "../layouts/BasicApp";
 import "../styles/animations.css";
 import "../styles/index.css";
-import NextAdapterApp from 'next-query-params/app';
-import { QueryParamProvider } from 'use-query-params';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -52,9 +50,7 @@ function EOHApp(props) {
         rel="stylesheet"
       ></link>
       <main className={`${montserrat.variable} ${doppioOne.variable} font-sans`}>
-        <QueryParamProvider adapter={NextAdapterApp}>
-          <BasicApp {...props} />
-        </QueryParamProvider>
+        <BasicApp {...props} />
       </main>
     </Fragment>
   );

@@ -4,10 +4,10 @@ import Exhibits from "components/vv/exhibits.js";
 import Map from "components/vv/map.js";
 import SpecialEvents from "components/vv/special-events.js";
 import { Icon } from '@iconify/react';
-import { useQueryParam, StringParam, withDefault } from 'use-query-params';
+import { useStringQueryParam } from '@utilities/useStringQueryParam';
 
 export default function VisitorView() {
-    const [currentView, setCurrentView] = useQueryParam('t', withDefault(StringParam, 'exhibits'));;;
+    const [currentView, setCurrentView] = useStringQueryParam("t", "exhibits");
     const pages = {
         'exhibits': { title: 'Exhibits', icon: "game-icons:barracks-tent", element: <Exhibits /> },
         'map': { title: 'Map', icon: "iconoir:map", element: <Map /> },
