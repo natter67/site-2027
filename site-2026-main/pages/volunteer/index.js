@@ -1,11 +1,6 @@
-import {
-  auth,
-  firestore,
-  provider,
-  collection,
-  getDocs,
-} from "@utilities/firebase";
 import React, { useState, useEffect } from "react";
+import { auth, provider, firestore, signInWithPopup, signOut, collection, getDocs, doc, getDoc, updateDoc, arrayUnion } from "utilities/firebase";
+
 
 export default function Volunteer() {
   const [user, setUser] = useState(null);
@@ -227,6 +222,7 @@ export default function Volunteer() {
             Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or{" "}
             <strong>Mohannad</strong> (984-325-7002) to schedule a meeting time!
           </p>
+          <p className="text-sm mt-1">You are <strong>required</strong> to sign up for at least one day slot, <strong>AND</strong> a set up or tear-down slot.</p>
         </div>
 
         <div>
@@ -328,9 +324,7 @@ export default function Volunteer() {
       ) : (
         <div className="relative">
           <p className="text-center">Please sign in to volunteer</p>
-          <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
-            {" "}
-            {/* THIS SHOULD BE onClick={handleSignIn} */}
+          <button onClick={handleSignIn} className="mt-4 px-4 py-2 bg-green-500 text-white rounded"> {/* THIS SHOULD BE onClick={handleSignIn} */}
             Sign In with Google
           </button>
         </div>
