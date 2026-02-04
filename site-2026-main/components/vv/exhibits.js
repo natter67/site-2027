@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { useQueryParam, StringParam, withDefault } from 'use-query-params';
 import Fuse from 'fuse.js';
+import { useStringQueryParam } from '@utilities/useStringQueryParam';
 
 const ErrorMessageBox = ({ message, onRetry }) => (
   <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
@@ -69,7 +69,7 @@ const ExhibitCard = ({ exhibit, idx }) => {
 const Exhibits = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numPages, setNumPages] = useState(10);
-  const [searchTerm, setSearchTerm] = useQueryParam('q', withDefault(StringParam, ''));;
+  const [searchTerm, setSearchTerm] = useStringQueryParam("q", "");
   const [searchBoxText, setSearchBoxText] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const itemsPerPage = 24;

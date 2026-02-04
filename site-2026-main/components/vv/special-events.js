@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react"
 import { useState } from "react"
 import useSWR from "swr"
-import { useQueryParam, StringParam, withDefault } from "use-query-params"
+import { useStringQueryParam } from "@utilities/useStringQueryParam"
 import dayjs from "dayjs"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
@@ -80,7 +80,7 @@ const SpecialEventCard = ({ event, idx, toggleFavorite }) => {
 const SpecialEvents = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [numPages, setNumPages] = useState(10)
-  const [searchTerm, setSearchTerm] = useQueryParam("sq", withDefault(StringParam, ""))
+  const [searchTerm, setSearchTerm] = useStringQueryParam("sq", "");
   const [searchBoxText, setSearchBoxText] = useState("")
   const [searchOpen, setSearchOpen] = useState(false)
   const itemsPerPage = 30

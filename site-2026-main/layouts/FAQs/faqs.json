@@ -1,0 +1,128 @@
+[
+  {
+    "id": "event-what-is-eoh",
+    "Question": "What is EOH?",
+    "Answer": "EOH is an annual 2-day event that showcases engineering at UIUC, a tradition that has been evolving for over a century. As the largest student-run STEM fair in the country, EOH presents over 200 exhibits to approximately 35,000 visitors each year. Other key events include a Tesla Coil Concert, Build-a-Blinkie, a Keynote Speaker (past speakers include Yu Pan (YouTube, PayPal) and Todd Little (Oracle)), middle and high school design competitions, and more. Visit us on April 10 and 11, 2026!",
+    "Category": "Event"
+  },
+  {
+    "id": "event-hours",
+    "Question": "What are the event hours?",
+    "Answer": "The shuttle runs from 8:00 am to 5:30 pm on both Friday, April 10, and Saturday, April 11. Exhibits are open from 9:00 am to 4:00 pm unless otherwise noted due to weather.",
+    "Category": "Event"
+  },
+  {
+    "id": "event-help",
+    "Question": "Where can I find help or ask questions during the event?",
+    "Answer": "Visit one of our Visitor’s Booths located at the Campus Instructional Facility (CIF), Graziano Plaza, outside Sidney Lu Mechanical Engineering Building, or outside the Electrical and Computer Engineering Building (ECEB).",
+    "Category": "Event"
+  },
+  {
+    "id": "event-weather",
+    "Question": "What should I do in case of severe weather?",
+    "Answer": "Check the event website for updates on where exhibits will be held: https://eohillinois.org",
+    "Category": "Event"
+  },
+  {
+    "id": "event-minors",
+    "Question": "Are minors allowed to attend alone?",
+    "Answer": "No. All minors must be accompanied by a parent or guardian at all times.",
+    "Category": "Event"
+  },
+  {
+    "id": "event-ages",
+    "Question": "Do you have events suitable for elementary, middle, and high schoolers?",
+    "Answer": "Yes! EOH is open to everyone and we have activities suitable for all ages.",
+    "Category": "Event"
+  },
+  {
+    "id": "event-free",
+    "Question": "Is EOH free? Do I need to register?",
+    "Answer": "EOH is completely free and open to everyone. No registration is required—just show up on Friday and/or Saturday to check out the exhibits.",
+    "Category": "Event"
+  },
+  {
+    "id": "event-exhibits",
+    "Question": "Where can I find information about specific exhibits?",
+    "Answer": "Check out the Visitor’s Guide for a comprehensive list of all exhibits, locations, special events, parking, shuttle info, emergency details, and maps. A PDF is available on https://eohillinois.org or physical copies can be picked up at Visitor’s Booths.",
+    "Category": "Event"
+  },
+  {
+    "id": "food-availability",
+    "Question": "Will food be available on campus during the event?",
+    "Answer": "Yes! Food trucks will be located on Mathews Avenue.",
+    "Category": "Food"
+  },
+  {
+    "id": "food-trucks",
+    "Question": "Which food trucks will be available?",
+    "Answer": "Available trucks include Juanito’s Tacos, Chicago Grill, La Paloma, Burrito King, Pastamania, Brien’s Bistro, Smith’s Burger Co., Kona Ice, Travelin’ Tom’s Coffee Truck, Urban Oasis, and Stango Cuisine.",
+    "Category": "Food"
+  },
+  {
+    "id": "parking-friday",
+    "Question": "Where can I park on Friday?",
+    "Answer": "Lot E-14 (near State Farm Center) offers all-day parking with shuttle service. Lot B-4 (North Campus) offers all-day parking without a shuttle; visitors can walk to Bardeen Quad or use the nearest shuttle stop at B-22.",
+    "Category": "Parking"
+  },
+  {
+    "id": "parking-saturday",
+    "Question": "Where can I park on Saturday?",
+    "Answer": "Available lots include B1, B17, C09, D09, E14, F23, F28, B4, and F29 across campus.",
+    "Category": "Parking"
+  },
+  {
+    "id": "parking-shuttle",
+    "Question": "Is shuttle service available?",
+    "Answer": "Yes. Shuttles run from 8:00 am to 5:30 pm on both days, stopping at major parking lots and exhibit hubs such as ECEB, CIF, and Everitt Laboratory. Full routes are available in the Visitor’s Guide.",
+    "Category": "Parking"
+  },
+  {
+    "id": "parking-shuttle-stops",
+    "Question": "What are the shuttle stops?",
+    "Answer": "Stops include Lot E-14, Everitt Laboratory, Campus Instructional Facility (CIF), Electrical and Computer Engineering Building (ECEB), Lot B-22, and Goodwin & Springfield.",
+    "Category": "Parking"
+  },
+  {
+    "id": "parking-buses",
+    "Question": "Where do buses pick up and drop off?",
+    "Answer": "All buses must use Lot B-22. Visitors should walk or take the shuttle to B-22 for bus pickup at the end of the day.",
+    "Category": "Parking"
+  },
+  {
+    "id": "parking-closures",
+    "Question": "Are there any street closures?",
+    "Answer": "Yes. From 7:00 am to 6:00 pm, W. Springfield Ave (Wright to Mathews) and S. Mathews St (Green to Springfield) will be closed to all but authorized vehicles.",
+    "Category": "Parking"
+  },
+  {
+    "id": "emergency-lost-child",
+    "Question": "What is the protocol for a lost or missing child?",
+    "Answer": "Immediately notify the nearest Visitor’s Booth. A volunteer will bring the child to the Visitor’s Booth in CIF and notify 911. A parent or guardian can meet the child at CIF.",
+    "Category": "Emergency"
+  },
+  {
+    "id": "emergency-medical",
+    "Question": "What should I do in case of a medical emergency?",
+    "Answer": "Notify a nearby volunteer immediately and go to the EMS tent on Graziano Plaza, located between Engineering Hall and Everitt Laboratory.",
+    "Category": "Emergency"
+  },
+  {
+    "id": "emergency-hospitals",
+    "Question": "Which hospitals are nearby?",
+    "Answer": "Nearby hospitals include Carle Foundation Hospital and OSF Presence Covenant Medical Center.",
+    "Category": "Emergency"
+  },
+  {
+    "id": "misc-lost-found",
+    "Question": "Is there a Lost & Found?",
+    "Answer": "Yes. Lost items can be taken to the Visitor’s Booth in CIF (9:00 am–5:00 pm, Friday & Saturday) or to the Engineering Council Office (Engineering Hall 103C) at other times.",
+    "Category": "Miscellaneous"
+  },
+  {
+    "id": "misc-identify",
+    "Question": "How can I identify staff and volunteers?",
+    "Answer": "Shirt colors indicate roles: Volunteers (Yellow), Exhibitors (Light Pink), Committee Members (White), Sponsors (Latte), Judges (Navy), HSDC (Bright Blue), MSDC (Lavender), Start-Up Showcase (Burgundy), Visitors (Aloe).",
+    "Category": "Miscellaneous"
+  }
+]
