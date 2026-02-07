@@ -1,5 +1,5 @@
-import Profile from '@/profile';
-import Content from '@/content';
+import Profile from "@/profile";
+import Content from "@/content";
 
 // const csv = require('csvtojson');
 // const csvFilePath = "./pages/about-us/meet-the-committee/people.csv"
@@ -19,210 +19,210 @@ import Content from '@/content';
 //     });
 
 const COMMITTEE_HEADSHOTS = [
-{
-    img: 'maddie.jpg',
-    Name: 'Maddie Conrad',
-    Position: 'Co-Director',
-    Class: 'Senior',
-    Major: 'Physics and French'
+  {
+    img: "maddie.jpg",
+    Name: "Maddie Conrad",
+    Position: "Co-Director",
+    Class: "Senior",
+    Major: "Physics and French",
   },
   {
-    img: 'aparna.jpg',
-    Name: 'Aparna Kamath',
-    Position: 'Co-Director',
-    Class: 'Senior',
-    Major: 'Physics'
+    img: "aparna.jpg",
+    Name: "Aparna Kamath",
+    Position: "Co-Director",
+    Class: "Senior",
+    Major: "Physics",
   },
   {
-    img: 'hiruni.jpg',
-    Name: 'Hiruni Bopearatchy',
-    Position: 'Secretary/Treasurer',
-    Class: 'Junior',
-    Major: 'Mechanical Engineering'
+    img: "hiruni.jpg",
+    Name: "Hiruni Bopearatchy",
+    Position: "Secretary/Treasurer",
+    Class: "Junior",
+    Major: "Mechanical Engineering",
   },
   {
-    img: 'ella.jpg',
-    Name: 'Ella Greer',
-    Position: 'Director of Facilities & Equipment',
-    Class: 'Senior',
-    Major: 'Aerospace Engineering'
+    img: "ella.jpg",
+    Name: "Ella Greer",
+    Position: "Director of Facilities & Equipment",
+    Class: "Senior",
+    Major: "Aerospace Engineering",
   },
   {
-    img: 'kate.jpg',
-    Name: 'Kate Pactol',
-    Position: 'Director of Exhibits',
-    Class: 'Junior',
-    Major: 'Mechanical Engineering'
+    img: "kate.jpg",
+    Name: "Kate Pactol",
+    Position: "Director of Exhibits",
+    Class: "Junior",
+    Major: "Mechanical Engineering",
   },
   {
-    img: 'adithi.jpg',
-    Name: 'Adithi Bikkavilli',
-    Position: 'Director of Traffic & Safety',
-    Class: 'Junior',
-    Major: 'Computer Engineering'
+    img: "adithi.jpg",
+    Name: "Adithi Bikkavilli",
+    Position: "Director of Traffic & Safety",
+    Class: "Junior",
+    Major: "Computer Engineering",
   },
   {
-    img: 'shiv.jpg',
-    Name: 'Shivaditya Gohil',
-    Position: 'Senior Corporate Director',
-    Class: 'Graduate Student',
-    Major: 'Computer Engineering'
+    img: "shiv.jpg",
+    Name: "Shivaditya Gohil",
+    Position: "Senior Corporate Director",
+    Class: "Graduate Student",
+    Major: "Computer Engineering",
   },
   {
-    img: 'roshni.jpg',
-    Name: 'Roshni Mathew',
-    Position: 'Senior Corporate Director',
-    Class: 'Senior',
-    Major: 'Computer Engineering'
+    img: "roshni.jpg",
+    Name: "Roshni Mathew",
+    Position: "Senior Corporate Director",
+    Class: "Senior",
+    Major: "Computer Engineering",
   },
   {
-    img: 'archir.jpg',
-    Name: 'Archir Luhana',
-    Position: 'Junior Corporate Director',
-    Class: 'Junior',
-    Major: 'Electrical Engineering'
+    img: "archir.jpg",
+    Name: "Archir Luhana",
+    Position: "Junior Corporate Director",
+    Class: "Junior",
+    Major: "Electrical Engineering",
   },
   {
-    img: 'shreya.jpg',
-    Name: 'Shreya Gosavi',
-    Position: 'Director of Special Events',
-    Class: 'Junior',
-    Major: 'Computer Science + Crop Sciences'
+    img: "shreya.jpg",
+    Name: "Shreya Gosavi",
+    Position: "Director of Special Events",
+    Class: "Junior",
+    Major: "Computer Science + Crop Sciences",
   },
   {
-    img: 'manasi.jpg',
-    Name: 'Manasi Bhargava',
-    Position: 'Director of Special Events',
-    Class: 'Junior',
-    Major: 'Engineering Mechanics'
+    img: "manasi.jpg",
+    Name: "Manasi Bhargava",
+    Position: "Director of Special Events",
+    Class: "Junior",
+    Major: "Engineering Mechanics",
   },
   {
-    img: 'ishani.jpg',
-    Name: 'Ishani Patel',
-    Position: 'Director of Marketing',
-    Class: 'Senior',
-    Major: 'Electrical Engineering'
+    img: "ishani.jpg",
+    Name: "Ishani Patel",
+    Position: "Director of Marketing",
+    Class: "Senior",
+    Major: "Electrical Engineering",
   },
   {
-    img: 'sarah.jpg',
-    Name: 'Sarah Su',
-    Position: 'Director of Marketing',
-    Class: 'Sophomore',
-    Major: 'Bioengineering'
+    img: "sarah.jpg",
+    Name: "Sarah Su",
+    Position: "Director of Marketing",
+    Class: "Sophomore",
+    Major: "Bioengineering",
   },
   {
-    img: 'riya.jpeg',
-    Name: 'Riya Karkhanis',
-    Position: 'Director of Marketing',
-    Class: 'Junior',
-    Major: 'Computer Engineering'
+    img: "riya.jpeg",
+    Name: "Riya Karkhanis",
+    Position: "Director of Marketing",
+    Class: "Junior",
+    Major: "Computer Engineering",
   },
   {
-    img: 'lillian.jpeg',
-    Name: 'Lillian Wang',
+    img: "lillian.jpeg",
+    Name: "Lillian Wang",
     Position: "Visitor's Information Director",
-    Class: 'Sophomore',
-    Major: 'Computer Science'
+    Class: "Sophomore",
+    Major: "Computer Science",
   },
   {
-    img: 'alyssa.jpg',
-    Name: 'Alyssa Huang',
-    Position: 'Director of Judging and Awards',
-    Class: 'Graduate Student',
-    Major: 'Electrical Engineering'
+    img: "alyssa.jpg",
+    Name: "Alyssa Huang",
+    Position: "Director of Judging and Awards",
+    Class: "Graduate Student",
+    Major: "Electrical Engineering",
   },
   {
-    img: 'sydney.jpg',
-    Name: 'Sydney Pavlik',
-    Position: 'Middle School Design Competition Director',
-    Class: 'Sophomore',
-    Major: 'Materials Science and Engineering'
+    img: "sydney.jpg",
+    Name: "Sydney Pavlik",
+    Position: "Middle School Design Competition Director",
+    Class: "Sophomore",
+    Major: "Materials Science and Engineering",
   },
   {
-    img: 'aryaa.jpg',
-    Name: 'Aryaa Rathi',
-    Position: 'High School Design Competition Director',
-    Class: 'Junior',
-    Major: 'Computer Science'
+    img: "aryaa.jpg",
+    Name: "Aryaa Rathi",
+    Position: "High School Design Competition Director",
+    Class: "Junior",
+    Major: "Computer Science",
   },
   {
-    img: 'faraz.jpg',
-    Name: 'Faraz Bhuiyan',
-    Position: 'Startup Showcase Director',
-    Class: 'Senior',
-    Major: 'Mechanical Engineering'
+    img: "faraz.jpg",
+    Name: "Faraz Bhuiyan",
+    Position: "Startup Showcase Director",
+    Class: "Senior",
+    Major: "Mechanical Engineering",
   },
   {
-    img: 'kushl.jpg',
-    Name: 'Kushl Saboo',
-    Position: 'Director of Advancements',
-    Class: 'Senior',
-    Major: 'Computer Engineering'
+    img: "kushl.jpg",
+    Name: "Kushl Saboo",
+    Position: "Director of Advancements",
+    Class: "Senior",
+    Major: "Computer Engineering",
   },
   {
-    img: 'divya.jpeg',
-    Name: 'Divya Bendigeri',
-    Position: 'Senior Director of Hospitality',
-    Class: 'Senior',
-    Major: 'Bioengineering'
+    img: "divya.jpeg",
+    Name: "Divya Bendigeri",
+    Position: "Senior Director of Hospitality",
+    Class: "Senior",
+    Major: "Bioengineering",
   },
   {
-    img: 'mohannad.jpg',
-    Name: 'Mohannad Alghamdi',
-    Position: 'Director of Hospitality',
-    Class: 'Sophomore',
-    Major: 'Materials Science and Engineering'
+    img: "mohannad.jpg",
+    Name: "Mohannad Alghamdi",
+    Position: "Director of Hospitality",
+    Class: "Sophomore",
+    Major: "Materials Science and Engineering",
   },
   {
-    img: 'shaan.jpg',
-    Name: 'Shaan Doshi',
-    Position: 'Senior Director of Technology',
-    Class: 'Junior',
-    Major: 'Computer Science and Physics'
+    img: "shaan.jpg",
+    Name: "Shaan Doshi",
+    Position: "Senior Director of Technology",
+    Class: "Junior",
+    Major: "Computer Science and Physics",
   },
   {
-    img: 'vani.jpg',
-    Name: 'Vani Ramesh',
-    Position: 'Junior Director of Technology',
-    Class: 'Junior',
-    Major: 'Computer Science'
+    img: "vani.jpg",
+    Name: "Vani Ramesh",
+    Position: "Junior Director of Technology",
+    Class: "Junior",
+    Major: "Computer Science",
   },
   {
-    img: 'nathan.jpg',
-    Name: 'Nathan Chan',
-    Position: 'Junior Director of Technology',
-    Class: 'Freshman',
-    Major: 'Material Science and Engineering'
+    img: "nathan.jpg",
+    Name: "Nathan Chan",
+    Position: "Junior Director of Technology",
+    Class: "Freshman",
+    Major: "Material Science and Engineering",
   },
   {
-    img: 'tessa.jpg',
-    Name: 'Tessa Waldhoff',
-    Position: 'Director of Outreach',
-    Class: 'Sophomore',
-    Major: 'Bioengineering'
+    img: "tessa.jpg",
+    Name: "Tessa Waldhoff",
+    Position: "Director of Outreach",
+    Class: "Sophomore",
+    Major: "Bioengineering",
   },
   {
-    img: 'brandon.jpg',
-    Name: 'Brandon Kiene',
-    Position: 'Junior Director of Outreach',
-    Class: 'Freshman',
-    Major: 'Engineering Mechanics'
+    img: "brandon.jpg",
+    Name: "Brandon Kiene",
+    Position: "Junior Director of Outreach",
+    Class: "Freshman",
+    Major: "Engineering Mechanics",
   },
   {
-    img: 'tushar.jpg',
-    Name: 'Tushar Jain',
-    Position: 'Junior Director of Outreach',
-    Class: 'Senior',
-    Major: 'Industrial Engineering'
+    img: "tushar.jpg",
+    Name: "Tushar Jain",
+    Position: "Junior Director of Outreach",
+    Class: "Senior",
+    Major: "Industrial Engineering",
   },
   {
-    img: 'atsi.jpg',
-    Name: 'Atsi Gupta',
-    Position: 'Sustainability Director',
-    Class: 'Senior',
-    Major: 'Computer Engineering and ILEE'
-  }
-]
+    img: "atsi.png",
+    Name: "Atsi Gupta",
+    Position: "Sustainability Director",
+    Class: "Senior",
+    Major: "Computer Engineering and ILEE",
+  },
+];
 
 export default function MeetTheCommittee() {
   return (
@@ -231,5 +231,5 @@ export default function MeetTheCommittee() {
         <Profile {...c} key={c.Name} />
       ))}
     </div>
-  )
+  );
 }
