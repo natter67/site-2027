@@ -188,7 +188,7 @@ export default function VolunteerPortalReserved() {
       <div className="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-900 p-4 mb-6 mx-4 w-11/12 md:w-7/12 rounded shadow-md space-y-3"> 
         <div> 
           <p className="font-semibold">📣 Required Sign Ups</p> 
-          <p className="text-sm mt-1"> If you were not able to attend a Town Hall please Slack, Text, or Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or{" "} <strong>Mohannad</strong> (984-325-7002) to schedule a meeting time! </p> 
+          <p className="text-sm mt-1">Please Slack, Text, or Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or <strong>Mohannad</strong> (984-325-7002) with any questions!</p> 
           <p className="text-sm mt-1">You are <strong>required</strong> to sign up for at least one day slot, <strong>AND</strong> a set up or tear-down slot.</p> 
         </div> 
         <div> 
