@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { getFirestore, collection, getDocs, getDoc, doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const firebaseConfig = {
@@ -26,6 +26,7 @@ export {
   collection,
   getDocs,
   getDoc,      // ✅ make sure this is here!
+  setDoc,
   doc,
   updateDoc,
   arrayUnion
