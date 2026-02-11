@@ -197,7 +197,7 @@ export default function VolunteerPortalReserved() {
         </div> 
         <div> 
           <p className="font-semibold">💬 Join the Slack</p> 
-          <p className="text-sm mt-1"> Stay updated and ask questions in our Slack group. <br /> <a href="https://join.slack.com/t/eohvolunteering2026/shared_invite/zt-3n582k8qd-dcb3Asc1e5U4pk_Dh7uiXw" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" > Join Slack → </a> </p> 
+          <p className="text-sm mt-1"> Stay updated and ask questions in our Slack group. <br /> <a href="https://join.slack.com/t/eohvolunteering2026/shared_invite/zt-3q5ubhpeo-McpC8WsbTppCBf9Rhb0UOQ" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" > Join Slack → </a> </p> 
         </div> 
       </div>
 
