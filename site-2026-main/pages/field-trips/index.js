@@ -14,14 +14,12 @@ export default function FieldTripsPage() {
         />
         <div className="lg:col-span-3 mb-10 text-center">
           <p className="font-montserrat text-lg">
-            This year, we are asking for your estimated time of arrival to
-            campus to help us plan traffic management. Please fill out this
-            short form to let us know you're coming:
+            In order to help us plan and streamline traffic managment this year, we are asking groups to let us know when they will be arriving on campus. Please reach out to (eoh-outreach@ec.illinois.edu) if you have any questions, comments, or concerns!
           </p>
           <Button
             type="big"
             className="px-6 py-3 rounded-md drop-shadow-md mt-6 text-lg font-semibold"
-            href="https://forms.gle/4Qj5k3fuEGXhs77RA"
+            href="https://docs.google.com/forms/d/e/1FAIpQLScffAHDSCovh2SFsqyE6I_zLYl169MrgZ-hCRy7wLVpaPUNcw/viewform"
             target="_blank"
           >
             Registration Form

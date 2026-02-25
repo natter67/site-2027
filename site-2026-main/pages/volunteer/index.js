@@ -1,7 +1,10 @@
+import React, { useEffect, useState } from "react";
 import {
   auth,
-  firestore,
   provider,
+  firestore,
+  signInWithPopup,
+  signOut,
   collection,
   getDocs,
   doc,
@@ -23,20 +26,23 @@ export default function Volunteer() {
   const [eventEmails, setEventEmails] = useState({});
   const [allEventEmails, setAllEventEmails] = useState([]);
 
+  /* ---------------- Auth ---------------- */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
       setUser(firebaseUser);
 
       if (firebaseUser) {
-        const isAdminUser =
-          firebaseUser.email === "tusharj2004@gmail.com" ||
-          firebaseUser.email === "kpact2@illinois.edu" ||
-          firebaseUser.email === "shaandoshi4@gmail.com" ||
-          firebaseUser.email === "aliciak2@illinois.edu" ||
-          firebaseUser.email === "azh4@illinois.edu" ||
-          firebaseUser.email === "atsig2@illinois.edu" ||
-          firebaseUser.email === "arryank2@illinois.edu";
-        setIsAdmin(isAdminUser);
+        const admins = [
+          "nathan49@illinois.edu",
+          "vanir2@illinois.edu",
+          "shaand3@illinois.edu",
+          "aparna4@illinois.edu",
+          "mconrad5@illinois.edu",
+          "divya5@illinois.edu",
+          "bkiene2@illinois.edu",
+          "maa38@illinois.edu",
+        ];
+        setIsAdmin(admins.includes(firebaseUser.email));
       } else {
         setIsAdmin(false);
       }
@@ -162,8 +168,14 @@ export default function Volunteer() {
       console.error("Error updating sign up:", error);
       alert("Error signing up. Try again.");
     }
+    setAllEventEmails(Array.from(emailSet));
   };
 
+  /* ---------------- Auth Actions ---------------- */
+  const handleSignIn = async () => signInWithPopup(auth, provider);
+  const handleSignOut = async () => signOut(auth);
+
+  /* ---------------- Render ---------------- */
   return (
     <div className="w-screen mt-32 mb-16 flex flex-col items-center">
 
@@ -234,7 +246,7 @@ export default function Volunteer() {
               onClick={() => signOut(auth)}
               className="underline text-blue-600"
             >
-              (Sign Out)
+              Sign In with Google
             </button>
           </h2>
 
