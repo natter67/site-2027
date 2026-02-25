@@ -7,19 +7,21 @@ import {
   signOut,
   collection,
   getDocs,
-  getDoc,
   doc,
-  arrayUnion,
+  getDoc,
   updateDoc,
-} from "utilities/firebase";
-import { query, orderBy, writeBatch, onSnapshot } from "firebase/firestore";
+  signInWithPopup,
+  signOut,
+} from "@utilities/firebase";
 
-export default function VolunteerPortalReserved() {
+import React, { useState, useEffect } from "react";
+import Content from "@/content";
+import Button from "@/button";
+
+export default function Volunteer() {
   const [user, setUser] = useState(null);
   const [volunteerEvents, setVolunteerEvents] = useState([]);
-  const [reservedEventIds, setReservedEventIds] = useState(new Set());
-
-  /* ---------------- Admin State ---------------- */
+  const [requiredEventsSignedUp, setRequiredEventsSignedUp] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [eventEmails, setEventEmails] = useState({});
   const [allEventEmails, setAllEventEmails] = useState([]);
@@ -46,134 +48,125 @@ export default function VolunteerPortalReserved() {
       }
     });
 
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const eventsRef = collection(firestore, "volunteerEvents2026");
-    const q = query(
-      eventsRef,
-      orderBy("date", "asc"),
-      orderBy("startTime", "asc")
-    );
-    const unsubscribeEvents = onSnapshot(q, (snapshot) => {
-      setVolunteerEvents(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
-    });
-
-    return () => unsubscribeEvents();
-  }, []);
-
-  /* ---------------- Fetch Events ---------------- */
-  useEffect(() => {
     const fetchVolunteerEvents = async () => {
-      const eventsRef = collection(firestore, "volunteerEvents2026");
-      const q = query(eventsRef, orderBy("date", "asc"), orderBy("startTime", "asc"));
-      const snapshot = await getDocs(q);
-      setVolunteerEvents(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+      const eventsRef = collection(firestore, "volunteerEvents");
+      const snapshot = await getDocs(eventsRef);
+      const events = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setVolunteerEvents(events);
     };
 
     fetchVolunteerEvents();
+    return () => unsubscribe();
   }, []);
 
-  /* ---------------- Reservation Logic ---------------- */
-  const toggleReserve = (eventId) => {
-    setReservedEventIds((prev) => {
-      const next = new Set(prev);
-      next.has(eventId) ? next.delete(eventId) : next.add(eventId);
-      return next;
-    });
-  };
-
-  const isRegistered = (event) => {
-    return event.volunteers?.some((v) => v.uid === user?.uid);
-  };
-
-  const handleUnregister = async (event) => {
-    if (!user) return;
-    if (!window.confirm(`Unregister from "${event.name}"?`)) return;
-
-    try {
-      const updatedVolunteers = (event.volunteers || []).filter(
-        (v) => v.uid !== user.uid
-      );
-
-      await updateDoc(
-        doc(firestore, "volunteerEvents2026", event.id),
-        { volunteers: updatedVolunteers }
-      );
-    } catch (err) {
-      console.error(err);
-      alert("Failed to unregister. Please try again.");
-    }
-  };
-
-  const reservedEvents = volunteerEvents.filter((e) => reservedEventIds.has(e.id));
-
-  /* ---------------- Requirements ---------------- */
-  const hasMinTwoSlots = reservedEvents.length >= 2;
-
-  const hasSetupOrTearDown = reservedEvents.some((event) =>
-    /set up|tear down/i.test(event.name)
-  );
-
-  const canSubmit = hasMinTwoSlots && hasSetupOrTearDown;
-
-  /* ---------------- Submit ---------------- */
-  const handleSubmit = async () => {
-    if (!user || !canSubmit) return;
-
-    try {
-      const batch = writeBatch(firestore);
-
-      for (const event of reservedEvents) {
-        if (
-          event.maxCapacity &&
-          event.volunteers &&
-          event.volunteers.length >= event.maxCapacity
-        ) {
-          alert(`"${event.name}" is already full. Please update your reservations.`);
-          return;
-        }
-
-        const eventRef = doc(firestore, "volunteerEvents2026", event.id);
-        batch.update(eventRef, {
-          volunteers: arrayUnion({
-            uid: user.uid,
-            name: user.displayName || "",
-            email: user.email || "",
-          }),
-        });
-      }
-
-      await batch.commit();
-      alert("Your volunteer schedule has been submitted!");
-      setReservedEventIds(new Set());
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong. Please try again.");
-    }
-  };
-
-  /* ---------------- Admin Email Logic ---------------- */
   const handleViewEventEmails = async (eventId) => {
-    const eventRef = doc(firestore, "volunteerEvents2026", eventId);
+    const eventRef = doc(firestore, "volunteerEvents", eventId);
     const eventDoc = await getDoc(eventRef);
     if (eventDoc.exists()) {
-      const volunteers = eventDoc.data().volunteers || [];
-      setEventEmails((prev) => ({
-        ...prev,
-        [eventId]: volunteers.map((v) => v.email),
-      }));
+      const eventData = eventDoc.data();
+      if (eventData.volunteers) {
+        const emails = eventData.volunteers.map((v) => v.email);
+        setEventEmails((prev) => ({ ...prev, [eventId]: emails }));
+      }
     }
   };
 
   const fetchAllEventEmails = async () => {
-    const emailSet = new Set();
+    let allEmailsSet = new Set();
+
     for (const event of volunteerEvents) {
-      const snap = await getDoc(doc(firestore, "volunteerEvents2026", event.id));
-      if (snap.exists()) {
-        (snap.data().volunteers || []).forEach((v) => emailSet.add(v.email));
+      const eventRef = doc(firestore, "volunteerEvents", event.id);
+      const eventDoc = await getDoc(eventRef);
+      if (eventDoc.exists()) {
+        const eventData = eventDoc.data();
+        if (eventData.volunteers) {
+          eventData.volunteers.forEach((v) => {
+            allEmailsSet.add(v.email);
+          });
+        }
       }
+    }
+
+    setAllEventEmails(Array.from(allEmailsSet));
+  };
+
+  const isUserSignedUp = (event) =>
+    event.volunteers?.some((v) => v.uid === user?.uid);
+
+  const isRequiredEventSignedUp = () => {
+    const requiredEvents = [
+      "Thursday Set Up",
+      "Thursday Set Up 2",
+      "Saturday Tear Down",
+      "Saturday Tear Down 2",
+    ];
+    return volunteerEvents.some(
+      (event) =>
+        requiredEvents.includes(event.name) && isUserSignedUp(event)
+    );
+  };
+
+  const handleSignUpOrUnsignUp = async (event) => {
+    if (!user) {
+      alert("Please sign in to volunteer.");
+      return;
+    }
+
+    if (
+      !isRequiredEventSignedUp() &&
+      ![
+        "Thursday Set Up",
+        "Thursday Set Up 2",
+        "Saturday Tear Down",
+        "Saturday Tear Down 2",
+      ].includes(event.name)
+    ) {
+      alert(
+        "You must sign up for one required event before signing up for others."
+      );
+      return;
+    }
+
+    const eventRef = doc(firestore, "volunteerEvents", event.id);
+
+    try {
+      let updatedVolunteers = [...(event.volunteers || [])];
+
+      if (isUserSignedUp(event)) {
+        updatedVolunteers = updatedVolunteers.filter(
+          (v) => v.uid !== user.uid
+        );
+      } else {
+        if (
+          event.maxCapacity &&
+          updatedVolunteers.length >= event.maxCapacity
+        ) {
+          alert("Sorry, this event is full.");
+          return;
+        }
+
+        updatedVolunteers.push({
+          uid: user.uid,
+          name: user.displayName || "",
+          email: user.email || "",
+        });
+      }
+
+      await updateDoc(eventRef, { volunteers: updatedVolunteers });
+
+      setVolunteerEvents((prev) =>
+        prev.map((e) =>
+          e.id === event.id
+            ? { ...e, volunteers: updatedVolunteers }
+            : e
+        )
+      );
+    } catch (error) {
+      console.error("Error updating sign up:", error);
+      alert("Error signing up. Try again.");
     }
     setAllEventEmails(Array.from(emailSet));
   };
@@ -184,166 +177,166 @@ export default function VolunteerPortalReserved() {
 
   /* ---------------- Render ---------------- */
   return (
-    <div className="w-screen mt-32 mb-16 flex justify-center items-center flex-col"> 
-      <div className="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-900 p-4 mb-6 mx-4 w-11/12 md:w-7/12 rounded shadow-md space-y-3"> 
-        <div> 
-          <p className="font-semibold">📣 Required Sign Ups</p> 
-          <p className="text-sm mt-1">Please Slack, Text, or Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or <strong>Mohannad</strong> (984-325-7002) with any questions!</p> 
-          <p className="text-sm mt-1">You are <strong>required</strong> to sign up for at least one day slot, <strong>AND</strong> a set up or tear-down slot.</p> 
-        </div> 
-        <div> 
-          <p className="font-semibold">📘 Volunteer Guide</p> 
-          <p className="text-sm mt-1"> Make sure to read the guide before your shift. <br /> <a href="https://docs.google.com/document/d/1kTTXVVkWIa97ATUofiHJ5s6RpGVXGTbLpIfqihlnYZo/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" > View Volunteer Guide → </a> </p> 
-        </div> 
-        <div> 
-          <p className="font-semibold">💬 Join the Slack</p> 
-          <p className="text-sm mt-1"> Stay updated and ask questions in our Slack group. <br /> <a href="https://join.slack.com/t/eohvolunteering2026/shared_invite/zt-3q5ubhpeo-McpC8WsbTppCBf9Rhb0UOQ" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" > Join Slack → </a> </p> 
-        </div> 
-      </div>
+    <div className="w-screen mt-32 mb-16 flex flex-col items-center">
 
+      {/* HERO SECTION */}
+      <div className="text-center max-w-5xl mx-auto px-4 mb-12">
+        <h1 className="font-montserrat text-4xl font-bold mb-4">
+          Volunteer Sign Ups are NOW OPEN!
+        </h1>
 
+        <p className="font-montserrat text-lg max-w-3xl mx-auto mb-6">
+          Be a part of the biggest engineering event on campus –
+          <span className="font-semibold"> Engineering Open House (EOH)</span>!
+          Don’t miss this chance to be at the heart of innovation.
+        </p>
 
-      <div className="w-screen mt-4 mb-16 flex flex-col items-center">
-        <h1 className="font-bold text-3xl mb-4">Volunteer Sign Up</h1>
-
-        {/* Requirements */}
-        <div className="m-6 py-4 px-40 border rounded bg-gray-50 space-y-2">
-          <p className="font-semibold">Requirements</p>
-           <p className={hasSetupOrTearDown ? "text-green-600" : "text-gray-600"}>
-            {hasSetupOrTearDown ? "✅" : "⬜"} At least 1 Set Up or Tear Down slot
+        <div className="max-w-xl mx-auto mb-6 p-4 rounded-lg bg-yellow-50 shadow-sm">
+          <p className="text-lg">
+            <span className="font-bold">📅 Date:</span> April 10–11th
           </p>
-          <p className={hasMinTwoSlots ? "text-green-600" : "text-gray-600"}>
-            {hasMinTwoSlots ? "✅" : "⬜"} At least 2 total slots
+          <p className="text-lg">
+            <span className="font-bold">⏰ Time:</span> 8:00 AM – 5:00 PM
+          </p>
+          <p className="text-lg">
+            <span className="font-bold">📍 Location:</span> Across the UIUC Engineering Campus
           </p>
         </div>
 
-        <button
-          disabled={!canSubmit}
-          onClick={handleSubmit}
-          className={`px-6 py-3 rounded text-white ${canSubmit
-            ? "bg-green-600 hover:bg-green-700"
-            : "bg-gray-400 cursor-not-allowed"
-            }`}
-        >
-          Submit Volunteer Schedule
-        </button>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 border rounded-lg shadow-sm">
+            <h3 className="text-xl font-bold mb-2">🤝 Collaborative Volunteering</h3>
+            <p>Meet and work with fellow engineers and innovators!</p>
+          </div>
 
-        {!user ? (
-          <div className="text-center">
-            <p>Please sign in to reserve volunteer slots</p>
+          <div className="p-6 border rounded-lg shadow-sm">
+            <h3 className="text-xl font-bold mb-2">🎓 No Experience Needed</h3>
+            <p>No prior volunteering experience required.</p>
+          </div>
+
+          <div className="p-6 border rounded-lg shadow-sm bg-yellow-100">
+            <h3 className="text-xl font-bold mb-2">👕 Free T-Shirt 🍪 & Snacks</h3>
+            <p className="font-semibold">
+              Enjoy snacks and take home an exclusive EOH T-shirt.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          Questions?{" "}
+          <a
+            href="mailto:eoh-hospitality@ec.illinois.edu"
+            className="font-bold underline"
+          >
+            eoh-hospitality@ec.illinois.edu
+          </a>
+        </div>
+      </div>
+
+
+      {/* SIGN IN OR PORTAL */}
+      {user ? (
+        <div className="w-11/12 md:w-7/12">
+          <h2 className="mb-4">
+            Welcome{" "}
+            {user.displayName
+              ? user.displayName.split(" ")[0]
+              : user.email.split("@")[0]}{" "}
             <button
-              onClick={handleSignIn}
-              className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
+              onClick={() => signOut(auth)}
+              className="underline text-blue-600"
             >
               Sign In with Google
             </button>
-          </div>
-        ) : (
-          <div className="w-11/12 md:w-7/12">
-            <p className="mb-4">
-              Welcome <strong>{user.displayName?.split(" ")[0]}</strong>
-              <button onClick={handleSignOut} className="ml-2 underline text-blue-600">
-                (Sign Out)
-              </button>
-            </p>
+          </h2>
 
-            {/* Events */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {volunteerEvents.map((event) => (
-                <div key={event.id} className="p-4 border rounded shadow">
-                  <h2 className="font-bold">{event.name}</h2>
-                  {event.time && <p><strong>{event.time}</strong></p>}
-                  {event.description && <p>{event.description}</p>}
-                  <p>
-                    Volunteers: {event.volunteers?.length || 0} / {event.maxCapacity || "N/A"}
-                  </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {volunteerEvents.map((event) => (
+              <div
+                key={event.id}
+                className="p-4 border rounded shadow text-center"
+              >
+                <h2 className="font-bold text-lg">{event.name}</h2>
+                {event.time && <p><strong>{event.time}</strong></p>}
+                <p>
+                  {event.volunteers?.length || 0} /{" "}
+                  {event.maxCapacity || "N/A"} Volunteers
+                </p>
 
-                  {isRegistered(event) ? (
-                    <button
-                      onClick={() => handleUnregister(event)}
-                      className="mt-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
-                    >
-                      Unregister
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => toggleReserve(event.id)}
-                      className={`mt-2 px-4 py-2 rounded text-white ${reservedEventIds.has(event.id)
-                        ? "bg-[#a2d3c2] hover:bg-[#8fb8a8]"
-                        : "bg-[#c578d6] hover:bg-[#a864b3]"
-                        }`}
-                    >
-                      {reservedEventIds.has(event.id) ? "Unreserve" : "Reserve"}
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Admin Section */}
-            {isAdmin && (
-              <div className="mt-10">
-                <h2 className="text-xl font-bold mb-4">Admin Section</h2>
-
-                <div className="flex gap-4 mb-4">
-                  <button
-                    onClick={fetchAllEventEmails}
-                    className="px-4 py-2 bg-[#c578d6] text-white rounded"
-                  >
-                    Fetch All Emails
-                  </button>
-                  {allEventEmails.length > 0 && (
-                    <button
-                      onClick={() => setAllEventEmails([])}
-                      className="px-4 py-2 bg-gray-400 text-white rounded"
-                    >
-                      Close
-                    </button>
-                  )}
-                </div>
-
-                {allEventEmails.length > 0 && (
-                  <textarea
-                    className="w-full p-2 border rounded mb-6"
-                    rows={4}
-                    readOnly
-                    value={allEventEmails.join(", ")}
-                  />
-                )}
-
-                {volunteerEvents.map((event) => (
-                  <div key={event.id} className="mb-4 p-4 border rounded bg-gray-100">
-                    <h3 className="font-semibold mb-2">{event.name}</h3>
-                    <button
-                      onClick={() =>
-                        eventEmails[event.id]
-                          ? setEventEmails((prev) => {
-                            const copy = { ...prev };
-                            delete copy[event.id];
-                            return copy;
-                          })
-                          : handleViewEventEmails(event.id)
-                      }
-                      className="px-4 py-2 bg-[#c578d6] text-white rounded"
-                    >
-                      {eventEmails[event.id] ? "Close Emails" : "View Emails"}
-                    </button>
-
-                    {eventEmails[event.id] && (
-                      <textarea
-                        className="w-full mt-2 p-2 border rounded"
-                        rows={3}
-                        readOnly
-                        value={eventEmails[event.id].join(", ")}
-                      />
-                    )}
-                  </div>
-                ))}
+                <button
+                  onClick={() => handleSignUpOrUnsignUp(event)}
+                  className={`mt-2 px-4 py-2 rounded text-white ${
+                    isUserSignedUp(event)
+                      ? "bg-green-400"
+                      : "bg-purple-500"
+                  }`}
+                >
+                  {isUserSignedUp(event) ? "Unsign Up" : "Sign Up"}
+                </button>
               </div>
-            )}
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="text-center">
+          <p>Please sign in to volunteer</p>
+          <button
+            onClick={() => signInWithPopup(auth, provider)}
+            className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
+          >
+            Sign In with Google
+          </button>
+        </div>
+      )}
+      {/* Required Sign Ups Yellow Box */}
+<div className="mt-8 w-full max-w-3xl bg-yellow-50 border-l-4 border-yellow-400 text-yellow-900 p-6 rounded-xl shadow-md space-y-4">
+  
+  <div>
+    <p className="font-semibold text-lg">📣 Required Sign Ups</p>
+    <p className="text-sm mt-2">
+      Please Slack, Text, or Email Hospitality Directors{" "}
+      <strong>Divya</strong> (408-826-9656) or{" "}
+      <strong>Mohannad</strong> (984-325-7002) with any questions!
+    </p>
+    <p className="text-sm mt-2">
+      You are required to sign up for at least one day slot, AND a set up or tear-down slot.
+    </p>
+  </div>
+
+  <div>
+    <p className="font-semibold">📘 Volunteer Guide</p>
+    <p className="text-sm mt-1">
+      Make sure to read the guide before your shift.
+      <br />
+      <a
+        href="https://docs.google.com/document/d/1kTTXVVkWIa97ATUofiHJ5s6RpGVXGTbLpIfqihlnYZo/edit?usp=sharing"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 underline"
+      >
+        View Volunteer Guide →
+      </a>
+    </p>
+  </div>
+
+  <div>
+    <p className="font-semibold">💬 Join the Slack</p>
+    <p className="text-sm mt-1">
+      Stay updated and ask questions in our Slack group.
+      <br />
+      <a
+        href="https://join.slack.com/t/eohvolunteering2026/shared_invite/zt-3n582k8qd-dcb3Asc1e5U4pk_Dh7uiXw"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 underline"
+      >
+        Join Slack →
+      </a>
+    </p>
+  </div>
+
+</div>
+
     </div>
-      );
+  );
 }
