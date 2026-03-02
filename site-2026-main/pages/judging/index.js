@@ -82,7 +82,7 @@ export default function Judging() {
             href="https://docs.google.com/forms/d/e/1FAIpQLSeNWz-dxvtHJQpYfBSIUCWy9fvQZsKtnxLHG_mC_BWMobvohw/viewform"
             target="_blank"
           >
-            Apply to Judge
+            Judging Interest Form
           </Button>
           <p className="mt-2 text-sm text-gray-500">
             Takes less than 3 minutes

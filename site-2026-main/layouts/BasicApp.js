@@ -35,7 +35,7 @@ const HEADER_ITEMS = [
     href: "/judging"
   },
   {
-    text: "Visitor Guide",
+    text: "2025 Visitor Guide",
     href: "/guide.pdf",
     target: "_blank",
     type: "big"

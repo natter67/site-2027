@@ -1,3 +1,19 @@
+import React, { useEffect, useState } from "react";
+import {
+  auth,
+  provider,
+  firestore,
+  signInWithPopup,
+  signOut,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  signInWithPopup,
+  signOut,
+} from "@utilities/firebase";
+
 import React, { useState, useEffect } from "react";
 import { auth, provider, firestore, signInWithPopup, signOut, collection, getDocs, doc, getDoc, updateDoc, arrayUnion } from "utilities/firebase";
 
@@ -10,6 +26,7 @@ export default function Volunteer() {
   const [eventEmails, setEventEmails] = useState({}); // State to store event emails
   const [allEventEmails, setAllEventEmails] = useState([]);
 
+  /* ---------------- Auth ---------------- */
   useEffect(() => {
     // Check if user is signed in
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
@@ -17,15 +34,17 @@ export default function Volunteer() {
 
       // Check if user is admin (example: check for admin email domain)
       if (firebaseUser) {
-        const isAdminUser =
-          firebaseUser.email === "tusharj2004@gmail.com" ||
-          firebaseUser.email === "kpact2@illinois.edu" ||
-          firebaseUser.email === "shaandoshi4@gmail.com" ||
-          firebaseUser.email === "aliciak2@illinois.edu" ||
-          firebaseUser.email === "azh4@illinois.edu" ||
-          firebaseUser.email === "atsig2@illinois.edu" ||
-          firebaseUser.email === "arryank2@illinois.edu";
-        setIsAdmin(isAdminUser);
+        const admins = [
+          "nathan49@illinois.edu",
+          "vanir2@illinois.edu",
+          "shaand3@illinois.edu",
+          "aparna4@illinois.edu",
+          "mconrad5@illinois.edu",
+          "divya5@illinois.edu",
+          "bkiene2@illinois.edu",
+          "maa38@illinois.edu",
+        ];
+        setIsAdmin(admins.includes(firebaseUser.email));
       } else {
         setIsAdmin(false);
       }
@@ -210,8 +229,14 @@ export default function Volunteer() {
       console.error("Error signing up/unsigning up for event:", error);
       alert("Error signing up, try again!");
     }
+    setAllEventEmails(Array.from(emailSet));
   };
 
+  /* ---------------- Auth Actions ---------------- */
+  const handleSignIn = async () => signInWithPopup(auth, provider);
+  const handleSignOut = async () => signOut(auth);
+
+  /* ---------------- Render ---------------- */
   return (
     <div className="w-screen mt-32 mb-16 flex justify-center items-center flex-col overflow-y-scroll">
       <div className="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-900 p-4 mb-6 mx-4 w-11/12 md:w-7/12 rounded shadow-md space-y-3">
@@ -268,7 +293,7 @@ export default function Volunteer() {
               onClick={handleSignOut}
               className="underline text-600 hover:text-blue-800"
             >
-              (Sign Out)
+              Sign In with Google
             </button>
           </h1>
           <div className="font-montserrat">

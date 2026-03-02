@@ -5,27 +5,52 @@ import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
+import rawFaqs from './faqs.json';
+
 const colors = ['bg-blue-300', 'bg-pink-300', 'bg-yellow-200', 'bg-red-300', 'bg-purple-300']
 
-const ErrorMessageBox = ({ message, onRetry }) => (
-  <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
-    <p>{message}</p>
-    {onRetry && (
-      <button onClick={onRetry} style={{ marginTop: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#f2f2f2', border: 'none', borderRadius: '5px' }}>
-        Retry
-      </button>
-    )}
-  </div>
-)
+// const ErrorMessageBox = ({ message, onRetry }) => (
+//   <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
+//     <p>{message}</p>
+//     {onRetry && (
+//       <button onClick={onRetry} style={{ marginTop: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#f2f2f2', border: 'none', borderRadius: '5px' }}>
+//         Retry
+//       </button>
+//     )}
+//   </div>
+// )
+
+const normalizeFaqs = (faqs) => {
+  return faqs.reduce((acc, faq) => {
+    const { id, Category, Question, Answer } = faq;
+
+    const categoryKey = `${Category} FAQs`;
+
+    const faqItem = {
+      id,
+      title: Question,
+      content: Answer,
+    };
+
+    if (!acc[categoryKey]) {
+      acc[categoryKey] = [faqItem];
+    } else {
+      acc[categoryKey].push(faqItem);
+    }
+
+    return acc;
+  }, {});
+};
+
 
 const Faqs = () => {
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  // const fetcher = (url) => fetch(url).then((res) => res.json());
   const [expandedId, setExpandedId] = useState(null);
 
-  const { data, error, isLoading } = useSWR(
-    `https://n11.eohillinois.org/api/faqs?sort=updatedAt:desc`,
-    fetcher
-  );
+  // const { data, error, isLoading } = useSWR(
+  //   `https://n11.eohillinois.org/api/faqs?sort=updatedAt:desc`,
+  //   fetcher
+  // );
 
   const [categories, setCategories] = useState({
     'Event FAQs': [],
@@ -34,22 +59,29 @@ const Faqs = () => {
     'Emergency FAQs': [],
   });
 
-  React.useEffect(() => {
-    if (data && data.data) {
-      const sortedFaqs = data.data.reduce((acc, faq) => {
-        const { Category, Question, Description } = faq;
-        const faqItem = { id: Question, title: Question, content: Description };
-        if (!acc[Category]) {
-          acc[Category] = [faqItem];
-        } else {
-          acc[Category].push(faqItem);
-        }
-        return acc;
-      }, {});
 
-      setCategories(sortedFaqs);
-    }
-  }, [data]);
+  // This is the code when grabbing FAQs from Strapi
+  // React.useEffect(() => {
+  //   if (data && data.data) {
+  //     const sortedFaqs = data.data.reduce((acc, faq) => {
+  //       const { Category, Question, Description } = faq;
+  //       const faqItem = { id: Question, title: Question, content: Description };
+  //       if (!acc[Category]) {
+  //         acc[Category] = [faqItem];
+  //       } else {
+  //         acc[Category].push(faqItem);
+  //       }
+  //       return acc;
+  //     }, {});
+
+  //     setCategories(sortedFaqs);
+  //   }
+  // }, [data]);
+
+  useEffect(() => {
+    const groupedFaqs = normalizeFaqs(rawFaqs);
+    setCategories(groupedFaqs);
+  }, []);
 
   const categoryOrder = ['Event FAQs', 'Parking FAQs', 'Food FAQs', 'Emergency FAQs'];
 
@@ -57,11 +89,11 @@ const Faqs = () => {
     return str.replace(/\n/g, "<br />")
   }
 
-  if (error) {
-    return <ErrorMessageBox message="failed to load, retry" onRetry={() => window.location.reload()} />;
-  }
+  // if (error) {
+  //   return <ErrorMessageBox message="failed to load, retry" onRetry={() => window.location.reload()} />;
+  // }
 
-  if (!data) return <div style={{ textAlign: 'center' }}>Loading...</div>;
+  // if (!data) return <div style={{ textAlign: 'center' }}>Loading...</div>;
 
   return (
     <div className="mt-15 md:mt-18 flex flex-col justify-between">
@@ -91,4 +123,3 @@ const Faqs = () => {
 }
 
 export default Faqs;
-
