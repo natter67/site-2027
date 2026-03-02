@@ -6,7 +6,7 @@ export default function Directors() {
         {/* Committee photo displayed above the directors' note */}
             <img 
                 src="assets/images/committee-shot.jpg" 
-                alt="Group picture of the EOH 2024 committee" 
+                alt="Group picture of the EOH 2026 committee" 
                 className='object-cover w-full max-w-3xl h-auto rounded-3xl' 
             />
             
