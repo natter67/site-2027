@@ -21,6 +21,7 @@ const footerSections = [
       { text: "Support EOH", href: "/#sponsors" },
       { text: "Engineering Council", href: "https://www.ecillinois.org/" },
       { text: "History of EOH", href: "https://grainger.illinois.edu/news/features/EOH-100" },
+      { text: "Future Dates", href: "/future-dates" },
     ],
   },
   {
