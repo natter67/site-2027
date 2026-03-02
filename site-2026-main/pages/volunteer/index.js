@@ -10,11 +10,8 @@ import {
   doc,
   getDoc,
   updateDoc,
-  signInWithPopup,
-  signOut,
 } from "@utilities/firebase";
 
-import React, { useState, useEffect } from "react";
 import Content from "@/content";
 import Button from "@/button";
 
