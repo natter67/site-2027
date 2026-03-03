@@ -20,9 +20,9 @@ export const KeynoteSpeaker = () => {
         <div 
             className="flex flex-col md:flex-row md:justify-center items-center gap-8 px-14 relative min-h-[500px] pb-40"
             style={{
-                backgroundImage: !isMobile && `linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, white 100%), url('/assets/images/website_moon.png')`,
-                backgroundSize: 'contain', // Ensures the image fits without cropping
-                backgroundPosition: 'center bottom -50px', // Moves the image further down
+                backgroundImage: !isMobile && `linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, white 100%), url('/assets/images/robot_unbuilt_banner.png')`,
+                backgroundSize: 'cover', // Ensures the image fits without cropping
+                backgroundPosition: 'center bottom -70px', // Moves the image further down
                 backgroundRepeat: 'no-repeat'
             }}            
         >
@@ -48,7 +48,8 @@ export const KeynoteSpeaker = () => {
             <img 
                 src="assets/images/keynote-headshot.png" 
                 alt="picture of Anna Oldani" 
-                className="w-80 h-80 object-cover rounded-full" 
+                className="w-80 h-80 object-cover rounded-full 
+                           ring-1 ring-black ring-offset-1 ring-offset-transparent" 
             />
         </div>
     );
