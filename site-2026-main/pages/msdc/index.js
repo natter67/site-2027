@@ -7,7 +7,7 @@ export default function MSDC() {
     <Content title="Middle School Design Competition">
       <div className="lg:col-span-3 mb-10">
         <div className="font-montserrat col-span-5 mb-2">
-          Our Middle School Design Competition (MSDC) is an engineering-focused competition on Friday, April 4. Students work in teams of 3-5 to create a design and presentation that will be evaluated at the end of the competition. It’s a great opportunity for students to gain hands-on engineering design and teamwork experience!
+          Our Middle School Design Competition (MSDC) is an engineering-focused competition on Friday, April 10. Students work in teams of 3-5 to create a design and presentation that will be evaluated at the end of the competition. It’s a great opportunity for students to gain hands-on engineering design and teamwork experience!
           <br />
           <br />
           <Info>
@@ -18,7 +18,7 @@ export default function MSDC() {
             <Button
               type="big"
               className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-              href="https://docs.google.com/forms/d/e/1FAIpQLSd2fJYy1U5IZj5itydIiZhaLBCScJIMVwY6_qIAD3jvTn3VFA/viewform?usp=dialog"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSekpeSFjM1RHXKDca-OCqi5ldS5q_Zxy296I5WThF-YjvewyA/viewform"
               target="_blank"
             >
               MSDC Registration

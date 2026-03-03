@@ -22,7 +22,7 @@ export default function HSDC() {
                     <Button
                       type="big"
                       className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-                      href="https://forms.gle/RQvkkRnFa74PwfMr5"
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSdHjKMv-2Br6dTVkIHbRg2rbl6XryAgXL480wsfjig7FTKMjg/viewform"
                       target="_blank"
                     >
                       HSDC Interest Form
