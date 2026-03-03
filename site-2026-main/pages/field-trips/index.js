@@ -31,7 +31,7 @@ export default function FieldTripsPage() {
         <h1 className="title text-3xl font-bold mb-4">MSDC and HSDC</h1>
         <p className="font-montserrat text-lg">
           Our Middle School and High School Design Competitions (MSDC and HSDC)
-          are engineering-focused competitions on <b>Friday, April 4</b>.
+          are engineering-focused competitions on <b>Friday, April 10</b>.
           Students work in teams of 3-5 to create a design and presentation that
           will be evaluated at the end of the competition. It’s a great
           opportunity for students to gain hands-on engineering design and
@@ -42,7 +42,7 @@ export default function FieldTripsPage() {
           <Button
             type="big"
             className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSd2fJYy1U5IZj5itydIiZhaLBCScJIMVwY6_qIAD3jvTn3VFA/viewform?usp=dialog"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSekpeSFjM1RHXKDca-OCqi5ldS5q_Zxy296I5WThF-YjvewyA/viewform"
             target="_blank"
           >
             MSDC Registration
@@ -50,7 +50,7 @@ export default function FieldTripsPage() {
           <Button
             type="big"
             className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-            href="https://forms.gle/LsS9fqGW2QNSMwm67"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdHjKMv-2Br6dTVkIHbRg2rbl6XryAgXL480wsfjig7FTKMjg/viewform"
             target="_blank"
           >
             HSDC Registration
