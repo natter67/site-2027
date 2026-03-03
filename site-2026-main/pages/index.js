@@ -12,6 +12,7 @@ import ScheduleSection from "../layouts/Schedule/index.js"
 import Visitors from "../layouts/Visitors/index.js"
 import Awards from "../layouts/Awards/index.js"
 import ExhibitApplication from "@layouts/ExhibitApplication /index.js"
+import QuantumDay from "@layouts/QuantumDay/index.js"
 
 export default function Home() {
   return (
@@ -28,34 +29,27 @@ export default function Home() {
         <Section color="white" title="EOH 2025 Awards" id="awards">
           <Awards />
         </Section> 
-        <div className="mt-24 sm:mt-16 md:mt-0"></div>
-        <Section color="white" title="Forge the Future with Us - Exhibits 2026" id="exhibit-application">
-          <ExhibitApplication />
-        </Section>
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
         <Section
-  color="bg-cover bg-center"
-  id="keynote"
-  title={
-    <span className="block text-center font-bold">
-      {/* Mobile version: with <br> */}
-      <span className="block sm:hidden">
-        Keynote from<br />Anna Oldani
-      </span>
-      {/* Desktop version: no <br> */}
-      <span className="hidden sm:inline">
-        Keynote from Anna Oldani
-      </span>
-    </span>
-  }
->
-  <KeynoteSpeaker />
-</Section>
-
-
-
+          color="bg-cover bg-center"
+          id="keynote"
+          title={
+            <span className="block text-center font-bold">
+              {/* Mobile version: with <br> */}
+              <span className="block sm:hidden">
+                2025 Keynote from<br />Anna Oldani
+              </span>
+              {/* Desktop version: no <br> */}
+              <span className="hidden sm:inline">
+                2025 Keynote from Anna Oldani
+              </span>
+            </span>
+          }
+        >
+          <KeynoteSpeaker />
+        </Section>
         <Section
           title="Featured Events"
           color="bg-white"
@@ -63,6 +57,9 @@ export default function Home() {
           wide
         >
           <EventList />
+        </Section>
+        <Section color="bg-white" title="World Quantum Day" id="visitors">
+          < QuantumDay/>
         </Section>
         <Section title="Schedule" color="bg-white" id="schedule" wide>
           <ScheduleSection />

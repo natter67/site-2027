@@ -48,13 +48,13 @@ export default function Header({ headerItems }) {
       />
 
       {/* Desktop */}
-      <div className="hidden lg:block fixed top-0 w-screen h-24 bg-white flex-col justify-center z-30">
+      <div className="hidden lg:block fixed top-0 w-screen h-34 bg-white flex-col justify-center z-30">
         <div className="w-3/4 m-auto py-0">
           <nav className="flex flex-row w-full">
             <Link href="/">
               <img
                 src="/assets/logo/eohheader.svg"
-                className="h-20 mt-2 cursor-pointer"
+                className="h-20 mt-2 cursor-pointer -ml-4"
                 draggable={false}
               />
             </Link>
@@ -75,7 +75,7 @@ export default function Header({ headerItems }) {
                     "uppercase text-center font-bold text-sm hover:text-theme-red transition delay-150 duration-200 ease-in-out font-montserrat"
                   }
                   style={{ fontWeight: 700, fontSize: 14 }}
-                  multiline
+                  // multiline
                 >
                   {text}
                 </Button>
