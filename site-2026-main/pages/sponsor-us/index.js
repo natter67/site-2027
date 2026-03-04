@@ -50,7 +50,7 @@ export default function SponsorUsPage() {
                                 </div>
                                 <div className="text-center font-montserrat font-bold">
                                     <p>
-                                        Roshni Matthew | Aarya Patel | Shiv Gohil | Madeline Kim
+                                        Roshni Matthew | Shiv Gohil | Archir Luhana
                                     </p>
                                 </div>
                                 <div className="text-center font-montserrat text-sm">eoh-corporate@ec.illinois.edu</div>
