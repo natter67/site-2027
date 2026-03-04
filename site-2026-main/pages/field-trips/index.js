@@ -50,7 +50,7 @@ export default function FieldTripsPage() {
           <Button
             type="big"
             className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdHjKMv-2Br6dTVkIHbRg2rbl6XryAgXL480wsfjig7FTKMjg/viewform"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfMLFgJQE_VCmKe_tDs74MnSJ1hvCMJgACSEEuxoDbrdVL_Bw/viewform"
             target="_blank"
           >
             HSDC Registration
