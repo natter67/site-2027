@@ -3,18 +3,16 @@ import Image from "next/image"
 export default function CorporateSponsor() {
   const logos_medium = [
     "/assets/sponsors/Abbott.png",
-    "/assets/sponsors/Brunswick.png",
     "/assets/sponsors/Dixon.png",
-    "/assets/sponsors/Hendrik.png",
   ]
   const logos_small = [
     "/assets/sponsors/MTD.png",
     "/assets/sponsors/Allete.png",
     "/assets/sponsors/Beckman.png",
+    "/assets/sponsors/Canes.png",
   ]
 
   const logos_large = [
-    "/assets/sponsors/Cheveron.png",
     "/assets/sponsors/John.PNG",
     "/assets/sponsors/Caterpillar.png",
   ]
