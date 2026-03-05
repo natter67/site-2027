@@ -64,8 +64,8 @@ export default function FieldTripsPage() {
 
         <h3 className="text-lg font-semibold mb-2">For Field Trip Buses:</h3>
         <p className="font-montserrat text-lg">
-          Buses should arrive via <b>Mathews Street</b> and drop off students
-          there, following directions from EOH volunteers.
+          Buses should arrive via <b>Goodwin Avenue</b> and drop off students
+          at lot <b>B-22</b>, following directions from EOH volunteers.
         </p>
         <p className="font-montserrat text-lg mt-2">
           After drop-off, buses will park in <b>Lot B22</b> (corner of Goodwin
@@ -79,12 +79,12 @@ export default function FieldTripsPage() {
 
         <h3 className="text-lg font-semibold mt-6 mb-2">For Visitors Arriving in Cars:</h3>
         <p className="font-montserrat text-lg">
-          Parking is available in the <b>State Farm Center Lot E14</b>. A
+          Parking is available in the <b>State Farm Center Lot E14, Lot B-4, and lot B-22</b>. A
           designated <b>EOH shuttle</b> will transport visitors to the main event
           area.
         </p>
 		<p className="font-montserrat text-lg mt-2">
-		Visitors may also drop off near EOH and then proceed to park in <b>E14</b>.
+		Visitors may also drop off near EOH and then proceed to park in <b>E14 or Lot B-4</b>.
 		</p>
 		</div>
 
