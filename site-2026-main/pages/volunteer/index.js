@@ -13,7 +13,8 @@ import {
   updateDoc,
 } from "utilities/firebase";
 import { query, orderBy, writeBatch, onSnapshot } from "firebase/firestore";
-// import { seedEvents } from "./addVolunteerSlots"
+import { isAdminEmail } from "@utilities/admin";
+// import { seedEvents } from "@utilities/seedVolunteerSlots";
 
 export default function VolunteerPortalReserved() {
   const [user, setUser] = useState(null);
@@ -31,17 +32,7 @@ export default function VolunteerPortalReserved() {
       setUser(firebaseUser);
 
       if (firebaseUser) {
-        const admins = [
-          "nathan49@illinois.edu",
-          "vanir2@illinois.edu",
-          "shaand3@illinois.edu",
-          "aparna4@illinois.edu",
-          "mconrad5@illinois.edu",
-          "divya5@illinois.edu",
-          "bkiene2@illinois.edu",
-          "maa38@illinois.edu",
-        ];
-        setIsAdmin(admins.includes(firebaseUser.email));
+        setIsAdmin(isAdminEmail(firebaseUser.email));
       } else {
         setIsAdmin(false);
       }
