@@ -1,10 +1,10 @@
 import { collection, doc, setDoc } from "firebase/firestore";
 import { firestore } from "utilities/firebase";
 
-// Adjust these to whatever and then call seedEvents in index.js
+// One-time seeding helper. Run from a temporary script/page or the console.
 const events = [
   {
-    id: "(4-10-2026) WasteNot Volunteering 9-11",
+    id: "(4-10-2026) WasteNot Volunteering 09:00-11:00",
     name: "WasteNot Volunteering",
     date: "2026-04-10",
     startTime: "09:00",
@@ -13,7 +13,7 @@ const events = [
     maxCapacity: 5,
   },
   {
-    id: "(4-10-2026) WasteNot Volunteering 11-1",
+    id: "(4-10-2026) WasteNot Volunteering 11:00-13:00",
     name: "WasteNot Volunteering",
     date: "2026-04-10",
     startTime: "11:00",
@@ -22,7 +22,7 @@ const events = [
     maxCapacity: 10,
   },
   {
-    id: "(4-10-2026) WasteNot Volunteering 1-3",
+    id: "(4-10-2026) WasteNot Volunteering 13:00-15:00",
     name: "WasteNot Volunteering",
     date: "2026-04-10",
     startTime: "13:00",
@@ -31,7 +31,7 @@ const events = [
     maxCapacity: 10,
   },
   {
-    id: "(4-10-2026) WasteNot Volunteering 3-5",
+    id: "(4-10-2026) WasteNot Volunteering 15:00-17:00",
     name: "WasteNot Volunteering",
     date: "2026-04-10",
     startTime: "15:00",
@@ -40,7 +40,7 @@ const events = [
     maxCapacity: 5,
   },
   {
-    id: "(4-11-2026) WasteNot Volunteering 9-11",
+    id: "(4-11-2026) WasteNot Volunteering 09:00-11:00",
     name: "WasteNot Volunteering",
     date: "2026-04-11",
     startTime: "09:00",
@@ -49,7 +49,7 @@ const events = [
     maxCapacity: 5,
   },
   {
-    id: "(4-11-2026) WasteNot Volunteering 11-1",
+    id: "(4-11-2026) WasteNot Volunteering 11:00-13:00",
     name: "WasteNot Volunteering",
     date: "2026-04-11",
     startTime: "11:00",
@@ -58,7 +58,7 @@ const events = [
     maxCapacity: 10,
   },
   {
-    id: "(4-11-2026) WasteNot Volunteering 1-3",
+    id: "(4-11-2026) WasteNot Volunteering 13:00-15:00",
     name: "WasteNot Volunteering",
     date: "2026-04-11",
     startTime: "13:00",
@@ -67,7 +67,7 @@ const events = [
     maxCapacity: 10,
   },
   {
-    id: "(4-11-2026) WasteNot Volunteering 3-5",
+    id: "(4-11-2026) WasteNot Volunteering 15:00-17:00",
     name: "WasteNot Volunteering",
     date: "2026-04-11",
     startTime: "15:00",
@@ -85,3 +85,4 @@ export async function seedEvents() {
     });
   }
 }
+

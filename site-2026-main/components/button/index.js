@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 import { getStyles } from '@utilities/types';
 import FlyoutMenu from '@/flyout-menu';
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function Button({
 	children,

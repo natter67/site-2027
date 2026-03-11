@@ -1,5 +1,18 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, getDoc, doc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  arrayUnion,
+  arrayRemove,
+  serverTimestamp,
+} from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const firebaseConfig = {
@@ -28,6 +41,10 @@ export {
   getDoc,      // ✅ make sure this is here!
   setDoc,
   doc,
+  addDoc,
   updateDoc,
-  arrayUnion
+  deleteDoc,
+  arrayUnion,
+  arrayRemove,
+  serverTimestamp,
 };
