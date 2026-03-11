@@ -13,6 +13,7 @@ import {
   updateDoc,
 } from "utilities/firebase";
 import { query, orderBy, writeBatch, onSnapshot } from "firebase/firestore";
+// import { seedEvents } from "./addVolunteerSlots"
 
 export default function VolunteerPortalReserved() {
   const [user, setUser] = useState(null);
@@ -57,23 +58,29 @@ export default function VolunteerPortalReserved() {
       orderBy("startTime", "asc")
     );
     const unsubscribeEvents = onSnapshot(q, (snapshot) => {
-      setVolunteerEvents(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+      setVolunteerEvents(snapshot.docs.map((d) => ({
+        docId: d.id,   // Firestore document name (incorrect)
+        ...d.data()    // includes correct event.id
+      })));
     });
 
     return () => unsubscribeEvents();
   }, []);
 
   /* ---------------- Fetch Events ---------------- */
-  useEffect(() => {
-    const fetchVolunteerEvents = async () => {
-      const eventsRef = collection(firestore, "volunteerEvents2026");
-      const q = query(eventsRef, orderBy("date", "asc"), orderBy("startTime", "asc"));
-      const snapshot = await getDocs(q);
-      setVolunteerEvents(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
-    };
+  // useEffect(() => {
+  //   const fetchVolunteerEvents = async () => {
+  //     const eventsRef = collection(firestore, "volunteerEvents2026");
+  //     const q = query(eventsRef, orderBy("date", "asc"), orderBy("startTime", "asc"));
+  //     const snapshot = await getDocs(q);
+  //     setVolunteerEvents(snapshot.docs.map((d) => ({
+  //       docId: d.id,   // Firestore document name (incorrect)
+  //       ...d.data()    // includes correct event.id
+  //     })));
+  //   };
 
-    fetchVolunteerEvents();
-  }, []);
+  //   fetchVolunteerEvents();
+  // }, []);
 
   /* ---------------- Reservation Logic ---------------- */
   const toggleReserve = (eventId) => {
@@ -98,7 +105,7 @@ export default function VolunteerPortalReserved() {
       );
 
       await updateDoc(
-        doc(firestore, "volunteerEvents2026", event.id),
+        doc(firestore, "volunteerEvents2026", event.docId),
         { volunteers: updatedVolunteers }
       );
     } catch (err) {
@@ -135,7 +142,7 @@ export default function VolunteerPortalReserved() {
           return;
         }
 
-        const eventRef = doc(firestore, "volunteerEvents2026", event.id);
+        const eventRef = doc(firestore, "volunteerEvents2026", event.docId);
         batch.update(eventRef, {
           volunteers: arrayUnion({
             uid: user.uid,
@@ -155,14 +162,14 @@ export default function VolunteerPortalReserved() {
   };
 
   /* ---------------- Admin Email Logic ---------------- */
-  const handleViewEventEmails = async (eventId) => {
-    const eventRef = doc(firestore, "volunteerEvents2026", eventId);
+  const handleViewEventEmails = async (event) => {
+    const eventRef = doc(firestore, "volunteerEvents2026", event.docId);
     const eventDoc = await getDoc(eventRef);
     if (eventDoc.exists()) {
       const volunteers = eventDoc.data().volunteers || [];
       setEventEmails((prev) => ({
         ...prev,
-        [eventId]: volunteers.map((v) => v.email),
+        [event.id]: volunteers.map((v) => v.email),
       }));
     }
   };
@@ -170,7 +177,7 @@ export default function VolunteerPortalReserved() {
   const fetchAllEventEmails = async () => {
     const emailSet = new Set();
     for (const event of volunteerEvents) {
-      const snap = await getDoc(doc(firestore, "volunteerEvents2026", event.id));
+      const snap = await getDoc(doc(firestore, "volunteerEvents2026", event.docId));
       if (snap.exists()) {
         (snap.data().volunteers || []).forEach((v) => emailSet.add(v.email));
       }
@@ -322,7 +329,7 @@ export default function VolunteerPortalReserved() {
                             delete copy[event.id];
                             return copy;
                           })
-                          : handleViewEventEmails(event.id)
+                          : handleViewEventEmails(event)
                       }
                       className="px-4 py-2 bg-[#c578d6] text-white rounded"
                     >
