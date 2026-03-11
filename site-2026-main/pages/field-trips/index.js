@@ -45,7 +45,7 @@ export default function FieldTripsPage() {
             href="https://docs.google.com/forms/d/e/1FAIpQLSekpeSFjM1RHXKDca-OCqi5ldS5q_Zxy296I5WThF-YjvewyA/viewform"
             target="_blank"
           >
-            MSDC Registration
+            MSDC Registration Closed
           </Button>
           <Button
             type="big"
@@ -53,7 +53,7 @@ export default function FieldTripsPage() {
             href="https://docs.google.com/forms/d/e/1FAIpQLSfMLFgJQE_VCmKe_tDs74MnSJ1hvCMJgACSEEuxoDbrdVL_Bw/viewform"
             target="_blank"
           >
-            HSDC Registration
+            HSDC Registration Last Call
           </Button>
         </div>
       </div>

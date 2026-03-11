@@ -21,7 +21,7 @@ export default function MSDC() {
               href="https://docs.google.com/forms/d/e/1FAIpQLSekpeSFjM1RHXKDca-OCqi5ldS5q_Zxy296I5WThF-YjvewyA/viewform"
               target="_blank"
             >
-              MSDC Registration
+              MSDC Registration Closed
             </Button>
           </div>
         </div>

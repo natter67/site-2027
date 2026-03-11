@@ -25,7 +25,7 @@ export default function HSDC() {
                       href="https://docs.google.com/forms/d/e/1FAIpQLSfMLFgJQE_VCmKe_tDs74MnSJ1hvCMJgACSEEuxoDbrdVL_Bw/viewform"
                       target="_blank"
                     >
-                      HSDC Registration Form
+                      HSDC Registration Form Closing Soon
                     </Button>
                   </div>
                 </div>
