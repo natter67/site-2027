@@ -7,9 +7,9 @@ export const ADMIN_EMAILS = [
   "divya5@illinois.edu",
   "bkiene2@illinois.edu",
   "maa38@illinois.edu",
+  "azh4@illinois.edu",
 ];
 
 export function isAdminEmail(email) {
   return !!email && ADMIN_EMAILS.includes(email);
 }
-
