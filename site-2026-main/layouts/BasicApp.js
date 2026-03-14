@@ -53,10 +53,13 @@ export default function BasicApp({ Component, pageProps }) {
     <Fragment>
       {(
         <div>
+          <a href="#main-content" className="skip-link">
+            Skip to main content
+          </a>
           <Header
             headerItems={HEADER_ITEMS}
           />
-          <div className="w-screen main-content">
+          <div id="main-content" className="w-screen main-content" role="main">
             <Component {...pageProps} />
           </div>
           {router.pathname != '/vv' && <Footer socials={SOCIALS} />}

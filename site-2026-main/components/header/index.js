@@ -27,18 +27,24 @@ export default function Header({ headerItems }) {
       {/* Mobile */} 
       <div className="fixed top-0 lg:hidden w-screen h-24 bg-white border-4 flex flex-col justify-center z-30">
         <div className="flex justify-center flex-row w-full">
-          <Link href="/">
+          <Link href="/" aria-label="Engineering Open House home">
             <img
               src="/assets/logo/eohheader.svg"
+              alt="Engineering Open House"
               className="absolute left-6 top-0 h-16 w-min mt-3 cursor-pointer object-contain "
             />
           </Link>
 
-          <img
-            src="/assets/ui/menu.svg"
-            className="absolute right-0 top-8 w-min h-10 mr-10 cursor-pointer object-contain"
+          <button
+            type="button"
+            className="absolute right-0 top-8 w-min h-10 mr-10 cursor-pointer object-contain bg-transparent border-0 p-0"
             onClick={() => setMenuOpen(!menuOpen)}
-          />
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-controls="mobile-menu"
+          >
+            <img src="/assets/ui/menu.svg" alt="" aria-hidden="true" className="w-10 h-10" />
+          </button>
         </div>
       </div>
       <MobileMenu
@@ -50,10 +56,11 @@ export default function Header({ headerItems }) {
       {/* Desktop */}
       <div className="hidden lg:block fixed top-0 w-screen h-34 bg-white flex-col justify-center z-30">
         <div className="w-3/4 m-auto py-0">
-          <nav className="flex flex-row w-full">
-            <Link href="/">
+          <nav className="flex flex-row w-full" aria-label="Main navigation">
+            <Link href="/" aria-label="Engineering Open House home">
               <img
                 src="/assets/logo/eohheader.svg"
+                alt="Engineering Open House"
                 className="h-20 mt-2 cursor-pointer -ml-4"
                 draggable={false}
               />

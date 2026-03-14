@@ -58,7 +58,7 @@ export default function Home() {
         >
           <EventList />
         </Section>
-        <Section color="bg-white" title="World Quantum Day" id="visitors">
+        <Section color="bg-white" title="World Quantum Day" id="world-quantum-day">
           < QuantumDay/>
         </Section>
         <Section title="Schedule" color="bg-white" id="schedule" wide>

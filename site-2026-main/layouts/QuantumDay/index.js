@@ -7,7 +7,7 @@ export default function QuantumDay() {
                         gap-8 mx-6 md:mx-auto md:w-3/4 text-sm">
             <img 
                 src="assets/images/quantumDayFlyer.jpg" 
-                alt="Group picture of the EOH 2026 committee" 
+                alt="World Quantum Day flyer" 
                 className="w-full md:w-2/5 lg:w-1/2
                            object-cover rounded-2xl shadow-xl"
             />

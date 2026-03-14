@@ -18,6 +18,7 @@ const footerSections = [
     heading: "EOH Committee",
     links: [
       { text: "Contact Us", href: "/contact-us" },
+      { text: "Accessibility", href: "/accessibility" },
       { text: "Support EOH", href: "/#sponsors" },
       { text: "Engineering Council", href: "https://www.ecillinois.org/" },
       { text: "History of EOH", href: "https://grainger.illinois.edu/news/features/EOH-100" },
@@ -68,8 +69,9 @@ export default function Footer({ socials }) {
               {section.links?.map((link) => (
                 <a
                   href={link.href}
-                  className="hover:text-blue-700 duration-200 font-montserrat font-medium text-black"
+                  className="hover:text-blue-700 duration-200 font-montserrat font-medium text-black focus:outline focus:ring-2 focus:ring-primary-brown focus:ring-offset-2 rounded"
                   key={link.href}
+                  {...(link.href.startsWith("http") ? { rel: "noopener noreferrer", target: "_blank" } : {})}
                 >
                   {link.text}
                 </a>
