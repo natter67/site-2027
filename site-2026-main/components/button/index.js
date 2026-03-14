@@ -44,7 +44,7 @@ export default function Button({
 				>
 					{children}
 				</h3>
-				{type == "menu" && <img src="/assets/ui/caret-down.svg" className="inline-block float-right w-5 p-0" />}
+				{type == "menu" && <img src="/assets/ui/caret-down.svg" alt="" className="inline-block float-right w-5 p-0" aria-hidden="true" />}
 				{/* {menuItems && <ArrowDropDownIcon />} */}
 			</a>
 			{menuItems && <div

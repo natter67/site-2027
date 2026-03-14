@@ -5,7 +5,7 @@ export default function Profile({ img, Name, Position, Class, Major }) {
     <div className="p-4 w-[100%] sm:w-[33%] md:w-[20%] flex justify-center items-center flex-col sm:justify-start sm:items-start text-left">
       <img
         src={`assets/headshots/${img}`}
-        alt="headshot"
+        alt={Name ? `${Name}, ${Position}` : "Profile photo"}
         className="w-40 h-44 shadow-md object-cover rounded-xl"
         width={160}
         height={176}

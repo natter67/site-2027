@@ -199,7 +199,7 @@ export default class Exhibits extends Component {
 							Now Showing <span className="font-bold">{bubbleAt}</span>
 						</div>
 						<div className="inline-block relative">
-							<img className="uiuc-map relative mx-auto shadow-lg" src="/assets/images/campus_map_1572x1028.png" />
+							<img className="uiuc-map relative mx-auto shadow-lg" src="/assets/images/campus_map_1572x1028.png" alt="Campus map showing exhibit locations" />
 							<Bubbles current={bubbleAt} onBubbleClick={this.handleClick} />
 						</div>
 					</div>
@@ -384,7 +384,7 @@ export default class Exhibits extends Component {
 												className="m-1 text-xs inline-flex items-center font-bold leading-sm px-3 py-1 bg-indigo-100 text-gray-900 rounded-full cursor-pointer"
 												onClick={(e) => this.setState({ tag: _.without(tag, t) })}
 											>
-												<img src="/assets/ui/close.svg" className="h-4 w-4 mr-2" />
+												<img src="/assets/ui/close.svg" alt="" className="h-4 w-4 mr-2" aria-hidden="true" />
 												{t}
 											</div>
 										))}

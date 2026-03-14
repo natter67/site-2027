@@ -1,7 +1,7 @@
 export default function AboutUs() {
 	return (
 		<div>
-			<img className="max-w-lg float-right ml-10 mb-10" src="assets/images/committee_full_6000x4000.jpg" />
+			<img className="max-w-lg float-right ml-10 mb-10" src="assets/images/committee_full_6000x4000.jpg" alt="EOH committee members" />
 			<div className="font-roboto font-light">
 				Welcome to Engineering Open House and the University of Illinois! We are extremely happy to welcome all
 				of our visitors, field trips, community members, students and faculty to the 101st in-person EOH! For

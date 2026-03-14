@@ -58,6 +58,38 @@
   background: #97eeff;
 }
 
+/* Skip link: visually hidden until focused (accessibility) */
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  z-index: 100;
+}
+.skip-link:focus {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  top: 0.5rem;
+  left: 0.5rem;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: white;
+  color: #473335;
+  font-weight: bold;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px #473335;
+  text-decoration: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
