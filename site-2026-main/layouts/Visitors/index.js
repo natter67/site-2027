@@ -35,7 +35,6 @@ export default function Visitors() {
     <div className="flex flex-col mx-10">
       <div className="mx-auto flex flex-col md:flex-row gap-5">
       <div className="flex flex-col">
-          <h3 className="text-2xl font-heading mb-4">Quick Links</h3>
           <a
             href="/guide.pdf"
             className="flex items-center justify-center gap-2 py-3 px-7 text-center text-white rounded-full bg-black text-xl font-semibold
@@ -79,11 +78,6 @@ export default function Visitors() {
           </div> */}
         </div>
         <div className="flex flex-col">
-          <h3 className="text-2xl font-heading mb-4" style={{ color: "white" }}>.</h3>
-
-        
-          
-          
           <a
             href="/students"
             className="flex items-center justify-center gap-2 py-3 px-7 text-center text-white rounded-full bg-black text-xl font-semibold

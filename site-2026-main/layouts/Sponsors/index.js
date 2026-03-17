@@ -6,7 +6,7 @@ export default function Sponsors() {
 	return (
 		<>
 			<div className="flex flex-col items-center">
-				<p className="text-center font-montserrat my-5 text-lg px-3">Engineering Open House would not be possible without our generous patrons. <br /> Thank you for your contributions.</p>
+				<p className="bg-theme-orange text-center font-montserrat mb-10 text-lg px-3 p-2 opacity-90 rounded-md">Engineering Open House would not be possible without our generous patrons. <br /> Thank you for your contributions.</p>
 				<div className="flex flex-col md:flex-row justify-between md:w-3/5 gap-5">
 					<div className="flex flex-col items-center">
 						<div className="font-montserrat text-lg md:text-2xl text-center bg-theme-yellow p-2 rounded-md bg-opacity-80">I'm a<br />

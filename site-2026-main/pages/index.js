@@ -26,9 +26,9 @@ export default function Home() {
       <main>
         <Title />
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
-        <Section color="white" title="EOH 2025 Awards" id="awards">
+        {/* <Section color="white" title="EOH 2025 Awards" id="awards">
           <Awards />
-        </Section> 
+        </Section>  */}
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
@@ -39,11 +39,11 @@ export default function Home() {
             <span className="block text-center font-bold">
               {/* Mobile version: with <br> */}
               <span className="block sm:hidden">
-                2025 Keynote from<br />Anna Oldani
+                Keynote from<br />Christina Ernst
               </span>
               {/* Desktop version: no <br> */}
               <span className="hidden sm:inline">
-                2025 Keynote from Anna Oldani
+                Keynote from Christina Ernst
               </span>
             </span>
           }
@@ -83,7 +83,7 @@ export default function Home() {
         <Section
           title="Support Our Mission"
           id="sponsors"
-          color="bg-rockets-layer bg-cover bg-center min-h-[550px]"
+          color="bg-robot-banner bg-cover bg-left min-h-[550px]"
         >
           <Sponsors />
         </Section>
