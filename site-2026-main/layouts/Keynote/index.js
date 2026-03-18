@@ -30,7 +30,7 @@ export const KeynoteSpeaker = () => {
                 <div className="flex flex-col md:flex-row gap-5 text-lg -mt-10">
                     <span className="flex flex-row gap-3 items-center">
                         <Icon icon="mingcute:time-line" className="text-3xl" />
-                        <h3>Saturday, April 10th - 2:30 PM to 3:30 PM</h3>
+                        <h3>Friday, April 10th - 2:30 PM to 3:30 PM</h3>
                     </span>
                     <span className="flex flex-row gap-3 items-center">
                         <Icon icon="mingcute:location-fill" className="text-3xl" />
