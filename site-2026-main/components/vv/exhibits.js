@@ -4,6 +4,8 @@ import useSWR from 'swr';
 import Fuse from 'fuse.js';
 import { useStringQueryParam } from '@utilities/useStringQueryParam';
 
+var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
+
 const ErrorMessageBox = ({ message, onRetry }) => (
   <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
     <p>{message}</p>
@@ -41,8 +43,8 @@ const ExhibitCard = ({ exhibit, idx }) => {
       <div className='flex flex-col justify-between gap-1'>
         <span className='flex flex-row gap-2'>
           <Icon icon="carbon:location-filled" className='text-xl text-blue-800' />
-          <span>{exhibit.buildingA}</span>
-          <span className='text-gray-600 italic'>{exhibit.subBuildingA}</span>
+          <span>{exhibit.building}</span>
+          <span className='text-gray-600 italic'>{exhibit.location}</span>
         </span>
         <span className='flex flex-row gap-2'>
           <Icon icon='codicon:organization' className='text-xl text-yellow-500' />
@@ -74,9 +76,12 @@ const Exhibits = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const itemsPerPage = 24;
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  // const { data, error, isLoading } = useSWR(
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${strapi_key}`
+    }
+  }).then((res) => res.json());
   //   // 'https://n11.eohillinois.org/api/exhibits',
   //   `https://n11.eohillinois.org/api/exhibits?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}
   //   ${searchTerm == '' ? '' :
@@ -84,12 +89,13 @@ const Exhibits = () => {
   //   fetcher
   // );
   const { data, error, isLoading } = useSWR(
-    `https://n11.eohillinois.org/api/exhibits?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}`,
+    `https://loved-vitality-4672033e09.strapiapp.com/api/exhibits?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}`,
     fetcher
   );
   
 
   if (error) {
+    console.log(error)
     return <ErrorMessageBox message="failed to load, retry" onRetry={() => window.location.reload()} />;
   }
 
@@ -112,23 +118,23 @@ const Exhibits = () => {
     setCurrentPage(1);
   };
 
+  console.log("Data: ", data)
+
 // .map(e => e.attributes)
   const items = data.data
-    .map(exhibit => {
-      return {
-        id: exhibit['Exhibit_Number'],
-        title: exhibit['Exhibit_Name'],
-        content: exhibit['VisGuide_Description'],
-        buildingA: exhibit['Building_A'],
-        subBuildingA: exhibit['Sub_Building_A'],
-        buildingB: exhibit['Building_B'],
-        subBuildingB: exhibit['Sub_Building_B'],
-        affiliation: exhibit['Affiliation'],
-        department: exhibit['Department'],
-        intendedAudience: exhibit['Intended_Audience'],
-        tags: exhibit['Tags']
-      }
-    });
+  .map(exhibit => {
+    return {
+      id: exhibit['Exhibit_Number'],
+      title: exhibit['Exhibit_Name'],
+      content: exhibit['VisGuide_Description'],
+      building: exhibit['Exhibit_Building'],
+      location: exhibit['Exhibit_Location'],        // was Building_Location
+      affiliation: exhibit['Exhibit_Organization'],
+      department: exhibit['Department'],
+      intendedAudience: exhibit['Intended_Audience'],
+      tags: exhibit['Tags'] ?? []                   // default to empty array if missing
+    }
+  });
 
   const pageCount = data.meta.pagination.pageCount;
   if (numPages != pageCount) {
@@ -140,7 +146,7 @@ const Exhibits = () => {
     distance: 200,
     minMatchCharLength: 1,
     ignoreLocation: true,
-    keys: ['title', 'content', 'buildingA', 'subBuildingA', 'affiliation', 'tags']
+    keys: ['title', 'content', 'building', 'affiliation', 'tags']
   };
   
   const fuse = new Fuse(items, fuseOptions);
