@@ -33,10 +33,10 @@ export default function SponsorUsPage() {
                                     Dear Potential Corporate Partner,
                                     <br />
                                     <br />
-                                    Engineering Open House (EOH) is an annual showcase of engineering, science, technology, and student innovation held at the University of Illinois at Urbana-Champaign. Engineering Open House will be hosted this year from April 4th to April 5th 2025. Now, in its 104th year, EOH draws over 35,000 attendees and participants from across the United States, making it one of the largest student-run events of its kind.
+                                    Engineering Open House (EOH) is an annual showcase of engineering, science, technology, and student innovation held at the University of Illinois at Urbana-Champaign. Engineering Open House will be hosted this year from April 10th to April 11th 2026. Now, in its 104th year, EOH draws over 35,000 attendees and participants from across the United States, making it one of the largest student-run events of its kind.
                                     <br />
                                     <br />
-                                    As an entirely student-run event, EOH is mainly funded by corporate sponsorships. Your company’s contributions will directly benefit students, exhibitors, and educators working to inspire the next generation of engineers. We hope that you choose to join us and we look forward to working with you and your company in making EOH 2025 better than ever. Thank you for your time and interest, please don’t hesitate to contact us with any questions!
+                                    As an entirely student-run event, EOH is mainly funded by corporate sponsorships. Your company’s contributions will directly benefit students, exhibitors, and educators working to inspire the next generation of engineers. We hope that you choose to join us and we look forward to working with you and your company in making EOH 2026 better than ever. Thank you for your time and interest, please don’t hesitate to contact us with any questions!
                                     <br />
                                     <br />
                                     Sincerely,

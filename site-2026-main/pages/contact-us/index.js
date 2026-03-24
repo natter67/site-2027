@@ -64,7 +64,7 @@ export default function ContactUsPage() {
 			<Content title="Contact Us">
 				<div className=" mb-10">
 					<p className="text-center font-montserrat">
-						If you have any questions or concerns regarding Engineering Open House 2025,
+						If you have any questions or concerns regarding Engineering Open House 2026,
 						<br />
 						please contact the most appropriate director for your matter.
 						<br />

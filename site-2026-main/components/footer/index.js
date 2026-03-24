@@ -72,7 +72,7 @@ export default function Footer({ socials }) {
       </div>
 
       <p className="relative z-10 font-montserrat text-sm text-black text-center mt-20 font-medium">
-        Copyright EOH 2025
+        Copyright EOH 2026
       </p>
     </footer>
   );
