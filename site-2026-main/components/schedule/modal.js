@@ -53,6 +53,8 @@ export const Modal = ({ close, event }) => {
 					</span>
 					<div>
 						<p>{event.description}</p>
+						<br></br>
+						<p>{event.timeDisplay}</p>
 					</div>
 					{picture && (
 						<img

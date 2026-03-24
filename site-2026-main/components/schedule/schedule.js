@@ -7,11 +7,15 @@ import useSWR from 'swr';
 import { Modal } from './modal.js';
 import Fuse from 'fuse.js';
 
+var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const DAY_ONE = 4;
-const DAY_TWO = 5;
+
+// What days are EOH on
+const DAY_ONE = 10;
+const DAY_TWO = 11;
 
 const slotGradients = {
   0: 'bg-red-700',
@@ -24,8 +28,9 @@ const slotGradients = {
 
 const timeMsPerSlot = 1000 * 60 * 30;
 const timeMs8Hrs = 1000 * 60 * 60 * 8.5;
-const dayOneMs = dayjs.tz('2025-04-04 00:00', 'America/Chicago').valueOf();
-const dayTwoMs = dayjs.tz('2025-04-05 00:00', 'America/Chicago').valueOf();
+// What days are EOH on
+const dayOneMs = dayjs.tz('2026-04-10 00:00', 'America/Chicago').valueOf();
+const dayTwoMs = dayjs.tz('2026-04-11 00:00', 'America/Chicago').valueOf();
 
 const genTimeSlots = () => {
   const totalSlots = 26;
@@ -84,10 +89,14 @@ export function Schedule() {
     );
   };
 
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${strapi_key}`
+    }
+  }).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
-    'https://n11.eohillinois.org/api/events?populate=occurences&pagination[pageSize]=40&populate=picture',
+    'https://loved-vitality-4672033e09.strapiapp.com/api/events?populate=occurences&pagination[pageSize]=40&populate=picture',
     fetcher
   );
 
@@ -98,15 +107,16 @@ export function Schedule() {
 
   const scheduleData = data.data.map((event, idx) => {
     const occurences = event.occurences.map((occ) => {
-      const start = dayjs(occ.startTime).tz('America/Chicago');
-      const end = dayjs(occ.endTime).tz('America/Chicago');
-      const date = start.date() === 4 ? DAY_ONE : DAY_TWO;
+      const start = dayjs.tz(occ.startTime.replace(/Z$/, ''), 'America/Chicago');
+      const end = dayjs.tz(occ.endTime.replace(/Z$/, ''), 'America/Chicago');
+      const date = start.date() === 10 ? DAY_ONE : DAY_TWO; // Change this line to reflect the day EOH is on!
       const duration = end.diff(start) / timeMsPerSlot;
       const rowIndex =
         (start.valueOf() -
           (date === DAY_ONE ? dayOneMs : dayTwoMs) -
           timeMs8Hrs) /
         timeMsPerSlot;
+      // console.log(start.format(), rowIndex);
       return {
         colIndex: idx,
         duration,
@@ -114,6 +124,7 @@ export function Schedule() {
         date,
         startMs: start.valueOf(),
         endMs: end.valueOf(),
+        day: start.format("dddd"),
         display: `${start.format('h:mm')} to ${end.format('h:mm')}`,
       };
     });
@@ -126,6 +137,7 @@ export function Schedule() {
       shortTitle: event.shortTitle,
       description: event.description,
       slots: occurences,
+      timeDisplay: occurences.map(o => `${o.day}, ${o.display}`).join(', '),
     };
   });
 
@@ -176,11 +188,11 @@ export function Schedule() {
                 <button
                     onClick={() => setDayOne(true)}
                     className={`p-3 md:p-5 px-5 md:px-7 font-bold font-montserrat rounded-t-xl
-                    ${onDayOne ? activeStyles : inactiveStyles}`}>Friday, April 4th</button>
+                    ${onDayOne ? activeStyles : inactiveStyles}`}>Friday, April 10th</button>
                 <button
                     onClick={() => setDayOne(false)}
                     className={`p-3 md:p-5 px-5 md:px-7 font-bold font-montserrat rounded-t-xl 
-                    ${onDayOne ? inactiveStyles : activeStyles}`}>Saturday, April 5th</button>
+                    ${onDayOne ? inactiveStyles : activeStyles}`}>Saturday, April 11th</button>
             </span>
             
              <div className="max-h-128 overflow-x-hidden p-4 bg-gradient-to-tr from-pink-50 via-yellow-50 to-blue-100 rounded-xl flex flex-col">

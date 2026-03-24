@@ -9,6 +9,8 @@ import Fuse from "fuse.js"
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
+var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
+
 const bgGradients = {
   0: "bg-red-300",
   1: "bg-yellow-300",
@@ -85,10 +87,14 @@ const SpecialEvents = () => {
   const [searchOpen, setSearchOpen] = useState(false)
   const itemsPerPage = 30
 
-  const fetcher = (url) => fetch(url).then((res) => res.json())
+  const fetcher = (url) => fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${strapi_key}`
+    }
+  }).then((res) => res.json());
 
   const { data, error } = useSWR(
-    `https://n11.eohillinois.org/api/events?populate=occurences&pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}`,
+    `https://loved-vitality-4672033e09.strapiapp.com/api/events?populate=occurences&pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}`,
     fetcher
   )
 
