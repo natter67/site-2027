@@ -35,16 +35,14 @@ export default function Header({ headerItems }) {
             />
           </Link>
 
-          <button
-            type="button"
-            className="absolute right-0 top-8 w-min h-10 mr-10 cursor-pointer object-contain bg-transparent border-0 p-0"
+          <img
+            src="/assets/ui/menu.svg"
+            className="absolute right-0 top-8 w-min h-10 mr-10 cursor-pointer object-contain"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-controls="mobile-menu"
-          >
-            <img src="/assets/ui/menu.svg" alt="" aria-hidden="true" className="w-10 h-10" />
-          </button>
+          />
         </div>
       </div>
       <MobileMenu
