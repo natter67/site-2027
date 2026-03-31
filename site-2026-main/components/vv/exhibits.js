@@ -217,7 +217,7 @@ const Exhibits = () => {
     <div className="flex flex-col gap-5">
 
       <span className="flex flex-row justify-between mx-8">
-        <h1 className='font-heading text-2xl mt-2 md:text-center md:mx-0'>Exhibits</h1>
+        <h1 className="font-heading text-5xl mt-2 md:text-center md:mx-0">Exhibits</h1>
         <button onClick={() => setSearchOpen(!searchOpen)}>
           <Icon icon="bx:search" className='text-3xl' />
         </button>
