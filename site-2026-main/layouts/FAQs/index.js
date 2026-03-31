@@ -104,23 +104,20 @@ const Faqs = () => {
             <h3 className="text-2xl font-bold mb-4">{category}</h3>
             <div className="flex flex-col gap-4 ">
               {faqs.map((faq) => (
-                <div key={faq.id}>
-                  <button
-                    type="button"
-                    className={`w-full p-5 ${colors[idx % colors.length]} rounded-md border hover:bg-opacity-80 text-left`}
-                    onClick={() => { if (expandedId == faq.id) { setExpandedId(null); } else { setExpandedId(faq.id); } }}
-                    aria-expanded={expandedId === faq.id}
-                    aria-controls={`faq-answer-${faq.id}`}
-                    id={`faq-question-${faq.id}`}
+                <button type="button" 
+                  key={faq.id} 
+                  className={`p-5 ${colors[idx % colors.length]} rounded-md border hover:bg-opacity-80`}
+                  aria-expanded={expandedId === faq.id}
+                  aria-controls={`faq-answer-${faq.id}`}
+                  id={`faq-question-${faq.id}`}
+                  onClick={() => { if (expandedId == faq.id) { setExpandedId(null) } else setExpandedId(faq.id) }}
                   >
-                    <h4 className="font-semibold text-lg md:text-xl">{faq.title}</h4>
-                  </button>
-                  {expandedId == faq.id && (
-                    <div id={`faq-answer-${faq.id}`} className="p-5 pt-0 -mt-2 text-sm text-black text-left" role="region" aria-labelledby={`faq-question-${faq.id}`}>
-                      <p dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }} />
-                    </div>
-                  )}
-                </div>
+                  <h4 className="font-semibold text-lg md:text-xl text-left">{faq.title}</h4>
+                  {expandedId == faq.id &&
+                    <p className="text-sm text-black text-left mt-2"
+                      dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }}></p>
+                  }
+                </button>
               ))}
             </div>
           </div>
