@@ -6,6 +6,7 @@ const footerSections = [
     links: [
       { text: "Middle School Design Competition", href: "/msdc" },
       { text: "High School Design Competition", href: "/hsdc" },
+      { text: "Students", href: "/students" },
     ],
   },
   {
@@ -59,8 +60,9 @@ export default function Footer({ socials }) {
               {section.links?.map((link) => (
                 <a
                   href={link.href}
-                  className="hover:text-blue-700 duration-200 font-montserrat font-medium text-black focus:outline focus:ring-2 focus:ring-primary-brown focus:ring-offset-2 rounded"
+                  className="hover:text-blue-700 duration-200 font-montserrat font-medium mt-2 text-black focus:outline focus:ring-2 focus:ring-primary-brown focus:ring-offset-2 rounded"
                   key={link.href}
+                  style={{lineHeight: "1"}}
                   {...(link.href.startsWith("http") ? { rel: "noopener noreferrer", target: "_blank" } : {})}
                 >
                   {link.text}

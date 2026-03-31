@@ -17,82 +17,137 @@ const ErrorMessageBox = ({ message, onRetry }) => (
   </div>
 )
 
-const bgGradients = {
-  0: 'bg-red-300',
-  1: 'bg-yellow-300',
-  2: 'bg-blue-300',
-  3: 'bg-pink-300',
-  4: 'bg-gray-300',
-  5: 'bg-green-300',
-  
-}
+const colorGradients = [
+  'from-orange-500 to-red-600',
+  'from-blue-500 to-indigo-600',
+  'from-emerald-500 to-teal-600',
+  'from-purple-500 to-violet-600',
+  'from-amber-500 to-orange-600',
+  'from-cyan-500 to-blue-600',
+];
 
 const ExhibitCard = ({ exhibit, idx }) => {
   const [expanded, setExpanded] = useState(false);
+  const gradient = colorGradients[idx % colorGradients.length];
 
+  // LLMed the frontend using what was generated from Nathan's Figma
   return (
-    <button key={idx} className={`border rounded-lg p-5 md:w-96 w-full flex flex-col gap-2 text-left shadow-md hover:shadow-xl duration-200
-    transition-transform transform hover:scale-105 ${ // This makes them expand on hover  
-      bgGradients[idx % Object.keys(bgGradients).length] // This is where you assign background color to the exhibits
-    }`} onClick={() => setExpanded(!expanded)}>
-      <div className="flex flex-row gap-2">
-        <p className='text-gray-500'>{exhibit.id}</p>
-        <h2 className="font-semibold text-left">{exhibit.title}</h2>
-      </div>
+    <button
+      className={`group cursor-pointer transition-all hover:scale-[1.02] relative border-0 bg-transparent p-0 text-left md:w-96 w-full`}
+      onClick={() => setExpanded(!expanded)}
+    >
+      {/* Spark particles on hover */}
+      <div className="absolute -top-1 -left-1 w-2 h-2 bg-yellow-300 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none"></div>
+      <div className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none" style={{ animationDelay: '0.1s' }}></div>
+      <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none" style={{ animationDelay: '0.2s' }}></div>
+      <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-orange-300 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping pointer-events-none" style={{ animationDelay: '0.15s' }}></div>
 
-      <div className='flex flex-col justify-between gap-1'>
-        <span className='flex flex-row gap-2'>
-          <Icon icon="carbon:location-filled" className='text-xl text-blue-800' />
-          <span>{exhibit.building}</span>
-          <span className='text-gray-600 italic'>{exhibit.location}</span>
-        </span>
-        <span className='flex flex-row gap-2'>
-          <Icon icon='codicon:organization' className='text-xl text-yellow-500' />
-          <span>{exhibit.affiliation}</span>
-        </span>
-      </div>
-      <div className={`${expanded ? '' : 'h-30 line-clamp-4'} my-2`}>
-        {exhibit.content}
-      </div>
-      {/* <div className="flex flex-row justify-around">
-              <button className="w-10 h-10">
-                <Icon icon="gg:expand" className='text-3xl hover:text-yellow-400 duration-200' />
-              </button>
-              <button className="w-10 h-10"><Icon icon="heroicons:map-pin-20-solid" className='text-3xl hover:text-yellow-400 duration-200' /></button>
-              <button className="w-10 h-10"><Icon icon="ic:round-star" className='text-3xl hover:text-yellow-400 duration-200' /></button>
-            </div> */}
+      <div className={`bg-gradient-to-br ${gradient} rounded-3xl p-6 shadow-xl border-2 border-white/30 relative overflow-hidden`}>
+        {/* Metal texture overlay */}
+        <div
+          className="absolute inset-0 opacity-20 mix-blend-overlay"
+          style={{
+            backgroundImage: `
+              linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%),
+              repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0px, transparent 1px, transparent 2px, rgba(0,0,0,0.05) 3px),
+              repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, transparent 1px, transparent 2px, rgba(0,0,0,0.05) 3px)
+            `,
+            backgroundSize: '200% 100%, 3px 3px, 3px 3px'
+          }}
+        ></div>
 
-      {
-        <Icon className='mx-auto text-2xl' icon={expanded ? 'material-symbols:expand-less' : "material-symbols:expand-more"} />}
+        {/* Diagonal stripe pattern */}
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)'
+          }}
+        ></div>
+
+        {/* Metallic shine effect */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/40 to-transparent rounded-full blur-3xl group-hover:from-white/60 transition-all"></div>
+
+        {/* Industrial rivets */}
+        <div className="absolute top-3 left-3 w-2 h-2 bg-white/30 rounded-full border border-white/50 shadow-inner"></div>
+        <div className="absolute top-3 right-3 w-2 h-2 bg-white/30 rounded-full border border-white/50 shadow-inner"></div>
+        <div className="absolute bottom-3 left-3 w-2 h-2 bg-white/30 rounded-full border border-white/50 shadow-inner"></div>
+        <div className="absolute bottom-3 right-3 w-2 h-2 bg-white/30 rounded-full border border-white/50 shadow-inner"></div>
+
+        <div className={`relative flex flex-col gap-3 overflow-hidden transition-all duration-300 ${expanded ? '' : 'h-64'}`}>
+          {/* Header row */}
+          <div className="flex items-center gap-2">
+            <span className="bg-white/25 text-white backdrop-blur border border-white/30 px-2 py-0.5 rounded-full text-xs font-medium">
+              {exhibit.id}
+            </span>
+            <h2 className="font-bold text-white">{exhibit.title}</h2>
+          </div>
+
+          {/* Location & Affiliation */}
+          <div className="flex flex-col gap-1">
+            <span className="flex flex-row gap-2 items-center">
+              <Icon icon="carbon:location-filled" className="text-xl text-white/80" />
+              <span className="text-white/90">{exhibit.building}</span>
+              <span className="text-white/70 italic">{exhibit.location}</span>
+            </span>
+            <span className="flex flex-row gap-2 items-center">
+              <Icon icon="codicon:organization" className="text-xl text-white/80" />
+              <span className="text-white/90">{exhibit.affiliation}</span>
+            </span>
+          </div>
+
+          {/* Tags */}
+          {exhibit.tags?.length > 0 && (
+            <div className="flex flex-row flex-wrap gap-2">
+              {exhibit.tags.slice(0, 3).map((tag, i) => (
+                <span
+                  key={i}
+                  className="bg-white/20 text-white backdrop-blur border border-white/30 px-2 py-0.5 rounded-full text-xs"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Content */}
+          <div className={`text-white/90 leading-relaxed my-1 ${expanded ? '' : 'h-24 line-clamp-4'}`}>
+            {exhibit.content}
+          </div>
+
+          {/* Expand icon */}
+          <div className="flex justify-center">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/25 backdrop-blur border border-white/30 group-hover:bg-white/40 transition-all">
+              <Icon
+                className="text-white text-xl"
+                icon={expanded ? 'material-symbols:expand-less' : 'material-symbols:expand-more'}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom heated metal accent */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:via-yellow-300/70 transition-all"></div>
+      </div>
     </button>
   )
 }
 
 const Exhibits = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [numPages, setNumPages] = useState(10);
   const [searchTerm, setSearchTerm] = useStringQueryParam("q", "");
   const [searchBoxText, setSearchBoxText] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
-  const itemsPerPage = 24;
-
+  const itemsPerPage = 24
 
   const fetcher = (url) => fetch(url, {
     headers: {
       'Authorization': `Bearer ${strapi_key}`
     }
   }).then((res) => res.json());
-  //   // 'https://n11.eohillinois.org/api/exhibits',
-  //   `https://n11.eohillinois.org/api/exhibits?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}
-  //   ${searchTerm == '' ? '' :
-  //     `&filters[$or][0][Exhibit_Name][$containsi]=${searchTerm}&filters[$or][1][VisGuide_Description][$containsi]=${searchTerm}&filters[$or][2][Exhibit_Number][$eq]=${searchTerm}&filters[$or][3][Affiliation][$eq]=${searchTerm}&filters[$or][4][Building_A][$containsi]=${searchTerm}&filters[$or][5][Tags][$containsi]=${searchTerm}`}`,
-  //   fetcher
-  // );
   const { data, error, isLoading } = useSWR(
-    `https://loved-vitality-4672033e09.strapiapp.com/api/exhibits?pagination[page]=${currentPage}&pagination[pageSize]=${itemsPerPage}`,
+    `https://loved-vitality-4672033e09.strapiapp.com/api/exhibits?populate=Tags&pagination[pageSize]=1000`,
     fetcher
   );
-  
 
   if (error) {
     console.log(error)
@@ -118,50 +173,51 @@ const Exhibits = () => {
     setCurrentPage(1);
   };
 
-  console.log("Data: ", data)
+  // console.log("Data: ", data)
 
-// .map(e => e.attributes)
-  const items = data.data
-  .map(exhibit => {
-    return {
-      id: exhibit['Exhibit_Number'],
-      title: exhibit['Exhibit_Name'],
-      content: exhibit['VisGuide_Description'],
-      building: exhibit['Exhibit_Building'],
-      location: exhibit['Exhibit_Location'],        // was Building_Location
-      affiliation: exhibit['Exhibit_Organization'],
-      department: exhibit['Department'],
-      intendedAudience: exhibit['Intended_Audience'],
-      tags: exhibit['Tags'] ?? []                   // default to empty array if missing
-    }
-  });
+  const items = (data.data ?? [])
+    .map(exhibit => {
+      return {
+        id: exhibit['Exhibit_Number'],
+        title: exhibit['Exhibit_Name'],
+        content: exhibit['VisGuide_Description'] ?? [],
+        building: exhibit['Exhibit_Building'] ?? [],
+        location: exhibit['Exhibit_Location'] ?? [],        // was Building_Location
+        affiliation: exhibit['Exhibit_Organization'] ?? [],
+        department: exhibit['Department'] ?? [],
+        intendedAudience: exhibit['Intended_Audience'] ?? [],
+        tags: exhibit.Tags ? Object.values(exhibit.Tags).slice(1) : [] // default to empty array if missing
+      }
+    });
 
-  const pageCount = data.meta.pagination.pageCount;
-  if (numPages != pageCount) {
-    setNumPages(pageCount)
-  }
   const fuseOptions = {
     includeScore: true,
     threshold: 0.2,
     distance: 200,
     minMatchCharLength: 1,
     ignoreLocation: true,
-    keys: ['title', 'content', 'building', 'affiliation', 'tags']
+    keys: ['title', 'content', 'building', 'affiliation', 'location', 'department', 'tags']
   };
-  
+
   const fuse = new Fuse(items, fuseOptions);
   const trimmedQuery = searchTerm.trim();
   const fuseResults = trimmedQuery ? fuse.search(trimmedQuery) : null;
-  
+
   const filteredItems = fuseResults
     ? fuseResults.map(result => result.item)
     : items;
-  
+
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const paginatedItems = filteredItems.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="flex flex-col gap-5">
 
       <span className="flex flex-row justify-between mx-8">
-        <h1 className='font-heading text-2xl mt-2 md:text-center md:mx-0'>Exhibits</h1>
+        <h1 className="font-heading text-5xl mt-2 md:text-center md:mx-0">Exhibits</h1>
         <button onClick={() => setSearchOpen(!searchOpen)}>
           <Icon icon="bx:search" className='text-3xl' />
         </button>
@@ -178,13 +234,7 @@ const Exhibits = () => {
             }}
             value={searchBoxText}
           />
-          <button
-            className="rounded-r-xl bg-blue-700 p-3 font-semibold text-white"
-            onClick={runSearch}
-          >
-            Go
-          </button>
-
+          <button className="rounded-r-xl bg-blue-700 p-3 font-semibold text-white" onClick={runSearch}>Go</button>
         </span>
       }
 
@@ -202,24 +252,22 @@ const Exhibits = () => {
       }
 
       <div className="w-full flex flex-wrap justify-center gap-5 px-4">
-
-      {filteredItems.map((item, idx) => (
-        <ExhibitCard exhibit={item} idx={idx} key={idx} />
-      ))}
-
+        {paginatedItems.map((item, idx) => (
+          <ExhibitCard exhibit={item} idx={idx} key={idx} />
+        ))}
       </div>
       <div className="flex flex-row justify-between items-center mx-5">
-        <p>Page {currentPage} of {numPages} </p>
+        <p>Page {currentPage} of {totalPages}</p>
         <div className="flex flex-row gap-3">
           <button
-            onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
             className="disabled:text-gray-500">
             <Icon icon="ic:round-navigate-before" className='text-3xl' />
           </button>
           <button
-            onClick={() => setCurrentPage((prevPage) => Math.min(prevPage + 1, numPages))}
-            disabled={currentPage === numPages}
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
             className="disabled:text-gray-500">
             <Icon icon="ic:round-navigate-next" className='text-3xl' />
           </button>
