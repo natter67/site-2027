@@ -180,12 +180,12 @@ const Exhibits = () => {
       return {
         id: exhibit['Exhibit_Number'],
         title: exhibit['Exhibit_Name'],
-        content: exhibit['VisGuide_Description'],
-        building: exhibit['Exhibit_Building'],
-        location: exhibit['Exhibit_Location'],        // was Building_Location
-        affiliation: exhibit['Exhibit_Organization'],
-        department: exhibit['Department'],
-        intendedAudience: exhibit['Intended_Audience'],
+        content: exhibit['VisGuide_Description'] ?? [],
+        building: exhibit['Exhibit_Building'] ?? [],
+        location: exhibit['Exhibit_Location'] ?? [],        // was Building_Location
+        affiliation: exhibit['Exhibit_Organization'] ?? [],
+        department: exhibit['Department'] ?? [],
+        intendedAudience: exhibit['Intended_Audience'] ?? [],
         tags: exhibit.Tags ? Object.values(exhibit.Tags).slice(1) : [] // default to empty array if missing
       }
     });

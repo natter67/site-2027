@@ -53,7 +53,7 @@ export default function Header({ headerItems }) {
 
       {/* Desktop */}
       <div className="hidden lg:block fixed top-0 w-screen h-34 bg-white flex-col justify-center z-30">
-        <div className="w-3/4 m-auto py-0">
+        <div className="w-4/5 m-auto py-0">
           <nav className="flex flex-row w-full" aria-label="Main navigation">
             <Link href="/" aria-label="Engineering Open House home">
               <img
