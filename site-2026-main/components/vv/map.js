@@ -319,14 +319,6 @@ const Map = () => {
 
         <div className="mx-5">
           <ShuttleInformation />
-          <a
-            href="/faq"
-            className="flex items-center justify-center gap-2 py-3 text-center text-white rounded-full bg-black text-xl font-semibold
-                        w-full sm:w-96 mx-auto my-3 bg-gradient-to-tr from-yellow-800 via-yellow-500 to-yellow-700"
-          >
-            <Icon icon="wpf:faq" className="text-2xl" />
-            <span>FAQs</span>
-          </a>
 
           <h2 className="font-heading text-2xl my-3">Locations</h2>
           <div className="flex flex-col gap-3">
