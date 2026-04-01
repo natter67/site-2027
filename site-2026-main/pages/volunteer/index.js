@@ -114,7 +114,8 @@ export default function VolunteerPortalReserved() {
     /set up|tear down/i.test(event.name)
   );
 
-  const canSubmit = hasMinTwoSlots && hasSetupOrTearDown;
+  // const canSubmit = hasMinTwoSlots && hasSetupOrTearDown;
+  const canSubmit = true;
 
   /* ---------------- Submit ---------------- */
   const handleSubmit = async () => {
@@ -187,7 +188,7 @@ export default function VolunteerPortalReserved() {
         <div> 
           <p className="font-semibold">📣 Required Sign Ups</p> 
           <p className="text-sm mt-1">Please Slack, Text, or Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or <strong>Mohannad</strong> (984-325-7002) with any questions!</p> 
-          <p className="text-sm mt-1">You are <strong>required</strong> to sign up for at least one day slot, <strong>AND</strong> a set up or tear-down slot.</p> 
+          {/* <p className="text-sm mt-1">You are <strong>required</strong> to sign up for at least one day slot, <strong>AND</strong> a set up or tear-down slot.</p>  */}
         </div> 
         <div> 
           <p className="font-semibold">📘 Volunteer Guide</p> 
@@ -205,7 +206,7 @@ export default function VolunteerPortalReserved() {
         <h1 className="font-bold text-3xl mb-4">Volunteer Sign Up</h1>
 
         {/* Requirements */}
-        <div className="m-6 py-4 px-40 border rounded bg-gray-50 space-y-2">
+        {/* <div className="m-6 py-4 px-40 border rounded bg-gray-50 space-y-2">
           <p className="font-semibold">Requirements</p>
            <p className={hasSetupOrTearDown ? "text-green-600" : "text-gray-600"}>
             {hasSetupOrTearDown ? "✅" : "⬜"} At least 1 Set Up or Tear Down slot
@@ -213,7 +214,7 @@ export default function VolunteerPortalReserved() {
           <p className={hasMinTwoSlots ? "text-green-600" : "text-gray-600"}>
             {hasMinTwoSlots ? "✅" : "⬜"} At least 2 total slots
           </p>
-        </div>
+        </div> */}
 
         <button
           disabled={!canSubmit}
