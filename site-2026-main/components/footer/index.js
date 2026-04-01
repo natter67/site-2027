@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 const footerSections = [
   {
     heading: "Special Events",
@@ -39,10 +37,15 @@ const footerSections = [
 
 export default function Footer({ socials }) {
   return (
-    <footer
-      className="relative flex flex-col w-full p-10 md:p-20 bg-no-repeat bg-bottom bg-cover"
-      style={{ backgroundImage: "url('/assets/banners/robot_banner_4.png')" }}
-    >
+    <footer className="relative flex flex-col w-full p-10 md:p-20 overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 z-0 bg-no-repeat bg-bottom bg-cover pointer-events-none"
+        style={{
+          backgroundImage: "url('/assets/banners/robot_banner_4.png')",
+          opacity: 0.35,
+        }}
+      />
 
       {/* Purple-to-transparent gradient behind text */}
       {/* <div
