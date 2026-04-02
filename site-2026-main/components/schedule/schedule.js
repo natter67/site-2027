@@ -107,8 +107,9 @@ export function Schedule() {
 
   const scheduleData = data.data.map((event, idx) => {
     const occurences = event.occurences.map((occ) => {
-      const start = dayjs.tz(occ.startTime.replace(/Z$/, ''), 'America/Chicago');
-      const end = dayjs.tz(occ.endTime.replace(/Z$/, ''), 'America/Chicago');
+      // This is my fix because I entered the data in European timezone
+      const start = dayjs.utc(occ.startTime).tz('Europe/Vienna').tz('America/Chicago', true);
+      const end = dayjs.utc(occ.endTime).tz('Europe/Vienna').tz('America/Chicago', true);
       const date = start.date() === 10 ? DAY_ONE : DAY_TWO; // Change this line to reflect the day EOH is on!
       const duration = end.diff(start) / timeMsPerSlot;
       const rowIndex =
