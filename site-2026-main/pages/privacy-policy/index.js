@@ -54,6 +54,14 @@ export default function PrivacyPolicyPage() {
           <p className="text-sm text-gray-600 pt-4 border-t border-gray-200">
             This page may be updated; the date at the top reflects the latest version.
           </p>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            <sup aria-hidden="true">*</sup>
+            To have your account information deleted, contact us at{" "}
+            <a href="mailto:eoh-tech@ec.illinois.edu" className="text-blue-600 underline hover:text-blue-800">
+              eoh-tech@ec.illinois.edu
+            </a>
+            .
+          </p>
         </div>
       </Content>
     </Fragment>
