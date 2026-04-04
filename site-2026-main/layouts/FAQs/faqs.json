@@ -14,7 +14,7 @@
   {
     "id": "event-help",
     "Question": "Where can I find help or ask questions during the event?",
-    "Answer": "Visit one of our Visitor’s Booths located at the Campus Instructional Facility (CIF), Graziano Plaza, outside Sidney Lu Mechanical Engineering Building, or outside the Electrical and Computer Engineering Building (ECEB).",
+    "Answer": "Visit one of our Visitor’s Booths located at the Campus Instructional Facility (CIF), in the courtyard between NCSA and Siebel Computer Science Building, outside Sidney Lu Mechanical Engineering Building, or outside the Electrical and Computer Engineering Building (ECEB).",
     "Category": "Event"
   },
   {
@@ -80,7 +80,7 @@
   {
     "id": "parking-shuttle-stops",
     "Question": "What are the shuttle stops?",
-    "Answer": "Stops include Lot E-14, Everitt Laboratory, Campus Instructional Facility (CIF), Electrical and Computer Engineering Building (ECEB), Lot B-22, and Goodwin & Springfield.",
+    "Answer": "Stops include Lot E-14, Everitt Laboratory, Electrical and Computer Engineering Building (ECEB), Lot B-22, and Lot B-1.",
     "Category": "Parking"
   },
   {

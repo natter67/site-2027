@@ -24,19 +24,16 @@ export const ShuttleInformation = () => {
                             Lot E-14
                         </li>
                         <li>
-                            S 6th St (close to South Quad)
-                        </li>
-                        <li>
                             Everitt Laboratory
-                        </li>
-                        <li>
-                            Campus Instructional Facility (CIF)
                         </li>
                         <li>
                             Electrical and Computer Engineering (ECEB)
                         </li>
                         <li>
-                            Lot B22
+                            Lot B-22
+                        </li>
+                        <li>
+                            Lot B-1
                         </li>
                     </ul>
                     and then will return to E-14 and repeat.
