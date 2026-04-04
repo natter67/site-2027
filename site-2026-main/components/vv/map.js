@@ -221,9 +221,17 @@ const Map = () => {
     CardInteract({
       top: "32.3%",
       left: "30.8%",
-      heading: "Bardeen Quad", // Some exhibits are also called North Quad
+      heading: "Bardeen Quad",
       buildingCode: "Bardeen",
       mapsLink: LOCATIONS.BardeenQuad,
+      openModal: openModal,
+    }),
+    CardInteract({
+      top: "20%",
+      left: "14.5%",
+      heading: "North Quad",
+      buildingCode: "North Quad",
+      mapsLink: LOCATIONS.NorthQuad,
       openModal: openModal,
     }),
   ]

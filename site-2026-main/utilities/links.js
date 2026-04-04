@@ -26,6 +26,7 @@ export const LOCATIONS = {
   Observatory: "https://maps.app.goo.gl/ahJ4abSKegeqRJBm6",
   Everitt: "https://maps.app.goo.gl/TRc9W1BsL5RWhn1n7",
   BardeenQuad: "https://maps.app.goo.gl/fFfYoGfgogKjQWeK8",
+  NorthQuad: "https://maps.app.goo.gl/joJKLUZrUdMAm5px5",
   CIF: "https://maps.app.goo.gl/1QBXd3aDN5wiYnzm7",
   GrazianoPlaza: "https://maps.app.goo.gl/KQNFQZhEeD3yCNvK9",
   SidneyLu: "https://maps.app.goo.gl/GsqZ6399qMoebvFn6",
