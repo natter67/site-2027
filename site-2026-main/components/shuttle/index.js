@@ -40,7 +40,7 @@ export const ShuttleInformation = () => {
                 </div>
                 <img
                     alt="Map of EOH Shuttles"
-                    src="assets/images/shuttle.png"
+                    src="assets/images/shuttle.jpeg"
                 />
             </Modal>
             <button onClick={() => setModalOpen(true)}
