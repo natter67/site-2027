@@ -105,8 +105,13 @@ export function Schedule() {
 
   const slots = genTimeSlots();
 
-  const scheduleData = data.data.map((event, idx) => {
-    const occurences = event.occurences.map((occ) => {
+  const rawEvents = Array.isArray(data?.data) ? data.data : [];
+
+  const scheduleData = rawEvents.map((event, idx) => {
+    const occList = Array.isArray(event?.occurences) ? event.occurences : [];
+    const occurences = occList
+      .filter((occ) => occ?.startTime && occ?.endTime)
+      .map((occ) => {
       // This is my fix because I entered the data in European timezone
       const start = dayjs.utc(occ.startTime).tz('Europe/Vienna').tz('America/Chicago', true);
       const end = dayjs.utc(occ.endTime).tz('Europe/Vienna').tz('America/Chicago', true);
