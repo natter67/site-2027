@@ -16,11 +16,18 @@ import {
 import { onSnapshot, query, orderBy, where } from "firebase/firestore";
 import { isAdminEmail } from "@utilities/admin";
 import { AWARDS, awardColorById, awardLabelById } from "@utilities/awards";
+import {
+  pinSha256ForGroup,
+  normalizeGroupId,
+  coerceAssignmentStopOrder,
+  awardAssignmentExhibitDocId,
+} from "@utilities/judging";
+import { parseJudgingScheduleCsv } from "@utilities/judgingCsv";
+import { fetchStrapiExhibitsForJudging } from "@utilities/strapiExhibits";
 
 const TABS = [
   { id: "volunteer-slots", label: "Volunteer Slots" },
   { id: "volunteer-reassign", label: "Volunteer Reassign" },
-  { id: "exhibits", label: "Exhibits" },
   { id: "judges", label: "Judges" },
 ];
 
@@ -34,32 +41,6 @@ function buildVolunteerEventId({ date, name, startTime, endTime }) {
   const safeStart = (startTime || "").trim() || "HH:MM";
   const safeEnd = (endTime || "").trim() || "HH:MM";
   return `(${safeDate}) ${safeName} ${safeStart}-${safeEnd}`;
-}
-
-function slugify(s) {
-  return (s || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
-
-function buildExhibitId({ exhibitName, leadExhibitorNetId }) {
-  const a = slugify(leadExhibitorNetId || "exhibit");
-  const b = slugify(exhibitName || "untitled");
-  return `${a}-${b}`.slice(0, 120);
-}
-
-function randomCode(bytes = 16) {
-  if (typeof window === "undefined" || !window.crypto?.getRandomValues) {
-    // Fallback for prerender; code is only generated client-side.
-    return Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2);
-  }
-  const arr = new Uint8Array(bytes);
-  window.crypto.getRandomValues(arr);
-  return Array.from(arr)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
 }
 
 export default function AdminPage() {
@@ -97,61 +78,29 @@ export default function AdminPage() {
   const [moveToDocId, setMoveToDocId] = useState("");
   const [moveVolunteerUid, setMoveVolunteerUid] = useState("");
 
-  // Exhibits form
-  const [exhibitForm, setExhibitForm] = useState({
-    exhibitName: "",
-    exhibitBuilding: "",
-    location: "",
-    status: "",
-    exhibitNotes: "",
-    awardIds: [],
-    timestamp: "",
-    emailAddress: "",
-    netIdsTownHall: "",
-    leadExhibitorFirstName: "",
-    leadExhibitorLastName: "",
-    leadExhibitorNetId: "",
-    leadExhibitorPhoneNumber: "",
-    alternateEmailAddress: "",
-    exhibitAffiliation: "",
-    affiliatedToWhich: "",
-    department: "",
-    advisorName: "",
-    advisorEmailAddress: "",
-    comprehensiveExhibitDescription: "",
-    visitorsGuideDescription: "",
-    intendedAudience: "",
-    exhibitTag1: "",
-    exhibitTag2: "",
-    exhibitTag3: "",
-    sustainability: "",
-    additionalJson: "",
-  });
-  const [editingExhibitDocId, setEditingExhibitDocId] = useState(null);
-
-  // Judges allowlist
-  const [judges, setJudges] = useState([]);
-  const [judgeForm, setJudgeForm] = useState({
-    email: "",
-    displayName: "",
-  });
-
-  // Judging setup
-  const [judgingQrForm, setJudgingQrForm] = useState({
-    exhibitId: "",
-    code: "",
-    active: true,
-  });
+  // Judging — exhibitor URL helper (read-only picker)
+  const [exhibitorLinkExhibitId, setExhibitorLinkExhibitId] = useState("");
   const [assignmentForm, setAssignmentForm] = useState({
     awardId: "",
     exhibitId: "",
-    judgeEmail: "",
     stopOrder: "",
+    scheduledTime: "",
   });
 
-  // Schedule viewer/editor (Judges tab)
-  const [scheduleJudgeEmail, setScheduleJudgeEmail] = useState("");
-  const [scheduleRows, setScheduleRows] = useState([]); // [{exhibitId, stopOrder, awardId, judgeEmail, awardLabel}]
+  const [judgingGroups, setJudgingGroups] = useState([]);
+  const [groupForm, setGroupForm] = useState({
+    id: "",
+    label: "",
+    pin: "",
+  });
+  const [csvImportBusy, setCsvImportBusy] = useState(false);
+  /** After parsing a CSV: rows to write + distinct group ids needing 4-digit PINs */
+  const [csvPendingRows, setCsvPendingRows] = useState(null);
+  const [csvPendingGroupIds, setCsvPendingGroupIds] = useState([]);
+  const [csvPinByGroup, setCsvPinByGroup] = useState({});
+
+  const [scheduleGroupId, setScheduleGroupId] = useState("");
+  const [scheduleRows, setScheduleRows] = useState([]);
   const [scheduleSaving, setScheduleSaving] = useState(false);
 
   useEffect(() => {
@@ -190,35 +139,33 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!isAdmin) return;
-    if (!scheduleJudgeEmail) {
+    const gid = normalizeGroupId(scheduleGroupId);
+    if (!gid) {
       setScheduleRows([]);
       return;
     }
 
-    const judgeEmail = normalizeEmail(scheduleJudgeEmail);
     const unsubs = [];
     let cancelled = false;
 
     for (const a of AWARDS) {
       const exhibitsRef = collection(firestore, "awardAssignments", a.id, "exhibits");
-      const q = query(exhibitsRef, where("judgeEmail", "==", judgeEmail));
+      const q = query(exhibitsRef, where("judgingGroupId", "==", gid));
       const unsub = onSnapshot(
         q,
         (snapshot) => {
           if (cancelled) return;
-          const incoming = snapshot.docs.map((d) => {
+            const incoming = snapshot.docs.map((d) => {
             const data = d.data() || {};
-            const stopOrderRaw =
-              typeof data.stopOrder === "number"
-                ? data.stopOrder
-                : typeof data.stopIndex === "number"
-                  ? data.stopIndex + 1
-                  : null;
+            const stopOrderRaw = coerceAssignmentStopOrder(data);
             return {
+              assignmentDocId: d.id,
               exhibitId: data.exhibitId || d.id,
               awardId: data.awardId || a.id,
               awardLabel: data.awardLabel || awardLabelById(data.awardId || a.id),
-              judgeEmail: data.judgeEmail || judgeEmail,
+              judgeEmail: data.judgeEmail || "",
+              judgingGroupId: data.judgingGroupId || gid,
+              scheduledTime: typeof data.scheduledTime === "string" ? data.scheduledTime : "",
               stopOrder: stopOrderRaw,
               updatedAt: data.updatedAt || null,
             };
@@ -239,44 +186,43 @@ export default function AdminPage() {
       cancelled = true;
       for (const u of unsubs) u();
     };
-  }, [isAdmin, scheduleJudgeEmail]);
+  }, [isAdmin, scheduleGroupId]);
 
   useEffect(() => {
     if (!isAdmin) return;
-
-    setLoadingExhibits(true);
-    const exhibitsRef = collection(firestore, "exhibits2026");
-    const q = query(exhibitsRef, orderBy("exhibitName", "asc"));
-    const unsubscribe = onSnapshot(
-      q,
+    const ref = collection(firestore, "judgingGroups");
+    const unsub = onSnapshot(
+      ref,
       (snapshot) => {
-        setExhibits(snapshot.docs.map((d) => ({ docId: d.id, ...d.data() })));
-        setLoadingExhibits(false);
-      },
-      (err) => {
-        console.error(err);
-        setLoadingExhibits(false);
-      }
-    );
-    return () => unsubscribe();
-  }, [isAdmin]);
-
-  useEffect(() => {
-    if (!isAdmin) return;
-
-    const judgesRef = collection(firestore, "judgesAllowlist");
-    const unsubscribe = onSnapshot(
-      judgesRef,
-      (snapshot) => {
-        setJudges(
+        setJudgingGroups(
           snapshot.docs
             .map((d) => ({ docId: d.id, ...d.data() }))
-            .sort((a, b) => (a.email || a.docId).localeCompare(b.email || b.docId))
+            .sort((a, b) => a.docId.localeCompare(b.docId))
         );
       },
       (err) => console.error(err)
     );
-    return () => unsubscribe();
+    return () => unsub();
+  }, [isAdmin]);
+
+  useEffect(() => {
+    if (!isAdmin) return;
+    let cancelled = false;
+    setLoadingExhibits(true);
+    fetchStrapiExhibitsForJudging()
+      .then((rows) => {
+        if (!cancelled) setExhibits(rows);
+      })
+      .catch((err) => {
+        console.error(err);
+        if (!cancelled) setExhibits([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingExhibits(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [isAdmin]);
 
   const eventByDocId = useMemo(() => {
@@ -330,39 +276,6 @@ export default function AdminPage() {
     setEditingDocId(null);
   };
 
-  const resetExhibitForm = () => {
-    setExhibitForm({
-      exhibitName: "",
-      exhibitBuilding: "",
-      location: "",
-      status: "",
-      exhibitNotes: "",
-      awardIds: [],
-      timestamp: "",
-      emailAddress: "",
-      netIdsTownHall: "",
-      leadExhibitorFirstName: "",
-      leadExhibitorLastName: "",
-      leadExhibitorNetId: "",
-      leadExhibitorPhoneNumber: "",
-      alternateEmailAddress: "",
-      exhibitAffiliation: "",
-      affiliatedToWhich: "",
-      department: "",
-      advisorName: "",
-      advisorEmailAddress: "",
-      comprehensiveExhibitDescription: "",
-      visitorsGuideDescription: "",
-      intendedAudience: "",
-      exhibitTag1: "",
-      exhibitTag2: "",
-      exhibitTag3: "",
-      sustainability: "",
-      additionalJson: "",
-    });
-    setEditingExhibitDocId(null);
-  };
-
   const startEditEvent = (evt) => {
     setEditingDocId(evt.docId);
     setEventForm({
@@ -374,40 +287,6 @@ export default function AdminPage() {
       maxCapacity: typeof evt.maxCapacity === "number" ? String(evt.maxCapacity) : "",
     });
     setActiveTab("volunteer-slots");
-  };
-
-  const startEditExhibit = (ex) => {
-    setEditingExhibitDocId(ex.docId);
-    setExhibitForm({
-      exhibitName: ex.exhibitName || "",
-      exhibitBuilding: ex.exhibitBuilding || "",
-      location: ex.location || "",
-      status: ex.status || "",
-      exhibitNotes: ex.exhibitNotes || "",
-      awardIds: Array.isArray(ex.awardIds) ? ex.awardIds : [],
-      timestamp: ex.timestamp || "",
-      emailAddress: ex.emailAddress || "",
-      netIdsTownHall: ex.netIdsTownHall || "",
-      leadExhibitorFirstName: ex.leadExhibitorFirstName || "",
-      leadExhibitorLastName: ex.leadExhibitorLastName || "",
-      leadExhibitorNetId: ex.leadExhibitorNetId || "",
-      leadExhibitorPhoneNumber: ex.leadExhibitorPhoneNumber || "",
-      alternateEmailAddress: ex.alternateEmailAddress || "",
-      exhibitAffiliation: ex.exhibitAffiliation || "",
-      affiliatedToWhich: ex.affiliatedToWhich || "",
-      department: ex.department || "",
-      advisorName: ex.advisorName || "",
-      advisorEmailAddress: ex.advisorEmailAddress || "",
-      comprehensiveExhibitDescription: ex.comprehensiveExhibitDescription || "",
-      visitorsGuideDescription: ex.visitorsGuideDescription || "",
-      intendedAudience: ex.intendedAudience || "",
-      exhibitTag1: ex.exhibitTag1 || "",
-      exhibitTag2: ex.exhibitTag2 || "",
-      exhibitTag3: ex.exhibitTag3 || "",
-      sustainability: ex.sustainability || "",
-      additionalJson: "",
-    });
-    setActiveTab("exhibits");
   };
 
   const upsertVolunteerEvent = async () => {
@@ -523,144 +402,195 @@ export default function AdminPage() {
     await deleteDoc(doc(firestore, "volunteerEvents2026", docId));
   };
 
-  const upsertExhibit = async () => {
-    const payload = {
-      exhibitName: (exhibitForm.exhibitName || "").trim(),
-      exhibitBuilding: (exhibitForm.exhibitBuilding || "").trim(),
-      location: (exhibitForm.location || "").trim(),
-      status: (exhibitForm.status || "").trim(),
-      exhibitNotes: (exhibitForm.exhibitNotes || "").trim(),
-      awardIds: Array.isArray(exhibitForm.awardIds)
-        ? exhibitForm.awardIds.map((s) => String(s).trim()).filter(Boolean)
-        : [],
-      timestamp: (exhibitForm.timestamp || "").trim(),
-      emailAddress: normalizeEmail(exhibitForm.emailAddress),
-      netIdsTownHall: (exhibitForm.netIdsTownHall || "").trim(),
-      leadExhibitorFirstName: (exhibitForm.leadExhibitorFirstName || "").trim(),
-      leadExhibitorLastName: (exhibitForm.leadExhibitorLastName || "").trim(),
-      leadExhibitorNetId: (exhibitForm.leadExhibitorNetId || "").trim(),
-      leadExhibitorPhoneNumber: (exhibitForm.leadExhibitorPhoneNumber || "").trim(),
-      alternateEmailAddress: normalizeEmail(exhibitForm.alternateEmailAddress),
-      exhibitAffiliation: (exhibitForm.exhibitAffiliation || "").trim(),
-      affiliatedToWhich: (exhibitForm.affiliatedToWhich || "").trim(),
-      department: (exhibitForm.department || "").trim(),
-      advisorName: (exhibitForm.advisorName || "").trim(),
-      advisorEmailAddress: normalizeEmail(exhibitForm.advisorEmailAddress),
-      comprehensiveExhibitDescription: (exhibitForm.comprehensiveExhibitDescription || "").trim(),
-      visitorsGuideDescription: (exhibitForm.visitorsGuideDescription || "").trim(),
-      intendedAudience: (exhibitForm.intendedAudience || "").trim(),
-      exhibitTag1: (exhibitForm.exhibitTag1 || "").trim(),
-      exhibitTag2: (exhibitForm.exhibitTag2 || "").trim(),
-      exhibitTag3: (exhibitForm.exhibitTag3 || "").trim(),
-      sustainability: (exhibitForm.sustainability || "").trim(),
-      updatedAt: serverTimestamp(),
-    };
+  const upsertAwardAssignment = async () => {
+    const awardId = (assignmentForm.awardId || "").trim();
+    const exhibitId = (assignmentForm.exhibitId || "").trim();
+    const judgingGroupId = normalizeGroupId(scheduleGroupId);
 
-    if (!payload.exhibitName) {
-      alert("Please provide Exhibit Name.");
+    if (!awardId || !exhibitId || !judgingGroupId) {
+      alert("Select a judging group, award, and exhibit.");
       return;
     }
 
-    let extra = null;
-    const raw = (exhibitForm.additionalJson || "").trim();
-    if (raw) {
-      try {
-        extra = JSON.parse(raw);
-      } catch {
-        alert("Additional fields JSON is not valid JSON.");
+    let stopOrderNum = Number(assignmentForm.stopOrder);
+    if (!Number.isFinite(stopOrderNum) || stopOrderNum < 1) {
+      const inGroup = scheduleRows.filter(
+        (r) => normalizeGroupId(r.judgingGroupId) === judgingGroupId
+      );
+      const maxVisit = inGroup.reduce(
+        (m, r) => Math.max(m, coerceAssignmentStopOrder(r) ?? 0),
+        0
+      );
+      stopOrderNum = maxVisit + 1;
+    }
+
+    const scheduledTime = (assignmentForm.scheduledTime || "").trim();
+
+    const assignmentDocId = awardAssignmentExhibitDocId(judgingGroupId, exhibitId);
+    const compositeRef = doc(firestore, "awardAssignments", awardId, "exhibits", assignmentDocId);
+    const legacyRef = doc(firestore, "awardAssignments", awardId, "exhibits", exhibitId);
+
+    const payload = {
+      awardId,
+      awardLabel: awardLabelById(awardId),
+      exhibitId,
+      judgingGroupId,
+      stopOrder: stopOrderNum,
+      ...(scheduledTime ? { scheduledTime } : {}),
+      updatedAt: serverTimestamp(),
+    };
+
+    const [legacySnap, compositeSnap] = await Promise.all([getDoc(legacyRef), getDoc(compositeRef)]);
+
+    if (compositeSnap.exists()) {
+      await setDoc(compositeRef, payload, { merge: true });
+    } else if (legacySnap.exists()) {
+      const leg = legacySnap.data() || {};
+      if (normalizeGroupId(leg.judgingGroupId) === judgingGroupId) {
+        await setDoc(compositeRef, payload, { merge: true });
+        if (legacyRef.id !== compositeRef.id) await deleteDoc(legacyRef);
+      } else {
+        await setDoc(compositeRef, payload, { merge: true });
+      }
+    } else {
+      await setDoc(compositeRef, payload, { merge: true });
+    }
+
+    setAssignmentForm((p) => ({ ...p, stopOrder: "", scheduledTime: "" }));
+    alert("Saved stop for this group.");
+  };
+
+  const upsertJudgingGroup = async () => {
+    const id = normalizeGroupId(groupForm.id);
+    if (!id) {
+      alert("Enter a group id (e.g. 1 or north-a).");
+      return;
+    }
+    const pin = (groupForm.pin || "").trim();
+    let pinSha256 = "";
+    if (pin) {
+      pinSha256 = await pinSha256ForGroup(id, pin);
+    } else {
+      const snap = await getDoc(doc(firestore, "judgingGroups", id));
+      pinSha256 = (snap.data()?.pinSha256 || "").trim();
+      if (!pinSha256) {
+        alert("Set a PIN when creating a group (or add one later with a new PIN).");
         return;
       }
     }
 
-    const computedId = buildExhibitId(payload);
-    const docId = editingExhibitDocId || computedId;
-    const exhibitRef = doc(firestore, "exhibits2026", docId);
-
-    const existing = await getDoc(exhibitRef);
-    const base = existing.exists()
-      ? {}
-      : {
-          id: docId,
-          createdAt: serverTimestamp(),
-        };
-
     await setDoc(
-      exhibitRef,
+      doc(firestore, "judgingGroups", id),
       {
-        ...base,
-        ...payload,
-        id: docId,
-        ...(extra ? { extra } : {}),
+        label: (groupForm.label || "").trim(),
+        pinSha256,
+        updatedAt: serverTimestamp(),
       },
       { merge: true }
     );
 
-    resetExhibitForm();
+    setGroupForm({ id: "", label: "", pin: "" });
+    alert(`Saved group "${id}". Judges sign in at /judging/${encodeURIComponent(id)}`);
   };
 
-  const removeExhibit = async (docId) => {
-    const ex = exhibitByDocId.get(docId);
+  const removeJudgingGroup = async (id) => {
+    if (!window.confirm(`Delete judging group "${id}"? Assignments are not deleted.`)) return;
+    await deleteDoc(doc(firestore, "judgingGroups", id));
+  };
+
+  const clearCsvImportPending = () => {
+    setCsvPendingRows(null);
+    setCsvPendingGroupIds([]);
+    setCsvPinByGroup({});
+  };
+
+  const parseJudgingCsvFile = async (file) => {
+    if (!file) {
+      alert("Choose a CSV file.");
+      return;
+    }
+    const text = await file.text();
+    const { rows, errors } = parseJudgingScheduleCsv(text, exhibits);
+    if (errors.length) {
+      alert(
+        errors.slice(0, 12).join("\n") + (errors.length > 12 ? `\n…${errors.length - 12} more` : "")
+      );
+      return;
+    }
+    if (!rows.length) {
+      alert("No rows to import.");
+      return;
+    }
+    const groupIds = [
+      ...new Set(rows.map((r) => normalizeGroupId(r.groupId)).filter(Boolean)),
+    ].sort();
+    if (!groupIds.length) {
+      alert("CSV has no group IDs.");
+      return;
+    }
+    const initialPins = {};
+    for (const g of groupIds) initialPins[g] = "";
+    setCsvPendingRows(rows);
+    setCsvPendingGroupIds(groupIds);
+    setCsvPinByGroup(initialPins);
+  };
+
+  const commitJudgingCsvImport = async () => {
+    if (!csvPendingRows?.length) return;
+    for (const g of csvPendingGroupIds) {
+      const pin = String(csvPinByGroup[g] ?? "").trim();
+      if (!/^\d{4}$/.test(pin)) {
+        alert(`Group "${g}": enter a 4-digit PIN (numbers only).`);
+        return;
+      }
+    }
+    const rowCount = csvPendingRows.length;
+    const groupCount = csvPendingGroupIds.length;
     if (
-      !window.confirm(`Delete exhibit "${ex?.exhibitName || docId}"?\n\nThis cannot be undone.`)
-    )
-      return;
-    await deleteDoc(doc(firestore, "exhibits2026", docId));
-  };
-
-  const upsertJudgingQr = async () => {
-    const exhibitId = (judgingQrForm.exhibitId || "").trim();
-    if (!exhibitId) {
-      alert("Select an exhibit.");
+      !window.confirm(
+        `Save ${groupCount} group PIN(s) and import ${rowCount} assignment row(s) into Firestore?`
+      )
+    ) {
       return;
     }
-
-    const code = (judgingQrForm.code || "").trim() || randomCode(16);
-
-    await setDoc(
-      doc(firestore, "judgingQrCodes", code),
-      {
-        exhibitId,
-        active: judgingQrForm.active !== false,
-        updatedAt: serverTimestamp(),
-        createdAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    setJudgingQrForm((p) => ({ ...p, code }));
-    alert(`Saved QR code.\n\nScan URL:\n${window.location.origin}/judging/scan/${code}`);
-  };
-
-  const upsertAwardAssignment = async () => {
-    const awardId = (assignmentForm.awardId || "").trim();
-    const exhibitId = (assignmentForm.exhibitId || "").trim();
-    const judgeEmail = normalizeEmail(assignmentForm.judgeEmail);
-    const stopOrderNum = Number(assignmentForm.stopOrder);
-
-    if (!awardId || !exhibitId || !judgeEmail) {
-      alert("Fill: award, exhibit, judge.");
-      return;
+    setCsvImportBusy(true);
+    try {
+      for (const g of csvPendingGroupIds) {
+        const pin = csvPinByGroup[g];
+        const pinSha256 = await pinSha256ForGroup(g, pin);
+        await setDoc(
+          doc(firestore, "judgingGroups", g),
+          {
+            pinSha256,
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      }
+      for (const r of csvPendingRows) {
+        const assignmentDocId = awardAssignmentExhibitDocId(r.groupId, r.exhibitId);
+        await setDoc(
+          doc(firestore, "awardAssignments", r.awardId, "exhibits", assignmentDocId),
+          {
+            awardId: r.awardId,
+            awardLabel: r.awardLabel,
+            exhibitId: r.exhibitId,
+            judgingGroupId: r.groupId,
+            stopOrder: r.stopOrder,
+            scheduledTime: r.scheduledTime || "",
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      }
+      clearCsvImportPending();
+      alert(`Imported ${rowCount} assignment(s) and saved 4-digit PINs for ${groupCount} group(s).`);
+    } catch (e) {
+      console.error(e);
+      alert("Import failed. Check the console and try again.");
+    } finally {
+      setCsvImportBusy(false);
     }
-    if (!Number.isFinite(stopOrderNum) || stopOrderNum < 1) {
-      alert("Stop # must be a number starting at 1.");
-      return;
-    }
-
-    await setDoc(
-      doc(firestore, "awardAssignments", awardId, "exhibits", exhibitId),
-      {
-        awardId,
-        awardLabel: awardLabelById(awardId),
-        exhibitId,
-        judgeEmail,
-        stopOrder: stopOrderNum,
-        updatedAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    setAssignmentForm((p) => ({ ...p, stopOrder: "" }));
-    alert("Saved award assignment.");
   };
 
   const moveVolunteerBetweenEvents = async () => {
@@ -702,59 +632,66 @@ export default function AdminPage() {
     setMoveVolunteerUid("");
   };
 
-  const upsertJudge = async () => {
-    const email = normalizeEmail(judgeForm.email);
-    if (!email) {
-      alert("Enter an email.");
-      return;
+  /** Swap two visit slots for the selected group (visit = same stopOrder across awards / one physical stop). */
+  const moveVisitInGroup = async (visitOrder, dir) => {
+    const gid = normalizeGroupId(scheduleGroupId);
+    if (!gid || typeof visitOrder !== "number") return;
+
+    const orders = [
+      ...new Set(
+        scheduleRows
+          .filter((r) => normalizeGroupId(r.judgingGroupId) === gid)
+          .map((r) => coerceAssignmentStopOrder(r))
+          .filter((n) => typeof n === "number" && n >= 1)
+      ),
+    ].sort((a, b) => a - b);
+
+    const idx = orders.indexOf(visitOrder);
+    const j = idx + dir;
+    if (idx < 0 || j < 0 || j >= orders.length) return;
+
+    const orderA = orders[idx];
+    const orderB = orders[j];
+
+    let toPersist = [];
+    setScheduleRows((prev) => {
+      const next = prev.map((r) => {
+        if (normalizeGroupId(r.judgingGroupId) !== gid) return r;
+        const o = coerceAssignmentStopOrder(r);
+        if (o === orderA) return { ...r, stopOrder: orderB };
+        if (o === orderB) return { ...r, stopOrder: orderA };
+        return r;
+      });
+      toPersist = next.filter((r) => {
+        if (normalizeGroupId(r.judgingGroupId) !== gid) return false;
+        const oldR = prev.find(
+          (p) =>
+            p.awardId === r.awardId &&
+            p.exhibitId === r.exhibitId &&
+            normalizeGroupId(p.judgingGroupId) === normalizeGroupId(r.judgingGroupId)
+        );
+        return coerceAssignmentStopOrder(oldR) !== coerceAssignmentStopOrder(r);
+      });
+      return next;
+    });
+
+    if (!toPersist.length) return;
+    try {
+      await Promise.all(
+        toPersist.map((r) =>
+          updateDoc(
+            doc(firestore, "awardAssignments", r.awardId, "exhibits", r.assignmentDocId || r.exhibitId),
+            {
+              stopOrder: coerceAssignmentStopOrder(r),
+              updatedAt: serverTimestamp(),
+            }
+          )
+        )
+      );
+    } catch (e) {
+      console.error(e);
+      alert("Could not save order. Try again.");
     }
-
-    await setDoc(
-      doc(firestore, "judgesAllowlist", email),
-      {
-        email,
-        displayName: (judgeForm.displayName || "").trim(),
-        updatedAt: serverTimestamp(),
-      },
-      { merge: true }
-    );
-
-    setJudgeForm({ email: "", displayName: "" });
-  };
-
-  const removeJudge = async (emailOrDocId) => {
-    if (!window.confirm(`Remove judge allowlist entry for "${emailOrDocId}"?`)) return;
-    await deleteDoc(doc(firestore, "judgesAllowlist", emailOrDocId));
-  };
-
-  const moveScheduleRowWithinAward = (awardId, exhibitId, dir) => {
-    setScheduleRows((prev) => {
-      const group = prev.filter((r) => r.awardId === awardId);
-      const others = prev.filter((r) => r.awardId !== awardId);
-      const idx = group.findIndex((r) => r.exhibitId === exhibitId);
-      const j = idx + dir;
-      if (idx < 0 || j < 0 || j >= group.length) return prev;
-      const nextGroup = [...group];
-      const tmp = nextGroup[idx];
-      nextGroup[idx] = nextGroup[j];
-      nextGroup[j] = tmp;
-      return [...others, ...nextGroup];
-    });
-  };
-
-  const renumberScheduleToMatchOrder = (awardId) => {
-    setScheduleRows((prev) => {
-      const group = prev
-        .filter((r) => r.awardId === awardId)
-        .sort((a, b) => {
-          const ax = typeof a.stopOrder === "number" ? a.stopOrder : 999999;
-          const bx = typeof b.stopOrder === "number" ? b.stopOrder : 999999;
-          return ax - bx;
-        })
-        .map((r, i) => ({ ...r, stopOrder: i + 1 }));
-      const others = prev.filter((r) => r.awardId !== awardId);
-      return [...others, ...group];
-    });
   };
 
   const saveAllSchedule = async () => {
@@ -764,17 +701,47 @@ export default function AdminPage() {
     }
     setScheduleSaving(true);
     try {
-      const writes = scheduleRows.map((r, i) => {
-        const stopOrder =
-          Number.isFinite(Number(r.stopOrder)) && Number(r.stopOrder) >= 1
-            ? Number(r.stopOrder)
-            : i + 1;
-        return setDoc(
-          doc(firestore, "awardAssignments", r.awardId, "exhibits", r.exhibitId),
-          { stopOrder, updatedAt: serverTimestamp() },
-          { merge: true }
-        );
-      });
+      const gidFallback = normalizeGroupId(scheduleGroupId);
+      const byGroup = new Map();
+      for (const r of scheduleRows) {
+        const g = normalizeGroupId(r.judgingGroupId);
+        if (!byGroup.has(g)) byGroup.set(g, []);
+        byGroup.get(g).push(r);
+      }
+      const writes = [];
+      for (const [g, list] of byGroup) {
+        const visitOrders = [
+          ...new Set(
+            list
+              .map((r) => coerceAssignmentStopOrder(r))
+              .filter((n) => typeof n === "number" && n >= 1)
+          ),
+        ].sort((a, b) => a - b);
+        visitOrders.forEach((oldOrder, idx) => {
+          const newOrder = idx + 1;
+          const atVisit = list.filter((r) => coerceAssignmentStopOrder(r) === oldOrder);
+          for (const r of atVisit) {
+            writes.push(
+              setDoc(
+                doc(
+                  firestore,
+                  "awardAssignments",
+                  r.awardId,
+                  "exhibits",
+                  r.assignmentDocId || awardAssignmentExhibitDocId(g || gidFallback, r.exhibitId)
+                ),
+                {
+                  stopOrder: newOrder,
+                  scheduledTime: typeof r.scheduledTime === "string" ? r.scheduledTime : "",
+                  judgingGroupId: g || gidFallback,
+                  updatedAt: serverTimestamp(),
+                },
+                { merge: true }
+              )
+            );
+          }
+        });
+      }
       await Promise.all(writes);
       alert("Saved schedule.");
     } finally {
@@ -783,10 +750,10 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="w-screen mt-28 mb-20 flex justify-center">
-      <div className="w-11/12 md:w-9/12 lg:w-7/12">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">Admin</h1>
+    <div className="w-full min-w-0 max-w-[100vw] overflow-x-hidden mt-28 mb-20 flex justify-center px-3 sm:px-4">
+      <div className="w-full sm:w-11/12 md:w-9/12 lg:w-7/12 min-w-0 max-w-6xl">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold">Admin</h1>
           <div className="flex items-center gap-3">
             {user ? (
               <>
@@ -1161,398 +1128,224 @@ export default function AdminPage() {
               </div>
             )}
 
-            {activeTab === "exhibits" && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="p-5 border rounded bg-white shadow">
-                  <h2 className="font-semibold mb-4">
-                    {editingExhibitDocId ? "Edit exhibit" : "Create exhibit"}
-                  </h2>
-
-                  <div className="grid grid-cols-1 gap-3">
-                    <label className="text-sm">
-                      Exhibit Name
-                      <input
-                        className="mt-1 w-full border rounded p-2"
-                        value={exhibitForm.exhibitName}
-                        onChange={(e) =>
-                          setExhibitForm((p) => ({ ...p, exhibitName: e.target.value }))
-                        }
-                      />
-                    </label>
-                    <label className="text-sm">
-                      Awards for this exhibit
-                      <select
-                        className="mt-1 w-full border rounded p-2"
-                        multiple
-                        value={Array.isArray(exhibitForm.awardIds) ? exhibitForm.awardIds : []}
-                        onChange={(e) => {
-                          const next = Array.from(e.target.selectedOptions).map((o) => o.value);
-                          setExhibitForm((p) => ({ ...p, awardIds: next }));
-                        }}
-                      >
-                        {AWARDS.map((a) => (
-                          <option key={a.id} value={a.id}>
-                            {a.label}
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-xs text-gray-600 mt-1">
-                        Hold Cmd/Ctrl to select multiple.
-                      </p>
-                    </label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        Exhibit Building
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.exhibitBuilding}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, exhibitBuilding: e.target.value }))
-                          }
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Location
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.location}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, location: e.target.value }))
-                          }
-                        />
-                      </label>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        Status
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.status}
-                          onChange={(e) => setExhibitForm((p) => ({ ...p, status: e.target.value }))}
-                          placeholder="Accepted / Pending / ..."
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Timestamp (optional)
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.timestamp}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, timestamp: e.target.value }))
-                          }
-                        />
-                      </label>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        Lead Exhibitor NetID
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.leadExhibitorNetId}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, leadExhibitorNetId: e.target.value }))
-                          }
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Lead Exhibitor Email
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.emailAddress}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, emailAddress: e.target.value }))
-                          }
-                        />
-                      </label>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        Lead First Name
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.leadExhibitorFirstName}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, leadExhibitorFirstName: e.target.value }))
-                          }
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Lead Last Name
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.leadExhibitorLastName}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, leadExhibitorLastName: e.target.value }))
-                          }
-                        />
-                      </label>
-                    </div>
-
-                    <label className="text-sm">
-                      Exhibit Notes (optional)
-                      <textarea
-                        className="mt-1 w-full border rounded p-2"
-                        rows={3}
-                        value={exhibitForm.exhibitNotes}
-                        onChange={(e) =>
-                          setExhibitForm((p) => ({ ...p, exhibitNotes: e.target.value }))
-                        }
-                      />
-                    </label>
-
-                    <label className="text-sm">
-                      Comprehensive Exhibit Description (optional)
-                      <textarea
-                        className="mt-1 w-full border rounded p-2"
-                        rows={4}
-                        value={exhibitForm.comprehensiveExhibitDescription}
-                        onChange={(e) =>
-                          setExhibitForm((p) => ({
-                            ...p,
-                            comprehensiveExhibitDescription: e.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-
-                    <label className="text-sm">
-                      Exhibit Description for Visitor&apos;s Guide (optional)
-                      <textarea
-                        className="mt-1 w-full border rounded p-2"
-                        rows={3}
-                        value={exhibitForm.visitorsGuideDescription}
-                        onChange={(e) =>
-                          setExhibitForm((p) => ({ ...p, visitorsGuideDescription: e.target.value }))
-                        }
-                      />
-                    </label>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        Intended Audience (optional)
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.intendedAudience}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, intendedAudience: e.target.value }))
-                          }
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Sustainability? (optional)
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.sustainability}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, sustainability: e.target.value }))
-                          }
-                          placeholder="Yes/No/..."
-                        />
-                      </label>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <label className="text-sm">
-                        Exhibit Tag 1
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.exhibitTag1}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, exhibitTag1: e.target.value }))
-                          }
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Exhibit Tag 2
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.exhibitTag2}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, exhibitTag2: e.target.value }))
-                          }
-                        />
-                      </label>
-                      <label className="text-sm">
-                        Exhibit Tag 3
-                        <input
-                          className="mt-1 w-full border rounded p-2"
-                          value={exhibitForm.exhibitTag3}
-                          onChange={(e) =>
-                            setExhibitForm((p) => ({ ...p, exhibitTag3: e.target.value }))
-                          }
-                        />
-                      </label>
-                    </div>
-
-                    <label className="text-sm">
-                      Additional fields (JSON, optional)
-                      <textarea
-                        className="mt-1 w-full border rounded p-2 font-mono text-xs"
-                        rows={6}
-                        value={exhibitForm.additionalJson}
-                        onChange={(e) =>
-                          setExhibitForm((p) => ({ ...p, additionalJson: e.target.value }))
-                        }
-                        placeholder='{"Advisor Email Address":"...","How many tables?":2}'
-                      />
-                    </label>
-                  </div>
-
-                  <div className="flex gap-2 mt-4">
-                    <button
-                      onClick={upsertExhibit}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
-                    >
-                      {editingExhibitDocId ? "Save" : "Create"}
-                    </button>
-                    <button onClick={resetExhibitForm} className="px-4 py-2 border rounded">
-                      Reset
-                    </button>
-                  </div>
-                  {editingExhibitDocId && (
-                    <p className="text-xs text-gray-600 mt-3">
-                      Note: Editing an exhibit does not change its internal identifier.
-                    </p>
-                  )}
-                </div>
-
-                <div className="p-5 border rounded bg-white shadow">
-                  <h2 className="font-semibold mb-4">Existing exhibits</h2>
-                  {loadingExhibits ? (
-                    <p>Loading…</p>
-                  ) : exhibits.length === 0 ? (
-                    <p className="text-sm text-gray-600">No exhibits yet.</p>
-                  ) : (
-                    <div className="flex flex-col gap-3">
-                      {exhibits.map((ex) => (
-                        <div key={ex.docId} className="border rounded p-3">
-                          <div className="flex justify-between gap-3">
-                            <div className="min-w-0">
-                              <p className="font-semibold truncate">
-                                {ex.exhibitName || ex.docId}
-                              </p>
-                              <p className="text-sm text-gray-700">
-                                {ex.exhibitBuilding ? `${ex.exhibitBuilding}` : ""}
-                                {ex.location ? ` · ${ex.location}` : ""}
-                              </p>
-                              {ex.emailAddress && (
-                                <p className="text-xs text-gray-600 truncate">{ex.emailAddress}</p>
-                              )}
-                            </div>
-                            <div className="flex flex-col gap-2 shrink-0">
-                              <button
-                                onClick={() => startEditExhibit(ex)}
-                                className="px-3 py-1 border rounded"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => removeExhibit(ex.docId)}
-                                className="px-3 py-1 border rounded text-red-700"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
             {activeTab === "judges" && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="p-5 border rounded bg-white shadow">
-                  <h2 className="font-semibold mb-4">Private judging QR codes</h2>
+                  <h2 className="font-semibold mb-4">Exhibitor progress link</h2>
                   <p className="text-sm text-gray-700 mb-4">
-                    Create a QR code for an exhibit. Judges and exhibitors use the same QR.
+                    Judges open <code className="text-xs">/judging/run</code> after their group PIN.
+                    Exhibitors can use the link below (exhibit number matches Strapi and judging stops; no
+                    login).
                   </p>
 
+                  <label className="text-sm block">
+                    Exhibit
+                    <select
+                      className="mt-1 w-full border rounded p-2"
+                      value={exhibitorLinkExhibitId}
+                      onChange={(e) => setExhibitorLinkExhibitId(e.target.value)}
+                    >
+                      <option value="">Select an exhibit…</option>
+                      {exhibits.map((ex) => (
+                        <option key={ex.docId} value={ex.docId}>
+                          {ex.exhibitName || ex.docId}
+                          {` · #${ex.exhibitNumber || ex.docId}`}
+                          {ex.location ? ` · ${ex.location}` : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {exhibitorLinkExhibitId ? (
+                    <p className="text-sm text-gray-800 mt-4 leading-relaxed">
+                      Exhibitor progress can be found at:{" "}
+                      <code className="text-xs break-all block mt-2 p-2 bg-gray-50 rounded border">
+                        {typeof window !== "undefined" ? window.location.origin : ""}/judging/exhibitor/
+                        {exhibitorLinkExhibitId}
+                      </code>
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-500 mt-4">Choose an exhibit to show the shareable URL.</p>
+                  )}
+                </div>
+
+                <div className="p-5 border rounded bg-white shadow">
+                  <h2 className="font-semibold mb-4">Judging groups & PINs</h2>
+                  <p className="text-sm text-gray-700 mb-4">
+                    Each group signs in at{" "}
+                    <code className="text-xs">
+                      {typeof window !== "undefined" ? window.location.origin : ""}/judging/
+                      &lt;group-id&gt;
+                    </code>{" "}
+                    with a PIN.
+                  </p>
                   <div className="grid grid-cols-1 gap-3">
                     <label className="text-sm">
-                      Exhibit
-                      <select
-                        className="mt-1 w-full border rounded p-2"
-                        value={judgingQrForm.exhibitId}
-                        onChange={(e) =>
-                          setJudgingQrForm((p) => ({ ...p, exhibitId: e.target.value }))
-                        }
-                      >
-                        <option value="">Select…</option>
-                        {exhibits.map((ex) => (
-                          <option key={ex.docId} value={ex.docId}>
-                            {ex.exhibitName || ex.docId}
-                            {ex.location ? ` · ${ex.location}` : ""}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label className="text-sm">
-                      Code (optional)
+                      Group id (URL segment)
                       <input
                         className="mt-1 w-full border rounded p-2 font-mono"
-                        value={judgingQrForm.code}
-                        onChange={(e) => setJudgingQrForm((p) => ({ ...p, code: e.target.value }))}
-                        placeholder="Leave blank to generate"
+                        value={groupForm.id}
+                        onChange={(e) => setGroupForm((p) => ({ ...p, id: e.target.value }))}
+                        placeholder="e.g. 1 or north-a"
                       />
                     </label>
-                    <label className="text-sm flex items-center gap-2">
+                    <label className="text-sm">
+                      Label (optional)
                       <input
-                        type="checkbox"
-                        checked={judgingQrForm.active !== false}
-                        onChange={(e) =>
-                          setJudgingQrForm((p) => ({ ...p, active: e.target.checked }))
-                        }
+                        className="mt-1 w-full border rounded p-2"
+                        value={groupForm.label}
+                        onChange={(e) => setGroupForm((p) => ({ ...p, label: e.target.value }))}
                       />
-                      Active
+                    </label>
+                    <label className="text-sm">
+                      PIN {groupForm.id ? "(leave blank to keep existing)" : ""}
+                      <input
+                        type="password"
+                        className="mt-1 w-full border rounded p-2"
+                        value={groupForm.pin}
+                        onChange={(e) => setGroupForm((p) => ({ ...p, pin: e.target.value }))}
+                        autoComplete="new-password"
+                      />
                     </label>
                   </div>
-
                   <div className="flex gap-2 mt-4">
                     <button
-                      onClick={upsertJudgingQr}
+                      onClick={upsertJudgingGroup}
                       className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
                     >
-                      Save QR code
+                      Save group
                     </button>
                     <button
-                      onClick={() => setJudgingQrForm({ exhibitId: "", code: "", active: true })}
+                      onClick={() => setGroupForm({ id: "", label: "", pin: "" })}
                       className="px-4 py-2 border rounded"
                     >
                       Reset
                     </button>
                   </div>
-
-                  {judgingQrForm.code && (
-                    <p className="text-xs text-gray-600 mt-3 break-all">
-                      Scan URL:{" "}
-                      <code>{typeof window !== "undefined" ? window.location.origin : ""}/judging/scan/{judgingQrForm.code}</code>
-                    </p>
-                  )}
+                  <div className="border-t mt-4 pt-4">
+                    <p className="text-sm font-semibold mb-2">Existing groups</p>
+                    {judgingGroups.length === 0 ? (
+                      <p className="text-sm text-gray-600">No groups yet.</p>
+                    ) : (
+                      <ul className="text-sm space-y-2">
+                        {judgingGroups.map((g) => (
+                          <li key={g.docId} className="flex justify-between gap-2 items-center">
+                            <span>
+                              <span className="font-mono font-semibold">{g.docId}</span>
+                              {g.label ? <span className="text-gray-600"> — {g.label}</span> : null}
+                            </span>
+                            <button
+                              type="button"
+                              className="text-red-700 underline text-xs shrink-0"
+                              onClick={() => removeJudgingGroup(g.docId)}
+                            >
+                              Remove
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
 
-                <div className="p-5 border rounded bg-white shadow">
-                  <h2 className="font-semibold mb-4">Schedule editor</h2>
+                <div className="p-5 border rounded bg-white shadow lg:col-span-2">
+                  <h2 className="font-semibold mb-4">Import schedule CSV</h2>
+                  <p className="text-sm text-gray-700 mb-3">
+                    <b>Column names</b>: Group #, Expected time, Award (may be multiple), Exhibit #.
+                    <br />
+                    <br />
+                    In the award column use Design, Energy, and/or Outreach (e.g. Design Award is
+                    fine too), comma-separated if more than one award is judged in the{" "}
+                    <span className="font-medium">same visit</span> (one CSV row = one visit slot for
+                    the group; every award listed shares that slot).
+                    <br />
+                    <br />
+                    After you pick a file, enter a <span className="font-semibold">4-digit PIN</span>{" "}
+                    for each judging group in the sheet. PINs are saved to Firestore when you confirm
+                    import (judges use them at <code className="text-xs">/judging/&lt;group-id&gt;</code>
+                    ).
+                  </p>
+                  <input
+                    type="file"
+                    accept=".csv,text/csv"
+                    className="text-sm w-full max-w-md"
+                    disabled={csvImportBusy}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) parseJudgingCsvFile(f);
+                      e.target.value = "";
+                    }}
+                  />
+                  {csvPendingRows?.length ? (
+                    <div className="mt-5 border rounded-lg border-amber-200 bg-amber-50/80 p-4">
+                      <p className="text-sm font-semibold text-amber-950 mb-3">
+                        Set 4-digit PINs ({csvPendingRows.length} assignment row(s),{" "}
+                        {csvPendingGroupIds.length} group
+                        {csvPendingGroupIds.length !== 1 ? "s" : ""})
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                        {csvPendingGroupIds.map((gid) => (
+                          <label key={gid} className="text-sm block min-w-0">
+                            <span className="font-mono font-semibold text-gray-800">{gid}</span>
+                            <input
+                              type="password"
+                              inputMode="numeric"
+                              autoComplete="one-time-code"
+                              pattern="[0-9]*"
+                              maxLength={4}
+                              className="mt-1 w-full border rounded p-2 font-mono tracking-widest"
+                              placeholder="0000"
+                              value={csvPinByGroup[gid] ?? ""}
+                              onChange={(e) => {
+                                const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
+                                setCsvPinByGroup((p) => ({ ...p, [gid]: digits }));
+                              }}
+                            />
+                          </label>
+                        ))}
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <button
+                          type="button"
+                          disabled={csvImportBusy}
+                          onClick={() => commitJudgingCsvImport()}
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded text-sm font-semibold"
+                        >
+                          Save PINs & import
+                        </button>
+                        <button
+                          type="button"
+                          disabled={csvImportBusy}
+                          onClick={clearCsvImportPending}
+                          className="px-4 py-2 border rounded text-sm"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : null}
+                  {csvImportBusy ? <p className="text-sm text-gray-600 mt-2">Working…</p> : null}
+                </div>
+
+                <div className="p-5 border rounded bg-white shadow lg:col-span-2">
+                  <h2 className="font-semibold mb-4">Schedule editor (by group)</h2>
                   <p className="text-sm text-gray-700 mb-4">
-                    Pick a judge, then adjust their single, ordered list of stops (across all awards).
+                    Pick a judging group, reorder stops, then Save all.
                   </p>
 
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="grid grid-cols-1 gap-3 max-w-md">
                     <label className="text-sm">
-                      Judge
+                      Judging group
                       <select
                         className="mt-1 w-full border rounded p-2"
-                        value={scheduleJudgeEmail}
-                        onChange={(e) => setScheduleJudgeEmail(e.target.value)}
+                        value={scheduleGroupId}
+                        onChange={(e) => setScheduleGroupId(normalizeGroupId(e.target.value))}
                       >
                         <option value="">Select…</option>
-                        {judges.map((j) => (
-                          <option key={j.docId} value={j.email || j.docId}>
-                            {j.displayName ? `${j.displayName} · ${j.email || j.docId}` : j.email || j.docId}
+                        {judgingGroups.map((g) => (
+                          <option key={g.docId} value={g.docId}>
+                            {g.label ? `${g.label} · ` : ""}
+                            {g.docId}
                           </option>
                         ))}
                       </select>
@@ -1560,8 +1353,8 @@ export default function AdminPage() {
                   </div>
 
                   <div className="border-t mt-5 pt-4">
-                    <h3 className="font-semibold mb-3">Add stop for this judge</h3>
-                    <div className="grid grid-cols-1 gap-3">
+                    <h3 className="font-semibold mb-3">Add stop for selected group</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <label className="text-sm">
                         Award
                         <select
@@ -1572,11 +1365,17 @@ export default function AdminPage() {
                           }
                         >
                           <option value="">Select…</option>
-                          {AWARDS.map((a) => (
-                            <option key={a.id} value={a.id}>
-                              {a.label}
-                            </option>
-                          ))}
+                          {awardsForSelectedAssignmentExhibit.length > 0
+                            ? awardsForSelectedAssignmentExhibit.map((a) => (
+                                <option key={a.id} value={a.id}>
+                                  {a.label}
+                                </option>
+                              ))
+                            : AWARDS.map((a) => (
+                                <option key={a.id} value={a.id}>
+                                  {a.label}
+                                </option>
+                              ))}
                         </select>
                       </label>
 
@@ -1590,34 +1389,51 @@ export default function AdminPage() {
                           }
                         >
                           <option value="">Select…</option>
-                          {exhibits
-                            .filter((ex) => {
-                              if (!assignmentForm.awardId) return true;
-                              const set = new Set(
-                                (Array.isArray(ex.awardIds) ? ex.awardIds : [])
-                                  .map((s) => String(s).trim())
-                                  .filter(Boolean)
-                              );
-                              return set.has(assignmentForm.awardId);
-                            })
-                            .map((ex) => (
-                              <option key={ex.docId} value={ex.docId}>
-                                {ex.exhibitName || ex.docId}
-                                {ex.location ? ` · ${ex.location}` : ""}
-                              </option>
-                            ))}
+                          {exhibits.map((ex) => (
+                            <option key={ex.docId} value={ex.docId}>
+                              {ex.exhibitName || ex.docId}
+                              {` · #${ex.exhibitNumber || ex.docId}`}
+                            </option>
+                          ))}
                         </select>
+                      </label>
+
+                      <label className="text-sm">
+                        Visit slot # (optional)
+                        <input
+                          type="number"
+                          min={1}
+                          className="mt-1 w-full border rounded p-2"
+                          value={assignmentForm.stopOrder}
+                          onChange={(e) =>
+                            setAssignmentForm((p) => ({ ...p, stopOrder: e.target.value }))
+                          }
+                          placeholder="Auto next if empty"
+                        />
+                        <span className="block text-xs text-gray-500 mt-1">
+                          Use the same number for another award + exhibit to make one mixed-award visit.
+                        </span>
+                      </label>
+                      <label className="text-sm">
+                        Expected time (optional)
+                        <input
+                          className="mt-1 w-full border rounded p-2"
+                          value={assignmentForm.scheduledTime}
+                          onChange={(e) =>
+                            setAssignmentForm((p) => ({ ...p, scheduledTime: e.target.value }))
+                          }
+                          placeholder="10:15 AM"
+                        />
                       </label>
                     </div>
 
                     <div className="flex gap-2 mt-4">
                       <button
                         onClick={() => {
-                          if (!scheduleJudgeEmail) {
-                            alert("Select a judge first.");
+                          if (!scheduleGroupId) {
+                            alert("Select a judging group first.");
                             return;
                           }
-                          setAssignmentForm((p) => ({ ...p, judgeEmail: scheduleJudgeEmail, stopOrder: "" }));
                           return upsertAwardAssignment();
                         }}
                         className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
@@ -1629,8 +1445,8 @@ export default function AdminPage() {
                           setAssignmentForm({
                             awardId: "",
                             exhibitId: "",
-                            judgeEmail: scheduleJudgeEmail || "",
                             stopOrder: "",
+                            scheduledTime: "",
                           })
                         }
                         className="px-4 py-2 border rounded"
@@ -1641,68 +1457,139 @@ export default function AdminPage() {
                   </div>
 
                   <div className="mt-4">
-                    {!scheduleJudgeEmail ? (
-                      <p className="text-sm text-gray-600">Select a judge to view their schedule.</p>
+                    {!scheduleGroupId ? (
+                      <p className="text-sm text-gray-600">Select a group to view its schedule.</p>
                     ) : scheduleRows.length === 0 ? (
-                      <p className="text-sm text-gray-600">No scheduled exhibits found for this judge.</p>
+                      <p className="text-sm text-gray-600">No stops for this group yet.</p>
                     ) : (
                       <div className="flex flex-col gap-2">
-                        {scheduleRows
-                          .slice()
-                          .sort((a, b) => {
-                            const ax = typeof a.stopOrder === "number" ? a.stopOrder : 999999;
-                            const bx = typeof b.stopOrder === "number" ? b.stopOrder : 999999;
-                            return ax - bx;
-                          })
-                          .map((r, idx, ordered) => {
-                            const ex = exhibitByDocId.get(r.exhibitId);
-                            const color = awardColorById(r.awardId);
+                        <p className="text-xs text-gray-600">
+                          <span className="font-medium">Visit order</span> is one shared schedule for this group.
+                          One row can include several awards if judges cover them in the same stop. ↑ / ↓ swaps
+                          whole visits (every award at that slot moves together).
+                        </p>
+                        {(() => {
+                          const gid = normalizeGroupId(scheduleGroupId);
+                          const inGroup = scheduleRows.filter(
+                            (r) => normalizeGroupId(r.judgingGroupId) === gid
+                          );
+                          const awardRank = (awardId) => {
+                            const i = AWARDS.findIndex((x) => x.id === awardId);
+                            return i >= 0 ? i : 99;
+                          };
+                          const visitOrders = [
+                            ...new Set(
+                              inGroup
+                                .map((r) => coerceAssignmentStopOrder(r))
+                                .filter((n) => typeof n === "number" && n >= 1)
+                            ),
+                          ].sort((a, b) => a - b);
+
+                          return visitOrders.map((visitOrder, visitIdx) => {
+                            const visitRows = inGroup.filter(
+                              (r) => coerceAssignmentStopOrder(r) === visitOrder
+                            );
+                            const sortedByAward = [...visitRows].sort(
+                              (a, b) => awardRank(a.awardId) - awardRank(b.awardId)
+                            );
+                            const exhibitIds = [...new Set(visitRows.map((r) => r.exhibitId))];
+                            const exhibitConflict = exhibitIds.length > 1;
+                            const primaryExhibitId = exhibitIds[0];
+                            const ex = exhibitByDocId.get(primaryExhibitId);
+                            const color = awardColorById(sortedByAward[0].awardId);
+                            const timeVal =
+                              visitRows.find((r) => (r.scheduledTime || "").trim())?.scheduledTime ?? "";
+
                             return (
                               <div
-                                key={`${r.awardId}__${r.exhibitId}`}
-                                className={`border rounded p-3 bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-l-4 ${color.accent}`}
+                                key={`visit-${visitOrder}`}
+                                className={`border rounded p-3 bg-gray-50 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 border-l-4 ${color.accent}`}
                               >
-                                <div className="min-w-0 flex items-center gap-2">
-                                  <span
-                                    className={`inline-flex items-center px-2 py-0.5 rounded border text-xs font-semibold ${color.badge}`}
-                                  >
-                                    {awardLabelById(r.awardId)}
-                                  </span>
+                                <div className="min-w-0 flex flex-col gap-1.5">
+                                  <div className="flex flex-wrap items-center gap-1.5">
+                                    {sortedByAward.map((r) => (
+                                      <span
+                                        key={r.assignmentDocId || `${r.awardId}-${r.exhibitId}-${r.judgingGroupId}`}
+                                        className={`inline-flex items-center px-2 py-0.5 rounded border text-xs font-semibold ${awardColorById(r.awardId).badge}`}
+                                      >
+                                        {awardLabelById(r.awardId)}
+                                      </span>
+                                    ))}
+                                  </div>
                                   <div className="min-w-0">
                                     <p className="font-semibold truncate">
-                                      {ex?.exhibitName || r.exhibitId}
+                                      {ex?.exhibitName || primaryExhibitId}
                                     </p>
                                     <p className="text-xs text-gray-600 truncate">
                                       {ex?.location ? `Location: ${ex.location}` : ""}
                                     </p>
+                                    {exhibitConflict ? (
+                                      <p className="text-xs text-amber-800 mt-1 font-medium">
+                                        Warning: this visit number has different exhibit ids—fix data or re-save.
+                                      </p>
+                                    ) : null}
                                   </div>
                                 </div>
 
-                                <div className="flex items-center gap-2 justify-between sm:justify-end">
+                                <div className="flex flex-wrap items-center gap-2 justify-between lg:justify-end">
+                                  <label className="text-xs text-gray-600 flex items-center gap-1">
+                                    Time
+                                    <input
+                                      className="border rounded p-1 w-28 text-sm"
+                                      value={typeof timeVal === "string" ? timeVal : ""}
+                                      onChange={(e) => {
+                                        const v = e.target.value;
+                                        setScheduleRows((prev) =>
+                                          prev.map((row) =>
+                                            normalizeGroupId(row.judgingGroupId) === gid &&
+                                            coerceAssignmentStopOrder(row) === visitOrder
+                                              ? { ...row, scheduledTime: v }
+                                              : row
+                                          )
+                                        );
+                                      }}
+                                    />
+                                  </label>
                                   <div className="flex items-center gap-2">
                                     <button
+                                      type="button"
                                       className="px-2 py-1 border rounded bg-white hover:bg-gray-100 text-sm"
-                                      onClick={() => moveScheduleRowWithinAward(r.awardId, r.exhibitId, -1)}
-                                      disabled={idx === 0}
+                                      onClick={() => void moveVisitInGroup(visitOrder, -1)}
+                                      disabled={visitIdx <= 0}
+                                      title={
+                                        visitIdx <= 0
+                                          ? "Already first visit"
+                                          : "Move this visit earlier in the group schedule"
+                                      }
                                     >
                                       ↑
                                     </button>
                                     <button
+                                      type="button"
                                       className="px-2 py-1 border rounded bg-white hover:bg-gray-100 text-sm"
-                                      onClick={() => moveScheduleRowWithinAward(r.awardId, r.exhibitId, +1)}
-                                      disabled={idx === ordered.length - 1}
+                                      onClick={() => void moveVisitInGroup(visitOrder, +1)}
+                                      disabled={visitIdx >= visitOrders.length - 1}
+                                      title={
+                                        visitIdx >= visitOrders.length - 1
+                                          ? "Already last visit"
+                                          : "Move this visit later in the group schedule"
+                                      }
                                     >
                                       ↓
                                     </button>
                                   </div>
 
-                                  <span className="text-sm font-semibold whitespace-nowrap">
-                                    Stop #{idx + 1}
+                                  <span className="text-right text-sm font-semibold whitespace-nowrap leading-tight">
+                                    <span className="block">Visit {visitIdx + 1}</span>
+                                    <span className="block text-xs font-normal text-gray-600">
+                                      slot {visitOrder}
+                                    </span>
                                   </span>
                                 </div>
                               </div>
                             );
-                          })}
+                          });
+                        })()}
 
                         <div className="flex justify-end mt-2">
                           <button
@@ -1716,86 +1603,6 @@ export default function AdminPage() {
                       </div>
                     )}
                   </div>
-                </div>
-
-                <div className="p-5 border rounded bg-white shadow">
-                  <h2 className="font-semibold mb-4">Add / update judge</h2>
-                  <div className="grid grid-cols-1 gap-3">
-                    <label className="text-sm">
-                      Email
-                      <input
-                        className="mt-1 w-full border rounded p-2"
-                        value={judgeForm.email}
-                        onChange={(e) => setJudgeForm((p) => ({ ...p, email: e.target.value }))}
-                        placeholder="judge@illinois.edu"
-                      />
-                    </label>
-                    <label className="text-sm">
-                      Display name (optional)
-                      <input
-                        className="mt-1 w-full border rounded p-2"
-                        value={judgeForm.displayName}
-                        onChange={(e) =>
-                          setJudgeForm((p) => ({ ...p, displayName: e.target.value }))
-                        }
-                        placeholder="Jane Doe"
-                      />
-                    </label>
-                  </div>
-
-                  <div className="flex gap-2 mt-4">
-                    <button
-                      onClick={upsertJudge}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
-                    >
-                      Save judge
-                    </button>
-                    <button
-                      onClick={() => setJudgeForm({ email: "", displayName: "" })}
-                      className="px-4 py-2 border rounded"
-                    >
-                      Reset
-                    </button>
-                  </div>
-                </div>
-
-                <div className="p-5 border rounded bg-white shadow">
-                  <h2 className="font-semibold mb-4">Allowlisted judges</h2>
-                  {judges.length === 0 ? (
-                    <p className="text-sm text-gray-600">No judges yet.</p>
-                  ) : (
-                    <div className="flex flex-col gap-3">
-                      {judges.map((j) => (
-                        <div key={j.docId} className="border rounded p-3">
-                          <div className="flex justify-between gap-3">
-                            <div className="min-w-0">
-                              <p className="font-semibold truncate">{j.displayName || j.email || j.docId}</p>
-                              <p className="text-sm text-gray-700">{j.email || j.docId}</p>
-                            </div>
-                            <div className="flex flex-col gap-2 shrink-0">
-                              <button
-                                onClick={() =>
-                                  setJudgeForm({
-                                    email: j.email || j.docId,
-                                    displayName: j.displayName || "",
-                                  })
-                                }
-                                className="px-3 py-1 border rounded"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => removeJudge(j.docId)}
-                                className="px-3 py-1 border rounded text-red-700"
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
             )}
