@@ -13,6 +13,7 @@ import Visitors from "../layouts/Visitors/index.js"
 import Awards from "../layouts/Awards/index.js"
 import ExhibitApplication from "@layouts/ExhibitApplication /index.js"
 import QuantumDay from "@layouts/QuantumDay/index.js"
+import SCC from "@layouts/SCC/index.js"
 
 export default function Home() {
   return (
@@ -90,6 +91,9 @@ export default function Home() {
         </Section>
         <Section color="bg-white" title="World Quantum Day" id="world-quantum-day">
           < QuantumDay/>
+        </Section>
+        <Section color="bg-white" title="EOH x Sustainability" id="scc">
+          < SCC/>
         </Section>
         <Section title="Schedule" color="bg-white" id="schedule" wide>
           <ScheduleSection />
