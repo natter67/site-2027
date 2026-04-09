@@ -6,6 +6,7 @@ import {
   collection,
   getDocs,
   getDoc,
+  onSnapshot,
   doc,
   setDoc,
   addDoc,
@@ -14,8 +15,18 @@ import {
   arrayUnion,
   arrayRemove,
   serverTimestamp,
+  runTransaction,
+  increment,
 } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAswSl10Bv7Sq3LnFZP_nfagQJ_qdfAads",
@@ -38,9 +49,13 @@ export {
   provider,
   signInWithPopup,
   signOut,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   collection,
   getDocs,
   getDoc,
+  onSnapshot,
   setDoc,
   doc,
   addDoc,
@@ -49,4 +64,6 @@ export {
   arrayUnion,
   arrayRemove,
   serverTimestamp,
+  runTransaction,
+  increment,
 };

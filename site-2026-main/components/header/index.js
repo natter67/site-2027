@@ -1,48 +1,77 @@
-import { Fragment, useState } from "react"
+import { Fragment, useMemo, useState } from "react"
 import Button from "@/button"
 import Link from "next/link"
 import MobileMenu from "@/mobile-menu"
-import { useRouter } from "next/navigation"
+import { useAuth } from "../../providers/Auth"
 
 export default function Header({ headerItems }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const router = useRouter()
+  const { user, loading } = useAuth()
 
-  // hardcore js right here
-  let mobileMenu = []
-  headerItems.forEach((item) => {
-    if (typeof item.menuItems === "undefined") {
-      mobileMenu.push(item)
-    } else {
-      if (item.href && !item.noMobile)
-        mobileMenu.push({ text: item.text, href: item.href, type: item.type })
-      item.menuItems.forEach((item) => {
-        mobileMenu.push(item)
-      })
+  const mobileMenu = useMemo(() => {
+    // hardcore js right here
+    const items = []
+    headerItems.forEach((item) => {
+      if (typeof item.menuItems === "undefined") {
+        items.push(item)
+      } else {
+        if (item.href && !item.noMobile)
+          items.push({ text: item.text, href: item.href, type: item.type })
+        item.menuItems.forEach((child) => {
+          items.push(child)
+        })
+      }
+    })
+
+    if (!loading) {
+      if (user) {
+        items.push({ text: "Account", href: "/account", type: undefined })
+      } else {
+        items.push({ text: "Login", href: "/login", type: undefined })
+      }
     }
-  })
+    return items
+  }, [headerItems, user, loading])
 
   return (
     <Fragment>
-      {/* Mobile */} 
-      <div className="fixed top-0 lg:hidden w-screen h-24 bg-white border-4 flex flex-col justify-center z-30">
-        <div className="flex justify-center flex-row w-full">
-          <Link href="/" aria-label="Engineering Open House home">
+      {/* Mobile */}
+      <div className="fixed top-0 z-30 flex h-24 w-screen flex-col justify-center border-4 bg-white lg:hidden">
+        <div className="flex w-full items-center justify-between gap-2 px-4 sm:px-6">
+          <Link href="/" aria-label="Engineering Open House home" className="shrink-0">
             <img
               src="/assets/logo/eohheader.svg"
               alt="Engineering Open House"
-              className="absolute left-6 top-0 h-16 w-min mt-3 cursor-pointer object-contain "
+              className="h-14 w-auto cursor-pointer object-contain sm:h-16"
             />
           </Link>
 
-          <img
-            src="/assets/ui/menu.svg"
-            className="absolute right-0 top-8 w-min h-10 mr-10 cursor-pointer object-contain"
+          <div className="flex min-w-0 flex-1 justify-center px-1">
+            <Button
+              text="Visitor View"
+              href="/vv"
+              type="green"
+              className="uppercase text-center font-montserrat"
+              style={{ fontWeight: 700, fontSize: 14 }}
+            >
+              Visitor View
+            </Button>
+          </div>
+
+          <button
+            type="button"
+            className="shrink-0 p-1"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-controls="mobile-menu"
-          />
+          >
+            <img
+              src="/assets/ui/menu.svg"
+              className="h-10 w-auto cursor-pointer object-contain"
+              alt=""
+            />
+          </button>
         </div>
       </div>
       <MobileMenu
@@ -53,7 +82,7 @@ export default function Header({ headerItems }) {
 
       {/* Desktop */}
       <div className="hidden lg:block fixed top-0 w-screen h-34 bg-white flex-col justify-center z-30">
-        <div className="w-4/5 m-auto py-0">
+        <div className="w-5/6 m-auto py-0">
           <nav className="flex flex-row w-full" aria-label="Main navigation">
             <Link href="/" aria-label="Engineering Open House home">
               <img
@@ -85,6 +114,28 @@ export default function Header({ headerItems }) {
                   {text}
                 </Button>
               ))}
+
+              {!loading && (
+                user ? (
+                  <Button
+                    text="Account"
+                    href="/account"
+                    className="mr-3 uppercase text-center font-montserrat"
+                    style={{ fontWeight: 700, fontSize: 14 }}
+                  >
+                    Account
+                  </Button>
+                ) : (
+                  <Button
+                    text="Login"
+                    href="/login"
+                    className="mr-3 uppercase text-center font-montserrat"
+                    style={{ fontWeight: 700, fontSize: 14 }}
+                  >
+                    Login
+                  </Button>
+                )
+              )}
             </div>
           </nav>
         </div>

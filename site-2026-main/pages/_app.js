@@ -2,6 +2,7 @@ import { Doppio_One, Montserrat } from 'next/font/google';
 import { Fragment } from "react";
 import "tailwindcss/tailwind.css";
 import BasicApp from "../layouts/BasicApp";
+import { AuthProvider } from "../providers/Auth";
 import "../styles/animations.css";
 import "../styles/index.css";
 
@@ -50,7 +51,9 @@ function EOHApp(props) {
         rel="stylesheet"
       ></link>
       <main className={`${montserrat.variable} ${doppioOne.variable} font-sans`}>
-        <BasicApp {...props} />
+        <AuthProvider>
+          <BasicApp {...props} />
+        </AuthProvider>
       </main>
     </Fragment>
   );

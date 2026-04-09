@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { firestore, collection, getDocs } from "utilities/firebaseApp";
+import { useAuth } from "../../providers/Auth";
 
 // ── Crown SVG ────────────────────────────────────────────────────────────────
 function CrownIcon() {
@@ -32,22 +33,26 @@ function InfoIcon() {
 }
 
 // ── Podium Block ──────────────────────────────────────────────────────────────
-function PodiumBlock({ place, name, height, bgClass }) {
+function PodiumBlock({ place, name, points, height, bgClass }) {
     const fontSize = place === 1 ? "text-4xl" : "text-2xl";
+    const pts = Number(points ?? 0);
 
     return (
         <div className="flex flex-col items-center">
-            <span className="font-montserrat font-semibold text-gray-700 text-sm mb-2 text-center max-w-[110px] leading-tight">
+            <span className="font-montserrat font-semibold text-gray-700 text-sm mb-1 text-center max-w-[110px] leading-tight">
                 {name}
             </span>
             <div
-                className={`flex items-center justify-center rounded-t-xl border border-gray-200 ${bgClass}`}
+                className={`flex flex-col items-center justify-center rounded-t-xl border border-gray-200 ${bgClass}`}
                 style={{ height, width: place === 1 ? 120 : 100 }}
             >
-                <span className={`${fontSize} font-extrabold text-white`}>
+                <span className={`${fontSize} font-extrabold text-white leading-none`}>
                     {place}
                 </span>
             </div>
+            <span className="font-montserrat font-bold text-gray-600 text-xs mt-2 -mb-4 tabular-nums">
+                {pts.toLocaleString()} pts
+            </span>
         </div>
     );
 }
@@ -78,10 +83,17 @@ function InfoModal({ onClose }) {
 }
 
 // ── Main Component ─────────────────────────────────────────────────────────────
-export default function Leaderboard() {
+const BOARD_KEYS = {
+    USERS: "USERS",
+    EXHIBITS: "EXHIBITS",
+};
+
+export default function Leaderboard({ embedded = false }) {
+    const { user: authUser } = useAuth();
     const [exhibits, setExhibits] = useState([]);
     const [users, setUsers] = useState([]);
     const [infoVisible, setInfoVisible] = useState(false);
+    const [activeBoard, setActiveBoard] = useState(BOARD_KEYS.USERS);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -103,25 +115,47 @@ export default function Leaderboard() {
     }, []);
 
 
-    const renderBoard = (boardData, label) => {
+    const renderBoard = (boardData, label, { hideTitle = false } = {}) => {
         const boardTop3 = boardData.slice(0, 3);
         const boardRest = boardData.slice(3, 10);
+        const showYouRow = label === "Users" && authUser?.uid;
+        const yourEntry = showYouRow ? boardData.find((row) => row.id === authUser.uid) : null;
+        const yourPoints = Number(yourEntry?.points ?? 0);
 
         return (
-            <div className="flex flex-col flex-1 min-w-0">
-                {/* Board Title */}
-                <h2 className="font-montserrat text-xl font-extrabold text-gray-800 text-center mb-4">
-                    {label}
-                </h2>
+            <div className="flex min-w-0 flex-1 mt-5 flex-col">
+                {!hideTitle ? (
+                    <h2 className="mb-4 text-center font-montserrat text-xl font-extrabold text-gray-800">
+                        {label}
+                    </h2>
+                ) : null}
 
                 {/* Podium */}
                 {boardTop3.length >= 3 && (
                     <div className="flex flex-col items-center mb-6">
                         <CrownIcon />
                         <div className="flex items-end gap-2 mt-3">
-                            <PodiumBlock place={2} name={boardTop3[1].name} height={85} bgClass="bg-theme-orange" />
-                            <PodiumBlock place={1} name={boardTop3[0].name} height={110} bgClass="bg-theme-dark-purple" />
-                            <PodiumBlock place={3} name={boardTop3[2].name} height={70} bgClass="bg-theme-yellow" />
+                            <PodiumBlock
+                                place={2}
+                                name={boardTop3[1].name}
+                                points={boardTop3[1].points}
+                                height={85}
+                                bgClass="bg-theme-orange"
+                            />
+                            <PodiumBlock
+                                place={1}
+                                name={boardTop3[0].name}
+                                points={boardTop3[0].points}
+                                height={110}
+                                bgClass="bg-theme-dark-purple"
+                            />
+                            <PodiumBlock
+                                place={3}
+                                name={boardTop3[2].name}
+                                points={boardTop3[2].points}
+                                height={70}
+                                bgClass="bg-theme-yellow"
+                            />
                         </div>
                     </div>
                 )}
@@ -139,6 +173,20 @@ export default function Leaderboard() {
                         Points <InfoIcon />
                     </button>
                 </div>
+
+                {showYouRow ? (
+                    <div className="mb-3 flex items-center justify-between rounded-2xl border border-gray-200 px-4 py-3 shadow-sm bg-theme-green">
+                        <span className="font-montserrat font-semibold text-gray-900">You</span>
+                        <div className="flex flex-col items-end">
+                            <span className="font-montserrat font-bold text-gray-900 text-lg leading-none tabular-nums">
+                                {yourPoints.toLocaleString()}
+                            </span>
+                            <span className="font-montserrat text-gray-700 text-[10px] font-bold uppercase tracking-wider">
+                                pts
+                            </span>
+                        </div>
+                    </div>
+                ) : null}
 
                 {/* Rank List */}
                 <div className="flex flex-col gap-2">
@@ -171,16 +219,46 @@ export default function Leaderboard() {
     };
 
     return (
-        <div className="min-h-screen w-full bg-white flex flex-col items-center">
+        <div
+            className={`flex w-full flex-col items-center bg-white ${
+                embedded ? "min-h-0 pb-4" : "min-h-screen"
+            }`}
+        >
             <div className="w-full max-w-4xl px-4">
-
-                {/* Side-by-side boards */}
-                <div className="flex flex-col md:flex-row gap-10">
-                    {renderBoard(exhibits, "Exhibits")}
-                    <div className="hidden md:block w-px bg-gray-200" />
-                    {renderBoard(users, "Users")}
+                {/* Mobile: toggle + single board (default Users) */}
+                <div className="mx-auto w-full mt-5 max-w-lg md:hidden">
+                    <div className="mb-6 flex justify-center gap-3 sm:gap-4">
+                        {[BOARD_KEYS.USERS, BOARD_KEYS.EXHIBITS].map((key) => {
+                            const label =
+                                key === BOARD_KEYS.EXHIBITS ? "Exhibits" : "Users";
+                            const selected = activeBoard === key;
+                            return (
+                                <button
+                                    key={key}
+                                    type="button"
+                                    onClick={() => setActiveBoard(key)}
+                                    className={`rounded-full border px-5 py-2 font-montserrat text-sm font-semibold transition-colors sm:px-7 sm:text-base ${
+                                        selected
+                                            ? "border-gray-800 bg-gray-800 text-white"
+                                            : "border-gray-200 bg-white text-gray-600 hover:border-gray-400"
+                                    }`}
+                                >
+                                    {label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    {activeBoard === BOARD_KEYS.USERS
+                        ? renderBoard(users, "Users", { hideTitle: true })
+                        : renderBoard(exhibits, "Exhibits", { hideTitle: true })}
                 </div>
 
+                {/* Desktop: side-by-side boards */}
+                <div className="hidden flex-col gap-10 md:flex md:flex-row">
+                    {renderBoard(exhibits, "Exhibits")}
+                    <div className="hidden w-px bg-gray-200 md:block" />
+                    {renderBoard(users, "Users")}
+                </div>
             </div>
 
             {/* Info Modal */}

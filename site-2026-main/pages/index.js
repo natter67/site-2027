@@ -34,10 +34,6 @@ export default function Home() {
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
-        <Section color="bg-white" title="Leaderboard" id="leaderboard">
-          {/* < Leaderboard/> */}
-          <p>Coming Soon!</p>
-        </Section>
         <Section
           color="bg-cover bg-center"
           id="keynote"

@@ -8,14 +8,32 @@ export default function MenuItem({
   className,
   children,
   kill,
+  onClick,
 }) {
-  const link = target ? (
-    <a href={href} target={target}>
-      {children}
-    </a>
-  ) : (
-    <Link href={href} className="font-montserrat">{children}</Link>
-  );
+  const handleClick = (e) => {
+    if (typeof onClick === "function") {
+      e?.preventDefault?.();
+      onClick(e);
+    }
+    kill?.();
+  };
+
+  const content =
+    typeof href === "string" ? (
+      target ? (
+        <a href={href} target={target} onClick={handleClick}>
+          {children}
+        </a>
+      ) : (
+        <Link href={href} className="font-montserrat" onClick={handleClick}>
+          {children}
+        </Link>
+      )
+    ) : (
+      <button type="button" className="font-montserrat w-full" onClick={handleClick}>
+        {children}
+      </button>
+    );
 
   return (
     <div
@@ -24,9 +42,8 @@ export default function MenuItem({
                   ${getStyles(type)}
                   ${typeof href === "undefined" && `cursor-default`}
                   ${className}`}
-      onClick={kill}
     >
-      {link}
+      {content}
     </div>
   );
 }
