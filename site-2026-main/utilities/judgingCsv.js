@@ -4,10 +4,10 @@ function normHeader(s) {
   return String(s ?? "")
     .trim()
     .toLowerCase()
+    .replace(/\u2019/g, "'")
     .replace(/\s+/g, " ");
 }
 
-/** Map normalized header → canonical key */
 const HEADER_KEYS = [
   ["group #", "group", "group number", "judging group", "group id"],
   ["expected time", "time", "scheduled time"],
@@ -26,6 +26,21 @@ function headerToKey(cell) {
     if (idx === 2) return "awardsRaw";
     if (idx === 3) return "exhibitNum";
     if (idx === 4) return "exhibitName";
+  }
+  if (
+    n === "pin" ||
+    n === "pin #" ||
+    n === "pin number" ||
+    n === "pin code" ||
+    n === "group pin" ||
+    n === "group pin #" ||
+    n === "judging pin" ||
+    n === "judging group pin" ||
+    n === "4 digit pin" ||
+    n === "4-digit pin" ||
+    n === "four digit pin"
+  ) {
+    return "groupPin";
   }
   if (n.includes("group") && (n.includes("#") || n.includes("number"))) return "groupId";
   if (n.includes("award")) return "awardsRaw";
@@ -49,6 +64,11 @@ function buildAwardAliasMap() {
     m.set(normHeader(a.label), a.id);
     const short = String(a.label).replace(/\s+award\s*$/i, "").trim();
     if (short) m.set(normHeader(short), a.id);
+    const aliases = Array.isArray(a.aliases) ? a.aliases : [];
+    for (const raw of aliases) {
+      const k = normHeader(raw);
+      if (k) m.set(k, a.id);
+    }
   }
   return m;
 }
@@ -93,18 +113,20 @@ export function resolveExhibitId(exhibits, exhibitNumRaw, exhibitNameRaw) {
 
 /**
  * Parse CSV text into normalized rows. Does not write Firestore.
- * @returns {{ rows: Array<{groupId:string, scheduledTime:string, awardIds:string[], exhibitId:string}>, errors: string[] }}
+ * @returns {{ rows: Array<...>, errors: string[], pinsByGroup: Record<string, string> }}
  */
 export function parseJudgingScheduleCsv(csvText, exhibits) {
   const errors = [];
   const rows = [];
+  /** @type {Map<string, string>} */
+  const pinAccumulator = new Map();
   const lines = String(csvText ?? "")
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter(Boolean);
   if (lines.length < 2) {
     errors.push("CSV needs a header row and at least one data row.");
-    return { rows, errors };
+    return { rows, errors, pinsByGroup: {} };
   }
 
   function parseLine(line) {
@@ -128,7 +150,11 @@ export function parseJudgingScheduleCsv(csvText, exhibits) {
     return out;
   }
 
-  const headerCells = parseLine(lines[0]);
+  const headerCells = parseLine(lines[0]).map((h) =>
+    String(h ?? "")
+      .replace(/^\ufeff/g, "")
+      .trim()
+  );
   const colMap = [];
   headerCells.forEach((h, i) => {
     const key = headerToKey(h);
@@ -139,7 +165,9 @@ export function parseJudgingScheduleCsv(csvText, exhibits) {
   if (!colMap.includes("exhibitNum")) {
     errors.push('Missing an "exhibit #"-style column (exhibit name alone is not used for import).');
   }
-  if (errors.length) return { rows, errors };
+  if (errors.length) return { rows, errors, pinsByGroup: {} };
+
+  const hasPinColumn = colMap.includes("groupPin");
 
   /** One visit # per CSV row for the group; every award on that row shares it (mixed-award visits). */
   const visitCounterByGroup = new Map();
@@ -157,6 +185,29 @@ export function parseJudgingScheduleCsv(csvText, exhibits) {
       errors.push(`Row ${li + 1}: empty group.`);
       continue;
     }
+
+    if (hasPinColumn) {
+      const pinDigits = String(rec.groupPin ?? "")
+        .replace(/\u00a0/g, " ")
+        .trim()
+        .replace(/\D/g, "")
+        .slice(0, 4);
+      if (pinDigits.length === 4) {
+        const prev = pinAccumulator.get(groupId);
+        if (prev !== undefined && prev !== pinDigits) {
+          errors.push(
+            `Row ${li + 1}: PIN for group "${groupId}" does not match an earlier row (${prev} vs ${pinDigits}).`
+          );
+        } else {
+          pinAccumulator.set(groupId, pinDigits);
+        }
+      } else if (String(rec.groupPin ?? "").trim()) {
+        errors.push(
+          `Row ${li + 1}: PIN for group "${groupId}" must resolve to exactly 4 digits (got "${rec.groupPin}").`
+        );
+      }
+    }
+
     const scheduledTime = String(rec.scheduledTime ?? "").trim();
     const awardIds = resolveAwardIdsFromCell(rec.awardsRaw ?? "");
     if (!awardIds.length) {
@@ -197,5 +248,11 @@ export function parseJudgingScheduleCsv(csvText, exhibits) {
     return a.awardId.localeCompare(b.awardId);
   });
 
-  return { rows, errors };
+  /** @type {Record<string, string>} */
+  const pinsByGroup = {};
+  for (const [g, pin] of pinAccumulator) {
+    pinsByGroup[g] = pin;
+  }
+
+  return { rows, errors, pinsByGroup };
 }

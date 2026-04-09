@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Bus, Hourglass } from "lucide-react";
+import { Hourglass } from "lucide-react";
 
 /** Match reference MTD-style palette */
 const BG = "#12100c";
@@ -9,16 +9,12 @@ const LINE = "#f7d000";
 const LINE_DONE = "#22c55e";
 const INACTIVE_CHIP_BG = "#3d3824";
 const INACTIVE_CHIP_TEXT = "#f0d030";
+/** Top timeline chips: lighter panel + high-contrast type (still neutral, not golden). */
+const STRIP_CHIP_BG = "#524c3a";
+const STRIP_CHIP_TEXT = "#fffef8";
+const STRIP_CHIP_MUTED = "#ddd5c4";
+const STRIP_CHIP_BORDER_ACTIVE = "#f5f1e6";
 const PILL_BG = "#2a2618";
-
-const ROUTE_DOT_COLORS = [
-  "#e53935",
-  "#1e88e5",
-  "#43a047",
-  "#fb8c00",
-  "#8e24aa",
-  "#00acc1",
-];
 
 function MtdRouteCard({ block, onRefresh }) {
   const { timeline, label } = block;
@@ -94,7 +90,8 @@ function MtdRouteCard({ block, onRefresh }) {
             const active = i === selectedIdx;
             const isPast = stop.status === "past";
             const isHereChip = stop.status === "here";
-            const chipDone = isPast || isHereChip;
+            const isNextChip = stop.status === "next";
+            const chipDone = isPast;
             const timeStr = stop.time && stop.time !== "—" ? stop.time : `Stop ${i + 1}`;
             const chipKey =
               stop.judgingGroupId != null && stop.stopOrder != null
@@ -113,32 +110,30 @@ function MtdRouteCard({ block, onRefresh }) {
                   setSelectedIdx(i);
                   scrollToRow(i);
                 }}
-                className={`snap-start touch-manipulation box-border flex h-[4.75rem] flex-col items-center justify-center rounded-2xl border-2 px-2 py-2 text-center active:scale-[0.98] transition-[opacity,transform,background-color,color,border-color] duration-200 ease-out ${
+                className={`snap-start touch-manipulation box-border flex h-[4.75rem] flex-col items-center justify-center rounded-2xl border-2 px-2 py-2 text-center active:scale-[0.98] transition-[opacity,transform,border-color,box-shadow] duration-200 ease-out ${
                   timeline.length <= 4
                     ? "min-w-0 flex-1 basis-0"
                     : "w-[7rem] shrink-0"
-                } ${active ? "border-black/25 shadow-md" : "border-transparent"} ${
-                  chipDone ? "opacity-80" : "opacity-100"
-                }`}
-                style={
-                  active
-                    ? { backgroundColor: YELLOW, color: "#111" }
-                    : { backgroundColor: INACTIVE_CHIP_BG, color: INACTIVE_CHIP_TEXT }
-                }
+                } ${active ? "shadow-md" : ""} ${chipDone ? "opacity-[0.92]" : "opacity-100"}`}
+                style={{
+                  backgroundColor: STRIP_CHIP_BG,
+                  color: STRIP_CHIP_TEXT,
+                  borderColor: active ? STRIP_CHIP_BORDER_ACTIVE : "#0a0a0a",
+                  borderWidth: active ? 3 : 2,
+                }}
               >
                 <span
-                  className={`flex min-h-[2.25rem] w-full items-center justify-center break-words font-black tabular-nums leading-tight ${
-                    active ? "text-[1.05rem] sm:text-[1.1rem]" : "text-[0.95rem] sm:text-[1rem]"
+                  className={`flex min-h-[2.25rem] w-full items-center justify-center break-words font-black tabular-nums leading-tight text-[1rem] sm:text-[1.05rem] [text-shadow:0_1px_0_rgba(0,0,0,0.35)] ${
+                    active ? "sm:text-[1.1rem]" : ""
                   }`}
                 >
                   {timeStr}
                 </span>
                 <span
-                  className={`mt-1 font-black uppercase tracking-wide text-[9px] leading-none ${
-                    active ? "text-black/90" : "opacity-85"
-                  }`}
+                  className="mt-1 font-black uppercase tracking-wide text-[10px] leading-tight sm:text-[11px]"
+                  style={{ color: STRIP_CHIP_MUTED }}
                 >
-                  {isPast ? "Visited" : isHereChip ? "Done" : "Scheduled"}
+                  {isPast ? "Visited" : isNextChip ? "Up next" : isHereChip ? "Done" : "Scheduled"}
                 </span>
               </button>
             );
@@ -237,15 +232,17 @@ function MtdRouteCard({ block, onRefresh }) {
                       ) : null}
 
                       <div className="flex items-center gap-2 flex-wrap">
-                        <Bus className="h-4 w-4 text-[#a09870] shrink-0" strokeWidth={2.5} />
                         {badges.map((b, bi) => {
                           const text = b.label ?? b.n ?? "";
                           if (!text) return null;
                           return (
                             <span
                               key={`${text}-${bi}`}
-                              className="inline-flex max-w-[11rem] items-center justify-center rounded-full px-2 py-1 text-[10px] font-bold text-white text-center leading-snug shadow-sm border border-black/20"
-                              style={{ backgroundColor: b.color || ROUTE_DOT_COLORS[bi % ROUTE_DOT_COLORS.length] }}
+                              className="inline-flex max-w-[11rem] items-center justify-center rounded-full px-2 py-1 text-[10px] font-bold text-center leading-snug border-2 border-black"
+                              style={{
+                                backgroundColor: INACTIVE_CHIP_BG,
+                                color: INACTIVE_CHIP_TEXT,
+                              }}
                             >
                               {text}
                             </span>

@@ -4,7 +4,7 @@ import Head from "next/head";
 import { firestore, doc } from "utilities/firebase";
 import { onSnapshot } from "firebase/firestore";
 import ExhibitorBusSchedule from "@/judging/ExhibitorBusSchedule";
-import { judgeCheckinDocId, checkinIdentityKeyFromAssignment } from "@utilities/judging";
+import { normalizeGroupId, checkinIdentityKeyFromGroup } from "@utilities/judging";
 import { loadAssignmentsForExhibit, buildExhibitorBusRows } from "@utilities/judgingExhibitProgress";
 import { fetchStrapiExhibitById } from "@utilities/strapiExhibits";
 
@@ -79,30 +79,30 @@ export default function JudgingExhibitorProgressPage() {
     refreshBus();
   }, [exhibitId, assignmentsForExhibit, refreshBus]);
 
-  const checkinWatchKey = useMemo(
-    () =>
-      assignmentsForExhibit
-        .map(({ awardId, assignment }) => `${awardId}:${assignment?.id ?? ""}`)
-        .sort()
-        .join("|"),
-    [assignmentsForExhibit]
-  );
+  const judgingGroupIdsForWatch = useMemo(() => {
+    const s = new Set();
+    for (const { assignment } of assignmentsForExhibit) {
+      const g = normalizeGroupId(assignment?.judgingGroupId);
+      if (g) s.add(g);
+    }
+    return [...s].sort();
+  }, [assignmentsForExhibit]);
 
   useEffect(() => {
     if (!exhibitId || !assignmentsForExhibit.length) return;
     const unsubs = [];
 
-    for (const { awardId, assignment } of assignmentsForExhibit) {
-      const key = checkinIdentityKeyFromAssignment(assignment);
+    for (const g of judgingGroupIdsForWatch) {
+      const key = checkinIdentityKeyFromGroup(g);
       if (!key) continue;
-      const ref = doc(firestore, "judgeCheckins", judgeCheckinDocId(awardId, key));
+      const ref = doc(firestore, "judgeCheckins", key);
       unsubs.push(onSnapshot(ref, () => refreshBus()));
     }
 
     return () => {
       unsubs.forEach((u) => u());
     };
-  }, [exhibitId, checkinWatchKey, refreshBus]);
+  }, [exhibitId, judgingGroupIdsForWatch.join("|"), refreshBus]);
 
   const title = useMemo(() => {
     return (
