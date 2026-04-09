@@ -111,7 +111,7 @@ const SpecialEventCard = ({ event, idx, toggleFavorite }) => {
           </div>
 
           {/* Description */}
-          <div className={`text-white/90 leading-relaxed my-1 ${expanded ? '' : 'line-clamp-4'}`}>
+          <div className={`text-white/90 leading-relaxed whitespace-pre-line my-1 ${expanded ? '' : 'line-clamp-4'}`}>
             <div dangerouslySetInnerHTML={{ __html: event.description }} />
           </div>
 

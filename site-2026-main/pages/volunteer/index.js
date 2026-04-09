@@ -201,8 +201,8 @@ export default function VolunteerPortalReserved() {
       </div>
 
 
-
-      <div className="w-screen mt-4 mb-16 flex flex-col items-center">
+      {/* Disabled */}
+      {false && <div className="w-screen mt-4 mb-16 flex flex-col items-center">
         <h1 className="font-bold text-3xl mb-4">Volunteer Sign Up</h1>
 
         {/* Requirements */}
@@ -342,7 +342,7 @@ export default function VolunteerPortalReserved() {
             )}
           </div>
         )}
-      </div>
+      </div>}
     </div>
       );
 }

@@ -14,6 +14,7 @@ import Awards from "../layouts/Awards/index.js"
 import ExhibitApplication from "@layouts/ExhibitApplication /index.js"
 import QuantumDay from "@layouts/QuantumDay/index.js"
 import SCC from "@layouts/SCC/index.js"
+import Leaderboard from "@layouts/Leaderboard/index.js"
 
 export default function Home() {
   return (
@@ -32,6 +33,10 @@ export default function Home() {
         </Section>  */}
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
+        </Section>
+        <Section color="bg-white" title="Leaderboard" id="leaderboard">
+          {/* < Leaderboard/> */}
+          <p>Coming Soon!</p>
         </Section>
         <Section
           color="bg-cover bg-center"

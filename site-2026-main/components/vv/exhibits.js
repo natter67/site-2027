@@ -110,7 +110,7 @@ const ExhibitCard = ({ exhibit, idx }) => {
           )}
 
           {/* Content */}
-          <div className={`text-white/90 leading-relaxed my-1 ${expanded ? '' : 'h-24 line-clamp-4'}`}>
+          <div className={`text-white/90 leading-relaxed whitespace-pre-line my-1 ${expanded ? '' : 'h-24 line-clamp-4'}`}>
             {exhibit.content}
           </div>
 

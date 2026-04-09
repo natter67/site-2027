@@ -52,7 +52,7 @@ export const Modal = ({ close, event }) => {
 						<span>{event.location}</span>
 					</span>
 					<div>
-						<p>{event.description}</p>
+						<p className="whitespace-pre-line">{event.description}</p>
 						<br></br>
 						<p>{event.timeDisplay}</p>
 					</div>
