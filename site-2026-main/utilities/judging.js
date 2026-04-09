@@ -1,6 +1,9 @@
 /**
  * Helpers for judging groups, check-in document IDs, and PIN hashing.
  * PINs are stored as SHA-256 hex of `${groupId}:${pin}` (verify client-side after reading group doc).
+ *
+ * Schedule rows live in `judgingStops` (see judgingStops.js). Check-ins: `judgeCheckins/{g_<groupId>}`
+ * with `visitedStopOrders` (per-slot check-ins) and `lastStopOrder` (most recent tap, for compatibility).
  */
 
 export function normalizeEmail(email) {
@@ -11,32 +14,7 @@ export function normalizeGroupId(groupId) {
   return (groupId || "").trim();
 }
 
-/**
- * Separator for composite Firestore doc ids under awardAssignments/{award}/exhibits/{id}.
- * Same exhibit may appear on the same award for multiple judging groups (one doc per group).
- */
-export const ASSIGNMENT_EXHIBIT_DOC_SEP = "__g__";
-
-/** Firestore document id for an assignment row (judgingGroupId + exhibitId). */
-export function awardAssignmentExhibitDocId(judgingGroupId, exhibitId) {
-  const g = normalizeGroupId(judgingGroupId);
-  const e = String(exhibitId ?? "").trim();
-  if (!g || !e) return e;
-  return `${g}${ASSIGNMENT_EXHIBIT_DOC_SEP}${e}`;
-}
-
-/** Real exhibit id from assignment doc id + stored fields (legacy docs use exhibit id alone as doc id). */
-export function exhibitIdFromAssignmentDoc(docId, data) {
-  const fromField = String(data?.exhibitId ?? "").trim();
-  if (fromField) return fromField;
-  const id = String(docId ?? "");
-  const sep = ASSIGNMENT_EXHIBIT_DOC_SEP;
-  const i = id.indexOf(sep);
-  if (i >= 0) return id.slice(i + sep.length);
-  return id;
-}
-
-/** Identity segment used inside judgeCheckins doc id: email, or g_<groupId> */
+/** Identity segment for judgeCheckins document id: email, or g_<groupId> */
 export function checkinIdentityKeyFromEmail(email) {
   return normalizeEmail(email);
 }
@@ -46,10 +24,12 @@ export function checkinIdentityKeyFromGroup(groupId) {
   return g ? `g_${g}` : "";
 }
 
-export function judgeCheckinDocId(awardId, identityKey) {
-  const a = (awardId || "").trim();
-  const k = (identityKey || "").trim();
-  return `${a}__${k}`;
+/**
+ * One Firestore document per judging group session (Fieldstone: lastStopOrder).
+ * Same value as checkinIdentityKeyFromGroup when using group PIN login.
+ */
+export function judgeSessionCheckinDocId(groupId) {
+  return checkinIdentityKeyFromGroup(groupId);
 }
 
 export async function sha256Hex(text) {
@@ -100,6 +80,30 @@ export function coerceAssignmentStopOrder(row) {
 }
 
 /**
+ * Slot numbers (`stopOrder`) this group has checked in. Uses `visitedStopOrders` when present;
+ * otherwise infers consecutive 1…lastStopOrder from legacy check-in docs.
+ */
+export function visitedStopOrderSetFromCheckin(checkin) {
+  /** @type {Set<number>} */
+  const s = new Set();
+  if (!checkin || typeof checkin !== "object") return s;
+  const raw = checkin.visitedStopOrders;
+  if (Array.isArray(raw)) {
+    for (const x of raw) {
+      const n = typeof x === "number" ? x : Number(x);
+      if (Number.isFinite(n) && n >= 1) s.add(n);
+    }
+  }
+  if (s.size === 0) {
+    const lo = checkin.lastStopOrder;
+    if (typeof lo === "number" && lo >= 1) {
+      for (let i = 1; i <= lo; i++) s.add(i);
+    }
+  }
+  return s;
+}
+
+/**
  * Minutes from midnight [0, 1439] for sorting; `null` = no usable time (judges list those stops last).
  * Handles values like "10:40 AM", "10:40AM", "14:30".
  */
@@ -127,7 +131,7 @@ export function scheduleTimeSortKey(scheduledTimeRaw) {
   return null;
 }
 
-/** Resolve Firestore check-in identity key from an assignment doc. */
+/** Resolve Firestore check-in identity key from a judging stop / assignment doc. */
 export function checkinIdentityKeyFromAssignment(assignment) {
   if (!assignment) return "";
   const gid = normalizeGroupId(assignment.judgingGroupId);

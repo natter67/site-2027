@@ -8,6 +8,7 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   setDoc,
   updateDoc,
   deleteDoc,
@@ -15,13 +16,13 @@ import {
 } from "utilities/firebase";
 import { onSnapshot, query, orderBy, where } from "firebase/firestore";
 import { isAdminEmail } from "@utilities/admin";
-import { AWARDS, awardColorById, awardLabelById } from "@utilities/awards";
+import { AWARDS, awardColorById, awardLabelById, awardRubricUrlById } from "@utilities/awards";
 import {
   pinSha256ForGroup,
   normalizeGroupId,
   coerceAssignmentStopOrder,
-  awardAssignmentExhibitDocId,
 } from "@utilities/judging";
+import { JUDGING_STOPS_COLLECTION, judgingStopDocId } from "@utilities/judgingStops";
 import { parseJudgingScheduleCsv } from "@utilities/judgingCsv";
 import { fetchStrapiExhibitsForJudging } from "@utilities/strapiExhibits";
 
@@ -81,7 +82,7 @@ export default function AdminPage() {
   // Judging — exhibitor URL helper (read-only picker)
   const [exhibitorLinkExhibitId, setExhibitorLinkExhibitId] = useState("");
   const [assignmentForm, setAssignmentForm] = useState({
-    awardId: "",
+    awardIds: [],
     exhibitId: "",
     stopOrder: "",
     scheduledTime: "",
@@ -145,47 +146,33 @@ export default function AdminPage() {
       return;
     }
 
-    const unsubs = [];
-    let cancelled = false;
+    const coll = collection(firestore, JUDGING_STOPS_COLLECTION);
+    const q = query(coll, where("judgingGroupId", "==", gid));
+    const unsub = onSnapshot(
+      q,
+      (snapshot) => {
+        const incoming = snapshot.docs.map((d) => {
+          const data = d.data() || {};
+          const stopOrderRaw = coerceAssignmentStopOrder(data);
+          const awardId = String(data.awardId ?? "").trim();
+          return {
+            stopDocId: d.id,
+            exhibitId: String(data.exhibitId ?? "").trim(),
+            awardId: awardId,
+            awardLabel: data.awardLabel || awardLabelById(awardId),
+            judgeEmail: data.judgeEmail || "",
+            judgingGroupId: normalizeGroupId(data.judgingGroupId) || gid,
+            scheduledTime: typeof data.scheduledTime === "string" ? data.scheduledTime : "",
+            stopOrder: stopOrderRaw,
+            updatedAt: data.updatedAt || null,
+          };
+        });
+        setScheduleRows(incoming);
+      },
+      (err) => console.error(err)
+    );
 
-    for (const a of AWARDS) {
-      const exhibitsRef = collection(firestore, "awardAssignments", a.id, "exhibits");
-      const q = query(exhibitsRef, where("judgingGroupId", "==", gid));
-      const unsub = onSnapshot(
-        q,
-        (snapshot) => {
-          if (cancelled) return;
-            const incoming = snapshot.docs.map((d) => {
-            const data = d.data() || {};
-            const stopOrderRaw = coerceAssignmentStopOrder(data);
-            return {
-              assignmentDocId: d.id,
-              exhibitId: data.exhibitId || d.id,
-              awardId: data.awardId || a.id,
-              awardLabel: data.awardLabel || awardLabelById(data.awardId || a.id),
-              judgeEmail: data.judgeEmail || "",
-              judgingGroupId: data.judgingGroupId || gid,
-              scheduledTime: typeof data.scheduledTime === "string" ? data.scheduledTime : "",
-              stopOrder: stopOrderRaw,
-              updatedAt: data.updatedAt || null,
-            };
-          });
-
-          setScheduleRows((prev) => {
-            const kept = prev.filter((r) => r.awardId !== a.id);
-            const merged = [...kept, ...incoming];
-            return merged;
-          });
-        },
-        (err) => console.error(err)
-      );
-      unsubs.push(unsub);
-    }
-
-    return () => {
-      cancelled = true;
-      for (const u of unsubs) u();
-    };
+    return () => unsub();
   }, [isAdmin, scheduleGroupId]);
 
   useEffect(() => {
@@ -403,12 +390,18 @@ export default function AdminPage() {
   };
 
   const upsertAwardAssignment = async () => {
-    const awardId = (assignmentForm.awardId || "").trim();
+    const awardIds = [
+      ...new Set(
+        (Array.isArray(assignmentForm.awardIds) ? assignmentForm.awardIds : [])
+          .map((x) => String(x ?? "").trim())
+          .filter(Boolean)
+      ),
+    ];
     const exhibitId = (assignmentForm.exhibitId || "").trim();
     const judgingGroupId = normalizeGroupId(scheduleGroupId);
 
-    if (!awardId || !exhibitId || !judgingGroupId) {
-      alert("Select a judging group, award, and exhibit.");
+    if (!awardIds.length || !exhibitId || !judgingGroupId) {
+      alert("Select a judging group, at least one award, and an exhibit.");
       return;
     }
 
@@ -426,38 +419,29 @@ export default function AdminPage() {
 
     const scheduledTime = (assignmentForm.scheduledTime || "").trim();
 
-    const assignmentDocId = awardAssignmentExhibitDocId(judgingGroupId, exhibitId);
-    const compositeRef = doc(firestore, "awardAssignments", awardId, "exhibits", assignmentDocId);
-    const legacyRef = doc(firestore, "awardAssignments", awardId, "exhibits", exhibitId);
+    const writes = awardIds.map((awardId) => {
+      const stopDocId = judgingStopDocId(judgingGroupId, awardId, exhibitId);
+      const stopRef = doc(firestore, JUDGING_STOPS_COLLECTION, stopDocId);
+      const payload = {
+        awardId,
+        awardLabel: awardLabelById(awardId),
+        exhibitId,
+        judgingGroupId,
+        stopOrder: stopOrderNum,
+        ...(scheduledTime ? { scheduledTime } : {}),
+        updatedAt: serverTimestamp(),
+      };
+      return setDoc(stopRef, payload, { merge: true });
+    });
 
-    const payload = {
-      awardId,
-      awardLabel: awardLabelById(awardId),
-      exhibitId,
-      judgingGroupId,
-      stopOrder: stopOrderNum,
-      ...(scheduledTime ? { scheduledTime } : {}),
-      updatedAt: serverTimestamp(),
-    };
+    await Promise.all(writes);
 
-    const [legacySnap, compositeSnap] = await Promise.all([getDoc(legacyRef), getDoc(compositeRef)]);
-
-    if (compositeSnap.exists()) {
-      await setDoc(compositeRef, payload, { merge: true });
-    } else if (legacySnap.exists()) {
-      const leg = legacySnap.data() || {};
-      if (normalizeGroupId(leg.judgingGroupId) === judgingGroupId) {
-        await setDoc(compositeRef, payload, { merge: true });
-        if (legacyRef.id !== compositeRef.id) await deleteDoc(legacyRef);
-      } else {
-        await setDoc(compositeRef, payload, { merge: true });
-      }
-    } else {
-      await setDoc(compositeRef, payload, { merge: true });
-    }
-
-    setAssignmentForm((p) => ({ ...p, stopOrder: "", scheduledTime: "" }));
-    alert("Saved stop for this group.");
+    setAssignmentForm((p) => ({ ...p, awardIds: [], stopOrder: "", scheduledTime: "" }));
+    alert(
+      awardIds.length > 1
+        ? `Saved ${awardIds.length} awards for this stop.`
+        : "Saved stop for this group."
+    );
   };
 
   const upsertJudgingGroup = async () => {
@@ -510,7 +494,7 @@ export default function AdminPage() {
       return;
     }
     const text = await file.text();
-    const { rows, errors } = parseJudgingScheduleCsv(text, exhibits);
+    const { rows, errors, pinsByGroup = {} } = parseJudgingScheduleCsv(text, exhibits);
     if (errors.length) {
       alert(
         errors.slice(0, 12).join("\n") + (errors.length > 12 ? `\n…${errors.length - 12} more` : "")
@@ -529,7 +513,9 @@ export default function AdminPage() {
       return;
     }
     const initialPins = {};
-    for (const g of groupIds) initialPins[g] = "";
+    for (const g of groupIds) {
+      initialPins[g] = String(pinsByGroup[g] ?? "").trim();
+    }
     setCsvPendingRows(rows);
     setCsvPendingGroupIds(groupIds);
     setCsvPinByGroup(initialPins);
@@ -568,9 +554,9 @@ export default function AdminPage() {
         );
       }
       for (const r of csvPendingRows) {
-        const assignmentDocId = awardAssignmentExhibitDocId(r.groupId, r.exhibitId);
+        const stopDocId = judgingStopDocId(r.groupId, r.awardId, r.exhibitId);
         await setDoc(
-          doc(firestore, "awardAssignments", r.awardId, "exhibits", assignmentDocId),
+          doc(firestore, JUDGING_STOPS_COLLECTION, stopDocId),
           {
             awardId: r.awardId,
             awardLabel: r.awardLabel,
@@ -679,18 +665,135 @@ export default function AdminPage() {
     try {
       await Promise.all(
         toPersist.map((r) =>
-          updateDoc(
-            doc(firestore, "awardAssignments", r.awardId, "exhibits", r.assignmentDocId || r.exhibitId),
-            {
-              stopOrder: coerceAssignmentStopOrder(r),
-              updatedAt: serverTimestamp(),
-            }
-          )
+          updateDoc(doc(firestore, JUDGING_STOPS_COLLECTION, r.stopDocId), {
+            stopOrder: coerceAssignmentStopOrder(r),
+            updatedAt: serverTimestamp(),
+          })
         )
       );
     } catch (e) {
       console.error(e);
       alert("Could not save order. Try again.");
+    }
+  };
+
+  /** Delete every stop at this visit slot, then renumber remaining slots to 1…n for the group. */
+  const removeVisitInGroup = async (visitOrder) => {
+    const gid = normalizeGroupId(scheduleGroupId);
+    if (!gid || typeof visitOrder !== "number") return;
+
+    const toDelete = scheduleRows.filter(
+      (r) => normalizeGroupId(r.judgingGroupId) === gid && coerceAssignmentStopOrder(r) === visitOrder
+    );
+    if (!toDelete.length) return;
+    if (
+      !window.confirm(
+        `Remove this visit (${toDelete.length} award row(s), slot ${visitOrder})? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      await Promise.all(
+        toDelete.map((r) => deleteDoc(doc(firestore, JUDGING_STOPS_COLLECTION, r.stopDocId)))
+      );
+
+      const coll = collection(firestore, JUDGING_STOPS_COLLECTION);
+      const q = query(coll, where("judgingGroupId", "==", gid));
+      const snap = await getDocs(q);
+      const uniqueOrders = [
+        ...new Set(
+          snap.docs
+            .map((d) => coerceAssignmentStopOrder(d.data()))
+            .filter((n) => typeof n === "number" && n >= 1)
+        ),
+      ].sort((a, b) => a - b);
+      const oldToNew = new Map();
+      uniqueOrders.forEach((oldO, i) => oldToNew.set(oldO, i + 1));
+
+      const renumberWrites = [];
+      for (const d of snap.docs) {
+        const oldO = coerceAssignmentStopOrder(d.data());
+        if (oldO == null) continue;
+        const newO = oldToNew.get(oldO);
+        if (newO !== undefined && newO !== oldO) {
+          renumberWrites.push(
+            updateDoc(doc(firestore, JUDGING_STOPS_COLLECTION, d.id), {
+              stopOrder: newO,
+              updatedAt: serverTimestamp(),
+            })
+          );
+        }
+      }
+      if (renumberWrites.length) await Promise.all(renumberWrites);
+      alert("Visit removed.");
+    } catch (e) {
+      console.error(e);
+      alert("Could not remove this visit. Try again.");
+    }
+  };
+
+  /**
+   * One “visit” shares stopOrder; every award row must use the same exhibit.
+   * Doc ids include exhibit id, so correcting a typo means copy → new doc → delete old.
+   */
+  const alignVisitToExhibit = async (visitOrder, targetExhibitIdRaw) => {
+    const gid = normalizeGroupId(scheduleGroupId);
+    const targetExhibitId = String(targetExhibitIdRaw ?? "").trim();
+    if (!gid || !targetExhibitId || typeof visitOrder !== "number") return;
+
+    const visitRows = scheduleRows.filter(
+      (r) => normalizeGroupId(r.judgingGroupId) === gid && coerceAssignmentStopOrder(r) === visitOrder
+    );
+    const mis = visitRows.filter((r) => String(r.exhibitId).trim() !== targetExhibitId);
+    if (!mis.length) {
+      alert("This visit already uses one exhibit.");
+      return;
+    }
+    if (
+      !window.confirm(
+        `Point every award at this visit to exhibit #${exhibitByDocId.get(targetExhibitId)?.exhibitNumber ?? targetExhibitId}?\n\nThis updates Firestore and removes stray assignment documents.`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      for (const r of mis) {
+        const oldDocId = r.stopDocId;
+        const newDocId = judgingStopDocId(gid, r.awardId, targetExhibitId);
+        if (oldDocId === newDocId) continue;
+
+        const oldRef = doc(firestore, JUDGING_STOPS_COLLECTION, oldDocId);
+        const newRef = doc(firestore, JUDGING_STOPS_COLLECTION, newDocId);
+
+        const snap = await getDoc(oldRef);
+        if (!snap.exists()) continue;
+        const data = snap.data() || {};
+        const payload = {
+          ...data,
+          awardId: r.awardId,
+          awardLabel: awardLabelById(r.awardId),
+          exhibitId: targetExhibitId,
+          judgingGroupId: gid,
+          stopOrder: coerceAssignmentStopOrder(r) ?? data.stopOrder,
+          scheduledTime: typeof r.scheduledTime === "string" ? r.scheduledTime : data.scheduledTime ?? "",
+          updatedAt: serverTimestamp(),
+        };
+
+        const existingNew = await getDoc(newRef);
+        if (existingNew.exists()) {
+          await setDoc(newRef, payload, { merge: true });
+        } else {
+          await setDoc(newRef, payload);
+        }
+        await deleteDoc(oldRef);
+      }
+      alert("Updated this visit so all awards use the same exhibit.");
+    } catch (e) {
+      console.error(e);
+      alert("Could not align this visit. Check the console.");
     }
   };
 
@@ -723,13 +826,7 @@ export default function AdminPage() {
           for (const r of atVisit) {
             writes.push(
               setDoc(
-                doc(
-                  firestore,
-                  "awardAssignments",
-                  r.awardId,
-                  "exhibits",
-                  r.assignmentDocId || awardAssignmentExhibitDocId(g || gidFallback, r.exhibitId)
-                ),
+                doc(firestore, JUDGING_STOPS_COLLECTION, r.stopDocId),
                 {
                   stopOrder: newOrder,
                   scheduledTime: typeof r.scheduledTime === "string" ? r.scheduledTime : "",
@@ -1251,19 +1348,27 @@ export default function AdminPage() {
                 <div className="p-5 border rounded bg-white shadow lg:col-span-2">
                   <h2 className="font-semibold mb-4">Import schedule CSV</h2>
                   <p className="text-sm text-gray-700 mb-3">
-                    <b>Column names</b>: Group #, Expected time, Award (may be multiple), Exhibit #.
+                    <b>Column names</b>: Group #, Expected time, Award (may be multiple), Exhibit #, and
+                    optionally <span className="font-semibold">PIN</span> (4-digit, same value on every row
+                    for that group).
                     <br />
                     <br />
-                    In the award column use Design, Energy, and/or Outreach (e.g. Design Award is
-                    fine too), comma-separated if more than one award is judged in the{" "}
-                    <span className="font-medium">same visit</span> (one CSV row = one visit slot for
-                    the group; every award listed shares that slot).
+                    In the award column use a name that matches one of the labels below (the importer
+                    also accepts configured short forms and aliases). Use{" "}
+                    <span className="font-medium">commas</span> to separate multiple awards judged in the{" "}
+                    <span className="font-medium">same visit</span>. One CSV row = one visit slot for the
+                    group; every award in that cell shares that slot.
+                    <br />
+                    <span className="mt-2 block text-xs text-gray-600 leading-relaxed">
+                      <span className="font-semibold text-gray-700">Labels: </span>
+                      <span className="text-gray-800">{AWARDS.map((a) => a.label).join(" · ")}</span>
+                    </span>
                     <br />
                     <br />
-                    After you pick a file, enter a <span className="font-semibold">4-digit PIN</span>{" "}
-                    for each judging group in the sheet. PINs are saved to Firestore when you confirm
-                    import (judges use them at <code className="text-xs">/judging/&lt;group-id&gt;</code>
-                    ).
+                    If the CSV includes a PIN column, those values load into the form below (you can still
+                    edit them). Otherwise enter a <span className="font-semibold">4-digit PIN</span> per
+                    group before importing. PINs are stored when you confirm (judges use them at{" "}
+                    <code className="text-xs">/judging/&lt;group-id&gt;</code>).
                   </p>
                   <input
                     type="file"
@@ -1279,18 +1384,23 @@ export default function AdminPage() {
                   {csvPendingRows?.length ? (
                     <div className="mt-5 border rounded-lg border-amber-200 bg-amber-50/80 p-4">
                       <p className="text-sm font-semibold text-amber-950 mb-3">
-                        Set 4-digit PINs ({csvPendingRows.length} assignment row(s),{" "}
+                        Review 4-digit PINs ({csvPendingRows.length} assignment row(s),{" "}
                         {csvPendingGroupIds.length} group
                         {csvPendingGroupIds.length !== 1 ? "s" : ""})
+                      </p>
+                      <p className="text-xs text-amber-900/90 mb-3">
+                        If the CSV had a recognizable <span className="font-semibold">PIN</span> column,
+                        values show below so you can verify (edit if needed). Every group still needs four
+                        digits before import.
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                         {csvPendingGroupIds.map((gid) => (
                           <label key={gid} className="text-sm block min-w-0">
                             <span className="font-mono font-semibold text-gray-800">{gid}</span>
                             <input
-                              type="password"
+                              type="text"
                               inputMode="numeric"
-                              autoComplete="one-time-code"
+                              autoComplete="off"
                               pattern="[0-9]*"
                               maxLength={4}
                               className="mt-1 w-full border rounded p-2 font-mono tracking-widest"
@@ -1355,38 +1465,27 @@ export default function AdminPage() {
                   <div className="border-t mt-5 pt-4">
                     <h3 className="font-semibold mb-3">Add stop for selected group</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <label className="text-sm">
-                        Award
-                        <select
-                          className="mt-1 w-full border rounded p-2"
-                          value={assignmentForm.awardId}
-                          onChange={(e) =>
-                            setAssignmentForm((p) => ({ ...p, awardId: e.target.value, exhibitId: "" }))
-                          }
-                        >
-                          <option value="">Select…</option>
-                          {awardsForSelectedAssignmentExhibit.length > 0
-                            ? awardsForSelectedAssignmentExhibit.map((a) => (
-                                <option key={a.id} value={a.id}>
-                                  {a.label}
-                                </option>
-                              ))
-                            : AWARDS.map((a) => (
-                                <option key={a.id} value={a.id}>
-                                  {a.label}
-                                </option>
-                              ))}
-                        </select>
-                      </label>
-
-                      <label className="text-sm">
+                      <label className="text-sm md:col-span-2">
                         Exhibit
                         <select
                           className="mt-1 w-full border rounded p-2"
                           value={assignmentForm.exhibitId}
-                          onChange={(e) =>
-                            setAssignmentForm((p) => ({ ...p, exhibitId: e.target.value }))
-                          }
+                          onChange={(e) => {
+                            const exhibitId = e.target.value;
+                            setAssignmentForm((p) => {
+                              const ex = exhibitByDocId.get(exhibitId);
+                              const allowed = Array.isArray(ex?.awardIds)
+                                ? new Set(
+                                    ex.awardIds.map((s) => String(s).trim()).filter(Boolean)
+                                  )
+                                : null;
+                              let awardIds = p.awardIds;
+                              if (allowed && allowed.size > 0) {
+                                awardIds = p.awardIds.filter((aid) => allowed.has(aid));
+                              }
+                              return { ...p, exhibitId, awardIds };
+                            });
+                          }}
                         >
                           <option value="">Select…</option>
                           {exhibits.map((ex) => (
@@ -1397,6 +1496,40 @@ export default function AdminPage() {
                           ))}
                         </select>
                       </label>
+
+                      <div className="text-sm md:col-span-2">
+                        <span className="block mb-1.5 font-medium">Awards for this stop</span>
+                        <div className="border rounded p-2 max-h-52 overflow-y-auto flex flex-col gap-2 bg-white">
+                          {(awardsForSelectedAssignmentExhibit.length > 0
+                            ? awardsForSelectedAssignmentExhibit
+                            : AWARDS
+                          ).map((a) => (
+                            <label
+                              key={a.id}
+                              className="flex items-center gap-2 cursor-pointer select-none"
+                            >
+                              <input
+                                type="checkbox"
+                                className="rounded border-gray-400"
+                                checked={assignmentForm.awardIds.includes(a.id)}
+                                onChange={() => {
+                                  setAssignmentForm((p) => {
+                                    const has = p.awardIds.includes(a.id);
+                                    const awardIds = has
+                                      ? p.awardIds.filter((x) => x !== a.id)
+                                      : [...p.awardIds, a.id];
+                                    return { ...p, awardIds };
+                                  });
+                                }}
+                              />
+                              <span>{a.label}</span>
+                            </label>
+                          ))}
+                        </div>
+                        <span className="block text-xs text-gray-500 mt-1">
+                          Check every rubric that applies at this visit (same booth, same slot).
+                        </span>
+                      </div>
 
                       <label className="text-sm">
                         Visit slot # (optional)
@@ -1411,7 +1544,8 @@ export default function AdminPage() {
                           placeholder="Auto next if empty"
                         />
                         <span className="block text-xs text-gray-500 mt-1">
-                          Use the same number for another award + exhibit to make one mixed-award visit.
+                          Leave empty for the next slot; use the same # only when adding more awards to
+                          an existing visit.
                         </span>
                       </label>
                       <label className="text-sm">
@@ -1443,7 +1577,7 @@ export default function AdminPage() {
                       <button
                         onClick={() =>
                           setAssignmentForm({
-                            awardId: "",
+                            awardIds: [],
                             exhibitId: "",
                             stopOrder: "",
                             scheduledTime: "",
@@ -1493,8 +1627,16 @@ export default function AdminPage() {
                               (a, b) => awardRank(a.awardId) - awardRank(b.awardId)
                             );
                             const exhibitIds = [...new Set(visitRows.map((r) => r.exhibitId))];
-                            const exhibitConflict = exhibitIds.length > 1;
-                            const primaryExhibitId = exhibitIds[0];
+                            const exhibitIdsSorted = [...exhibitIds].sort((a, b) => {
+                              const ea = exhibitByDocId.get(a);
+                              const eb = exhibitByDocId.get(b);
+                              const na = Number(ea?.exhibitNumber);
+                              const nb = Number(eb?.exhibitNumber);
+                              if (Number.isFinite(na) && Number.isFinite(nb)) return na - nb;
+                              return String(a).localeCompare(String(b));
+                            });
+                            const exhibitConflict = exhibitIdsSorted.length > 1;
+                            const primaryExhibitId = exhibitIdsSorted[0];
                             const ex = exhibitByDocId.get(primaryExhibitId);
                             const color = awardColorById(sortedByAward[0].awardId);
                             const timeVal =
@@ -1507,26 +1649,58 @@ export default function AdminPage() {
                               >
                                 <div className="min-w-0 flex flex-col gap-1.5">
                                   <div className="flex flex-wrap items-center gap-1.5">
-                                    {sortedByAward.map((r) => (
-                                      <span
-                                        key={r.assignmentDocId || `${r.awardId}-${r.exhibitId}-${r.judgingGroupId}`}
-                                        className={`inline-flex items-center px-2 py-0.5 rounded border text-xs font-semibold ${awardColorById(r.awardId).badge}`}
-                                      >
-                                        {awardLabelById(r.awardId)}
-                                      </span>
-                                    ))}
+                                    {sortedByAward.map((r) => {
+                                      const rubric = awardRubricUrlById(r.awardId);
+                                      return (
+                                        <span
+                                          key={r.stopDocId || `${r.awardId}-${r.exhibitId}-${r.judgingGroupId}`}
+                                          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded border text-xs font-semibold ${awardColorById(r.awardId).badge}`}
+                                        >
+                                          <span>{awardLabelById(r.awardId)}</span>
+                                          {rubric ? (
+                                            <a
+                                              href={rubric}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="font-normal text-[10px] underline underline-offset-2 text-current opacity-90 hover:opacity-100"
+                                              onClick={(e) => e.stopPropagation()}
+                                            >
+                                              Rubric
+                                            </a>
+                                          ) : null}
+                                        </span>
+                                      );
+                                    })}
                                   </div>
                                   <div className="min-w-0">
                                     <p className="font-semibold truncate">
-                                      {ex?.exhibitName || primaryExhibitId}
+                                      <span>{ex?.exhibitName || primaryExhibitId}</span>
+                                      <span className="text-gray-600 font-normal">
+                                        {" "}
+                                        · #{ex?.exhibitNumber ?? primaryExhibitId}
+                                      </span>
                                     </p>
                                     <p className="text-xs text-gray-600 truncate">
                                       {ex?.location ? `Location: ${ex.location}` : ""}
                                     </p>
                                     {exhibitConflict ? (
-                                      <p className="text-xs text-amber-800 mt-1 font-medium">
-                                        Warning: this visit number has different exhibit ids—fix data or re-save.
-                                      </p>
+                                      <div className="text-xs text-amber-800 mt-1 space-y-1.5">
+                                        <p className="font-medium leading-snug">
+                                          This visit combines several awards but they reference different exhibits.
+                                          Use one booth for the whole stop, or move an award to another visit slot.
+                                        </p>
+                                        <button
+                                          type="button"
+                                          className="text-left underline font-semibold hover:text-amber-950"
+                                          onClick={() => void alignVisitToExhibit(visitOrder, primaryExhibitId)}
+                                        >
+                                          Use{" "}
+                                          <span className="font-bold">
+                                            {ex?.exhibitName || primaryExhibitId} (#{ex?.exhibitNumber ?? primaryExhibitId})
+                                          </span>{" "}
+                                          for every award at this visit
+                                        </button>
+                                      </div>
                                     ) : null}
                                   </div>
                                 </div>
@@ -1576,6 +1750,14 @@ export default function AdminPage() {
                                       }
                                     >
                                       ↓
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="px-2 py-1 border rounded border-red-200 bg-red-50 text-red-800 hover:bg-red-100 text-sm"
+                                      onClick={() => void removeVisitInGroup(visitOrder)}
+                                      title="Remove this visit (all awards at this slot)"
+                                    >
+                                      Remove
                                     </button>
                                   </div>
 
