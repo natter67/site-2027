@@ -18,7 +18,6 @@ const useMapModal = () => {
             images = [
               "/assets/maps/tb1.jpg",
               "/assets/maps/tb2.jpg",
-              "/assets/maps/tb3.jpg",
             ];
             setNoMapAvailable(false);
         } else {
