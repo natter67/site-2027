@@ -5,22 +5,23 @@ import { useRouter } from "next/router";
 import {
   firestore,
   doc,
+  getDoc,
   setDoc,
+  updateDoc,
+  arrayUnion,
   serverTimestamp,
-  collection,
-  getDocs,
 } from "utilities/firebase";
-import { query, where, onSnapshot } from "firebase/firestore";
-import { AWARDS, awardLabelById } from "@utilities/awards";
+import { onSnapshot } from "firebase/firestore";
+import { awardLabelById, awardRubricUrlById } from "@utilities/awards";
 import {
   normalizeGroupId,
   readJudgingGroupSession,
-  judgeCheckinDocId,
   checkinIdentityKeyFromGroup,
   coerceAssignmentStopOrder,
   scheduleTimeSortKey,
-  exhibitIdFromAssignmentDoc,
+  visitedStopOrderSetFromCheckin,
 } from "@utilities/judging";
+import { fetchJudgingStopsForGroup } from "@utilities/judgingStops";
 import { fetchStrapiExhibitById } from "@utilities/strapiExhibits";
 
 /**
@@ -32,30 +33,27 @@ async function loadJudgeMergedSchedule(groupId) {
   /** @type {Map<string, { exhibitId: string, stopOrder: number, scheduledTime: string, awardIds: Set<string> }>} */
   const byKey = new Map();
 
-  for (const a of AWARDS) {
-    const coll = collection(firestore, "awardAssignments", a.id, "exhibits");
-    const q = query(coll, where("judgingGroupId", "==", gid));
-    const snap = await getDocs(q);
-    for (const d of snap.docs) {
-      const data = d.data() || {};
-      const exhibitId = exhibitIdFromAssignmentDoc(d.id, data);
-      const row = { ...data, exhibitId };
-      const o = coerceAssignmentStopOrder(row);
-      if (o == null) continue;
-      const key = `${o}\0${exhibitId}`;
-      const st = typeof data.scheduledTime === "string" ? data.scheduledTime.trim() : "";
-      if (!byKey.has(key)) {
-        byKey.set(key, {
-          exhibitId,
-          stopOrder: o,
-          scheduledTime: st,
-          awardIds: new Set([a.id]),
-        });
-      } else {
-        const cur = byKey.get(key);
-        cur.awardIds.add(a.id);
-        if (!cur.scheduledTime && st) cur.scheduledTime = st;
-      }
+  const rows = await fetchJudgingStopsForGroup(gid);
+  for (const data of rows) {
+    const exhibitId = String(data.exhibitId ?? "").trim();
+    const awardId = String(data.awardId ?? "").trim();
+    if (!exhibitId || !awardId) continue;
+    const row = { ...data, exhibitId, awardId };
+    const o = coerceAssignmentStopOrder(row);
+    if (o == null) continue;
+    const key = `${o}\0${exhibitId}`;
+    const st = typeof data.scheduledTime === "string" ? data.scheduledTime.trim() : "";
+    if (!byKey.has(key)) {
+      byKey.set(key, {
+        exhibitId,
+        stopOrder: o,
+        scheduledTime: st,
+        awardIds: new Set([awardId]),
+      });
+    } else {
+      const cur = byKey.get(key);
+      cur.awardIds.add(awardId);
+      if (!cur.scheduledTime && st) cur.scheduledTime = st;
     }
   }
 
@@ -80,7 +78,8 @@ export default function JudgingRunPage() {
   const [session, setSession] = useState(null);
   const [mergedStops, setMergedStops] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [checkinOrders, setCheckinOrders] = useState(() => new Map());
+  /** Visit slot numbers (`stopOrder`) already checked in for this group session. */
+  const [visitedStopOrders, setVisitedStopOrders] = useState([]);
   const [exhibitTitles, setExhibitTitles] = useState(() => new Map());
   const [checkInWorking, setCheckInWorking] = useState(false);
 
@@ -149,45 +148,30 @@ export default function JudgingRunPage() {
 
   const identityKey = gid ? checkinIdentityKeyFromGroup(gid) : "";
 
-  const routeAwardIds = useMemo(() => {
-    const s = new Set();
-    for (const row of mergedStops) {
-      for (const a of row.awardIds) s.add(a);
-    }
-    return [...s].sort();
-  }, [mergedStops]);
-
   useEffect(() => {
-    if (!gid || !identityKey || !routeAwardIds.length) return;
-    const unsubs = [];
+    if (!gid || !identityKey) return;
+    const ref = doc(firestore, "judgeCheckins", identityKey);
+    const unsub = onSnapshot(
+      ref,
+      (snap) => {
+        if (!snap.exists()) {
+          setVisitedStopOrders([]);
+          return;
+        }
+        const data = snap.data();
+        const v = visitedStopOrderSetFromCheckin(data);
+        setVisitedStopOrders([...v].sort((a, b) => a - b));
+      },
+      (err) => console.error(err)
+    );
 
-    for (const awardId of routeAwardIds) {
-      const ref = doc(firestore, "judgeCheckins", judgeCheckinDocId(awardId, identityKey));
-      const unsub = onSnapshot(
-        ref,
-        (snap) => {
-          const o = snap.exists() ? snap.data()?.stopOrder : null;
-          setCheckinOrders((prev) => {
-            const next = new Map(prev);
-            next.set(awardId, typeof o === "number" ? o : 0);
-            return next;
-          });
-        },
-        (err) => console.error(err)
-      );
-      unsubs.push(unsub);
-    }
-
-    return () => unsubs.forEach((u) => u());
-  }, [gid, identityKey, routeAwardIds.join("|")]);
+    return () => unsub();
+  }, [gid, identityKey]);
 
   const routeView = useMemo(() => {
     if (!mergedStops.length) return null;
-    const lastOrder =
-      routeAwardIds.length > 0
-        ? Math.max(0, ...routeAwardIds.map((a) => checkinOrders.get(a) ?? 0))
-        : 0;
-    const nextStop = mergedStops.find((s) => s.stopOrder > lastOrder) || null;
+    const visited = new Set(visitedStopOrders);
+    const nextStop = mergedStops.find((s) => !visited.has(s.stopOrder)) || null;
 
     const rows = mergedStops.map((s) => {
       const o = s.stopOrder;
@@ -195,7 +179,7 @@ export default function JudgingRunPage() {
       const time = s.scheduledTime?.trim() || null;
       let status = "future";
       if (typeof o === "number") {
-        if (o <= lastOrder) status = "past";
+        if (visited.has(o)) status = "past";
         else if (
           nextStop &&
           s.exhibitId === nextStop.exhibitId &&
@@ -214,39 +198,46 @@ export default function JudgingRunPage() {
       };
     });
 
-    return { lastOrder, nextStop, rows };
-  }, [mergedStops, checkinOrders, exhibitTitles, routeAwardIds]);
+    return { nextStop, rows };
+  }, [mergedStops, visitedStopOrders, exhibitTitles]);
 
-  const handleCheckIn = async (nextStop) => {
-    if (!gid || !nextStop) return;
-    const o = nextStop.stopOrder;
-    if (typeof o !== "number" || o < 1) return;
+  const handleCheckIn = async (stop) => {
+    if (!gid || !stop) return;
+    const o =
+      typeof stop.stopOrder === "number"
+        ? stop.stopOrder
+        : typeof stop.order === "number"
+          ? stop.order
+          : null;
+    if (o == null || o < 1) return;
     const key = checkinIdentityKeyFromGroup(gid);
     if (!key) return;
 
-    const exhibitId = nextStop.exhibitId;
-    const rawAwards = nextStop.awardIds;
-    const awardIdsToSync = new Set(
-      rawAwards instanceof Set ? [...rawAwards] : rawAwards || []
-    );
+    const exhibitId = stop.exhibitId;
 
     setCheckInWorking(true);
     try {
-      await Promise.all(
-        [...awardIdsToSync].map((a) =>
-          setDoc(
-            doc(firestore, "judgeCheckins", judgeCheckinDocId(a, key)),
-            {
-              awardId: a,
-              judgingGroupId: gid,
-              exhibitId,
-              stopOrder: o,
-              checkedInAt: serverTimestamp(),
-            },
-            { merge: true }
-          )
-        )
-      );
+      const ref = doc(firestore, "judgeCheckins", key);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        await updateDoc(ref, {
+          visitedStopOrders: arrayUnion(o),
+          lastStopOrder: o,
+          judgingGroupId: gid,
+          exhibitId,
+          checkedInAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      } else {
+        await setDoc(ref, {
+          visitedStopOrders: [o],
+          lastStopOrder: o,
+          judgingGroupId: gid,
+          exhibitId,
+          checkedInAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+      }
     } catch (e) {
       console.error(e);
       alert("Check-in failed. Try again.");
@@ -296,13 +287,11 @@ export default function JudgingRunPage() {
       >
         <div className="max-w-lg mx-auto w-full min-w-0">
           <header className="mb-6">
-            <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">Your route</h1>
-            <p className="text-sm text-gray-600 mt-1">
-              Group <span className="font-mono font-semibold text-amber-800">{gid}</span>
-            </p>
+            <h1 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
+              Group <span className="font-mono font-semibold text-amber-800">{gid}</span> route
+            </h1>
             <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-              Stops are in time order. Visits without a scheduled time appear at the end. Checking in
-              advances every award for that visit.
+              Click the check-in button to mark your visit. It is ok to visit stops out of order.
             </p>
           </header>
 
@@ -325,18 +314,25 @@ export default function JudgingRunPage() {
                 {routeView.rows.map((row) => {
                   const isPast = row.status === "past";
                   const isCurrent = row.status === "current";
-                  const muted = row.status === "future";
+                  const isFuture = row.status === "future";
 
                   return (
                     <li
                       key={`${row.order}-${row.exhibitId}`}
                       className={`px-4 py-3 flex flex-col gap-2 ${
-                        muted ? "opacity-40" : ""
+                        isFuture && !isCurrent ? "opacity-80" : ""
                       } ${isCurrent ? "bg-[#2a2618]/80" : ""}`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs font-mono text-[#6a6348]">Visit {row.order}</p>
+                          <p className="text-xs font-mono text-[#8a8660] flex flex-wrap items-baseline gap-x-1.5 gap-y-0">
+                            <span className="font-bold">Visit {row.order}</span>
+                            {row.time ? (
+                              <span className="tabular-nums font-semibold">({row.time})</span>
+                            ) : (
+                              <span className="italic font-normal">(No time set)</span>
+                            )}
+                          </p>
                           <p
                             className={`font-semibold break-words ${
                               isCurrent ? "text-[#f7d000]" : "text-[#e8e0c8]"
@@ -345,20 +341,29 @@ export default function JudgingRunPage() {
                             {row.title}
                           </p>
                           <div className="flex flex-wrap gap-1 mt-1.5">
-                            {row.awardIds.map((aid) => (
-                              <span
-                                key={aid}
-                                className="inline-block rounded px-1.5 py-0.5 text-[10px] font-semibold bg-[#2a2618] text-[#c8b860] border border-[#3d3620]"
-                              >
-                                {awardLabelById(aid)}
-                              </span>
-                            ))}
+                            {row.awardIds.map((aid) => {
+                              const rubric = awardRubricUrlById(aid);
+                              return (
+                                <span
+                                  key={aid}
+                                  className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-semibold bg-[#2a2618] text-[#c8b860] border border-[#3d3620]"
+                                >
+                                  <span>{awardLabelById(aid)}</span>
+                                  {rubric ? (
+                                    <a
+                                      href={rubric}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="font-normal underline text-[#f7d000]"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      Form
+                                    </a>
+                                  ) : null}
+                                </span>
+                              );
+                            })}
                           </div>
-                          {row.time ? (
-                            <p className="text-xs text-[#8a8660] mt-0.5">{row.time}</p>
-                          ) : (
-                            <p className="text-xs text-[#6a6348] mt-0.5 italic">No time set</p>
-                          )}
                         </div>
                         {isPast ? (
                           <span className="text-[10px] uppercase tracking-wider text-green-500 shrink-0">
@@ -371,14 +376,18 @@ export default function JudgingRunPage() {
                           </span>
                         ) : null}
                       </div>
-                      {isCurrent && routeView.nextStop ? (
+                      {!isPast ? (
                         <button
                           type="button"
                           disabled={checkInWorking}
-                          onClick={() => handleCheckIn(routeView.nextStop)}
-                          className="w-full min-h-[48px] rounded-lg bg-[#f7d000] py-3 text-sm font-bold text-black disabled:opacity-50 touch-manipulation active:opacity-90"
+                          onClick={() => handleCheckIn(row)}
+                          className={`w-full min-h-[48px] rounded-lg py-3 text-sm font-bold disabled:opacity-50 touch-manipulation active:opacity-90 ${
+                            isCurrent
+                              ? "bg-[#f7d000] text-black"
+                              : "bg-[#3d3620] text-[#e8e0c8] border border-[#5c5338]"
+                          }`}
                         >
-                          {checkInWorking ? "Saving…" : "Check in at this stop"}
+                          {checkInWorking ? "Saving…" : "Check in"}
                         </button>
                       ) : null}
                     </li>

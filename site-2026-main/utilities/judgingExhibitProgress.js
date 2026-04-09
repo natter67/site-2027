@@ -4,19 +4,32 @@ import { AWARDS, awardLabelById } from "@utilities/awards";
 import {
   normalizeGroupId,
   normalizeEmail,
-  judgeCheckinDocId,
   checkinIdentityKeyFromGroup,
   coerceAssignmentStopOrder,
   scheduleTimeSortKey,
-  exhibitIdFromAssignmentDoc,
+  visitedStopOrderSetFromCheckin,
 } from "@utilities/judging";
+import { JUDGING_STOPS_COLLECTION } from "@utilities/judgingStops";
 import { fetchStrapiExhibitById } from "@utilities/strapiExhibits";
 
-const AWARD_BADGE_HEX = ["#1e88e5", "#43a047", "#8e24aa"];
+const AWARD_BADGE_HEX = [
+  "#1e88e5",
+  "#43a047",
+  "#8e24aa",
+  "#fb8c00",
+  "#7e57c2",
+  "#00acc1",
+  "#5c6bc0",
+  "#d4a017",
+  "#2e7d32",
+  "#c62828",
+];
 
-export async function readCheckinForAward({ awardId, identityKey }) {
-  const id = judgeCheckinDocId(awardId, identityKey);
-  const ref = doc(firestore, "judgeCheckins", id);
+/** Session check-in for a judging group (judgeCheckins/{g_<groupId>}). */
+export async function readJudgeSessionCheckin(judgingGroupId) {
+  const key = checkinIdentityKeyFromGroup(judgingGroupId);
+  if (!key) return null;
+  const ref = doc(firestore, "judgeCheckins", key);
   const snap = await getDoc(ref);
   return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
@@ -24,58 +37,56 @@ export async function readCheckinForAward({ awardId, identityKey }) {
 export async function fetchRouteForAssignment(awardId, assignment) {
   const gid = normalizeGroupId(assignment?.judgingGroupId);
   const email = normalizeEmail(assignment?.judgeEmail);
-  const coll = collection(firestore, "awardAssignments", awardId, "exhibits");
-  const q = gid
-    ? query(coll, where("judgingGroupId", "==", gid))
-    : email
-      ? query(coll, where("judgeEmail", "==", email))
-      : null;
-  if (!q) return [];
-  const snap = await getDocs(q);
-  const rows = snap.docs.map((d) => {
-    const data = d.data() || {};
-    const exhibitId = exhibitIdFromAssignmentDoc(d.id, data);
-    return {
-      ...data,
-      exhibitId,
-    };
-  });
-  rows.sort((a, b) => {
-    const ao = coerceAssignmentStopOrder(a) ?? 9999;
-    const bo = coerceAssignmentStopOrder(b) ?? 9999;
-    return ao - bo;
-  });
-  return rows;
+  const coll = collection(firestore, JUDGING_STOPS_COLLECTION);
+
+  if (gid) {
+    const q = query(coll, where("judgingGroupId", "==", gid));
+    const snap = await getDocs(q);
+    const rows = snap.docs
+      .map((d) => ({ ...d.data(), exhibitId: String(d.data()?.exhibitId ?? "").trim() }))
+      .filter((r) => String(r.awardId) === String(awardId));
+    rows.sort((a, b) => {
+      const ao = coerceAssignmentStopOrder(a) ?? 9999;
+      const bo = coerceAssignmentStopOrder(b) ?? 9999;
+      return ao - bo;
+    });
+    return rows;
+  }
+  if (email) {
+    const q = query(coll, where("judgeEmail", "==", email));
+    const snap = await getDocs(q);
+    const rows = snap.docs
+      .map((d) => ({ ...d.data(), exhibitId: String(d.data()?.exhibitId ?? "").trim() }))
+      .filter((r) => String(r.awardId) === String(awardId));
+    rows.sort((a, b) => {
+      const ao = coerceAssignmentStopOrder(a) ?? 9999;
+      const bo = coerceAssignmentStopOrder(b) ?? 9999;
+      return ao - bo;
+    });
+    return rows;
+  }
+  return [];
 }
 
-/** Award assignments that include this exhibit (Strapi exhibit doc id). May be multiple rows per award (different judging groups). */
+/** All judging stops that include this exhibit (Strapi exhibit id / booth #). One Firestore query. */
 export async function loadAssignmentsForExhibit(exhibitId) {
   const id = String(exhibitId ?? "").trim();
   if (!id) return { assignmentsForExhibit: [] };
 
+  const coll = collection(firestore, JUDGING_STOPS_COLLECTION);
+  const q = query(coll, where("exhibitId", "==", id));
+  const snap = await getDocs(q);
+
   /** @type {{ awardId: string, assignment: Record<string, unknown> & { id: string } }[]} */
   const assignmentsForExhibit = [];
-
-  for (const a of AWARDS) {
-    const coll = collection(firestore, "awardAssignments", a.id, "exhibits");
-    const q = query(coll, where("exhibitId", "==", id));
-    const snap = await getDocs(q);
-    const seen = new Set();
-    for (const d of snap.docs) {
-      seen.add(d.id);
-      assignmentsForExhibit.push({
-        awardId: a.id,
-        assignment: { id: d.id, ...d.data() },
-      });
-    }
-    const legacyRef = doc(firestore, "awardAssignments", a.id, "exhibits", id);
-    const legacy = await getDoc(legacyRef);
-    if (legacy.exists() && !seen.has(legacy.id)) {
-      assignmentsForExhibit.push({
-        awardId: a.id,
-        assignment: { id: legacy.id, ...legacy.data() },
-      });
-    }
+  for (const d of snap.docs) {
+    const data = d.data() || {};
+    const aid = String(data.awardId ?? "").trim();
+    if (!aid) continue;
+    assignmentsForExhibit.push({
+      awardId: aid,
+      assignment: { id: d.id, ...data },
+    });
   }
 
   return { assignmentsForExhibit };
@@ -83,58 +94,40 @@ export async function loadAssignmentsForExhibit(exhibitId) {
 
 /**
  * Timeline for ExhibitorBusSchedule: one row per **(judging group × visit × this exhibit)**.
- * Visits from different groups must not share the same slot key (visit #1 in group 3 ≠ visit #1 in group 1).
+ * Built only from assignments for this exhibit — no N× full-route reloads.
  */
 export async function buildExhibitorBusRows({ exhibitId, assignmentsForExhibit }) {
   const id = String(exhibitId ?? "").trim();
   if (!id || !assignmentsForExhibit?.length) return [];
 
-  const awardIds = [...new Set(assignmentsForExhibit.map((x) => x.awardId))];
-
   /** @type {Map<string, { exhibitId: string, stopOrder: number, judgingGroupId: string, scheduledTime: string, awards: Set<string> }>} */
   const slotByKey = new Map();
-  /** @type {Map<string, Array<Record<string, unknown>>>} */
-  const routeCache = new Map();
-
-  async function getRouteForAwardAndGroup(awardId, assignment) {
-    const g = normalizeGroupId(assignment?.judgingGroupId);
-    const ck = `${awardId}\0${g}`;
-    if (routeCache.has(ck)) return routeCache.get(ck);
-    const routeAll = await fetchRouteForAssignment(awardId, assignment);
-    routeCache.set(ck, routeAll);
-    return routeAll;
-  }
 
   for (const { awardId, assignment } of assignmentsForExhibit) {
     if (!assignment) continue;
-    const routeAll = await getRouteForAwardAndGroup(awardId, assignment);
-    const fallbackGid = normalizeGroupId(assignment.judgingGroupId);
-    for (const row of routeAll) {
-      const ord = coerceAssignmentStopOrder(row) ?? 0;
-      if (ord < 1) continue;
-      const eid = String(row.exhibitId ?? "").trim();
-      if (!eid) continue;
-      const gid = normalizeGroupId(row.judgingGroupId) || fallbackGid;
-      if (!gid) continue;
-      const st =
-        typeof row.scheduledTime === "string" && row.scheduledTime.trim()
-          ? row.scheduledTime.trim()
-          : "";
-      const slotKey = `${gid}\0${ord}\0${eid}`;
-      if (!slotByKey.has(slotKey)) {
-        slotByKey.set(slotKey, {
-          exhibitId: eid,
-          stopOrder: ord,
-          judgingGroupId: gid,
-          scheduledTime: st || "—",
-          awards: new Set(),
-        });
-      }
-      /** @type {{ exhibitId: string, stopOrder: number, judgingGroupId: string, scheduledTime: string, awards: Set<string> }} */
-      const slot = slotByKey.get(slotKey);
-      slot.awards.add(awardId);
-      if (st && slot.scheduledTime === "—") slot.scheduledTime = st;
+    const ord = coerceAssignmentStopOrder(assignment) ?? 0;
+    if (ord < 1) continue;
+    const eid = String(assignment.exhibitId ?? "").trim();
+    if (!eid) continue;
+    const gid = normalizeGroupId(assignment.judgingGroupId);
+    if (!gid) continue;
+    const st =
+      typeof assignment.scheduledTime === "string" && assignment.scheduledTime.trim()
+        ? assignment.scheduledTime.trim()
+        : "";
+    const slotKey = `${gid}\0${ord}\0${eid}`;
+    if (!slotByKey.has(slotKey)) {
+      slotByKey.set(slotKey, {
+        exhibitId: eid,
+        stopOrder: ord,
+        judgingGroupId: gid,
+        scheduledTime: st || "—",
+        awards: new Set(),
+      });
     }
+    const slot = slotByKey.get(slotKey);
+    slot.awards.add(awardId);
+    if (st && slot.scheduledTime === "—") slot.scheduledTime = st;
   }
 
   const viewerSlots = [...slotByKey.values()]
@@ -164,6 +157,22 @@ export async function buildExhibitorBusRows({ exhibitId, assignmentsForExhibit }
     return m;
   }
 
+  const checkinByGid = new Map();
+  async function visitedSetForGroup(g) {
+    if (checkinByGid.has(g)) return checkinByGid.get(g);
+    const checkin = await readJudgeSessionCheckin(g);
+    const set = visitedStopOrderSetFromCheckin(checkin);
+    checkinByGid.set(g, set);
+    return set;
+  }
+
+  const slotOrdsByGid = new Map();
+  for (const s of viewerSlots) {
+    const g = s.judgingGroupId;
+    if (!slotOrdsByGid.has(g)) slotOrdsByGid.set(g, []);
+    slotOrdsByGid.get(g).push(s.stopOrder);
+  }
+
   const timeline = [];
   for (const slot of viewerSlots) {
     const ord = slot.stopOrder;
@@ -172,48 +181,30 @@ export async function buildExhibitorBusRows({ exhibitId, assignmentsForExhibit }
     const meta = await exhibitMeta(eid);
     const timeStr = slot.scheduledTime || "—";
 
-    const awardsForThisVisit = [];
-    for (const { awardId: aid, assignment: asg } of assignmentsForExhibit) {
-      const routeAll = await getRouteForAwardAndGroup(aid, asg);
-      const match = routeAll.some((r) => {
-        const o = coerceAssignmentStopOrder(r) ?? 0;
-        const reid = String(r.exhibitId ?? "").trim();
-        const rgid = normalizeGroupId(r.judgingGroupId);
-        return o === ord && reid === id && rgid === slotGid;
-      });
-      if (match) awardsForThisVisit.push(aid);
-    }
+    const awardsForThisVisit = [...slot.awards].sort(
+      (a, b) => AWARDS.findIndex((x) => x.id === a) - AWARDS.findIndex((x) => x.id === b)
+    );
 
-    let lastOrderForSlot = 0;
-    const identityKey = checkinIdentityKeyFromGroup(slotGid);
-    if (identityKey) {
-      for (const aid of awardsForThisVisit) {
-        const checkin = await readCheckinForAward({ awardId: aid, identityKey });
-        const lo = coerceAssignmentStopOrder(checkin) ?? 0;
-        lastOrderForSlot = Math.max(lastOrderForSlot, lo);
-      }
-    }
+    const visited = await visitedSetForGroup(slotGid);
+    const ordsThisExhibit = slotOrdsByGid.get(slotGid) || [];
+    const unvisitedHere = ordsThisExhibit.filter((o) => !visited.has(o));
 
     let status = "future";
-    const lo = lastOrderForSlot;
-    if (lo <= 0) {
-      if (ord === 1) status = "next";
+    if (visited.has(ord)) {
+      status = "past";
+    } else if (unvisitedHere.length && ord === Math.min(...unvisitedHere)) {
+      status = "next";
     } else {
-      if (ord < lo) status = "past";
-      else if (ord === lo) status = "here";
-      else if (ord === lo + 1) status = "next";
-      else status = "future";
+      status = "future";
     }
 
-    const routeBadges = awardsForThisVisit
-      .sort((a, b) => AWARDS.findIndex((x) => x.id === a) - AWARDS.findIndex((x) => x.id === b))
-      .map((aid) => {
-        const awardIdx = AWARDS.findIndex((x) => x.id === aid);
-        return {
-          label: awardLabelById(aid),
-          color: AWARD_BADGE_HEX[awardIdx >= 0 ? awardIdx % AWARD_BADGE_HEX.length : 0],
-        };
-      });
+    const routeBadges = awardsForThisVisit.map((aid) => {
+      const awardIdx = AWARDS.findIndex((x) => x.id === aid);
+      return {
+        label: awardLabelById(aid),
+        color: AWARD_BADGE_HEX[awardIdx >= 0 ? awardIdx % AWARD_BADGE_HEX.length : 0],
+      };
+    });
 
     timeline.push({
       stopOrder: ord,
