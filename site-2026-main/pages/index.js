@@ -13,6 +13,7 @@ import Visitors from "../layouts/Visitors/index.js"
 import Awards from "../layouts/Awards/index.js"
 import ExhibitApplication from "@layouts/ExhibitApplication /index.js"
 import QuantumDay from "@layouts/QuantumDay/index.js"
+import SCC from "@layouts/SCC/index.js"
 
 export default function Home() {
   return (
@@ -48,7 +49,37 @@ export default function Home() {
             </span>
           }
         >
-          <KeynoteSpeaker />
+          <KeynoteSpeaker
+            timeString="Friday, April 10th - 2:30 PM to 3:30 PM" 
+            description="Christina Ernst is a senior software engineer at Google and the fashioneering content creator behind shebuildsrobots.com. Her tech-fashion crossover work has been featured in CNN Style, Make: Magazine, Forbes, Entertainment Weekly, CBC, and Popular Science. She was a recurring engineering correspondent on Season 6 of the educational STEM show 'Mission Unstoppable with Miranda Cosgrove' and also served as the 2024 Maker-in-Residence at Chicago Public Library."
+            imagePath="assets/images/keynote-headshot-christina.jpg"
+            name="Christina Ernst"
+            backgroundNum="1"
+            />
+        </Section>
+        <Section
+          color="bg-cover bg-center"
+          id="keynote"
+          title={
+            <span className="block text-center font-bold">
+              {/* Mobile version: with <br> */}
+              <span className="block sm:hidden">
+                Keynote from<br />Dr. Aadeel Akhtar
+              </span>
+              {/* Desktop version: no <br> */}
+              <span className="hidden sm:inline">
+                Keynote from Dr. Aadeel Akhtar
+              </span>
+            </span>
+          }
+        >
+          <KeynoteSpeaker
+            timeString="Saturday, April 11th - 3:00 PM to 4:00 PM" 
+            description="Dr. Aadeel Akhtar, CEO of PSYONIC, founded the company to create advanced, accessible bionic limbs after meeting a young girl missing a limb in Pakistan. PSYONIC's bionic Ability Hand is the fastest on the market, impact-resistant, and the first to provide a sense of touch. It is also covered by Medicare and is being used by humans and robotics companies globally, including NASA, Meta, Mercedes, and Google. Dr. Akhtar earned a Ph.D. in Neuroscience and an M.S. in Electrical & Computer Engineering from the University of Illinois, along with a B.S. in Biology and an M.S. in Computer Science from Loyola University Chicago. He’s been recognized by MIT Technology Review and Newsweek and secured a 3-shark deal on Shark Tank."
+            imagePath="assets/images/keynote-headshot-aadeel.jpg"
+            name="Dr. Aadeel Akhtar"
+            backgroundNum="2"
+          />
         </Section>
         <Section
           title="Featured Events"
@@ -60,6 +91,9 @@ export default function Home() {
         </Section>
         <Section color="bg-white" title="World Quantum Day" id="world-quantum-day">
           < QuantumDay/>
+        </Section>
+        <Section color="bg-white" title="EOH x Sustainability" id="scc">
+          < SCC/>
         </Section>
         <Section title="Schedule" color="bg-white" id="schedule" wide>
           <ScheduleSection />

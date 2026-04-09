@@ -103,7 +103,7 @@ export default function FieldTripsPage() {
     <div className="flex justify-center gap-6 mt-6">
     <img
 			className="w-1/2 md:w-1/3 rounded-md shadow-md"
-			src="assets/images/shuttle.png"
+			src="assets/images/shuttle.jpeg"
 			alt="Shuttle Information"
 		/>
     </div>

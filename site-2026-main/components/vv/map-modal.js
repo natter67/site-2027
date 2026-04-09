@@ -2,38 +2,45 @@ import { useState } from "react";
 
 const useMapModal = () => {
     const [modalImages, setModalImages] = useState([]);
+    const [noMapAvailable, setNoMapAvailable] = useState(false);
 
     const openModal = async (buildingCode) => {
-        let images = ["/assets/images/default_image.png"];
+        let images = [];
 
-        if (buildingCode === "MEB") {
+        if (buildingCode === "Sydney Lu") {
             images = [
-              "/assets/maps/sidney lu0.jpg",
-              "/assets/maps/sidney lu1.jpg",
-              "/assets/maps/sidney lu2.jpg",
+              "/assets/maps/sidney-lu0.jpg",
+              "/assets/maps/sidney-lu1.jpg",
+              "/assets/maps/sidney-lu2.jpg",
             ];
-        }
-        else if (buildingCode === "TB") {
+            setNoMapAvailable(false);
+        } else if (buildingCode === "Transporation Building") {
             images = [
               "/assets/maps/tb1.jpg",
               "/assets/maps/tb2.jpg",
-              "/assets/maps/tb3.jpg",
             ];
+            setNoMapAvailable(false);
         } else {
-            const floor1Url = `/assets/maps/${buildingCode.toLowerCase()}1.jpg`;
-            const floor2Url = `/assets/maps/${buildingCode.toLowerCase()}2.jpg`;
+            const sanitized = buildingCode.toLowerCase().replace(/\s+/g, '-');
+            const floor1Url = `/assets/maps/${sanitized}1.jpg`;
+            const floor2Url = `/assets/maps/${sanitized}2.jpg`;
             try {
                 const res1 = await fetch(floor1Url, { method: "HEAD" });
                 if (res1.ok) {
-                try {
-                    const res2 = await fetch(floor2Url, { method: "HEAD" });
-                    images = res2.ok ? [floor1Url, floor2Url] : [floor1Url];
-                } catch {
-                    images = [floor1Url];
-                }
+                    try {
+                        const res2 = await fetch(floor2Url, { method: "HEAD" });
+                        images = res2.ok ? [floor1Url, floor2Url] : [floor1Url];
+                    } catch {
+                        images = [floor1Url];
+                    }
+                    setNoMapAvailable(false);
+                } else {
+                    setNoMapAvailable(true);
+                    images = ["no-map"];
                 }
             } catch {
-                // Do nothing
+                setNoMapAvailable(true);
+                images = ["no-map"];
             }
         }
 
@@ -42,9 +49,10 @@ const useMapModal = () => {
 
     const closeModal = () => {
         setModalImages([]);
+        setNoMapAvailable(false);
     };
 
-    return { modalImages, openModal, closeModal };
-    };
+    return { modalImages, noMapAvailable, openModal, closeModal };
+};
 
 export default useMapModal;

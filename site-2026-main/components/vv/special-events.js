@@ -173,13 +173,11 @@ const SpecialEvents = () => {
 
   const items = data.data.map((event, idx) => {
     const occurences = event.occurences.map((occ) => ({
-      startTime: occ.startTime,
-      endTime: occ.endTime,
+      startTime: dayjs.utc(occ.startTime).tz('Europe/Vienna').tz('America/Chicago', true),
+      endTime: dayjs.utc(occ.endTime).tz('Europe/Vienna').tz('America/Chicago', true),
       colIndex: idx,
     })).map((slot) => {
-      const start = dayjs(slot.startTime).tz("America/Chicago")
-      const end = dayjs(slot.endTime).tz("America/Chicago")
-      return { display: `${start.format("dddd")}, ${start.format("h:mm")} to ${end.format("h:mm a")}` }
+      return { display: `${slot.startTime.format("dddd")}, ${slot.startTime.format("h:mm")} to ${slot.endTime.format("h:mm a")}` }
     })
     return {
       id: idx,
