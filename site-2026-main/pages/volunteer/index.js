@@ -200,6 +200,91 @@ export default function VolunteerPortalReserved() {
         </div> 
       </div>
 
+      {/* Admin Section ADDED BACK - DELETE when you re-enable the volunteer portal */}
+      {!user ? (
+          <div className="text-center">
+            <p>Please sign in to reserve volunteer slots</p>
+            <button
+              onClick={handleSignIn}
+              className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
+            >
+              Sign In with Google
+            </button>
+          </div>
+        ) : (
+          <div className="w-11/12 md:w-7/12">
+            <p className="mb-4">
+              Welcome <strong>{user.displayName?.split(" ")[0]}</strong>
+              <button onClick={handleSignOut} className="ml-2 underline text-blue-600">
+                (Sign Out)
+              </button>
+            </p>
+            </div>)}
+
+
+      {isAdmin && (
+        <div className="mt-10">
+          <h2 className="text-xl font-bold mb-4">Admin Section</h2>
+
+          <div className="flex gap-4 mb-4">
+            <button
+              onClick={fetchAllEventEmails}
+              className="px-4 py-2 bg-[#c578d6] text-white rounded"
+            >
+              Fetch All Emails
+            </button>
+            {allEventEmails.length > 0 && (
+              <button
+                onClick={() => setAllEventEmails([])}
+                className="px-4 py-2 bg-gray-400 text-white rounded"
+              >
+                Close
+              </button>
+            )}
+          </div>
+
+          {allEventEmails.length > 0 && (
+            <textarea
+              className="w-full p-2 border rounded mb-6"
+              rows={4}
+              readOnly
+              value={allEventEmails.join(", ")}
+            />
+          )}
+
+          {volunteerEvents.map((event) => (
+            <div key={event.id} className="mb-4 p-4 border rounded bg-gray-100">
+              <h3 className="font-semibold mb-2">{event.id}</h3>
+              <button
+                onClick={() =>
+                  eventEmails[event.id]
+                    ? setEventEmails((prev) => {
+                      const copy = { ...prev };
+                      delete copy[event.id];
+                      return copy;
+                    })
+                    : handleViewEventEmails(event)
+                }
+                className="px-4 py-2 bg-[#c578d6] text-white rounded"
+              >
+                {eventEmails[event.id] ? "Close Emails" : "View Emails"}
+              </button>
+
+              {eventEmails[event.id] && (
+                <textarea
+                  className="w-full mt-2 p-2 border rounded"
+                  rows={3}
+                  readOnly
+                  value={eventEmails[event.id].join(", ")}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Delete the section above here */}
+
 
       {/* Disabled */}
       {false && <div className="w-screen mt-4 mb-16 flex flex-col items-center">

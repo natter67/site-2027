@@ -21,7 +21,7 @@ export const KeynoteSpeaker = ( {timeString, description, imagePath, name, backg
         <div 
             className="flex flex-col md:flex-row md:justify-center items-center gap-8 px-14 relative min-h-[500px] pb-40"
             style={{
-                backgroundImage: !isMobile && `linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, white 100%), url('/assets/banners/robot_banner_${backgroundNum}.png')`,
+                backgroundImage: `url('/assets/banners/robot_banner_${backgroundNum}.png')`,
                 backgroundSize: 'cover', // Ensures the image fits without cropping
                 backgroundPosition: 'center bottom -70px', // Moves the image further down
                 backgroundRepeat: 'no-repeat'
@@ -40,7 +40,7 @@ export const KeynoteSpeaker = ( {timeString, description, imagePath, name, backg
                         </h3>
                     </span>
                 </div>
-                <p style={{backgroundColor: "rgba(255, 255, 255, 0.5)", borderRadius: "20px"}}>{description}</p>
+                <p style={{backgroundColor: "rgba(255, 255, 255, 0.5)", borderRadius: "20px", marginTop: "20px"}}>{description}</p>
             </div>
             <img 
                 src={imagePath}
