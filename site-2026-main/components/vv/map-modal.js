@@ -36,9 +36,11 @@ const useMapModal = () => {
                     setNoMapAvailable(false);
                 } else {
                     setNoMapAvailable(true);
+                    images = ["no-map"];
                 }
             } catch {
                 setNoMapAvailable(true);
+                images = ["no-map"];
             }
         }
 
