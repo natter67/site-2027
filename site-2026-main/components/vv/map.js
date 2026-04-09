@@ -283,7 +283,7 @@ const Map = () => {
   //   setModalImages([]);
   //   setNoMapAvailable(false); // Reset state when closing modal
   // };
-
+  interacts.sort((a, b) => a.heading.localeCompare(b.heading));
   return (
     <>
       <div className="xs:hidden mx-5 flex flex-col gap-5">
