@@ -324,7 +324,8 @@ export default function CameraScan() {
         className="pointer-events-none absolute inset-0 flex items-center justify-center"
         aria-hidden
       >
-        <div className="h-64 w-64 rounded-2xl border-2 border-white/60 sm:h-72 sm:w-72" />
+        {/* This is the QR code outline */}
+        <div className="h-80 w-80 sm:h-96 sm:w-96 rounded-2xl border-2 border-white/60" />
       </div>
       <div className="pointer-events-auto relative z-10 mt-auto flex justify-center pb-28">
         <button
