@@ -11,7 +11,6 @@ import { KeynoteSpeaker } from "../layouts/Keynote/index.js"
 import ScheduleSection from "../layouts/Schedule/index.js"
 import Visitors from "../layouts/Visitors/index.js"
 import Awards from "../layouts/Awards/index.js"
-import ExhibitApplication from "@layouts/ExhibitApplication /index.js"
 import QuantumDay from "@layouts/QuantumDay/index.js"
 import SCC from "@layouts/SCC/index.js"
 import DownloadApp from "@layouts/DownloadApp/index.js"
@@ -31,7 +30,7 @@ export default function Home() {
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
         {/* <Section color="white" title="EOH 2025 Awards" id="awards">
           <Awards />
-        </Section> }
+        </Section> */}
         <Section color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
