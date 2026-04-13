@@ -14,64 +14,70 @@ const slotGradients = {
 
 const awards = [
   {
-    "title": "Outstanding Undergraduate Research",
-    "1": "Hydrogels in Healthcare",
-    "2": "Department of Climate, Meteorology, and Atmospheric Science",
-    "3": "Design Your Cure"
+    "title": "Visitor’s Favorite Award",
+    "1": "Rocket Races",
+    "2": "NovoPrint 3D-Printing Robot Arm",
+    "3": "Exploring Curie Temperature"
   },
   {
     "title": "Outstanding RSO Exhibit",
-    "1": "The Beast",
-    "2": "Freedom Machine: Adaptive Gravel E-Trike",
-    "3": "The Fusor"
+    "1": "Motor Testing Technology",
+    "2": "Mystery Compound Chemical Investigation",
+    "3": "Mouse Integration Glasses"
   },
   {
     "title": "Outstanding Freshman Exhibit",
-    "1": "IISE Shark Tank",
-    "2": "Pykrete: Ice with the Strength of Steel",
-    "3": "Women’s Reproductive Health Hormone Sensor"
+    "1": "bioplastics",
+    "2": "Near-Infrared Diffused Optical Tomography (NIR-DOT)",
+    "3": "Dextera"
   },
   {
     "title": "Most Engaging",
-    "1": "Pilot Your Drone: Air Traffic Adventureland",
-    "2": "Motor Testing Technology",
-    "3": "Jump Simulation - Medical School Experience"
+    "1": "Step into the Future: Pavement Energy Harvesting",
+    "2": "Big Hero 6 Microbots",
+    "3": "Department of Climate, Meteorology, and Atmospheric Sciences"
   },
   {
-    "title": "Family Favorite Award",
-    "1": "IISE Shark Tank",
-    "2": "Mobile Manipulation Delivery Robot",
-    "3": "Egg Drop"
+    "title": "Outstanding Undergraduate Research",
+    "1": "Scario",
+    "2": "Students Pushing INnovation (SPIN) Internship Program",
+    "3": "Visual Nutrition"
   },
   {
-    "title": "Most Industry Impact Presented by Chevron",
-    "1": "Freedom Machine: Adaptive Gravel E-Trike",
-    "2": "CIMED Intelligent Mattress Topper",
-    "3": "Urinalysis"
+    "title": "Most Industry Impact",
+    "1": "VidaCloud - Intelligent Mattress Topper",
+    "2": "FormFit",
+    "3": "Market in a Minute"
   },
   {
     "title": "Visionary Impact Award",
-    "1": "VoxLink",
-    "2": "NeuroTech@UIUC",
-    "3": "Women’s Reproductive Health Hormone Sensor"
+    "1": "Devices for Hand/Wrist Mobility Impairment",
+    "2": "Novel Mobile Robots Lab",
+    "3": "Mouse Integration Glasses"
   },
   {
-    "title": "Distinguished Technology Award",
-    "1": "ArachnoBot",
-    "2": "The Fusor",
-    "3": "Novoprint: Multi-Extruder Robotic Printing Arm"
+    "title": "Distinguished Tech Award",
+    "1": "Big Hero 6 Microbots",
+    "2": "Novel Mobile Robots Lab",
+    "3": "SIGRobotics"
   },
   {
-    "title": "Sustainability Award",
-    "1": "Power of Clean Water and Tree Rings",
-    "2": "From Scrap to Spool: 3D PLA Recycler",
-    "3": "Care for the Air"
+    "title": "Sustainability Efforts Award",
+    "1": "Step into the Future: Pavement Energy Harvesting",
+    "2": "Fueling the Future: From Chemistry to Cars",
+    "3": "Solar Cell LBIC Mapping"
   },
   {
-    "title": "The Age of Innovation",
-    "1": "Pilot Your Drone: Air Traffic Adventureland",
-    "2": "Women’s Reproductive Health Hormone Sensor",
-    "3": "Illini Solar Car"
+    "title": "Forging the Future (Theme Award)",
+    "1": "Fueling the Future: From Chemistry to Cars",
+    "2": "Students Pushing INnovation (SPIN) Internship Program",
+    "3": "IonSpark"
+  },
+  {
+    "title": "Research Showcase",
+    "1": "Savindi Devmal",
+    "2": null,
+    "3": null
   }
 ];
 
@@ -82,7 +88,7 @@ export default function () {
       <p className='md:w-2/3 mx-5 md:mx-auto text-center mb-5'>
         The Awards Ceremony provides an opportunity to celebrate the hard work that our exhibitors have put into their exhibits.
         We look forward to highlighting outstanding exhibits that demonstrate creativity, innovation, and passion. <br />
-        Congratulations to all of our EOH 2025 award winners!
+        Congratulations to all of our EOH 2026 award winners!
       </p>
       <div className="flex flex-row flex-wrap justify-center gap-5 mx-10">
         {
@@ -94,16 +100,20 @@ export default function () {
                 <Icon icon="game-icons:podium-winner" className='text-3xl min-w-[25px]' />
                 <p>{award["1"]}</p>
               </span>
+              {award["2"] && <>
               <h3 className='mt-2 font-heading text-lg'>Second Place</h3>
               <span className='flex flex-row rounded-lg items-center gap-4 p-3 text-white font-bold bg-gray-600'>
                 <Icon icon="game-icons:podium-second" className='text-3xl min-w-[25px]' />
                 <p>{award["2"]}</p>
               </span>
+              </>}
+              {award["3"] && <>
               <h3 className='mt-2 font-heading text-lg'>Third Place</h3>
               <span className='flex flex-row rounded-lg items-center gap-4 p-3 text-white font-bold bg-primary-brown'>
                 <Icon icon="game-icons:podium-third" className='text-3xl min-w-[25px]' />
                 <p>{award["3"]}</p>
               </span>
+              </>}
             </div>
           </Modal>
         }
