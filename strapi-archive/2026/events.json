@@ -1,0 +1,992 @@
+[
+    {
+        "id": 4,
+        "documentId": "tz97bkc1u19fhlrrni7fa27d",
+        "title": "EOH Research Showcase",
+        "location": "Loomis 147",
+        "description": "Come learn about the incredible cutting-edge research students are conducting across many engineering disciplines!",
+        "shortTitle": "The EOH Research Showcase showcases cutting-edge research conducted by students!",
+        "createdAt": "2026-03-24T15:15:35.430Z",
+        "updatedAt": "2026-03-24T16:04:29.539Z",
+        "publishedAt": "2026-03-24T16:04:29.653Z",
+        "occurences": [
+            {
+                "id": 6,
+                "startTime": "2026-04-10T10:00:00.000Z",
+                "endTime": "2026-04-10T12:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "documentId": "c8ni1qtu0rwzk5t2jc02lg8p",
+        "title": "Keynote Speaker",
+        "location": "CIF Monumental Steps",
+        "description": "The two accomplished alumni of University of Illinois Urbana-Champaign, Christina Ernst and Dr Aadeel Akhtar are one of the leading examples of how innovation in engineering can transform lives and expand creative boundaries. Christina Ernst is a senior software engineer at Google and the fashioneering content creator behind She Builds Robots (@shebuildsrobots). Her tech-fashion crossover work has been featured in CNN Style, Make: Magazine, Forbes, Entertainment Weekly, CBC, and Popular Science. Dr. Aadeel Akhtar, the founder and CEO of PSYONIC is on the forefront of redefining prosthetic technology. His innovations, such as the Ability Hand, combines neuroscience, robotics, and human-centered design to improve quality of life worldwide. Christina will speak on Friday, Dr. Akhtar will speak on Saturday, and both will speak together to close out EOH!",
+        "shortTitle": "The two accomplished alumni of University of Illinois Urbana-Champaign, Christina Ernst and Dr Aadeel Akhtar are one of the leading examples of how innovation in engineering can transform lives and expand creative boundaries!",
+        "createdAt": "2026-03-31T13:32:29.757Z",
+        "updatedAt": "2026-03-31T13:32:29.757Z",
+        "publishedAt": "2026-03-31T13:32:29.832Z",
+        "occurences": [
+            {
+                "id": 10,
+                "startTime": "2026-04-10T12:30:00.000Z",
+                "endTime": "2026-04-10T13:30:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 11,
+                "startTime": "2026-04-11T13:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 12,
+                "startTime": "2026-04-11T15:00:00.000Z",
+                "endTime": "2026-04-11T15:30:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "documentId": "xh0penenipizmlkrozm9fylv",
+        "title": "Tesla Coil Concert",
+        "location": "Bardeen Quad",
+        "description": "Just as dark falls, visit the Bardeen Quad to see an electrifying display of light and sound.",
+        "shortTitle": "Just as dark falls, visit the Bardeen Quad to see an electrifying display of light and sound.",
+        "createdAt": "2026-03-31T13:33:40.147Z",
+        "updatedAt": "2026-03-31T13:34:48.453Z",
+        "publishedAt": "2026-03-31T13:34:48.577Z",
+        "occurences": [
+            {
+                "id": 15,
+                "startTime": "2026-04-10T18:30:00.000Z",
+                "endTime": "2026-04-10T19:30:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "documentId": "djr4kaunnehoe568dh2hw4l2",
+        "title": "Build-a-Blinkie",
+        "location": "CIF 0035",
+        "description": "Build-a-Blinkie is an organization dedicated to the teaching of STEM. We are teaching people to solder one blinkie at a time. Come check out this interactive activity and take home your own soldered blinkie!",
+        "shortTitle": "Build-a-Blinkie is an organization dedicated to the teaching of STEM. We are teaching people to solder one blinkie at a time. Come check out this interactive activity and take home your own soldered blinkie!",
+        "createdAt": "2026-03-31T13:35:40.361Z",
+        "updatedAt": "2026-03-31T13:35:48.184Z",
+        "publishedAt": "2026-03-31T13:35:48.284Z",
+        "occurences": [
+            {
+                "id": 20,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 21,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "documentId": "bcepaiwa2unaqzmdr5obtifk",
+        "title": "ESTAR Tour",
+        "location": "ESTAR Booth outside CIF",
+        "description": "Come learn more about the Grainger College of Engineering with a tour from an engineering student admissions representative (ESTAR)! One-hour tours depart from the Bardeen Quad at 10:30am, 12:00pm and 1:00pm. No registration necessary!",
+        "shortTitle": "Come learn more about the Grainger College of Engineering with a tour from an engineering student admissions representative (ESTAR)! One-hour tours depart from the Bardeen Quad at 10:30am, 12:00pm and 1:00pm. No registration necessary!",
+        "createdAt": "2026-03-31T13:38:03.357Z",
+        "updatedAt": "2026-03-31T13:38:03.357Z",
+        "publishedAt": "2026-03-31T13:38:03.385Z",
+        "occurences": [
+            {
+                "id": 28,
+                "startTime": "2026-04-10T08:30:00.000Z",
+                "endTime": "2026-04-10T09:30:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 29,
+                "startTime": "2026-04-10T10:00:00.000Z",
+                "endTime": "2026-04-10T11:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 30,
+                "startTime": "2026-04-10T11:00:00.000Z",
+                "endTime": "2026-04-10T12:00:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 31,
+                "startTime": "2026-04-11T08:30:00.000Z",
+                "endTime": "2026-04-11T09:30:00.000Z",
+                "colIndex": 4
+            },
+            {
+                "id": 32,
+                "startTime": "2026-04-11T10:00:00.000Z",
+                "endTime": "2026-04-11T11:00:00.000Z",
+                "colIndex": 5
+            },
+            {
+                "id": 33,
+                "startTime": "2026-04-11T11:00:00.000Z",
+                "endTime": "2026-04-11T12:00:00.000Z",
+                "colIndex": 6
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "documentId": "yef9vxwzucgn9bpmuozl1avy",
+        "title": "Build Your Own Terrarium / Make Your Own Soda Tab Buddy",
+        "location": "National History Building 2078",
+        "description": "Join us for two separate hands-on sustainability workshops: create a mini terrarium ecosystem in a jar to learn about natural cycles, or upcycle recycled soda can tabs into fun \u201ctab buddies\u201d to turn everyday waste into something reusable.",
+        "shortTitle": "Join us for two separate hands-on sustainability workshops: create a mini terrarium ecosystem in a jar to learn about natural cycles, or upcycle recycled soda can tabs into fun \u201ctab buddies\u201d to turn everyday waste into something reusable.",
+        "createdAt": "2026-03-31T13:39:35.126Z",
+        "updatedAt": "2026-03-31T13:39:35.126Z",
+        "publishedAt": "2026-03-31T13:39:35.158Z",
+        "occurences": [
+            {
+                "id": 39,
+                "startTime": "2026-04-10T09:00:00.000Z",
+                "endTime": "2026-04-10T11:30:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "documentId": "lonu6x7es4i3s3i40qxzv3v2",
+        "title": "American Society of Civil Engineers (ASCE)",
+        "location": "Newmark Civil Engineering Lab",
+        "description": "ASCE will have a spin-the-wheel game with civil engineering trivia for visitors of all ages. Prizes will be available for winners. There will also be a concrete cornhole game. ",
+        "shortTitle": "ASCE will have a spin-the-wheel game with civil engineering trivia for visitors of all ages. Prizes will be available for winners. There will also be a concrete cornhole game. ",
+        "createdAt": "2026-03-31T13:38:52.267Z",
+        "updatedAt": "2026-03-31T13:39:46.537Z",
+        "publishedAt": "2026-03-31T13:39:46.611Z",
+        "occurences": [
+            {
+                "id": 40,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 41,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "documentId": "oipnibco0w27ta5qrma6f88b",
+        "title": "Computer Science Games and Activities",
+        "location": "Siebel Center for Computer Science",
+        "description": "Come explore all you can do with Computer Science and AI! Organized by Siebel School of Computing and Data Science, these two rooms will feature many interactive activities for all ages. ",
+        "shortTitle": "Come explore all you can do with Computer Science and AI! Organized by Siebel School of Computing and Data Science, these two rooms will feature many interactive activities for all ages. ",
+        "createdAt": "2026-03-31T13:41:35.072Z",
+        "updatedAt": "2026-03-31T13:41:35.072Z",
+        "publishedAt": "2026-03-31T13:41:35.142Z",
+        "occurences": [
+            {
+                "id": 44,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 45,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "documentId": "eghnsb66w1znnyprb4lq0949",
+        "title": "Department of Climate, Meteorology, and Atmospheric Sciences",
+        "location": "Bardeen Quad",
+        "description": "Have you ever wondered about tornadoes or how rainbows get their color? Are you looking for a college program to study weather or climate? Look no further than the Department of Climate, Meteorology, and Atmospheric Sciences! We will have interactive demos of weather phenomena, instruments that we use to study the weather, and weather balloon launches each day of EOH!",
+        "shortTitle": "Have you ever wondered about tornadoes or how rainbows get their color? Are you looking for a college program to study weather or climate? Look no further than the Department of Climate, Meteorology, and Atmospheric Sciences! ",
+        "createdAt": "2026-04-03T16:43:22.801Z",
+        "updatedAt": "2026-04-03T16:43:22.801Z",
+        "publishedAt": "2026-04-03T16:43:22.861Z",
+        "occurences": [
+            {
+                "id": 50,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 51,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 27,
+        "documentId": "cs0fnk1b3nezdmqafcffvpmt",
+        "title": "GlideControl",
+        "location": "Digital Computer Laboratory Basement",
+        "description": "See the amazing physics behind modern parachute control systems in GlideControl, and learn about the ways that they can be used like air sea rescue and air drop systems.",
+        "shortTitle": "See the amazing physics behind modern parachute control systems in GlideControl, and learn about the ways that they can be used like air sea rescue and air drop systems.",
+        "createdAt": "2026-04-03T16:46:15.025Z",
+        "updatedAt": "2026-04-03T16:46:15.025Z",
+        "publishedAt": "2026-04-03T16:46:15.127Z",
+        "occurences": [
+            {
+                "id": 54,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 55,
+                "startTime": "2026-04-11T08:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "documentId": "n5yi0u0ce1uhrlxpxfij3t5x",
+        "title": "Reimagining Cultivation & Agricultural Production Systems by Crop Sciences @ Illinois",
+        "location": "National Center for Supercomputing Applications",
+        "description": "This exhibit explores how Crop Sciences is reimagining agricultural production systems by integrating plant biology, engineering, ecological design and the state-of-the-art computational and analytical technologies. Visitors will discover the remarkable natural diversity of crops such as soybean and maize through herbarium displays and visual demonstrations of plant architecture, seed traits, and growth habits. These biological differences shape how crops perform in different environments and production systems. ",
+        "shortTitle": "This exhibit explores how Crop Sciences is reimagining agricultural production systems by integrating plant biology, engineering, ecological design and the state-of-the-art computational and analytical technologies. ",
+        "createdAt": "2026-04-03T16:48:07.313Z",
+        "updatedAt": "2026-04-03T16:48:07.313Z",
+        "publishedAt": "2026-04-03T16:48:07.386Z",
+        "occurences": [
+            {
+                "id": 58,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 59,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 31,
+        "documentId": "xr2alhznblmd93l14z5k2wtt",
+        "title": "Physics Van",
+        "location": "Loomis Laboratory 141",
+        "description": "By performing and explaining exciting physics demonstrations, we show our audiences that science is fun and worthwhile for people who wonder about why the world acts the way it does. We challenge kids\u2019 mental picture of what kind of people scientists are. We show them that as long as you want to learn and have fun, there\u2019s a world of physics waiting to be discovered! The Physics Van travels to elementary schools in Champaign-Urbana, IL and towns in the surrounding area.",
+        "shortTitle": "By performing and explaining exciting physics demonstrations, we show our audiences that science is fun and worthwhile for people who wonder about why the world acts the way it does!",
+        "createdAt": "2026-04-03T16:50:35.951Z",
+        "updatedAt": "2026-04-03T16:50:35.951Z",
+        "publishedAt": "2026-04-03T16:50:36.003Z",
+        "occurences": [
+            {
+                "id": 66,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T09:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 67,
+                "startTime": "2026-04-10T10:00:00.000Z",
+                "endTime": "2026-04-10T11:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 68,
+                "startTime": "2026-04-10T12:00:00.000Z",
+                "endTime": "2026-04-10T13:00:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 69,
+                "startTime": "2026-04-11T08:00:00.000Z",
+                "endTime": "2026-04-11T09:00:00.000Z",
+                "colIndex": 4
+            },
+            {
+                "id": 70,
+                "startTime": "2026-04-11T10:00:00.000Z",
+                "endTime": "2026-04-11T11:00:00.000Z",
+                "colIndex": 5
+            },
+            {
+                "id": 71,
+                "startTime": "2026-04-11T12:00:00.000Z",
+                "endTime": "2026-04-11T13:00:00.000Z",
+                "colIndex": 6
+            }
+        ]
+    },
+    {
+        "id": 33,
+        "documentId": "v87v48vh6ycq0n4cblj29u6s",
+        "title": "Professor Panel",
+        "location": "CIF 2018",
+        "description": "The professor panel is an opportunity for current and prospective students to ask professors about their fields, how to get involved with research, and pursuing academia/graduate school.",
+        "shortTitle": "The professor panel is an opportunity for current and prospective students to ask professors about their fields, how to get involved with research, and pursuing academia/graduate school.",
+        "createdAt": "2026-04-03T16:51:17.182Z",
+        "updatedAt": "2026-04-03T16:51:17.182Z",
+        "publishedAt": "2026-04-03T16:51:17.212Z",
+        "occurences": [
+            {
+                "id": 73,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T09:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 37,
+        "documentId": "tby4u5obg0vexe8zu72b8spl",
+        "title": "Workshops in Python, CAD, and Web Design",
+        "location": "Engineering Hall 406B1 & 110A",
+        "description": "Join us for a workshops in Python, CAD, and Web Design at the Engineering Hall.\nCAD: Engineering Hall 406B1 & 110A Friday 11 am-12 pm \nPython: Engineering Hall 406B1 & 110A Friday 12-1 pm \nWeb Design: Engineering Hall 406B1 & 110A Friday 1-2 pm",
+        "shortTitle": "Join us for a workshops in Python, CAD, and Web Design at the Engineering Hall.",
+        "createdAt": "2026-04-03T16:54:50.939Z",
+        "updatedAt": "2026-04-03T16:54:50.939Z",
+        "publishedAt": "2026-04-03T16:54:50.994Z",
+        "occurences": [
+            {
+                "id": 83,
+                "startTime": "2026-04-10T09:00:00.000Z",
+                "endTime": "2026-04-10T10:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 84,
+                "startTime": "2026-04-10T10:00:00.000Z",
+                "endTime": "2026-04-10T11:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 85,
+                "startTime": "2026-04-10T11:00:00.000Z",
+                "endTime": "2026-04-10T12:00:00.000Z",
+                "colIndex": 3
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "documentId": "vyndaulz252ywdh1wv9ddqwk",
+        "title": "Interactive Lego Design",
+        "location": "CIF 2039",
+        "description": "The Lego Design Lab is a place designed for students of all ages to engage in interactive lego building and coding. There will be 3 stations: Robot Maze, Machine Building, and Spider Obstacles.",
+        "shortTitle": "The Lego Design Lab is a place designed for students of all ages to engage in interactive lego building and coding. There will be 3 stations: Robot Maze, Machine Building, and Spider Obstacles.",
+        "createdAt": "2026-04-03T16:56:23.670Z",
+        "updatedAt": "2026-04-03T16:56:23.670Z",
+        "publishedAt": "2026-04-03T16:56:23.719Z",
+        "occurences": [
+            {
+                "id": 88,
+                "startTime": "2026-04-10T07:30:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 89,
+                "startTime": "2026-04-11T07:30:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 72,
+        "documentId": "yml33xbvzqyskqpw5h9uyzns",
+        "title": "Alumni Panel",
+        "location": "CIF 2018",
+        "description": "Come learn about different careers and projects from UIUC alumni!",
+        "shortTitle": "Come learn about different careers and projects from UIUC alumni!",
+        "createdAt": "2026-04-04T10:31:59.920Z",
+        "updatedAt": "2026-04-04T10:31:59.920Z",
+        "publishedAt": "2026-04-04T10:31:59.953Z",
+        "occurences": [
+            {
+                "id": 181,
+                "startTime": "2026-04-10T09:00:00.000Z",
+                "endTime": "2026-04-10T10:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 78,
+        "documentId": "ye6n0nsysvlhqbdwav9nkxpd",
+        "title": "Face Painting",
+        "location": "Graziano Plaza",
+        "description": "Make your imagination reality just like our exhibitors by visiting our face painting booth!",
+        "shortTitle": "Make your imagination reality just like our exhibitors by visiting our face painting booth!",
+        "createdAt": "2026-04-04T10:33:45.503Z",
+        "updatedAt": "2026-04-08T23:07:36.634Z",
+        "publishedAt": "2026-04-08T23:07:37.008Z",
+        "occurences": [
+            {
+                "id": 188,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T13:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 189,
+                "startTime": "2026-04-11T08:00:00.000Z",
+                "endTime": "2026-04-11T10:30:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 42,
+        "documentId": "felxjvfsaq80lgjdm7ogmrx2",
+        "title": "I\u2019m Admitted! Welcome to Grainger College of Engineering",
+        "location": "CIF 4025 & Monumental Steps",
+        "description": "Congratulations to our admitted first-year and transfer engineering students! Start your Engineering Open House visit at the Campus Instructional Facility (CIF) to receive a limited-edition gift while supplies last. Join us for a Student Panel from 10 am-11 am in CIF Room 4025 to meet a Dean and connect with current students. On Friday, April 10, we will also have a College Resource Fair from 11 am-12 pm at the monumental steps on the 1st floor.",
+        "shortTitle": "Congratulations to our admitted first-year and transfer engineering students! Start your Engineering Open House visit at the Campus Instructional Facility (CIF) to receive a limited-edition gift while supplies last.",
+        "createdAt": "2026-04-03T17:01:44.030Z",
+        "updatedAt": "2026-04-03T17:01:56.428Z",
+        "publishedAt": "2026-04-03T17:01:56.513Z",
+        "occurences": [
+            {
+                "id": 94,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T09:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 95,
+                "startTime": "2026-04-10T09:00:00.000Z",
+                "endTime": "2026-04-10T10:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "documentId": "aip85ngzozmgmanpnr1fzty8",
+        "title": "Illini Pullers",
+        "location": "North Quad",
+        "description": "To keep our rivers green, we will be dyeing them green! We will inject a small amount of dye in our Boneyard Creek to learn how pollutants travel in rivers. With this knowledge we can avoid the risks that pollution brings to our rivers. Demonstrations every half hour.",
+        "shortTitle": "To keep our rivers green, we will be dyeing them green! We will inject a small amount of dye in our Boneyard Creek to learn how pollutants travel in rivers. With this knowledge we can avoid the risks that pollution brings to our rivers. Demonstrations every half hour.",
+        "createdAt": "2026-04-03T17:05:00.154Z",
+        "updatedAt": "2026-04-03T17:05:00.154Z",
+        "publishedAt": "2026-04-03T17:05:00.195Z",
+        "occurences": [
+            {
+                "id": 100,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T10:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 101,
+                "startTime": "2026-04-10T11:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 102,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T10:00:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 103,
+                "startTime": "2026-04-11T11:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 4
+            }
+        ]
+    },
+    {
+        "id": 46,
+        "documentId": "ia9zkifal7u43uuhdrs7ih5h",
+        "title": "LabEscape",
+        "location": "Digital Computing Lab 1262",
+        "description": "A terrible tragedy threatens the entire world - quantum tech is our only hope. Are YOU up\nto the challenge of the world\u2019s only science-based escape room??? The very latest chapter in the Prof. S. saga is Dark Matter Disaster. The year is 2058. Jupiter seemed like such a good idea at the time, until an unlikely accident sends it careening towards earth. Reservations required: https://labescape.org/eoh2026/",
+        "shortTitle": "A terrible tragedy threatens the entire world - quantum tech is our only hope. Are YOU up\nto the challenge of the world\u2019s only science-based escape room??? \nReservations required: https://labescape.org/eoh2026/",
+        "createdAt": "2026-04-03T17:09:04.270Z",
+        "updatedAt": "2026-04-03T17:09:04.270Z",
+        "publishedAt": "2026-04-03T17:09:04.479Z",
+        "occurences": [
+            {
+                "id": 106,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T19:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 107,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T19:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 48,
+        "documentId": "gw7p9avmbbsq1an7tg1j1j8j",
+        "title": "Mom\u2019s Weekend Design Competition",
+        "location": "Loomis 136",
+        "description": "Stop by with your mom or friends and compete in our design competition! Spend as long as you would like and show off your engineering intuition. You may bump into Christina Ernst (shebuildsrobots) here!",
+        "shortTitle": "Stop by with your mom or friends and compete in our design competition! Spend as long as you would like and show off your engineering intuition. You may bump into Christina Ernst (shebuildsrobots) here!",
+        "createdAt": "2026-04-03T17:10:16.613Z",
+        "updatedAt": "2026-04-03T17:10:16.613Z",
+        "publishedAt": "2026-04-03T17:10:16.651Z",
+        "occurences": [
+            {
+                "id": 109,
+                "startTime": "2026-04-11T09:00:00.000Z",
+                "endTime": "2026-04-11T12:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 50,
+        "documentId": "kc95shejefao8nkufod3shdh",
+        "title": "Hybrid Illinois Device for Research and Applications (HIDRA)",
+        "location": "Nuclear Radiation Laboratory",
+        "description": "A one-of-a-kind research fusion reactor! The University\u2019s own hybrid tokamak/stellarator fusion device! Sign up for a tour here: https://tinyurl.com/eohhidratour",
+        "shortTitle": "A one-of-a-kind research fusion reactor! The University\u2019s own hybrid tokamak/stellarator fusion device! Sign up for a tour here: https://tinyurl.com/eohhidratour",
+        "createdAt": "2026-04-03T17:12:49.171Z",
+        "updatedAt": "2026-04-03T17:12:49.171Z",
+        "publishedAt": "2026-04-03T17:12:49.205Z",
+        "occurences": [
+            {
+                "id": 118,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T08:45:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 119,
+                "startTime": "2026-04-10T09:00:00.000Z",
+                "endTime": "2026-04-10T09:45:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 120,
+                "startTime": "2026-04-10T10:00:00.000Z",
+                "endTime": "2026-04-10T10:45:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 121,
+                "startTime": "2026-04-10T11:00:00.000Z",
+                "endTime": "2026-04-10T11:45:00.000Z",
+                "colIndex": 4
+            },
+            {
+                "id": 122,
+                "startTime": "2026-04-11T08:00:00.000Z",
+                "endTime": "2026-04-11T08:45:00.000Z",
+                "colIndex": 5
+            },
+            {
+                "id": 123,
+                "startTime": "2026-04-11T09:00:00.000Z",
+                "endTime": "2026-04-11T09:45:00.000Z",
+                "colIndex": 6
+            },
+            {
+                "id": 124,
+                "startTime": "2026-04-11T10:00:00.000Z",
+                "endTime": "2026-04-11T10:45:00.000Z",
+                "colIndex": 7
+            },
+            {
+                "id": 125,
+                "startTime": "2026-04-11T11:00:00.000Z",
+                "endTime": "2026-04-11T11:45:00.000Z",
+                "colIndex": 8
+            }
+        ]
+    },
+    {
+        "id": 54,
+        "documentId": "g1nkjwx4umljpd9vpcue5m57",
+        "title": "NovoPrint 3D-Printing Robot Arm",
+        "location": "Sidney Lu Floor 1",
+        "description": "A 3D printed, 3D printing robotic arm",
+        "shortTitle": "A 3D printed, 3D printing robotic arm",
+        "createdAt": "2026-04-03T17:17:23.088Z",
+        "updatedAt": "2026-04-03T17:17:23.088Z",
+        "publishedAt": "2026-04-03T17:17:23.120Z",
+        "occurences": [
+            {
+                "id": 140,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 141,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 56,
+        "documentId": "uu5is49li58cqt0ypf4nos7x",
+        "title": "Pacbot Competition",
+        "location": "Nick Holonyak Micro & Nanotechnology Laboratory",
+        "description": "Pacman Robot Competition",
+        "shortTitle": "Pacman Robot Competition",
+        "createdAt": "2026-04-04T10:20:47.879Z",
+        "updatedAt": "2026-04-04T10:20:47.879Z",
+        "publishedAt": "2026-04-04T10:20:47.918Z",
+        "occurences": [
+            {
+                "id": 144,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 145,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 58,
+        "documentId": "ceyhitc9v74ujhkji6uk8kd6",
+        "title": "Robobrawl Design, Print, Destroy! (D.P.D.)",
+        "location": "Holonyak Micro & Nanotechnology Laboratory",
+        "description": "Battlebots but small! Come by and see some awesome matches as competitors fight their combat robots to win the gold! Finals from 3:30-4PM.",
+        "shortTitle": "Battlebots but small! Come by and see some awesome matches as competitors fight their combat robots to win the gold! Finals from 3:30-4PM.",
+        "createdAt": "2026-04-04T10:23:04.169Z",
+        "updatedAt": "2026-04-04T10:23:04.169Z",
+        "publishedAt": "2026-04-04T10:23:04.286Z",
+        "occurences": [
+            {
+                "id": 150,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T13:30:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 151,
+                "startTime": "2026-04-10T13:30:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 152,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T13:30:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 153,
+                "startTime": "2026-04-11T13:30:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 4
+            }
+        ]
+    },
+    {
+        "id": 60,
+        "documentId": "cl058z04zdwnm4iutpixi8dx",
+        "title": "Rocket Races",
+        "location": "Bardeen Quad",
+        "description": "Watch two rockets race between the bridges every hour! We designed and built 2 model rockets, and will race them between the bridges while teaching about the processes used to build rockets and the motors that power them.",
+        "shortTitle": "Watch two rockets race between the bridges every hour! We designed and built 2 model rockets, and will race them between the bridges while teaching about the processes used to build rockets and the motors that power them.",
+        "createdAt": "2026-04-04T10:24:06.398Z",
+        "updatedAt": "2026-04-04T10:24:06.398Z",
+        "publishedAt": "2026-04-04T10:24:06.447Z",
+        "occurences": [
+            {
+                "id": 156,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 157,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 62,
+        "documentId": "cynmupwg1rz5qga473nk6w4t",
+        "title": "Satellite Sightseeing",
+        "location": "Bardeen Quad",
+        "description": "Take an \u201cEarth-selfie\u201d from a weather satellite in space! ISSRC\u2019s Satellite Sightseeing Exhibit interactively explores the concept of amateur satellite communication, and explores how even college students can receive and decode weather satellite imagery. Combining this with an interactive mobile antenna mount, we can sightsee the earth from many different angles!",
+        "shortTitle": "Take an \u201cEarth-selfie\u201d from a weather satellite in space! ISSRC\u2019s Satellite Sightseeing Exhibit interactively explores the concept of amateur satellite communication, and explores how even college students can receive and decode weather satellite imagery.",
+        "createdAt": "2026-04-04T10:26:08.692Z",
+        "updatedAt": "2026-04-04T10:26:08.692Z",
+        "publishedAt": "2026-04-04T10:26:08.815Z",
+        "occurences": [
+            {
+                "id": 160,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 161,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 64,
+        "documentId": "lm0p9966tf2i8c2gl8dfdg7q",
+        "title": "Shark Tank",
+        "location": "Transportation Building",
+        "description": "Dive into a fast-paced challenge where teams brainstorm and pitch their innovative solutions to an engineering problem. Challenges begin every hour on the hour.",
+        "shortTitle": "Dive into a fast-paced challenge where teams brainstorm and pitch their innovative solutions to an engineering problem. Challenges begin every hour on the hour.",
+        "createdAt": "2026-04-04T10:27:55.644Z",
+        "updatedAt": "2026-04-04T10:27:55.644Z",
+        "publishedAt": "2026-04-04T10:27:55.751Z",
+        "occurences": [
+            {
+                "id": 164,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 165,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 66,
+        "documentId": "lxqzdi5ksot90u08kiz3eh8c",
+        "title": "Superhero Hospital",
+        "location": "Everitt Laboratory 1302",
+        "description": "Visit the Superhero Hospital to learn how bioengineering can help heal our superheroes after they save the day! Check out all 5 of our activities and receive a special item at the end.",
+        "shortTitle": "Visit the Superhero Hospital to learn how bioengineering can help heal our superheroes after they save the day! Check out all 5 of our activities and receive a special item at the end.",
+        "createdAt": "2026-04-04T10:29:20.318Z",
+        "updatedAt": "2026-04-04T10:29:20.318Z",
+        "publishedAt": "2026-04-04T10:29:20.351Z",
+        "occurences": [
+            {
+                "id": 170,
+                "startTime": "2026-04-10T08:00:00.000Z",
+                "endTime": "2026-04-10T10:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 171,
+                "startTime": "2026-04-10T11:00:00.000Z",
+                "endTime": "2026-04-10T13:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 172,
+                "startTime": "2026-04-11T08:00:00.000Z",
+                "endTime": "2026-04-11T10:00:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 173,
+                "startTime": "2026-04-11T11:00:00.000Z",
+                "endTime": "2026-04-11T13:00:00.000Z",
+                "colIndex": 4
+            }
+        ]
+    },
+    {
+        "id": 68,
+        "documentId": "qtuh2hkx2etq3wcjbf3bj3n8",
+        "title": "The Icing on the Machine: A Rube Goldberg Story",
+        "location": "Sidney Lu Floor 1",
+        "description": "Watch a bakery-themed chain reaction end with a delicious reveal! Step into a world of engineering confections! Our bakery-themed Rube Goldberg machine transforms pastries and coffee beans into a wonderfully clumsy chain reaction, all to accomplish one simple, sweet task: opening a box. Demos begin every 30 minutes.",
+        "shortTitle": "Watch a bakery-themed chain reaction end with a delicious reveal! Step into a world of engineering confections! Our bakery-themed Rube Goldberg machine transforms pastries and coffee beans into a wonderfully clumsy chain reaction, all to accomplish one simple, sweet task: opening a box. Demos begin every 30 minutes.",
+        "createdAt": "2026-04-04T10:30:48.762Z",
+        "updatedAt": "2026-04-04T10:30:48.762Z",
+        "publishedAt": "2026-04-04T10:30:48.854Z",
+        "occurences": [
+            {
+                "id": 176,
+                "startTime": "2026-04-10T07:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 177,
+                "startTime": "2026-04-11T07:00:00.000Z",
+                "endTime": "2026-04-11T14:00:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 70,
+        "documentId": "lcwde1bbxsh4j3mwkxp59ht6",
+        "title": "Alumni Coffee Chats",
+        "location": "CIF 2018",
+        "description": "Students can get to know alumni in a more personal setting! This is a great opportunity to ask alums about their time at the U of I, the industries they work in, and how students can plan their lives after college.",
+        "shortTitle": "Students can get to know alumni in a more personal setting! This is a great opportunity to ask alums about their time at the U of I, the industries they work in, and how students can plan their lives after college.",
+        "createdAt": "2026-04-04T10:31:23.412Z",
+        "updatedAt": "2026-04-04T10:31:23.412Z",
+        "publishedAt": "2026-04-04T10:31:23.450Z",
+        "occurences": [
+            {
+                "id": 179,
+                "startTime": "2026-04-10T12:00:00.000Z",
+                "endTime": "2026-04-10T14:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 81,
+        "documentId": "r4n0p2f62fkeagcr1picjyn2",
+        "title": "Crop Sciences Special Events",
+        "location": "NCSA",
+        "description": "The following are presentations conducted by research laboratories under the crops sciences department:\n\nPlants of the Past Inform Crops of the Future: 1:30PM\nWhat's Wrong with my Plant?: TBD\nDrones, Rovers, and Satellite Imaging for Agriculture: 10:30AM, 12:30PM\nExploring Soybean Diversity & Seeding Give-away: 2:30PM\nImagining Farms of the Future: 11:30AM",
+        "shortTitle": "The following are presentations conducted by research laboratories under the crops sciences department:\n\nPlants of the Past Inform Crops of the Future: 1:30PM\n\nWhat's Wrong with my Plant?: TBD\n\nDrones, Rovers, and Satellite Imaging for Agriculture: 10:30AM, 12:30PM\n\nExploring Soybean Diversity & Seeding Give-away: 2:30PM\n\nImagining Farms of the Future: 11:30AM",
+        "createdAt": "2026-04-08T23:06:52.089Z",
+        "updatedAt": "2026-04-08T23:19:52.341Z",
+        "publishedAt": "2026-04-08T23:19:52.405Z",
+        "occurences": [
+            {
+                "id": 197,
+                "startTime": "2026-04-10T11:30:00.000Z",
+                "endTime": "2026-04-10T12:00:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 198,
+                "startTime": "2026-04-10T08:30:00.000Z",
+                "endTime": "2026-04-10T09:00:00.000Z",
+                "colIndex": 2
+            },
+            {
+                "id": 199,
+                "startTime": "2026-04-10T10:30:00.000Z",
+                "endTime": "2026-04-10T11:00:00.000Z",
+                "colIndex": 3
+            },
+            {
+                "id": 200,
+                "startTime": "2026-04-10T12:30:00.000Z",
+                "endTime": "2026-04-10T13:00:00.000Z",
+                "colIndex": 4
+            },
+            {
+                "id": 201,
+                "startTime": "2026-04-10T09:30:00.000Z",
+                "endTime": "2026-04-10T10:00:00.000Z",
+                "colIndex": 5
+            }
+        ]
+    },
+    {
+        "id": 82,
+        "documentId": "o3yzs0zldfvlbmauecp90w71",
+        "title": "Chai Town",
+        "location": "Graziano Plaza",
+        "description": "Come listen to UIUC\u2019s famous South Asian acapella group!",
+        "shortTitle": "Come listen to UIUC\u2019s famous South Asian acapella group!",
+        "createdAt": "2026-04-04T10:32:35.272Z",
+        "updatedAt": "2026-04-09T13:26:38.009Z",
+        "publishedAt": "2026-04-09T13:26:38.111Z",
+        "occurences": [
+            {
+                "id": 203,
+                "startTime": "2026-04-10T09:00:00.000Z",
+                "endTime": "2026-04-10T09:45:00.000Z",
+                "colIndex": 1
+            },
+            {
+                "id": 204,
+                "startTime": "2026-04-10T11:30:00.000Z",
+                "endTime": "2026-04-10T12:15:00.000Z",
+                "colIndex": 2
+            }
+        ]
+    },
+    {
+        "id": 84,
+        "documentId": "jgytoy257nqtpwg3ulzcbzmb",
+        "title": "NIL Combine",
+        "location": "Siebel Center for Design",
+        "description": "MAPA Ticketing Inc. (MAPA) is hosting the NIL Combine Series sponsored by JP Morgan Chase at the Siebel Center for Design on Saturday, April 11. \n\nSpecial access to this event is open to student athletes, parents, coaches, campus organizations, and other engineering open house (EOH) participants that register here (MAPA NCS).\n\nCome join MAPA during EOH and learn about NIL, financial literacy, and other rules of the road in this ever-changing sports terrain. Access additional information at https://mapatix.com/the-nil-combine-series.",
+        "shortTitle": "Come join MAPA during EOH and learn about NIL, financial literacy, and other rules of the road in this ever-changing sports terrain.",
+        "createdAt": "2026-04-09T18:16:19.084Z",
+        "updatedAt": "2026-04-09T18:16:19.084Z",
+        "publishedAt": "2026-04-09T18:16:19.125Z",
+        "occurences": [
+            {
+                "id": 206,
+                "startTime": "2026-04-11T08:00:00.000Z",
+                "endTime": "2026-04-11T10:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 86,
+        "documentId": "d1kjh3pngek1g12pvo3q6gw3",
+        "title": "KIMLAB Robot Stories and Demos",
+        "location": "CIF Monumental Steps",
+        "description": "Professor Joohyung Kim will be showcasing robots from KIMLAB! There will be individual demonstrations organized by topic or interactive games. The lecture will include technical details explained in accessible terms, with demos interleaved between topics.",
+        "shortTitle": "Professor Joohyung Kim will be showcasing robots from KIMLAB! ",
+        "createdAt": "2026-04-01T00:39:06.959Z",
+        "updatedAt": "2026-04-10T12:23:09.719Z",
+        "publishedAt": "2026-04-10T12:23:09.804Z",
+        "occurences": [
+            {
+                "id": 208,
+                "startTime": "2026-04-10T10:30:00.000Z",
+                "endTime": "2026-04-10T12:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    },
+    {
+        "id": 87,
+        "documentId": "kzje8u532nkqioo3rihdl2wo",
+        "title": "Liquid Nitrogen Ice Cream",
+        "location": "Loomis Laboratory",
+        "description": "The Physics Van will be hosting live demos for Engineering Open House audience at Loomis Laboratory. After each show, members of the Physics Van will serve liquid nitrogen ice cream to guest while supplies last.",
+        "shortTitle": "The Physics Van will be hosting live demos for Engineering Open House audience at Loomis Laboratory. After each show, members of the Physics Van will serve liquid nitrogen ice cream to guest while supplies last.",
+        "createdAt": "2026-04-03T17:16:21.812Z",
+        "updatedAt": "2026-04-10T17:25:52.771Z",
+        "publishedAt": "2026-04-10T17:25:52.886Z",
+        "occurences": [
+            {
+                "id": 209,
+                "startTime": "2026-04-10T11:00:00.000Z",
+                "endTime": "2026-04-10T12:00:00.000Z",
+                "colIndex": 1
+            }
+        ]
+    }
+]

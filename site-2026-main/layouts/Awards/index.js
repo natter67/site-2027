@@ -15,9 +15,9 @@ const slotGradients = {
 const awards = [
   {
     "title": "Visitor’s Favorite Award",
-    "1": "Rocket Races",
+    "1": "Couch Car",
     "2": "NovoPrint 3D-Printing Robot Arm",
-    "3": "Exploring Curie Temperature"
+    "3": "Rocket Races"
   },
   {
     "title": "Outstanding RSO Exhibit",
