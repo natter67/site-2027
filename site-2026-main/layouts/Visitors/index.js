@@ -38,7 +38,7 @@ export default function Visitors() {
           <a
             href="/guide.pdf"
             className="flex items-center justify-center gap-2 py-3 px-7 text-center text-white rounded-full bg-black text-xl font-semibold
-                        w-full sm:w-96 mx-auto bg-gradient-to-tr from-[#ff8400] via-[#ff6700] to-[#ff8400] shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        w-full sm:w-96 mx-auto bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff8400] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <Icon icon="oi:book" className="text-2xl" />
             <span>Visitor Guide</span>
@@ -47,7 +47,7 @@ export default function Visitors() {
           <a
             href="/faq"
             className="flex items-center justify-center gap-2 py-3 text-center text-white rounded-full bg-black text-xl font-semibold
-                          w-full sm:w-96 mx-auto my-3 bg-gradient-to-tr from-[#c578d6] via-[#d292e0] to-[#c578d6] shadow-lg hover:shadow-xl transition-shadow duration-300"
+                          w-full sm:w-96 mx-auto my-3 bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff5f05] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <Icon icon="wpf:faq" className="text-2xl" />
             <span>FAQs</span>
@@ -81,7 +81,7 @@ export default function Visitors() {
           <a
             href="/students"
             className="flex items-center justify-center gap-2 py-3 px-7 text-center text-white rounded-full bg-black text-xl font-semibold
-                        w-full sm:w-96 mx-auto bg-gradient-to-tr from-[#ff8400] via-[#ff6700] to-[#ff8400] shadow-lg hover:shadow-xl transition-shadow duration-300"
+                        w-full sm:w-96 mx-auto bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff5f05] shadow-lg hover:shadow-xl transition-shadow duration-300"
           >
             <Icon icon="mdi:backpack" className="text-2xl" />
             <span>New Students</span>

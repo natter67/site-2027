@@ -215,11 +215,28 @@ export default function HomeVideo() {
         ))}
       </div>)} */}
 
-      <img
-        src="/assets/logo/EOHlogo2026.svg"
-        className="z-10 w-3/4 md:w-2/5 mb-6 md:mb-0"
-        alt="EOH Logo"
-      />
+      <div className="flex flex-col items-center z-10 mb-6 md:mb-0 w-full md:w-1/2">
+        <img
+          src="/assets/logo/eohlogo2026-orangeblue.png"
+          className="w-[150%] md:w-[80%]"
+          alt="EOH Logo"
+        />
+        <a
+          href="https://docs.google.com/forms/d/1NLvezecSIgMF66updgSD7W2sMc-xCw_-vK3yrsEiI-8/edit"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-center underline hover:opacity-80"
+          style={{
+            fontFamily: "'Norwester', sans-serif",
+            fontSize: "3rem",
+            fontWeight: "800",
+            color: "#333",
+            marginTop: "-2rem",
+          }}
+        >
+          2027 Logo Applications Now Open: Due Sept 18
+        </a>
+      </div>
     {/* Centered Title Area */}
       <header
         className="relative text-center z-0 px-4 md:px-0 w-full md:w-1/2 mt-20 md:mt-0"
@@ -256,11 +273,11 @@ export default function HomeVideo() {
             fontSize: windowWidth < 768 ? "3rem" : "6rem",
             // fontWeight: "700",
             lineHeight: "100%",
-            color: "#452566",
+            color: "#13295b",
             marginBottom: "1rem",
           }}
         >
-          Forging the Future
+          Driven by Discovery
         </h2>
         <p
           className="date"
@@ -271,7 +288,7 @@ export default function HomeVideo() {
             marginBottom: "1rem",
           }}
         >
-          April 10th & April 11th, 2026
+          April 9th & April 10th, 2027
         </p>
       </header>
 
