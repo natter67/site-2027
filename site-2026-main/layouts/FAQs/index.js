@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import rawFaqs from './faqs.json';
 
-const colors = ['bg-blue-300', 'bg-pink-300', 'bg-yellow-200', 'bg-red-300', 'bg-purple-300']
+const colors = ['bg-[#13294b]', 'bg-[#ff5f05]']
 
 // const ErrorMessageBox = ({ message, onRetry }) => (
 //   <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
@@ -112,9 +112,9 @@ const Faqs = () => {
                   id={`faq-question-${faq.id}`}
                   onClick={() => { if (expandedId == faq.id) { setExpandedId(null) } else setExpandedId(faq.id) }}
                   >
-                  <h4 className="font-semibold text-lg md:text-xl text-left">{faq.title}</h4>
+                  <h4 className="font-semibold text-lg md:text-xl text-left text-white">{faq.title}</h4>
                   {expandedId == faq.id &&
-                    <p className="text-sm text-black text-left mt-2"
+                    <p className="text-sm text-white text-left mt-2"
                       dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }}></p>
                   }
                 </button>

@@ -70,7 +70,7 @@ export default function ContactUsPage() {
 						<br />
 						<br />
 						If you are not sure which director to contact, please email{' '}
-						<span className="font-montserrat text-blue-600 hover:text-blue-900 font-semibold">
+						<span className="font-montserrat text-[#13294b] hover:text-[#13294b] font-semibold">
 							<a href="mailto:eoh@ec.illinois.edu">eoh@ec.illinois.edu</a>
 						</span>.
 					</p>
@@ -79,7 +79,7 @@ export default function ContactUsPage() {
 					{CONTACTS.map(c =>
 						<div className='md:p-4 text-sm md:text-base' key={c.email}>
 							<p className="font-montserrat font-bold mx-auto">{c.title}</p>
-							<a href="mailto:eoh-advancement@ec.illinois.edu" className='font-montserrat text-blue-800 hover:text-blue-900'>{c.email}</a>
+							<a href="mailto:eoh-advancement@ec.illinois.edu" className='font-montserrat text-[#13294b] hover:text-[#13294b]'>{c.email}</a>
 						</div>
 					)}
 				</div>

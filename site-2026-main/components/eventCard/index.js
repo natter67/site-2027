@@ -14,7 +14,7 @@ const EventCard = ({ description, title, location, dateTime }) => {
         {dateTime.map((time, index) => (
           <span
             key={index}
-            className="inline-block bg-blue-200 rounded-full px-3 py-1 text-sm font-semibold text-blue-700 mr-2 mb-2"
+            className="inline-block bg-[#13294b] rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
           >
             {time}
           </span>
