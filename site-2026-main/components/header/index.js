@@ -40,7 +40,7 @@ export default function Header({ headerItems }) {
         <div className="flex w-full items-center justify-between gap-2 px-4 sm:px-6">
           <Link href="/" aria-label="Engineering Open House home" className="shrink-0">
             <img
-              src="/assets/logo/eohheader.svg"
+              src="/assets/logo/eohheader2027.svg"
               alt="Engineering Open House"
               className="h-14 w-auto cursor-pointer object-contain sm:h-16"
             />
