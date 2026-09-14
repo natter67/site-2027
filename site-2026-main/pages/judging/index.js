@@ -76,7 +76,7 @@ export default function Judging() {
           <Button
             type="big"
             className="px-10 py-4 text-lg font-bold rounded-none
-                       bg-gradient-to-r from-yellow-400 to-yellow-500
+                       bg-gradient-to-r from-[#ff5f05] to-[#ff5f05]
                        hover:scale-105 transition-transform
                        drop-shadow-lg"
             href="https://docs.google.com/forms/d/e/1FAIpQLSeNWz-dxvtHJQpYfBSIUCWy9fvQZsKtnxLHG_mC_BWMobvohw/viewform"
