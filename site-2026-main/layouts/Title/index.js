@@ -217,7 +217,7 @@ export default function HomeVideo() {
 
       <div className="flex flex-col items-center z-10 mb-6 md:mb-0 w-full md:w-1/2">
         <img
-          src="/assets/logo/eohlogo2026-orangeblue.png"
+          src="/assets/logo/eoh2026logo-orangeblue-notwrinkly.png"
           className="w-[150%] md:w-[80%]"
           alt="EOH Logo"
         />

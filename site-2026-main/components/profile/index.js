@@ -12,7 +12,7 @@ export default function Profile({ img, Name, Position, Class, Major }) {
         style={{}}
       />
       <h3 className="font-montserrat font-bold text-md pt-2 pb-0">{Name}</h3>
-      <h3 className="font-montserrat font-light text-red-800 text-md py-0">
+      <h3 className="font-montserrat font-light text-[#ff5f05] text-md py-0">
         {Position}
       </h3>
       <h3 className="font-montserrat font-light text-md py-0">{Major}</h3>
