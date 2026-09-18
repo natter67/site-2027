@@ -16,10 +16,10 @@ export default function HomeVideo() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-   const town_hall_dates = [
-    {label: "Town Hall 1", date: new Date("2026-10-15T00:00:00")},
-    {label: "Town Hall 2", date: new Date("2026-11-02T00:00:00")},
-    {label: "Town Hall 3", date: new Date("2026-11-17T00:00:00")},
+  const town_hall_dates = [
+    {label: "Town Hall 1", date: new Date("2026-10-15T00:00:00"), badge: "OCT 15"},
+    {label: "Town Hall 2", date: new Date("2026-11-02T00:00:00"), badge: "NOV  2"},
+    {label: "Town Hall 3", date: new Date("2026-11-17T00:00:00"), badge: "NOV 17"},
 
   ]
 
@@ -265,9 +265,9 @@ export default function HomeVideo() {
         >
           Exhibit Countdown
         </a> */}
-      
+
         <div
-            style={{
+          style={{
             textAlign: "center",
             marginTop: "2rem",
             padding: "1rem 1.5rem",
@@ -302,18 +302,31 @@ export default function HomeVideo() {
             const t = timeleft[index];
             if (!t) return null;
             return (
-              <p key={th.label} style={{ fontSize: "1rem", color: "#333", margin: "0.25rem 0" }}>
-                {th.label}:{" "}
-                {t.passed
-                  ? "Happened!"
-                  : `${t.days}d ${t.hours}h ${t.minutes}m ${t.seconds}s`}
+              <p key={th.label} style={{ fontSize: "1rem", color: "#333", margin: "0.25rem 0", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+                <span>{th.label}:</span>
+                <span
+                  style={{
+                    backgroundColor: "#13294b",
+                    color: "#fff",
+                    borderRadius: "9999px",
+                    padding: "0.15rem 0.6rem",
+                    fontSize: "0.85rem",
+                    fontWeight: "700",
+                  }}
+                >
+                  {th.badge}
+                </span>
+                <span>
+                  {t.passed ? "Happened!" : `${t.days}d ${t.hours}h ${t.minutes}m ${t.seconds}s`}
+                </span>
               </p>
+
             );
           })}
         </div>
-        </div>
+      </div>
 
-    {/* Centered Title Area */}
+      {/* Centered Title Area */}
       <header
         className="relative text-center z-0 px-4 md:px-0 w-full md:w-1/2 mt-20 md:mt-0"
         style={{ padding: "2rem 1rem" }}
