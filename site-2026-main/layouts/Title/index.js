@@ -280,7 +280,7 @@ export default function HomeVideo() {
           <h2
             style={{
               fontFamily: "'Norwester', sans-serif",
-              fontSize: "2rem",
+              fontSize: "1rem",
               fontWeight: "800",
               color: "#333",
               marginBottom: "0.5rem",
