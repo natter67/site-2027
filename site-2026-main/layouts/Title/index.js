@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 export default function HomeVideo() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [timeleft, setTimeLeft] = useState([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -13,6 +14,34 @@ export default function HomeVideo() {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+   const town_hall_dates = [
+    {label: "Town Hall 1", date: new Date("2026-10-15T00:00:00")},
+    {label: "Town Hall 2", date: new Date("2026-11-02T00:00:00")},
+    {label: "Town Hall 3", date: new Date("2026-11-17T00:00:00")},
+
+  ]
+
+  useEffect(() =>{
+    const getTimeLeft = (targetDate) => {
+      const diff = targetDate.getTime() - Date.now();
+      if (diff <= 0){
+        return {days: 0, hours: 0, minutes: 0, seconds: 0, passed: true};
+      }
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      return {days, hours, minutes, seconds, passed: false};
+    };
+    const updateCountdowns = () => {
+      setTimeLeft(town_hall_dates.map((th) => getTimeLeft(th.date)));
+    };
+    updateCountdowns();
+    const intervalID = setInterval(updateCountdowns, 1000);
+    return () => clearInterval(intervalID);
   }, []);
 
   // REPLACE with new graphics soon
@@ -221,7 +250,7 @@ export default function HomeVideo() {
           className="w-[150%] md:w-[80%]"
           alt="EOH Logo"
         />
-        <a
+        {/* <a
           href="https://docs.google.com/forms/d/1NLvezecSIgMF66updgSD7W2sMc-xCw_-vK3yrsEiI-8/edit"
           target="_blank"
           rel="noopener noreferrer"
@@ -234,9 +263,56 @@ export default function HomeVideo() {
             marginTop: "-2rem",
           }}
         >
-          2027 Logo Applications Now Open: Due Sept 18
-        </a>
-      </div>
+          Exhibit Countdown
+        </a> */}
+      
+        <div
+            style={{
+            textAlign: "center",
+            marginTop: "2rem",
+            padding: "1rem 1.5rem",
+            border: "2px solid #13294b",
+            borderRadius: "0.75rem",
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "'Norwester', sans-serif",
+              fontSize: "2rem",
+              fontWeight: "800",
+              color: "#333",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Exhibit Countdown
+          </h2>
+          <p
+            style={{
+              fontSize: "1.1rem",
+              fontWeight: "600",
+              color: "#666",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Town Hall Dates
+          </p>
+          {town_hall_dates.map((th, index) => {
+            const t = timeleft[index];
+            if (!t) return null;
+            return (
+              <p key={th.label} style={{ fontSize: "1rem", color: "#333", margin: "0.25rem 0" }}>
+                {th.label}:{" "}
+                {t.passed
+                  ? "Happened!"
+                  : `${t.days}d ${t.hours}h ${t.minutes}m ${t.seconds}s`}
+              </p>
+            );
+          })}
+        </div>
+        </div>
+
     {/* Centered Title Area */}
       <header
         className="relative text-center z-0 px-4 md:px-0 w-full md:w-1/2 mt-20 md:mt-0"
