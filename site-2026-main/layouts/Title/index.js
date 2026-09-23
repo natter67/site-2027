@@ -379,6 +379,37 @@ export default function HomeVideo() {
         >
           April 9th & April 10th, 2027
         </p>
+        <div style={{ position: "relative", display: "inline-block" }}>
+          <a
+            href="https://forms.gle/7kQJ5RA95zQcVbNf8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pulse-cta inline-block border rounded-md text-white font-medium underline px-3 py-2 drop-shadow-md bg-[#ff5f05] hover:bg-[#ff5f05]"
+            style={{
+              fontSize: windowWidth < 768 ? "1rem" : "1.25rem",
+              marginTop: "0.75rem",
+              marginBottom: "1rem",
+            }}
+          >
+            EOH Exhibits Interest Form 2026-2027
+          </a>
+          <img
+            src="/assets/ui/magnifying-glass-cursor.png"
+            alt=""
+            className="cursor-cta"
+            style={{
+              position: "absolute",
+              top: "-2rem",
+              right: "-2rem",
+              width: "10rem",
+              height: "10rem",
+              filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.4))",
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
+            aria-hidden="true"
+          />
+        </div>
       </header>
 
 
@@ -420,6 +451,50 @@ export default function HomeVideo() {
           100% {
             transform: rotate(360deg);
           }
+        }
+
+        @keyframes pulse-cta {
+          0%, 100% {
+            box-shadow: 0 0 0 0 rgba(255, 95, 5, 0.6);
+          }
+          50% {
+            box-shadow: 0 0 0 10px rgba(255, 95, 5, 0);
+          }
+        }
+
+        @keyframes cursor-cta {
+          0% {
+            opacity: 0;
+            transform: translate(55vw, 45vh) scale(1);
+          }
+          15% {
+            opacity: 1;
+            transform: translate(55vw, 45vh) scale(1);
+          }
+          45% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+          }
+          53% {
+            transform: translate(0, 0) scale(0.85);
+          }
+          61% {
+            transform: translate(0, 0) scale(1);
+          }
+          80% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+          }
+          95%, 100% {
+            opacity: 0;
+            transform: translate(55vw, 45vh) scale(1);
+          }
+        }
+        .cursor-cta {
+          animation: cursor-cta 8s ease-in-out infinite;
+        }
+        .pulse-cta {
+          animation: pulse-cta 1.8s ease-out infinite;
         }
 
         @keyframes lavaFlowTriangle {
