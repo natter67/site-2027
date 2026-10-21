@@ -1,4 +1,8 @@
 // Keynote speakers: shown in full on /explore/keynotes and as a teaser in layouts/Highlights.
+// The speakers below are from EOH 2026. When the 2027 speakers are announced: replace them,
+// set KEYNOTES_YEAR to 2027 and set REVEAL_COMING_SOON to false.
+export const KEYNOTES_YEAR = 2026;
+export const REVEAL_COMING_SOON = true; // shows "2027 keynote reveal coming soon"
 export const KEYNOTES = [
   {
     name: "Christina Ernst",

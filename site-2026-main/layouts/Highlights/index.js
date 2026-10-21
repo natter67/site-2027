@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Mic, Swords } from "lucide-react";
 import { FEATURED_EVENTS } from "@layouts/EventList";
-import { KEYNOTES } from "@utilities/keynotes";
+import { KEYNOTES, KEYNOTES_YEAR, REVEAL_COMING_SOON } from "@utilities/keynotes";
 import { GUIDE } from "@utilities/visitorGuide";
 import { slug } from "@utilities/slug";
 
@@ -15,8 +15,10 @@ const HIGHLIGHTS = [
   event("Tesla Coil Concert", "/explore/special-events"),
   {
     title: "Keynotes",
-    subtitle: KEYNOTES.map((k) => k.name).join(" · "),
-    blurb: KEYNOTES.map((k) => k.timeString).join(" · "),
+    subtitle: REVEAL_COMING_SOON ? "2027 keynote reveal coming soon" : KEYNOTES.map((k) => k.name).join(" · "),
+    blurb: REVEAL_COMING_SOON
+      ? `${KEYNOTES_YEAR} keynotes: ${KEYNOTES.map((k) => k.name).join(" and ")}`
+      : KEYNOTES.map((k) => k.timeString).join(" · "),
     href: "/explore/keynotes",
     icon: Mic,
   },

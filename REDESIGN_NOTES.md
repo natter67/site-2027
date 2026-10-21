@@ -417,20 +417,20 @@ Content that moved off the home page is reached through in-browser hash redirect
 
 **Needs confirmation:** the hours (9 AM–4 PM) and location (Bardeen & North Quad, Urbana) come from the brief and live in `utilities/eventConfig.js`.
 
-**2026 leftovers that still need 2027 content:**
-- Home `<title>` "EOH 2026"
-- The awards heading "EOH 2026 Awards"
-- Keynotes (2026 speakers and dates)
-- Featured-event dates
-- The directors' letter
-- The Visitor Guide and Mom's Weekend PDFs (2026)
-- `showcase.pdf` (2025)
-- The schedule widget's hard-coded 2026 days
-- The footer copyright
+**2026 leftovers: owner's decisions (2026-10-21)**
+- Home browser-tab title: **changed** to "EOH 2027".
+- "EOH 2026 Awards" heading: keep (it shows last year's awards).
+- Keynotes: the 2026 speakers stay, labelled "These were the keynote speakers at EOH 2026", with a "2027 keynote reveal coming soon" card on `/explore/keynotes` and in the home Highlights. To switch, set `KEYNOTES_YEAR` and `REVEAL_COMING_SOON` in `utilities/keynotes.js`.
+- Directors' letter: keep the 2026 letter until the directors send the 2027 one.
+- Visitor Guide and Mom's Weekend (PDFs and web pages): keep.
+- Schedule widget's built-in dates: keep for now.
+- Footer copyright: keep ("Copyright EOH 2026"; it's still 2026).
+- MSDC form: to be updated later. The HSDC button already uses the 2027 interest form.
+- Still to review: featured-event dates and `showcase.pdf` (2025).
 
 ### Skipped or left alone to avoid breaking features
 - `/vv` logic, the schedule widget's logic, forms and payment links are unchanged. The schedule's Strapi URL and its timezone fix were only moved into exported helpers so the home preview reuses them, and the widget behaves the same.
-- **Strapi is still unreachable** (TLS error on `loved-vitality-4672033e09.strapiapp.com`), so the schedule, the home preview and Happening now show their fallbacks. See `TROUBLESHOOTING.md`.
+- **Strapi is offline on purpose:** the subscription only runs from second semester, when exhibit registration starts. Until then the schedule, the home preview and Happening now show their fallbacks. See `TROUBLESHOOTING.md`.
 - The map's floor-plan icon is an `<a>` without an `href`, so it can't be reached by keyboard. Fixing it would change `/vv` behaviour.
 - `/sponsor-us` still logs a React hydration warning (#418); this was already there before the redesign.
 - Four old pages are linked from nowhere but still work: `/events-list`, `/exhibitors`, `/independent-attend` (2023 content) and the 2025 `showcase.pdf`. Decide whether to keep, update or redirect them.

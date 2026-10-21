@@ -46,7 +46,7 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | Page title, summary, breadcrumb or "On this page" wrong | `utilities/navigation.js` (summary) and `components/page-header` | Pages pass `title` (and sometimes `onThisPage`) to `components/content` |
 | Directors' card quote on the home page | `layouts/DirectorsCard/index.js` | Copied word for word from `layouts/Directors` (full letter, `/about/directors`); keep them in sync |
 | Home section heading or "MILE 0X" sign | `pages/index.js` (the `mile` text) and `components/section/Section.js` (`variant="road"` styling) | Other pages use `Section` without a variant and are unaffected |
-| Keynote time, bio, or photo | `utilities/keynotes.js` (text) and `layouts/Keynote/index.js` (layout) | Shown on `/explore/keynotes` and in the home Highlights. |
+| Keynote time, bio, or photo | `utilities/keynotes.js` (text) and `layouts/Keynote/index.js` (layout) | Shown on `/explore/keynotes` and in the home Highlights. `KEYNOTES_YEAR` and `REVEAL_COMING_SOON` control the "2027 keynote reveal coming soon" card and the "These were the keynote speakers at EOH 2026" note. |
 | Awards | `layouts/Awards/index.js` | The `awards` list |
 | Featured event cards (MSDC, HSDC, Mom's Weekend, Startup Showcase, Tesla Coil) | `layouts/EventList/index.js` | The `FEATURED_EVENTS` list. Shown on `/explore/special-events`; the home Highlights reuse it. |
 | Donate or sponsor buttons | `layouts/Sponsors/index.js` | `STRIPE_DONATE_LINK`, `UIF_SPONSOR_LINK` |
@@ -63,7 +63,7 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 
 | Service | Used for | Settings |
 |---|---|---|
-| **Strapi Cloud** (CMS) | Schedule (`/schedule`, home preview, Happening now), Visitor View exhibits and special events, judging exhibit lookups | `utilities/strapi.js` is the only place with the host. To point at a different Strapi, set `NEXT_PUBLIC_STRAPI_URL`. The key is `NEXT_PUBLIC_STRAPI_KEY`. |
+| **Strapi Cloud** (CMS) | Schedule (`/schedule`, home preview, Happening now), Visitor View exhibits and special events, judging exhibit lookups | `utilities/strapi.js` is the only place with the host. To point at a different Strapi, set `NEXT_PUBLIC_STRAPI_URL`. The key is `NEXT_PUBLIC_STRAPI_KEY`.. **Paid only from second semester** (when exhibit registration starts). Outside that window it's off, and the schedule, Visitor View and Happening now show fallback messages. That's expected. |
 | **Firebase `eoh-2026-backend`** | Header login and account, leaderboard, QR scan points | Written directly into `utilities/firebaseApp.js` (not in `.env`) |
 | **Firebase `eoh-volunteer`** | Volunteer, admin, judging | Written directly into `utilities/firebase.js` (not in `.env`) |
 | **Vercel** | Hosting and deploys | Project `site-2027`. Pushes to `main` can trigger a production deploy. |
