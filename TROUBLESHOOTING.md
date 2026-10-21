@@ -31,21 +31,28 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | Hero text, date, interest-form link, or countdown layout | `layouts/Title/index.js` | Styles are in the "Hero" section of `styles/direction-a.css` |
 | Hero logo missing | `public/assets/logo/eoh2027-official-logo.jpg` | Served through Next.js image optimization (`/_next/image?url=…`). If only this image fails, check the image request in the browser's Network tab. |
 | Road animation, signposts, or "Hit the gas" | `components/hero-road/index.js` | Styles are in the "HeroRoad" section of `styles/direction-a.css`. The road path appears in **both** files and must match. |
-| Scrolling topics band under the hero | `components/ticker/index.js` | |
+| Scrolling topics band | `components/ticker/index.js` | No longer on the home page (removed in the 2027 restructure); the component is kept but unused. |
 | Animations don't play at all | none | Expected if the visitor's device has "reduce motion" turned on: everything is shown still on purpose. |
-| Header links | `layouts/BasicApp.js` | The `HEADER_ITEMS` list. Each item's `type` picks its style in `utilities/types.js`; the `da-*` pill styles live in `styles/direction-a.css`. |
+| Header, mega menu, mobile menu, footer or landing-page links | `utilities/navigation.js` | One list feeds the header (`components/header`, `components/mega-menu`, `components/mobile-nav`), the footer, the landing pages, breadcrumbs and "More in …" links. The `summary` lines there are the one-line page summaries. |
 | New colors, fonts, buttons, or cards look wrong | `styles/direction-a.css` | The colors are named variables at the top of the file. Their Tailwind names (`bg-da-navy` etc.) are in `tailwind.config.js`; the fonts are set up in `pages/_app.js`. Run `npm run dev` and open `/direction-a-preview` to see every piece on one page. |
-| Footer links | `components/footer/index.js` | The `footerSections` list |
+| Footer layout | `components/footer/index.js` | Links come from `utilities/navigation.js`; the "Stay in touch" column (mailing list, socials, Linktree) is in this file. |
 | Order of the home-page sections | `pages/index.js` | One block per section; delete a block to hide that section |
+| Event dates, hours, place or cost (hero, facts strip, `/visit`) | `utilities/eventConfig.js` | `EVENT_FACTS` |
+| Home shows the **event-day or post-event layout at the wrong time** (or not when it should) | `utilities/eventConfig.js` | `EVENT_START` / `EVENT_END`. Force a mode for everyone with `NEXT_PUBLIC_EVENT_MODE=pre`, `event` or `post` in Vercel and redeploy; preview one with `?mode=event` on any URL. |
+| Event-day bottom tab bar (phones) | `components/event-tab-bar/index.js` | Only shows in event mode, never on `/vv` |
+| "Happening now / Up next" or the home schedule preview is empty | `utilities/strapi.js` | Same Strapi data as the schedule. Code: `layouts/HappeningNow`, `layouts/SchedulePreview`, `utilities/scheduleItems.js` |
+| Old links like `/#awards` don't land on the right page | `pages/index.js` | The `MOVED_ANCHORS` list (in-browser redirects for content that moved off the home page) |
+| Page title, summary, breadcrumb or "On this page" wrong | `utilities/navigation.js` (summary) and `components/page-header` | Pages pass `title` (and sometimes `onThisPage`) to `components/content` |
+| Directors' card quote on the home page | `layouts/DirectorsCard/index.js` | Copied word for word from `layouts/Directors` (full letter, `/about/directors`); keep them in sync |
 | Home section heading or "MILE 0X" sign | `pages/index.js` (the `mile` text) and `components/section/Section.js` (`variant="road"` styling) | Other pages use `Section` without a variant and are unaffected |
-| Keynote time, bio, or photo | `pages/index.js` (text) and `layouts/Keynote/index.js` (layout) | |
+| Keynote time, bio, or photo | `utilities/keynotes.js` (text) and `layouts/Keynote/index.js` (layout) | Shown on `/explore/keynotes` and in the home Highlights. |
 | Awards | `layouts/Awards/index.js` | The `awards` list |
-| Featured event cards (MSDC, HSDC, Mom's Weekend, Startup Showcase, Tesla Coil) | `layouts/EventList/index.js` | The `events` list |
+| Featured event cards (MSDC, HSDC, Mom's Weekend, Startup Showcase, Tesla Coil) | `layouts/EventList/index.js` | The `FEATURED_EVENTS` list. Shown on `/explore/special-events`; the home Highlights reuse it. |
 | Donate or sponsor buttons | `layouts/Sponsors/index.js` | `STRIPE_DONATE_LINK`, `UIF_SPONSOR_LINK` |
 | Sponsor logos | `components/corporateSponsor/index.js` | Image files live in `public/assets/sponsors/` |
 | FAQ answers | `layouts/FAQs/faqs.json` | |
 | `/students` event list | `public/assets/data/events.json` | |
-| Visitor guide or other PDFs | `public/guide.pdf`, `public/EOHxmoms.pdf`, `public/showcase.pdf` | Replace the file and keep the same name |
+| Visitor guide or other PDFs | `public/guide.pdf`, `public/EOHxmoms.pdf`, `public/showcase.pdf` | Replace the file and keep the same name. The web versions (`/visit/guide`, `/schools/moms-weekend`) read `utilities/visitorGuide.js` and `utilities/momsWeekend.js`, so update those too. |
 | `/live` or `/guide` redirect | `next.config.js` | |
 | Google Maps links for buildings | `utilities/links.js` | The `LOCATIONS` list |
 | Icons missing but the page otherwise fine | none | Icons load from api.iconify.design at runtime. If that site is blocked or down, icons disappear but everything else works. |
@@ -55,7 +62,7 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 
 | Service | Used for | Settings |
 |---|---|---|
-| **Strapi Cloud** (CMS) | Home schedule, Visitor View exhibits and special events, judging exhibit lookups | `utilities/strapi.js` is the only place with the host. To point at a different Strapi, set `NEXT_PUBLIC_STRAPI_URL`. The key is `NEXT_PUBLIC_STRAPI_KEY`. |
+| **Strapi Cloud** (CMS) | Schedule (`/schedule`, home preview, Happening now), Visitor View exhibits and special events, judging exhibit lookups | `utilities/strapi.js` is the only place with the host. To point at a different Strapi, set `NEXT_PUBLIC_STRAPI_URL`. The key is `NEXT_PUBLIC_STRAPI_KEY`. |
 | **Firebase `eoh-2026-backend`** | Header login and account, leaderboard, QR scan points | Written directly into `utilities/firebaseApp.js` (not in `.env`) |
 | **Firebase `eoh-volunteer`** | Volunteer, admin, judging | Written directly into `utilities/firebase.js` (not in `.env`) |
 | **Vercel** | Hosting and deploys | Project `site-2027`. Pushes to `main` can trigger a production deploy. |
