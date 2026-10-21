@@ -6,7 +6,7 @@ import { useStringQueryParam } from '@utilities/useStringQueryParam';
 import { strapiSwrFetcher, strapiUrl } from '@utilities/strapi';
 
 const ErrorMessageBox = ({ message, onRetry }) => (
-  <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
+  <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#a30000', borderRadius: '5px', textAlign: 'center' }}>
     <p>{message}</p>
     {onRetry && (
       <button onClick={onRetry} style={{ marginTop: '10px', padding: '10px', fontSize: '16px', cursor: 'pointer', backgroundColor: '#f2f2f2', border: 'none', borderRadius: '5px' }}>
