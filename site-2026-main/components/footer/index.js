@@ -37,16 +37,7 @@ const footerSections = [
 
 export default function Footer({ socials }) {
   return (
-    <footer className="relative flex flex-col w-full p-10 md:p-20 overflow-hidden">
-      <div
-        aria-hidden
-        className="absolute inset-0 z-0 bg-no-repeat bg-bottom bg-cover pointer-events-none"
-        style={{
-          backgroundImage: "url('/assets/banners/robot_banner_4.png')",
-          opacity: 0.35,
-        }}
-      />
-
+    <footer className="relative flex flex-col w-full p-10 md:p-16 overflow-hidden bg-da-navy font-body text-white">
       {/* Purple-to-transparent gradient behind text */}
       {/* <div
         className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
@@ -55,15 +46,15 @@ export default function Footer({ socials }) {
         }}
       /> */}
 
-      <div className="relative z-10 flex flex-col md:flex-row w-full items-center md:items-start bg-theme-orange bg-opacity-15 rounded-lg">
-        <div className="flex flex-row flex-wrap items-stretch justify-evenly md:w-2/3">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center md:flex-row md:items-start">
+        <div className="flex w-full flex-row flex-wrap items-stretch justify-evenly">
           {footerSections.map((section) => (
             <div className="flex flex-col p-3 w-44 gap-1" key={section.heading}>
-              <h3 className="font-bold mb-1 font-montserrat text-black">{section.heading}</h3>
+              <h3 className="mb-1 font-display text-xl uppercase tracking-wide text-da-orange-light">{section.heading}</h3>
               {section.links?.map((link) => (
                 <a
                   href={link.href}
-                  className="hover:text-blue-700 duration-200 font-montserrat font-medium mt-2 text-black focus:outline focus:ring-2 focus:ring-primary-brown focus:ring-offset-2 rounded"
+                  className="mt-2 rounded font-medium text-white hover:underline hover:decoration-da-orange-light hover:decoration-2 hover:underline-offset-4 focus:outline focus:ring-2 focus:ring-da-orange focus:ring-offset-2 focus:ring-offset-da-navy"
                   key={link.href}
                   style={{lineHeight: "1"}}
                   {...(link.href.startsWith("http") ? { rel: "noopener noreferrer", target: "_blank" } : {})}
@@ -76,7 +67,7 @@ export default function Footer({ socials }) {
         </div>
       </div>
 
-      <p className="relative z-10 font-montserrat text-sm text-black text-center mt-20 font-medium">
+      <p className="relative z-10 mt-12 text-center font-label text-xs uppercase tracking-[0.1em] text-white">
         Copyright EOH 2026
       </p>
     </footer>
