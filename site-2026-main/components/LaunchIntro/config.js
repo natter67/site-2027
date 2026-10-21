@@ -8,26 +8,27 @@ export const INTRO_ENABLED = true;
 export const SESSION_KEY = "eoh-intro-seen";
 export const REPLAY_PARAM = "intro";
 
-// Milliseconds from the moment the page starts loading.
+// Milliseconds from the moment the page starts loading. About 5.5 s in total; the finished frame
+// (headline filled, counter at 100) holds for about 1.4 s before the wipe.
 export const TIMING = {
-  frameEnd: 600, // grid fades in, rules draw, crop marks and labels appear (0–0.6s)
-  rulesStart: 50,
-  labelsStart: 250,
-  trailsStart: 300, // light trails draw 0.30–2.05s
-  trailsEnd: 2050,
-  readoutStart: 550, // "EXPLORING │ field" flips 0.55–2.10s
-  readoutEnd: 2100,
-  headlineTopStart: 850, // "DRIVEN BY" rises
-  headlineBottomStart: 1050, // "DISCOVERY" outline rises
-  riseDuration: 500,
-  fillStart: 1350, // "DISCOVERY" fills left to right 1.35–1.85s
-  fillEnd: 1850,
-  counterEnd: 2300, // counter 000 → 100 (ease-out), held until the page is ready
-  exitStart: 2100, // headline, readout and trails ease up and fade (2.10–2.65s)
-  exitDuration: 550,
-  handoffDelay: 450, // panel wipe starts 0.45s into the exit (2.55s) …
-  handoffDuration: 950, // … and ends at 3.50s, then the overlay unmounts
-  hardCap: 6000, // never longer than this, even if the page isn't ready
+  frameEnd: 800, // grid fades in, rules draw, crop marks and labels appear (0–0.8s)
+  rulesStart: 80,
+  labelsStart: 350,
+  trailsStart: 400, // light trails draw 0.4–3.0s
+  trailsEnd: 3000,
+  readoutStart: 700, // "EXPLORING │ field" flips 0.7–3.4s
+  readoutEnd: 3400,
+  headlineTopStart: 1000, // "DRIVEN BY" rises
+  headlineBottomStart: 1300, // "DISCOVERY" outline rises
+  riseDuration: 700,
+  fillStart: 1800, // "DISCOVERY" fills left to right 1.8–2.6s
+  fillEnd: 2600,
+  counterEnd: 3400, // counter 000 → 100 (ease-out), held until the page is ready
+  exitStart: 4000, // headline, readout and trails ease up and fade (4.0–4.7s)
+  exitDuration: 700,
+  handoffDelay: 500, // panel wipe starts 0.5s into the exit (4.5s) …
+  handoffDuration: 1000, // … and ends at 5.5s, then the overlay unmounts
+  hardCap: 8000, // never longer than this, even if the page isn't ready
 };
 
 export const EASING = {

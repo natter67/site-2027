@@ -291,7 +291,7 @@ A once-per-session title sequence ("launch sequence") that plays over the page t
 
 It is mounted once in `pages/_app.js`.
 
-**The sequence (about 3.5 s):**
+**The sequence (about 5.5 s; slowed down from 3.5 s at the owner's request so the finished title holds for about 1.4 s):**
 - **Frame:** the hairline grid fades in, the rules draw left to right, crop marks and mono labels appear, and the counter reads 000.
 - **Trails:** two orange light trails with a glow, a faint cool-white trail in the other lane, and a white-hot head. They draw along the lower band, then sweep up and off the right edge.
 - **Headline:** "DRIVEN BY" rises through a mask, then "DISCOVERY" rises as an orange outline and fills left to right (the fill is the same text stacked exactly on the outline).
@@ -309,7 +309,7 @@ It is mounted once in `pages/_app.js`.
 - **Plays when:** it's the first page view in a browser session (`sessionStorage`), on any page.
 - **Replay:** `?intro=1` replays it.
 - **Never plays:** with JavaScript off, with reduced motion turned on, or on later views in the same session (no flash).
-- **Counter:** follows real loading: `document.fonts.ready`, priority images decoded (the hero logo), and window load. It eases 000→100 over 2.3 s, never goes backward, and holds the finished frame if the page isn't ready. Hand-off happens as soon as the page is ready, with a hard cap of 6 s.
+- **Counter:** follows real loading: `document.fonts.ready`, priority images decoded (the hero logo), and window load. It eases 000→100 over 2.3 s, never goes backward, and holds the finished frame if the page isn't ready. Hand-off happens as soon as the page is ready, with a hard cap of 8 s.
 - **Skip:** the "Skip intro" button (the first Tab stop), Esc, or a click or tap anywhere goes straight to the wipe.
 - **Accessibility:** focus is never trapped. After the handoff, Tab reaches the skip link as normal. The visual layers are `aria-hidden`.
 - **Performance:** CSS-only motion plus inline SVG; no new dependencies, video, canvas or extra fonts. The page underneath is server-rendered and never waits on the intro.
