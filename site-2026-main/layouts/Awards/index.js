@@ -116,7 +116,7 @@ export default function () {
   onClick={() => setAward(a)}
   className="da-card da-card--lift w-72 p-5 flex items-center justify-center text-da-navy focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-da-orange"
 >
-  <h4 className='font-display text-xl uppercase leading-tight text-center'>{a.title}</h4>
+  <h3 className='font-display text-xl uppercase leading-tight text-center'>{a.title}</h3>
 </button>
 
           )
