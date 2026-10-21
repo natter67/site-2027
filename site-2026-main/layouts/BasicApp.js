@@ -2,60 +2,19 @@ import Footer from '@/footer';
 import Header from '@/header';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
+import { useEventMode } from '@utilities/useEventMode';
 
-const LINKTREE_URL = 'https://linktr.ee/eoh2025';
-const FB_URL = 'https://www.facebook.com/EngineeringOpenHouse/';
-const INSTA_URL = 'https://www.instagram.com/eoh_illinois/';
-const TWITTER_URL = 'https://twitter.com/IllinoisEOH';
-const CONTACT_US = '/contact-us';
-
-const SOCIALS = { LINKTREE_URL, FB_URL, INSTA_URL, TWITTER_URL };
-
-const HEADER_ITEMS = [
-  { text: "Volunteer", href: "/volunteer" },
-  {
-    text: "Contact Us",
-    href: CONTACT_US
-  },
-  {
-    text: "FAQs",
-    href: "/faq"
-  },
-  {
-    text: "Sponsors",
-    href: "/#sponsors"
-  },
-  {
-    text: "Field Trips",
-    href: "/field-trips"
-  },
-  {
-    text: "Judging",
-    href: "/judging"
-  },
-  {
-    text: "Students",
-    href: "/students"
-  },
-  { text: "Visitor View", 
-    href: "/vv",
-    type: "green",
-  },
-  {
-    text: "Visitor Guide",
-    href: "/guide.pdf",
-    target: "_blank",
-    type: "big"
-  },
-  {
-    text: 'Linktree',
-    href: LINKTREE_URL,
-    type: 'mail'
-  }
-];
+// Pages that keep their own look instead of the Direction A page background and body font:
+// home draws its own sections, and the rest are event-day tools (plus every /judging/... page).
+const OWN_LOOK_PAGES = ['/', '/vv', '/volunteer', '/admin', '/login', '/account'];
 
 export default function BasicApp({ Component, pageProps }) {
   const router = useRouter()
+  const mode = useEventMode()
+  const daPage = !OWN_LOOK_PAGES.includes(router.pathname) && !router.pathname.startsWith('/judging/');
+  // flow-root keeps a page's top margin inside the background; isolate keeps z-index:-1 images
+  // (the Sponsor Us photo) painted above it. da-ground lives in styles/direction-a.css.
+  const daClasses = daPage ? 'da-ground font-body text-da-navy flow-root isolate' : '';
   return (
     <Fragment>
       {(
@@ -63,13 +22,13 @@ export default function BasicApp({ Component, pageProps }) {
           <a href="#main-content" className="skip-link">
             Skip to main content
           </a>
-          <Header
-            headerItems={HEADER_ITEMS}
-          />
-          <div id="main-content" className="w-screen main-content" role="main">
+          <Header />
+          <div id="main-content" className={`w-screen main-content ${daClasses}`} role="main">
             <Component {...pageProps} />
           </div>
-          {router.pathname != '/vv' && <Footer socials={SOCIALS} />}
+          {router.pathname != '/vv' && <Footer />}
+          {/* Room for the event-day tab bar (components/event-tab-bar) on phones */}
+          {mode === 'event' && router.pathname != '/vv' && <div aria-hidden="true" className="h-16 lg:hidden" />}
         </div>
       )}
     </Fragment>

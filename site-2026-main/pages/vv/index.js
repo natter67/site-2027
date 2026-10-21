@@ -22,13 +22,13 @@ export default function VisitorView() {
         <div className="mt-24 flex flex-col justify-between lg:mt-20">
             <div className="mb-24">{pages[view].element}</div>
 
-            <div className="pointer-events-auto fixed bottom-0 z-40 flex h-20 w-full flex-row items-center justify-evenly bg-blue-300">
+            <div className="pointer-events-auto fixed bottom-0 z-40 flex h-20 w-full flex-row items-center justify-evenly bg-da-navy text-white">
                 {Object.keys(pages).map((p) => (
                     <button
                         key={p}
                         type="button"
                         onClick={() => setCurrentView(p)}
-                        className={`${view === p ? "font-bold" : ""} flex min-w-0 w-1/5 flex-col items-center px-0.5`}
+                        className={`${view === p ? "font-bold text-da-orange-light" : ""} flex min-w-0 w-1/5 flex-col items-center px-0.5`}
                     >
                         <Icon icon={pages[p].icon} className="shrink-0 text-3xl" />
                         <h2 className="max-w-full truncate whitespace-nowrap text-xs sm:text-base">{pages[p].title}</h2>

@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import rawFaqs from './faqs.json';
 
-const colors = ['bg-[#13294b]', 'bg-[#ff5f05]']
+const colors = ['bg-[#13294b] text-white', 'bg-[#ff5f05] text-da-navy'] // navy text on orange for contrast
 
 // const ErrorMessageBox = ({ message, onRetry }) => (
 //   <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
@@ -43,7 +43,8 @@ const normalizeFaqs = (faqs) => {
 };
 
 
-const Faqs = () => {
+// `only` (optional): category names to show, e.g. ['Parking FAQs'] on /visit/getting-here
+const Faqs = ({ only }) => {
   // const fetcher = (url) => fetch(url).then((res) => res.json());
   const [expandedId, setExpandedId] = useState(null);
 
@@ -97,24 +98,24 @@ const Faqs = () => {
 
   return (
     <div className="mt-15 md:mt-18 flex flex-col justify-between">
-      {categoryOrder.map((category, idx) => {
+      {(only || categoryOrder).map((category, idx) => {
         const faqs = categories[category] || [];
         return (
-          <div key={category} className="mb-8">
-            <h3 className="text-2xl font-bold mb-4">{category}</h3>
+          <div key={category} id={category.toLowerCase().replace(/\s+/g, "-")} className="mb-8 scroll-mt-24 lg:scroll-mt-32">
+            <h2 className="font-display text-2xl uppercase mb-4">{category}</h2>
             <div className="flex flex-col gap-4 ">
               {faqs.map((faq) => (
                 <button type="button" 
                   key={faq.id} 
-                  className={`p-5 ${colors[idx % colors.length]} rounded-md border hover:bg-opacity-80`}
+                  className={`p-5 ${colors[idx % colors.length]} rounded-2xl border-2 border-da-navy hover:bg-opacity-80`}
                   aria-expanded={expandedId === faq.id}
                   aria-controls={`faq-answer-${faq.id}`}
                   id={`faq-question-${faq.id}`}
                   onClick={() => { if (expandedId == faq.id) { setExpandedId(null) } else setExpandedId(faq.id) }}
                   >
-                  <h4 className="font-semibold text-lg md:text-xl text-left text-white">{faq.title}</h4>
+                  <h3 className="font-semibold text-lg md:text-xl text-left">{faq.title}</h3>
                   {expandedId == faq.id &&
-                    <p className="text-sm text-white text-left mt-2"
+                    <p className="text-sm text-left mt-2"
                       dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }}></p>
                   }
                 </button>

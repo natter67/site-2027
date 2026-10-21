@@ -19,9 +19,9 @@ export default function Button({
 	const [menuIsOpen, setMenuOpenTo] = useState(false);
 
 	const cursor = typeof href === 'undefined' ? 'cursor-default' : 'cursor-pointer';
-	const styles = `relative transition delay-150 duration-200 ease-in-out inline-flex items-center py-2 ${getStyles(
-		type
-	)} ${cursor} ${className}`;
+	const typeStyles = getStyles(type);
+	const font = typeStyles?.includes('da-') ? 'font-body' : 'font-montserrat'; // Direction A styles use Archivo
+	const styles = `relative transition delay-150 duration-200 ease-in-out inline-flex items-center py-2 ${typeStyles} ${cursor} ${className}`;
 
 	return (
 		<div className={divClass}>
@@ -38,12 +38,12 @@ export default function Button({
 				style={style}
 				onClick={onClick}
 			>
-				<h3
-					className={`font-montserrat ${multiline ? 'mx-auto' : 'whitespace-nowrap truncate'}`}
+				<span
+					className={`${font} ${multiline ? 'mx-auto' : 'whitespace-nowrap truncate'}`}
 					style={width ? { width: width } : {}}
 				>
 					{children}
-				</h3>
+				</span>
 				{type == "menu" && <img src="/assets/ui/caret-down.svg" alt="" className="inline-block float-right w-5 p-0" aria-hidden="true" />}
 				{/* {menuItems && <ArrowDropDownIcon />} */}
 			</a>

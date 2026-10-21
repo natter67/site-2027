@@ -6,10 +6,9 @@ import dayjs from "dayjs"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
 import Fuse from "fuse.js"
+import { strapiSwrFetcher, strapiUrl } from "@utilities/strapi"
 dayjs.extend(utc)
 dayjs.extend(timezone)
-
-var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
 
 const colorGradients = [
   'from-orange-500 to-red-600',
@@ -152,15 +151,9 @@ const SpecialEvents = () => {
   const [searchOpen, setSearchOpen] = useState(false)
   const itemsPerPage = 30
 
-  const fetcher = (url) => fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${strapi_key}`
-    }
-  }).then((res) => res.json());
-
   const { data, error } = useSWR(
-    `https://loved-vitality-4672033e09.strapiapp.com/api/events?populate=occurences&pagination[pageSize]=100`,
-    fetcher
+    strapiUrl(`/api/events?populate=occurences&pagination[pageSize]=100`),
+    strapiSwrFetcher
   )
 
   if (error) return <ErrorMessageBox message="Failed to load. Please try again." onRetry={() => window.location.reload()} />

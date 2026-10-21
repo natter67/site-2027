@@ -32,13 +32,21 @@ const visitorBooths = [
 
 export default function Visitors() {
   return (
-    <div className="flex flex-col mx-10">
-      <div className="mx-auto flex flex-col md:flex-row gap-5">
-      <div className="flex flex-col">
+    <div className="mx-auto w-full max-w-4xl px-4">
+      <div className="da-card mx-auto flex w-full flex-col items-center gap-6 p-6 md:flex-row md:p-8">
+        <svg aria-hidden="true" viewBox="0 0 80 80" className="h-20 w-20 shrink-0">
+          <circle cx="40" cy="40" r="34" className="fill-white stroke-da-navy" strokeWidth="4" />
+          <text x="40" y="18" textAnchor="middle" fontSize="11" className="font-display fill-da-navy">N</text>
+          <g className="da-compass-needle">
+            <path d="M40 14 L46 40 L40 66 L34 40 Z" className="fill-da-navy" />
+            <path d="M40 14 L46 40 L34 40 Z" className="fill-da-orange" />
+          </g>
+          <circle cx="40" cy="40" r="4" className="fill-white stroke-da-navy" strokeWidth="2" />
+        </svg>
+      <div className="flex w-full flex-1 flex-col gap-3">
           <a
             href="/guide.pdf"
-            className="flex items-center justify-center gap-2 py-3 px-7 text-center text-white rounded-full bg-black text-xl font-semibold
-                        w-full sm:w-96 mx-auto bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff8400] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="da-pill da-pill--primary w-full text-lg"
           >
             <Icon icon="oi:book" className="text-2xl" />
             <span>Visitor Guide</span>
@@ -46,8 +54,7 @@ export default function Visitors() {
 
           <a
             href="/faq"
-            className="flex items-center justify-center gap-2 py-3 text-center text-white rounded-full bg-black text-xl font-semibold
-                          w-full sm:w-96 mx-auto my-3 bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff5f05] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="da-pill da-pill--secondary w-full text-lg"
           >
             <Icon icon="wpf:faq" className="text-2xl" />
             <span>FAQs</span>
@@ -77,11 +84,10 @@ export default function Visitors() {
             </Info>
           </div> */}
         </div>
-        <div className="flex flex-col">
+        <div className="flex w-full flex-1 flex-col gap-3">
           <a
             href="/students"
-            className="flex items-center justify-center gap-2 py-3 px-7 text-center text-white rounded-full bg-black text-xl font-semibold
-                        w-full sm:w-96 mx-auto bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff5f05] shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="da-pill da-pill--secondary w-full text-lg"
           >
             <Icon icon="mdi:backpack" className="text-2xl" />
             <span>New Students</span>

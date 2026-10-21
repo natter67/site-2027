@@ -6,8 +6,7 @@ import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { Modal } from './modal.js';
 import Fuse from 'fuse.js';
-
-var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
+import { strapiSwrFetcher, strapiUrl } from '@utilities/strapi';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -31,6 +30,12 @@ const timeMs8Hrs = 1000 * 60 * 60 * 8.5;
 // What days are EOH on
 const dayOneMs = dayjs.tz('2026-04-10 00:00', 'America/Chicago').valueOf();
 const dayTwoMs = dayjs.tz('2026-04-11 00:00', 'America/Chicago').valueOf();
+
+// Shared with layouts/SchedulePreview (same SWR key, so the data is fetched once).
+export const SCHEDULE_EVENTS_URL = strapiUrl('/api/events?populate=occurences&pagination[pageSize]=40&populate=picture');
+
+// Strapi times were entered in European time; this turns one into Champaign time.
+export const toChampaignTime = (iso) => dayjs.utc(iso).tz('Europe/Vienna').tz('America/Chicago', true);
 
 const genTimeSlots = () => {
   const totalSlots = 26;
@@ -89,16 +94,7 @@ export function Schedule() {
     );
   };
 
-  const fetcher = (url) => fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${strapi_key}`
-    }
-  }).then((res) => res.json());
-
-  const { data, error, isLoading } = useSWR(
-    'https://loved-vitality-4672033e09.strapiapp.com/api/events?populate=occurences&pagination[pageSize]=40&populate=picture',
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR(SCHEDULE_EVENTS_URL, strapiSwrFetcher);
 
   if (error) return 'An error has occurred.';
   if (isLoading) return 'Loading...';
@@ -113,8 +109,8 @@ export function Schedule() {
       .filter((occ) => occ?.startTime && occ?.endTime)
       .map((occ) => {
       // This is my fix because I entered the data in European timezone
-      const start = dayjs.utc(occ.startTime).tz('Europe/Vienna').tz('America/Chicago', true);
-      const end = dayjs.utc(occ.endTime).tz('Europe/Vienna').tz('America/Chicago', true);
+      const start = toChampaignTime(occ.startTime);
+      const end = toChampaignTime(occ.endTime);
       const date = start.date() === 10 ? DAY_ONE : DAY_TWO; // Change this line to reflect the day EOH is on!
       const duration = end.diff(start) / timeMsPerSlot;
       const rowIndex =
@@ -170,9 +166,9 @@ export function Schedule() {
   );
 
   const activeStyles =
-    'border-white bg-gradient-to-tr from-purple-800 via-purple-600 to-blue-700 text-white';
+    'border-2 border-b-0 border-da-navy bg-da-navy text-white';
   const inactiveStyles =
-    'border-black border-t-2 border-l-2 border-r-2 bg-transparent hover:bg-gradient-to-tr from-purple-200 via-purple-100 to-blue-200 text-black';
+    'border-2 border-b-0 border-da-navy bg-white text-da-navy hover:bg-da-peach';
 
   return (
     <>
@@ -184,7 +180,7 @@ export function Schedule() {
 
 <div className="flex justify-end px-6 mb-2">
                 <button
-                    className="bg-purple-700 text-white px-4 py-2 rounded-xl font-semibold hover:bg-purple-800"
+                    className="da-pill da-pill--sm da-pill--navy"
                     onClick={() => setShowItinerary(!showItinerary)}
                 >
                     {showItinerary ? "Hide My Itinerary" : "View My Itinerary"}
@@ -201,7 +197,7 @@ export function Schedule() {
                     ${onDayOne ? inactiveStyles : activeStyles}`}>Saturday, April 11th</button>
             </span>
             
-             <div className="max-h-128 overflow-x-hidden p-4 bg-gradient-to-tr from-pink-50 via-yellow-50 to-blue-100 rounded-xl flex flex-col">
+             <div className="max-h-128 overflow-x-hidden p-4 da-card flex flex-col">
                 <div className="flex flex-row gap-0">
                     <div className="flex flex-col">
                         <div className='h-24 flex items-end justify-center'>

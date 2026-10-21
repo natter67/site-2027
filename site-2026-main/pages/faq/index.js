@@ -7,10 +7,10 @@ import Faqs from "layouts/FAQs/index.js";
 export default function FaqPage() {
     return (
         <div className="flex flex-col">
-            <Content>
-                <h2 className="text-2xl md:text-3xl font-bold mb-8 font-heading">
-                    Frequently Asked Questions (FAQs)
-                </h2>
+            <Content
+                title="Frequently Asked Questions (FAQs)"
+                onThisPage={["Event FAQs", "Parking FAQs", "Food FAQs", "Emergency FAQs"].map((label) => ({ id: label.toLowerCase().replace(/\s+/g, "-"), label }))}
+            >
                 <Faqs />
             </Content>
         </div>

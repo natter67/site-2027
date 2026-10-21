@@ -1,17 +1,11 @@
 /**
  * Load exhibits from Strapi for judging (admin, exhibitor progress, judge route titles).
- * Uses NEXT_PUBLIC_STRAPI_URL when set, otherwise a default Strapi app host.
+ * Host and key come from utilities/strapi.js.
  */
 
-const DEFAULT_STRAPI_BASE = "https://loved-vitality-4672033e09.strapiapp.com";
+import { getStrapiBase, getStrapiKey } from "./strapi";
 
-export function getStrapiBase() {
-  return (process.env.NEXT_PUBLIC_STRAPI_URL || DEFAULT_STRAPI_BASE).replace(/\/$/, "");
-}
-
-export function getStrapiKey() {
-  return process.env.NEXT_PUBLIC_STRAPI_KEY || "";
-}
+export { getStrapiBase, getStrapiKey };
 
 function strapiHeaders() {
   const key = getStrapiKey();

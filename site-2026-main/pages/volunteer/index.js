@@ -41,22 +41,35 @@ export default function VolunteerPortalReserved() {
     return () => unsubscribe();
   }, []);
 
+  // The Firestore rules only let signed-in users read the events, so listen only while someone is
+  // signed in, and start again after sign-in (previously a signed-out load failed and never retried).
   useEffect(() => {
+    if (!user) {
+      setVolunteerEvents([]);
+      return;
+    }
     const eventsRef = collection(firestore, "volunteerEvents2026");
     const q = query(
       eventsRef,
       orderBy("date", "asc"),
       orderBy("startTime", "asc")
     );
-    const unsubscribeEvents = onSnapshot(q, (snapshot) => {
-      setVolunteerEvents(snapshot.docs.map((d) => ({
-        docId: d.id,   // Firestore document name (incorrect)
-        ...d.data()    // includes correct event.id
-      })));
-    });
+    const unsubscribeEvents = onSnapshot(
+      q,
+      (snapshot) => {
+        setVolunteerEvents(snapshot.docs.map((d) => ({
+          docId: d.id,   // Firestore document name (incorrect)
+          ...d.data()    // includes correct event.id
+        })));
+      },
+      (error) => {
+        // Plain string: logging the Error object pops up the Next.js dev overlay
+        console.error(`[Volunteer] Could not load volunteer events: ${error.code || error.message}`);
+      }
+    );
 
     return () => unsubscribeEvents();
-  }, []);
+  }, [user]);
 
   /* ---------------- Fetch Events ---------------- */
   // useEffect(() => {

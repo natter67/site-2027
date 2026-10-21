@@ -10,7 +10,7 @@ export default function HSDC() {
   return (
     <Content title="High School Design Competition">
       <div className="lg:col-span-3 mb-10">
-        <div className="font-montserrat col-span-5 mb-2">
+        <div className="font-body col-span-5 mb-2">
                   Our High School Design Competition (HSDC) is an engineering-focused competition on Friday, April 10. Students work in teams of 3-5 to create a design and presentation that will be evaluated at the end of the competition. It’s a great opportunity for students to gain hands-on engineering design and teamwork experience!
                   <br />
                   <br />
@@ -22,10 +22,10 @@ export default function HSDC() {
                     <Button
                       type="big"
                       className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-                      href="https://docs.google.com/forms/d/e/1FAIpQLSfMLFgJQE_VCmKe_tDs74MnSJ1hvCMJgACSEEuxoDbrdVL_Bw/viewform"
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSehjy07XLsKKv7BTrGMHRpfBf0NYCpYT28yhV_QU_E0ksqZVg/viewform"
                       target="_blank"
                     >
-                      HSDC Registration Form Closing Soon
+                      HSDC 2027 Interest Form
                     </Button>
                   </div>
                 </div>

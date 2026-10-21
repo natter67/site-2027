@@ -335,7 +335,7 @@ const Map = () => {
                 className="flex flex-row items-center justify-between ml-2"
                 key={idx}
               >
-                <h4>{interact.heading}</h4>
+                <h3>{interact.heading}</h3>
                 <span className="flex flex-row items-center gap-3">
                   {interact.mapsLink && (
                     <a
@@ -355,6 +355,7 @@ const Map = () => {
                     href={`/vv?t=exhibits&q=${encodeURI(
                       interact.buildingCode
                     )}`}
+                    aria-label={`Exhibits in ${interact.heading}`}
                   >
                     <Icon
                       icon="game-icons:barracks-tent"
@@ -364,6 +365,7 @@ const Map = () => {
                   <a
                     className="flex flex-row items-center py-2 px-3 border shadow-md rounded-md gap-2 hover:bg-green-200 duration-200"
                     onClick={() => openModal(interact.buildingCode)}
+                    aria-label={`Floor map of ${interact.heading}`}
                   >
                     <Icon
                       icon="mdi:map"

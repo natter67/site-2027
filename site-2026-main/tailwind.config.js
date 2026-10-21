@@ -15,6 +15,10 @@ module.exports = {
       sans: ['var(--font-montserrat)'],
       heading: ['var(--font-doppio)'],
       lovelo: ["Lovelo", "sans-serif"],
+      // Direction A (fonts loaded in pages/_app.js)
+      display: ["var(--font-anton)", "Impact", "sans-serif"],
+      body: ["var(--font-archivo)", "Arial", "sans-serif"],
+      label: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
     },
     screens: {
       'xs': '375px',
@@ -47,6 +51,17 @@ module.exports = {
         "theme-yellow": "#fcd579",
         primary: {
           brown: "#473335",
+        },
+        // Direction A tokens (values live in styles/direction-a.css)
+        da: {
+          navy: "var(--da-navy)",
+          orange: "var(--da-orange)",
+          "orange-light": "var(--da-orange-light)",
+          "orange-text": "var(--da-orange-text)",
+          peach: "var(--da-peach)",
+          road: "var(--da-road)",
+          slate: "var(--da-slate)",
+          ground: "var(--da-ground)",
         },
       },
       screens: {

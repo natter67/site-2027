@@ -4,32 +4,26 @@ export default function Sponsors() {
 	const UIF_SPONSOR_LINK = '/sponsor-us' // /sponsor-us
 
 	return (
-		<>
-			<div className="flex flex-col items-center">
-				<p className="bg-[#ff5f05] hover:bg-[#ff8400] text-center font-montserrat mb-10 text-lg px-3 p-2 opacity-90 rounded-md">Engineering Open House would not be possible without our generous patrons. <br /> Thank you for your contributions.</p>
-				<div className="flex flex-col md:flex-row justify-between md:w-3/5 gap-5">
-					<div className="flex flex-col items-center">
-						<div className="font-montserrat text-lg md:text-2xl text-center bg-[#ff5f05] hover:bg-[#ff8400] p-2 rounded-md bg-opacity-80">I'm a<br />
-							<h1 className="text-2xl lg:text-3xl md:pt-2">Student or Visitor</h1>
-						</div>
-						<a className="bg-[#ff5f05] hover:bg-[#ff8400] p-3 pb-4 rounded-full w-64 font-montserrat text-2xl md:text-3xl mt-2 md:mt-6 text-center" href={STRIPE_DONATE_LINK}> 
-							Donate
-						</a>
-						<p>via Stripe</p>
-					</div>
-					<div className="flex flex-col items-center">
-
-						<div className="font-montserrat text-lg md:text-2xl text-center  p-2 rounded-md bg-[#ff5f05] hover:bg-[#ff8400]">
-							I'm a <br />
-							<h1 className="text-2xl lg:text-3xl md:pt-2">Company Representative</h1>
-						</div>
-						<a className="bg-[#ff5f05] hover:bg-[#ff8400] p-3 pb-4 rounded-full w-64 font-montserrat text-2xl md:text-3xl mt-2 md:mt-6 text-center" href={UIF_SPONSOR_LINK} >
-							Sponsor
-						</a>
-						<p>via UIF</p>
-					</div>
-                </div>
+		<div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-8 px-4">
+			<p className="da-card px-6 py-4 text-lg">Engineering Open House would not be possible without our generous patrons. <br /> Thank you for your contributions.</p>
+			<div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+				<div className="da-card flex flex-col items-center gap-3 p-6">
+					<p className="text-lg">I'm a</p>
+					<h3 className="font-display text-3xl uppercase leading-none">Student or Visitor</h3>
+					<a className="da-pill da-pill--primary mt-3 w-64 text-2xl" href={STRIPE_DONATE_LINK}>
+						Donate
+					</a>
+					<p className="font-label text-sm uppercase tracking-[0.1em]">via Stripe</p>
+				</div>
+				<div className="da-card flex flex-col items-center gap-3 p-6">
+					<p className="text-lg">I'm a</p>
+					<h3 className="font-display text-3xl uppercase leading-none">Company Representative</h3>
+					<a className="da-pill da-pill--secondary mt-3 w-64 text-2xl" href={UIF_SPONSOR_LINK}>
+						Sponsor
+					</a>
+					<p className="font-label text-sm uppercase tracking-[0.1em]">via UIF</p>
+				</div>
 			</div>
-		</>
+		</div>
 	)
 }

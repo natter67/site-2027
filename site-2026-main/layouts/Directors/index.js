@@ -1,17 +1,24 @@
 import React from 'react';
+import Image from 'next/image';
 
 export default function Directors() {
     return (
-        <div className="flex flex-col items-center gap-6 mx-6 md:mx-auto md:w-3/4 text-sm text-center md:text-justify">
+        <div className="flex flex-col items-center gap-8 px-4 text-left text-lg leading-[1.75]">
+        {/* Full letter (/about/directors). The letter column is ~44rem wide at 18px: about 70 characters a line. */}
         {/* Committee photo displayed above the directors' note */}
-            <img 
-                src="assets/images/committee-shot.jpg" 
-                alt="Group picture of the EOH 2026 committee" 
-                className='object-cover w-full max-w-3xl h-auto rounded-3xl' 
-            />
+            <div className="da-card w-full max-w-3xl overflow-hidden p-2">
+                <Image
+                    src="/assets/images/committee-shot.jpg"
+                    width={5472}
+                    height={3648}
+                    sizes="(min-width: 800px) 768px, 92vw"
+                    alt="Group picture of the EOH 2026 committee"
+                    className="rounded-xl"
+                />
+            </div>
             
             {/* Directors' note spans the width of the image */}
-            <div className="w-full max-w-3xl border p-6 rounded-lg">
+            <div className="da-card w-full max-w-[44rem] p-6 md:p-12">
                 <p className="mt-4">
                     Welcome to the 104th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.                 </p>
                 <p className="mt-4">
