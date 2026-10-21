@@ -1,8 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 
 // Home page card for the Note from the Directors. The quote is the letter's first paragraph,
 // copied word for word from layouts/Directors (the full letter at /about/directors). If the
-// letter changes, update this quote too.
+// letter changes, update this quote too. Photos go through next/image (the originals are 3–6 MB).
 const DIRECTORS = [
   { name: "Aparna Kamath", initials: "AK", photo: "/assets/headshots/aparna.jpg" },
   { name: "Maddie Conrad", initials: "MC", photo: "/assets/headshots/maddie.jpg" },
@@ -11,16 +12,16 @@ const DIRECTORS = [
 export default function DirectorsCard() {
   return (
     <figure className="da-card mx-auto w-[calc(100%-2rem)] max-w-4xl p-6 text-left md:p-10">
-      <div className="flex flex-col gap-6 md:flex-row md:items-start md:gap-10">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-10">
         <div className="flex shrink-0 gap-3">
           {DIRECTORS.map((d) => (
-            <img
+            <Image
               key={d.name}
               src={d.photo}
               alt={d.name}
               width={96}
               height={96}
-              loading="lazy"
+              sizes="96px"
               className="!h-24 !w-24 rounded-full border-[3px] border-da-navy object-cover"
             />
           ))}
