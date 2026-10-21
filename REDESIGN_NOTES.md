@@ -90,3 +90,18 @@ Actions:
 ---
 
 ## 3. Work log
+
+### Step 2: header and footer (done)
+- All menu links live in `site-2026-main/utilities/navigation.js`. The header, mobile menu, footer, landing pages and breadcrumbs all read it.
+- Desktop header is still 88 px tall: a 28 px navy utility bar (About EOH · Contact · Event Day Hub · Log in/Account · Donate) plus the main row (logo, five menus, "Plan your visit"). The mobile header went from 96 px to 64 px (logo, "Plan your visit", menu button).
+- Mega menus (`components/mega-menu`): click to open. They close on a second click, Esc (focus goes back to the button), a click outside, a route change, or tabbing away. They use `aria-expanded` and `aria-controls`, and each panel starts with a link to its landing page.
+- Mobile menu (`components/mobile-nav`): an accordion per section, then the utility links and Donate. Esc closes it and puts focus back on the menu button.
+- Footer: Visit, Explore (with the Schedule links), Schools & Competitions, Get Involved, About, and Stay in touch (mailing list, socials, Linktree).
+- **Judgment calls:**
+  - "Visitor View" is labelled "Event Day Hub" in menus; the `/vv` page itself is unchanged.
+  - Log in/Account moved to the utility bar on desktop and the bottom of the mobile menu.
+  - The footer has 5 IA columns instead of the brief's 4, because Schools & Competitions links (MSDC, HSDC, Students) were already in the old footer.
+  - Two Linktree URLs existed: `linktr.ee/eoh2025` in the header and `linktr.ee/EOHuiuc` in the footer. Only the footer one is kept, since the brief puts Linktree in the footer only.
+  - The footer copyright stays "Copyright EOH 2026" (existing copy).
+- Left in place but no longer used: `components/mobile-menu` (old mobile menu). `components/flyout-menu` is still used by `components/button`.
+- **DRAFT copy:** every `summary` in `utilities/navigation.js`, group headings ("Before you go", "On the day", "See and do", "Honors and initiatives", "Schools and students", "Design competitions"), the "Join the mailing list" label and "Stay in touch".
