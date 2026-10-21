@@ -291,7 +291,7 @@ A once-per-session title sequence ("launch sequence") that plays over the page t
 
 It is mounted once in `pages/_app.js`.
 
-**The sequence (about 5.5 s; slowed down from 3.5 s at the owner's request so the finished title holds for about 1.4 s):**
+**The sequence (about 4.5 s, with the finished title held for about 0.8 s). The owner found 3.5 s too fast and 5.5 s too slow:**
 - **Frame:** the hairline grid fades in, the rules draw left to right, crop marks and mono labels appear, and the counter reads 000.
 - **Trails:** two orange light trails with a glow, a faint cool-white trail in the other lane, and a white-hot head. They draw along the lower band, then sweep up and off the right edge.
 - **Headline:** "DRIVEN BY" rises through a mask, then "DISCOVERY" rises as an orange outline and fills left to right (the fill is the same text stacked exactly on the outline).
@@ -309,7 +309,7 @@ It is mounted once in `pages/_app.js`.
 - **Plays when:** it's the first page view in a browser session (`sessionStorage`), on any page.
 - **Replay:** `?intro=1` replays it.
 - **Never plays:** with JavaScript off, with reduced motion turned on, or on later views in the same session (no flash).
-- **Counter:** follows real loading: `document.fonts.ready`, priority images decoded (the hero logo), and window load. It eases 000→100 over 2.3 s, never goes backward, and holds the finished frame if the page isn't ready. Hand-off happens as soon as the page is ready, with a hard cap of 8 s.
+- **Counter:** follows real loading: `document.fonts.ready`, priority images decoded (the hero logo), and window load. It eases 000→100 over 2.3 s, never goes backward, and holds the finished frame if the page isn't ready. Hand-off happens as soon as the page is ready, with a hard cap of 7 s.
 - **Skip:** the "Skip intro" button (the first Tab stop), Esc, or a click or tap anywhere goes straight to the wipe.
 - **Accessibility:** focus is never trapped. After the handoff, Tab reaches the skip link as normal. The visual layers are `aria-hidden`.
 - **Performance:** CSS-only motion plus inline SVG; no new dependencies, video, canvas or extra fonts. The page underneath is server-rendered and never waits on the intro.
@@ -344,6 +344,10 @@ It is mounted once in `pages/_app.js`.
 - **MTD sponsor logo** no longer sticks out of its tile. Every sponsor logo now scales down to fit inside its tile (`object-contain`). MTD's file is a white 225 px square with the mark in the middle, so it gets a 16:9 crop of its white margins in CSS (`FIT_OVERRIDES` in `components/corporateSponsor`); the image file is unchanged.
 - **Home hero road animation:** the car now drives right to left, like the car in the official logo. Its animation runs in reverse, and the car keeps its original body shape (long hood at the front) with the headlight and beam moved to the front and the taillight to the back. The trail sits behind it, the wheels turn the right way, and the signpost pop timing matches the new direction. Everything else is the original animation: signposts, "Hit the gas", the trail, the road. A broader restyle I made first was reverted at the owner's request.
 - **Hero signposts no longer clipped at the top.** Exhibits, Shows and Keynotes sit lower; Exhibits and Shows posts were shortened so their feet still touch the road. The strip doesn't clip a sign that pops past its top edge, and above 1440 px it keeps its 6:1 shape instead of cropping the top of the drawing (at 1440 px and below it's unchanged). Checked with every sign frozen at full pop at 390–2560 px.
+- **Console errors fixed (2026-10-21; all three predate the redesign):**
+  - `/sponsor-us`: a paragraph wrapped a divider `<div>` and a list, which made React throw the page away and redraw it. It's now a `<div>`. The 11 expandable sections also got React keys and fixed IDs (the library made them from the time, so they differed between server and browser). Forms and payment links are unchanged.
+  - `/events-list`: the event table's header row was missing its `<tr>`.
+  - `/volunteer`: the event list now loads only while someone is signed in, and reloads after sign-in. Before, a signed-out load hit the Firestore rules ("permission denied") and never retried, so a volunteer who then signed in saw no shifts until they refreshed.
 
 ---
 
