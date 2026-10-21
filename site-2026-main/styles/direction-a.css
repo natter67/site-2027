@@ -1,0 +1,107 @@
+/*
+ * Direction A ("The Road Trip") — EOH 2027 design tokens and shared primitives.
+ * Nothing here changes a page until a component uses a .da-* class or var(--da-*).
+ * Fonts come from pages/_app.js: --font-anton (display), --font-archivo (body), --font-jetbrains (labels).
+ */
+
+/* ---------- Tokens ---------- */
+:root {
+  --da-navy: #13294B;
+  --da-orange: #FF5F05;        /* accents, buttons; never small text on light backgrounds */
+  --da-orange-light: #FF8A4C;  /* orange text on navy */
+  --da-orange-text: #B23A00;   /* small orange text on light backgrounds */
+  --da-peach: #FFC7A6;
+  --da-road: #3B4558;
+  --da-slate: #8A94A8;         /* borders and posts only on light backgrounds (fails contrast as text) */
+  --da-ground: #ECECEC;
+  --da-ground-dot: #D6D6D6;
+  --da-white: #FFFFFF;
+}
+
+/* ---------- Page ground: light grey with halftone dots ---------- */
+.da-ground {
+  background-color: var(--da-ground);
+  background-image: radial-gradient(var(--da-ground-dot) 1.2px, transparent 1.3px);
+  background-size: 14px 14px;
+}
+
+/* ---------- Card ---------- */
+.da-card {
+  background: var(--da-white);
+  border: 2px solid var(--da-navy);
+  border-radius: 18px;
+  color: var(--da-navy);
+}
+.da-card--lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.da-card--lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 6px 6px 0 var(--da-orange);
+}
+
+/* ---------- Pill buttons ---------- */
+.da-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: 2px solid var(--da-navy);
+  border-radius: 999px;
+  font-family: var(--font-archivo), Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.da-pill:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0 var(--da-navy);
+}
+.da-pill:focus-visible {
+  outline: 3px solid var(--da-orange);
+  outline-offset: 3px;
+}
+.da-pill--primary { background: var(--da-orange); color: var(--da-navy); }
+.da-pill--secondary { background: var(--da-white); color: var(--da-navy); }
+.da-pill--navy { background: var(--da-navy); color: var(--da-white); }
+
+/* ---------- RoadDivider (components/road-divider) ---------- */
+.da-road {
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+  background: var(--da-road);
+  border-top: 4px solid var(--da-navy);
+  border-bottom: 4px solid var(--da-navy);
+}
+.da-road::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 4px dashed var(--da-orange);
+  transform: translateY(-50%);
+}
+.da-road__car {
+  position: absolute;
+  top: 2px;
+  z-index: 1;
+  animation: da-road-drive 9s linear infinite;
+}
+@keyframes da-road-drive {
+  from { left: -90px; }
+  to { left: 100%; }
+}
+
+/* ---------- Reduced motion: static end states ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .da-card--lift,
+  .da-pill { transition: none; }
+  .da-card--lift:hover,
+  .da-pill:hover { transform: none; }
+  .da-road__car { animation: none; left: 12%; }
+}
