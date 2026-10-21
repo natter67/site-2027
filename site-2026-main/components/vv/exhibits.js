@@ -3,8 +3,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import Fuse from 'fuse.js';
 import { useStringQueryParam } from '@utilities/useStringQueryParam';
-
-var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
+import { strapiSwrFetcher, strapiUrl } from '@utilities/strapi';
 
 const ErrorMessageBox = ({ message, onRetry }) => (
   <div style={{ margin: '20px', padding: '20px', backgroundColor: '#ffcccc', color: '#cc0000', borderRadius: '5px', textAlign: 'center' }}>
@@ -139,14 +138,9 @@ const Exhibits = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const itemsPerPage = 24
 
-  const fetcher = (url) => fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${strapi_key}`
-    }
-  }).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
-    `https://loved-vitality-4672033e09.strapiapp.com/api/exhibits?populate=Tags&pagination[pageSize]=1000`,
-    fetcher
+    strapiUrl(`/api/exhibits?populate=Tags&pagination[pageSize]=1000`),
+    strapiSwrFetcher
   );
 
   if (error) {

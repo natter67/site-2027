@@ -6,8 +6,7 @@ import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { Modal } from './modal.js';
 import Fuse from 'fuse.js';
-
-var strapi_key = process.env.NEXT_PUBLIC_STRAPI_KEY
+import { strapiSwrFetcher, strapiUrl } from '@utilities/strapi';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -89,15 +88,9 @@ export function Schedule() {
     );
   };
 
-  const fetcher = (url) => fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${strapi_key}`
-    }
-  }).then((res) => res.json());
-
   const { data, error, isLoading } = useSWR(
-    'https://loved-vitality-4672033e09.strapiapp.com/api/events?populate=occurences&pagination[pageSize]=40&populate=picture',
-    fetcher
+    strapiUrl('/api/events?populate=occurences&pagination[pageSize]=40&populate=picture'),
+    strapiSwrFetcher
   );
 
   if (error) return 'An error has occurred.';
