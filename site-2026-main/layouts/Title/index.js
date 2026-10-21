@@ -173,9 +173,15 @@ export default function HomeVideo({ mode = "pre" }) {
               strokeLinecap="round"
             />
           </svg>
-          <p className="mt-4 font-label text-sm font-bold uppercase tracking-[0.1em] sm:text-base">
-            {EVENT_FACTS.dates} · {EVENT_FACTS.hours} · {EVENT_FACTS.location} · {EVENT_FACTS.cost}
-          </p>
+          {/* One fact per line on phones so the wrap doesn't change when the web font loads (layout shift) */}
+          <ul className="m-0 mt-4 list-none p-0 font-label text-sm font-bold uppercase tracking-[0.1em] sm:text-base md:flex md:flex-wrap md:gap-x-2">
+            {[EVENT_FACTS.dates, EVENT_FACTS.hours, EVENT_FACTS.location, EVENT_FACTS.cost].map((fact, i) => (
+              <li key={fact} className="md:whitespace-nowrap">
+                {i > 0 && <span aria-hidden="true" className="mr-2 hidden md:inline">·</span>}
+                {fact}
+              </li>
+            ))}
+          </ul>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/visit" className="da-pill da-pill--primary text-base sm:text-lg">
               Plan your visit
