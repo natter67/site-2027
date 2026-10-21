@@ -17,6 +17,9 @@ import DownloadApp from "@layouts/DownloadApp/index.js"
 import Leaderboard from "@layouts/Leaderboard/index.js"
 import Ticker from "@/ticker"
 import RoadDivider from "@/road-divider"
+import Timeline from "@layouts/Timeline/index.js"
+import DiscoveryLab from "@layouts/DiscoveryLab/index.js"
+import Passport from "@layouts/Passport/index.js"
 
 export default function Home() {
   return (
@@ -96,20 +99,30 @@ export default function Home() {
         >
           <EventList />
         </Section>
-        <Section variant="road" mile="MILE 05 · QUANTUM DAY" color="bg-white" title="World Quantum Day" id="world-quantum-day">
+        {/* Discovery Lab, Passport and Timeline: draft content (confirm with team); delete a block to remove that section */}
+        <Section variant="road" tone="navy" mile="MILE 05 · DISCOVERY LAB" title="Pick a field. Start discovering." id="discovery-lab">
+          <DiscoveryLab />
+        </Section>
+        <Section variant="road" mile="MILE 06 · FUEL UP" title="Your discovery passport" id="passport">
+          <Passport />
+        </Section>
+        <Section variant="road" mile="MILE 07 · QUANTUM DAY" color="bg-white" title="World Quantum Day" id="world-quantum-day">
           < QuantumDay/>
         </Section>
-        <Section variant="road" mile="MILE 06 · SUSTAINABILITY" color="bg-white" title="EOH x Sustainability" id="scc">
+        <Section variant="road" mile="MILE 08 · SUSTAINABILITY" color="bg-white" title="EOH x Sustainability" id="scc">
           < SCC/>
         </Section>
         <RoadDivider car="orange" />
-        <Section variant="road" mile="MILE 07 · SCHEDULE" title="Schedule" color="bg-white" id="schedule" wide>
+        <Section variant="road" mile="MILE 09 · SCHEDULE" title="Schedule" color="bg-white" id="schedule" wide>
           <ScheduleSection />
+        </Section>
+        <Section variant="road" mile="MILE 10 · DISCOVERED HERE" title="The road runs through history" id="history">
+          <Timeline />
         </Section>
         <Section
           color="bg-white"
           variant="road"
-          mile="MILE 08 · FROM THE DIRECTORS"
+          mile="MILE 11 · FROM THE DIRECTORS"
           title="Note from the Directors"
           id="directors"
         >
@@ -127,7 +140,7 @@ export default function Home() {
       </Section>*/}
         <Section
           variant="road"
-          mile="MILE 09 · SUPPORT"
+          mile="MILE 12 · SUPPORT"
           title="Support Our Mission"
           id="sponsors"
           color="bg-robot-banner bg-cover bg-left min-h-[550px]"
@@ -138,7 +151,7 @@ export default function Home() {
           color="bg-white"
           variant="road"
           tone="navy"
-          mile="MILE 10 · FUELED BY OUR SPONSORS"
+          mile="MILE 13 · FUELED BY OUR SPONSORS"
           title="Corporate Sponsors"
           id="corporate-sponsors"
         >
