@@ -5,9 +5,9 @@ export function getStyles(type) {
   else if (type === "big")
     return "da-pill da-pill--sm da-pill--primary"; // was white on orange (failed contrast)
   else if (type === "mail")
-    return "border rounded-md font-medium text-white px-3 drop-shadow-md bg-[#707372] hover:bg-[#707372]";
+    return "da-pill da-pill--sm da-pill--navy"; // was white on grey
   else if (type === "green")
-    return "border rounded-md font-medium text-white px-3 drop-shadow-md bg-[#13294b] hover:bg-[#13294b]";
+    return "da-pill da-pill--sm da-pill--navy"; // was white on navy
   else if (type === "inactive")
     return "shadow-sm font-medium text-gray-500 bg-gray-100 italic";
   else if (type === "menu")
