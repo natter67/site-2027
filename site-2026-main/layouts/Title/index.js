@@ -6,7 +6,7 @@ import HeroRoad from "@/hero-road";
 import { EVENT_FACTS } from "@utilities/eventConfig";
 import { EXHIBIT_INTEREST_FORM_URL } from "@utilities/navigation";
 
-export default function HomeVideo() {
+export default function HomeVideo({ mode = "pre" }) {
   const [windowWidth, setWindowWidth] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [timeleft, setTimeLeft] = useState([]);
@@ -184,7 +184,7 @@ export default function HomeVideo() {
               Explore exhibits
             </Link>
           </div>
-          <p className="mt-4 text-sm">
+          {mode === "pre" && <p className="mt-4 text-sm">
             Exhibitors:{" "}
             <a
               href={EXHIBIT_INTEREST_FORM_URL}
@@ -194,7 +194,7 @@ export default function HomeVideo() {
             >
               EOH Exhibits Interest Form 2026-2027
             </a>
-          </p>
+          </p>}
         </header>
 
         {/* Official 2027 logo (unaltered; its white background sits on a white card) + countdown */}
@@ -210,7 +210,7 @@ export default function HomeVideo() {
             />
           </div>
 
-          <div className="da-card w-full max-w-xl p-5 text-center">
+          {mode === "pre" && <div className="da-card w-full max-w-xl p-5 text-center">
             <h2 className="font-display text-2xl uppercase">Exhibit Countdown</h2>
             <p className="mt-1 font-label text-xs font-bold uppercase tracking-[0.1em] text-da-orange-text">
               Town Hall Dates
@@ -244,7 +244,7 @@ export default function HomeVideo() {
                 </p>
               );
             })}
-          </div>
+          </div>}
         </div>
       </div>
 

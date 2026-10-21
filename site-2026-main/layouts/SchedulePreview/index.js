@@ -2,7 +2,8 @@ import { useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { strapiSwrFetcher } from "@utilities/strapi";
-import { SCHEDULE_EVENTS_URL, toChampaignTime } from "@/schedule/schedule";
+import { SCHEDULE_EVENTS_URL } from "@/schedule/schedule";
+import { toScheduleItems } from "@utilities/scheduleItems";
 
 // Home page schedule preview: the first few events of each day from the same Strapi data as the
 // full schedule widget (same SWR key, so it is fetched once). If Strapi is down it shows a link only.
@@ -13,14 +14,8 @@ export default function SchedulePreview() {
   const [day, setDay] = useState(DAYS[0]);
   const { data, error, isLoading } = useSWR(SCHEDULE_EVENTS_URL, strapiSwrFetcher);
 
-  const items = (Array.isArray(data?.data) ? data.data : [])
-    .flatMap((event) =>
-      (Array.isArray(event?.occurences) ? event.occurences : [])
-        .filter((occ) => occ?.startTime)
-        .map((occ) => ({ title: event.title, location: event.location, start: toChampaignTime(occ.startTime) }))
-    )
+  const items = toScheduleItems(data)
     .filter((item) => item.start.format("dddd") === day)
-    .sort((a, b) => a.start.valueOf() - b.start.valueOf())
     .slice(0, SHOW);
 
   return (

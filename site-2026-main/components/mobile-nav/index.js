@@ -12,7 +12,7 @@ export default function MobileNav({ open, accountLink }) {
   if (!open) return null;
 
   return (
-    <nav id="mobile-nav" aria-label="Main" className="fixed inset-x-0 bottom-0 top-16 z-30 overflow-y-auto border-t-2 border-da-navy bg-white font-body text-da-navy lg:hidden">
+    <nav id="mobile-nav" aria-label="Main" className="fixed inset-x-0 bottom-0 top-16 z-30 overflow-y-auto pb-20 border-t-2 border-da-navy bg-white font-body text-da-navy lg:hidden">
       <ul className="m-0 list-none p-0">
         {PRIMARY_NAV.map((section) => {
           const isOpen = expanded === section.key;

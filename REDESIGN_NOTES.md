@@ -241,3 +241,42 @@ Content moved off the home page to new pages:
 - "Featured events for everyone"
 - "Events for moms with younger students are listed in the PDF."
 - The extra "Visitor Guide and the Event Day Hub" sentence on `/explore/special-events`
+
+### Step 6: event lifecycle modes, event-day tab bar, Event Day Hub (done)
+**Mode** comes from `utilities/eventConfig.js` (`getEventMode`) through `utilities/useEventMode.js`:
+- `pre` until April 9, 2027
+- `event` on April 9–10, 2027 (Champaign time)
+- `post` afterwards
+
+**Overrides:**
+- Add `?mode=pre|event|post` to any URL (just that tab).
+- Set `NEXT_PUBLIC_EVENT_MODE=pre|event|post` and redeploy (everyone). **Recommended for the event days**: pages are pre-built, so without it visitors may see the pre-event layout for a moment before the browser switches.
+
+**What each mode shows:**
+
+| | Pre-event | Event days | Post-event |
+|---|---|---|---|
+| Top of home | Hero with Town Hall countdown and the exhibitor interest form link | "Today at EOH" block (`layouts/EventDayLead`): Event Day Hub, Map and Shuttles & parking buttons, plus Happening now / Up next | "Thanks for coming" block (`layouts/PostEventLead`): award winners, photo highlights (**placeholder**), feedback form (**placeholder**), save the date (EOH 2028 from `utilities/futureDates.js`) |
+| Header button | Plan your visit | Event Day Hub | Plan your visit |
+| Phones | — | Bottom tab bar (`components/event-tab-bar`): Now · Map · Schedule · Exhibits · Menu. Not on `/vv`, which has its own. | — |
+| `/schedule#happening-now` | Explains what will appear | Live Happening now / Up next (`layouts/HappeningNow`) | Explains what will appear |
+
+- Happening now / Up next use the same Strapi data as the schedule widget (`utilities/scheduleItems.js`). If Strapi is down they say so and point to the Event Day Hub.
+- Tested at 360 and 1440 px in every mode (`direction-a/scripts/modetest.js`): no horizontal scroll and no page errors. The tab bar's Menu opens the normal menu.
+
+**Event Day Hub prominence:** it's in the utility bar, in Explore › Exhibits, and is the header's main button, the home page's lead button and a tab bar item on event days.
+
+**Judgment calls:**
+- The Town Hall countdown is shown only before the event; its logic is unchanged.
+- The future dates list moved to `utilities/futureDates.js` so the post-event "save the date" reads the same data as `/future-dates`.
+
+**DRAFT copy:**
+- "EOH is on now · …"
+- "Today at EOH"
+- "Open the Event Day Hub"
+- "Shuttles & parking"
+- The Happening now fallback lines
+- The post-event card texts
+- The `/schedule` Happening now explainer
+
+**PLACEHOLDERS:** photo highlights, and the feedback form (no URL yet).

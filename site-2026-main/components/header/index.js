@@ -3,6 +3,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import MegaMenu from "@/mega-menu"
 import MobileNav from "@/mobile-nav"
+import EventTabBar from "@/event-tab-bar"
+import { useEventMode } from "@utilities/useEventMode"
 import { UTILITY_NAV, DONATE_URL, linkProps } from "@utilities/navigation"
 import { useAuth } from "../../providers/Auth"
 
@@ -17,6 +19,9 @@ export default function Header() {
   const menuButtonRef = useRef(null)
   const router = useRouter()
   const { user, loading } = useAuth()
+  const mode = useEventMode()
+  // One primary action: "Plan your visit", or the Event Day Hub while EOH is on
+  const primary = mode === "event" ? { label: "Event Day Hub", href: "/vv" } : { label: "Plan your visit", href: "/visit" }
   const accountLink = loading ? null : user ? { label: "Account", href: "/account" } : { label: "Log in", href: "/login" }
 
   useEffect(() => {
@@ -44,8 +49,8 @@ export default function Header() {
         <Link href="/" aria-label="Engineering Open House home" className={`shrink-0 ${FOCUS}`}>
           <img src="/assets/logo/eohheader2027.svg" alt="Engineering Open House" className="h-10 w-auto" />
         </Link>
-        <Link href="/visit" className={`da-pill da-pill--sm da-pill--primary whitespace-nowrap ${FOCUS}`}>
-          Plan your visit
+        <Link href={primary.href} className={`da-pill da-pill--sm da-pill--primary whitespace-nowrap ${FOCUS}`}>
+          {primary.label}
         </Link>
         <button
           ref={menuButtonRef}
@@ -60,6 +65,9 @@ export default function Header() {
         </button>
       </header>
       <MobileNav open={menuOpen} accountLink={accountLink} />
+      {mode === "event" && router.pathname !== "/vv" && (
+        <EventTabBar onMenu={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
+      )}
 
       {/* Desktop: utility bar, then logo + mega menu + primary action */}
       <header className="fixed top-0 z-30 hidden h-[88px] w-screen border-b-2 border-da-navy bg-white font-body lg:block">
@@ -81,8 +89,8 @@ export default function Header() {
           </Link>
           <MegaMenu />
           <div className="flex items-center">
-            <Link href="/visit" className={`da-pill da-pill--sm da-pill--primary whitespace-nowrap ${FOCUS}`}>
-              Plan your visit
+            <Link href={primary.href} className={`da-pill da-pill--sm da-pill--primary whitespace-nowrap ${FOCUS}`}>
+              {primary.label}
             </Link>
           </div>
         </div>

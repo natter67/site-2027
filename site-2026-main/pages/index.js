@@ -14,6 +14,9 @@ import StartHere from "@layouts/StartHere"
 import Highlights from "@layouts/Highlights"
 import SchedulePreview from "@layouts/SchedulePreview"
 import DirectorsCard from "@layouts/DirectorsCard"
+import EventDayLead from "@layouts/EventDayLead"
+import PostEventLead from "@layouts/PostEventLead"
+import { useEventMode } from "@utilities/useEventMode"
 
 // Content that used to live on the home page. Old links such as /#awards still work: the browser
 // never sends the #part to the server, so the redirect has to happen here.
@@ -28,6 +31,7 @@ const MOVED_ANCHORS = {
 
 export default function Home() {
   const router = useRouter()
+  const mode = useEventMode() // pre / event / post (utilities/eventConfig.js)
   useEffect(() => {
     const to = MOVED_ANCHORS[window.location.hash]
     if (to) router.replace(to)
@@ -42,7 +46,9 @@ export default function Home() {
       </Head>
 
       <main>
-        <Title />
+        {mode === "event" && <EventDayLead />}
+        {mode === "post" && <PostEventLead />}
+        <Title mode={mode} />
         <QuickFacts />
         <Section variant="road" mile="MILE 01 · START HERE" title="Start here" id="start-here">
           <StartHere />
