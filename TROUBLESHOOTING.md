@@ -30,7 +30,7 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | Countdown dates wrong | `layouts/Title/index.js` | The `town_hall_dates` array at the top. Times use the visitor's own time zone. |
 | Hero text, date, interest-form link, or countdown layout | `layouts/Title/index.js` | Styles are in the "Hero" section of `styles/direction-a.css` |
 | Hero logo missing | `public/assets/logo/eoh2027-official-logo.jpg` | Served through Next.js image optimization (`/_next/image?url=…`). If only this image fails, check the image request in the browser's Network tab. |
-| Road animation, signposts, or "Hit the gas" | `components/hero-road/index.js` | Styles are in the "HeroRoad" section of `styles/direction-a.css`. The road path appears in **both** files and must match. |
+| Road and car animation under the hero | `components/hero-road/index.js` | Styles in the "HeroRoad" section of `styles/direction-a.css`. The car drives right to left, like the official logo. The road path is written in both files and must match. |
 | Scrolling topics band | `components/ticker/index.js` | No longer on the home page (removed in the 2027 restructure); the component is kept but unused. |
 | Animations don't play at all | none | Expected if the visitor's device has "reduce motion" turned on: everything is shown still on purpose. |
 | Header, mega menu, mobile menu, footer or landing-page links | `utilities/navigation.js` | One list feeds the header (`components/header`, `components/mega-menu`, `components/mobile-nav`), the footer, the landing pages, breadcrumbs and "More in …" links. The `summary` lines there are the one-line page summaries. |
@@ -50,7 +50,7 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | Awards | `layouts/Awards/index.js` | The `awards` list |
 | Featured event cards (MSDC, HSDC, Mom's Weekend, Startup Showcase, Tesla Coil) | `layouts/EventList/index.js` | The `FEATURED_EVENTS` list. Shown on `/explore/special-events`; the home Highlights reuse it. |
 | Donate or sponsor buttons | `layouts/Sponsors/index.js` | `STRIPE_DONATE_LINK`, `UIF_SPONSOR_LINK` |
-| Sponsor logos | `components/corporateSponsor/index.js` | Image files live in `public/assets/sponsors/` |
+| Sponsor logos | `components/corporateSponsor/index.js` | Image files live in `public/assets/sponsors/`. If a logo looks too small or overflows its tile (e.g. a square file with white margins), add it to `FIT_OVERRIDES` in the same file. |
 | FAQ answers | `layouts/FAQs/faqs.json` | |
 | `/students` event list | `public/assets/data/events.json` | |
 | Visitor guide or other PDFs | `public/guide.pdf`, `public/EOHxmoms.pdf`, `public/showcase.pdf` | Replace the file and keep the same name. The web versions (`/visit/guide`, `/schools/moms-weekend`) read `utilities/visitorGuide.js` and `utilities/momsWeekend.js`, so update those too. |

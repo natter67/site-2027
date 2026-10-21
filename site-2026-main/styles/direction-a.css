@@ -102,48 +102,24 @@
   width: 100%;
   height: clamp(140px, 17vw, 240px);
 }
-.da-drive__lane { animation: da-lanes 1.2s linear infinite; }
-@keyframes da-lanes { to { stroke-dashoffset: -100; } }
-/* Same path as ROAD in components/hero-road */
+/* Same path as ROAD in components/hero-road. The car drives right to left, like the official logo:
+   offset-distance runs from 100% to 0%, and the car is drawn facing left. The road doesn't move. */
 .da-drive__car {
   offset-path: path('M -140 160 C 200 160, 330 70, 620 95 S 1020 215, 1280 150 S 1480 80, 1620 90');
   offset-rotate: auto;
   offset-distance: 46%;
-  animation: da-drive 11s linear infinite;
+  animation: da-drive 16s linear infinite;
 }
 @keyframes da-drive {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
+  from { offset-distance: 100%; }
+  to { offset-distance: 0%; }
 }
+/* Wheels turn counter-clockwise because the car travels left */
 .da-drive__wheel {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: da-spin 0.5s linear infinite;
+  transform-origin: 0 0;
+  animation: da-spin 0.6s linear infinite reverse;
 }
 @keyframes da-spin { to { transform: rotate(360deg); } }
-.da-drive__chassis { animation: da-bob 0.35s ease-in-out infinite; }
-@keyframes da-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.da-drive__trail { animation: da-trail 1.6s ease-out infinite; }
-@keyframes da-trail {
-  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
-  15% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-90px, -46px) scale(1.2); }
-}
-.da-drive__sign {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-  animation: da-sign-pop 11s linear infinite;
-}
-@keyframes da-sign-pop {
-  0% { transform: scale(0.7); opacity: 0.45; }
-  5% { transform: scale(1.25); opacity: 1; }
-  12% { transform: scale(1); }
-  70% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0.7); opacity: 0.45; }
-}
 
 /* ---------- Ticker (components/ticker) ---------- */
 .da-ticker {
@@ -213,13 +189,8 @@
   .da-road__car { animation: none; left: 12%; }
   .da-hero-drop,
   .da-hero-underline,
-  .da-drive__lane,
   .da-drive__car,
   .da-drive__wheel,
-  .da-drive__chassis,
-  .da-drive__sign,
   .da-ticker__track,
   .da-compass-needle { animation: none; }
-  .da-drive__trail,
-  .da-drive__gas { display: none; }
 }

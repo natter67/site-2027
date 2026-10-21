@@ -339,6 +339,14 @@ It is mounted once in `pages/_app.js`.
 - **Your call:** the intro also plays when someone's first page is an event-day tool (`/vv`, `/judging/*`, `/volunteer`). That's what the brief asks for, but you may want to skip those pages; a judge or volunteer would see it once per session.
 - The labels ("No. 105", coordinates, "April 09 — 10, 2027", "Bardeen Quad · Urbana-Champaign, IL") are the brief's wording; confirm "No. 105" with the committee.
 
+## Follow-up changes (after the morning report)
+- **Accessibility & sensory guide page removed** (`070abdb`): EOH can't offer a sensory guide. Accommodations stay on `/accessibility`.
+- **MTD sponsor logo** no longer sticks out of its tile. Every sponsor logo now scales down to fit inside its tile (`object-contain`). MTD's file is a white 225 px square with the mark in the middle, so it gets a 16:9 crop of its white margins in CSS (`FIT_OVERRIDES` in `components/corporateSponsor`); the image file is unchanged.
+- **Home hero road animation:**
+  - **Direction:** the car now drives right to left, the same direction as the car in the official logo. The lane markings no longer slide along with it (that made the car look like it was going backwards).
+  - **New car and road:** a cleaner, lower white sports car echoing the logo car (navy glass, orange taillight, soft shadow, slower and steady with no bounce), in the far lane. The road matches the logo: grey asphalt, navy and white edge lines, orange centre dashes.
+  - **Removed:** the floating math symbols, the popping "Exhibits / Shows / Startups / Keynotes" draft signposts and the "Hit the gas" button.
+
 ---
 
 ## Morning report
