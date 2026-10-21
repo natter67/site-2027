@@ -190,17 +190,20 @@ export default function HomeVideo({ mode = "pre" }) {
               Explore exhibits
             </Link>
           </div>
-          {mode === "pre" && <p className="mt-4 text-sm">
-            Exhibitors:{" "}
+          {mode === "pre" && (
             <a
               href={EXHIBIT_INTEREST_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold underline decoration-da-orange decoration-2 underline-offset-4"
+              className="da-pill da-pill--navy mt-3 max-w-full text-center text-base sm:text-lg"
             >
-              EOH Exhibits Interest Form 2026-2027
+              <span>
+                <span className="font-normal text-da-orange-light">Exhibitors:</span> EOH Exhibits Interest Form 2026-2027
+              </span>
+              <span aria-hidden="true">↗</span>
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
-          </p>}
+          )}
         </header>
 
         {/* Official 2027 logo (unaltered; its white background sits on a white card) + countdown */}
