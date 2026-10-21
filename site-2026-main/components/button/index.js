@@ -19,6 +19,7 @@ export default function Button({
 	const [menuIsOpen, setMenuOpenTo] = useState(false);
 
 	const cursor = typeof href === 'undefined' ? 'cursor-default' : 'cursor-pointer';
+	const font = type?.startsWith('da-') ? 'font-body' : 'font-montserrat';
 	const styles = `relative transition delay-150 duration-200 ease-in-out inline-flex items-center py-2 ${getStyles(
 		type
 	)} ${cursor} ${className}`;
@@ -39,7 +40,7 @@ export default function Button({
 				onClick={onClick}
 			>
 				<h3
-					className={`font-montserrat ${multiline ? 'mx-auto' : 'whitespace-nowrap truncate'}`}
+					className={`${font} ${multiline ? 'mx-auto' : 'whitespace-nowrap truncate'}`}
 					style={width ? { width: width } : {}}
 				>
 					{children}

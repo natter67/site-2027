@@ -83,10 +83,10 @@
   clip: auto;
   white-space: normal;
   background: white;
-  color: #473335;
+  color: var(--da-navy);
   font-weight: bold;
   border-radius: 4px;
-  box-shadow: 0 0 0 2px #473335;
+  box-shadow: 0 0 0 3px var(--da-orange);
   text-decoration: none;
 }
 

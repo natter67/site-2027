@@ -67,6 +67,7 @@
 .da-pill--primary { background: var(--da-orange); color: var(--da-navy); }
 .da-pill--secondary { background: var(--da-white); color: var(--da-navy); }
 .da-pill--navy { background: var(--da-navy); color: var(--da-white); }
+.da-pill--sm { padding: 0.5rem 1rem; font-size: 0.875rem; } /* header pills */
 
 /* ---------- RoadDivider (components/road-divider) ---------- */
 .da-road {

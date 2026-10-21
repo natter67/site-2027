@@ -11,46 +11,53 @@ const CONTACT_US = '/contact-us';
 
 const SOCIALS = { LINKTREE_URL, FB_URL, INSTA_URL, TWITTER_URL };
 
+// `type` picks the button style in utilities/types.js (da-* = Direction A header styles)
 const HEADER_ITEMS = [
-  { text: "Volunteer", href: "/volunteer" },
+  { text: "Volunteer", href: "/volunteer", type: "da-link" },
   {
     text: "Contact Us",
-    href: CONTACT_US
+    href: CONTACT_US,
+    type: "da-link"
   },
   {
     text: "FAQs",
-    href: "/faq"
+    href: "/faq",
+    type: "da-link"
   },
   {
     text: "Sponsors",
-    href: "/#sponsors"
+    href: "/#sponsors",
+    type: "da-link"
   },
   {
     text: "Field Trips",
-    href: "/field-trips"
+    href: "/field-trips",
+    type: "da-link"
   },
   {
     text: "Judging",
-    href: "/judging"
+    href: "/judging",
+    type: "da-link"
   },
   {
     text: "Students",
-    href: "/students"
+    href: "/students",
+    type: "da-link"
   },
-  { text: "Visitor View", 
+  { text: "Visitor View",
     href: "/vv",
-    type: "green",
+    type: "da-navy",
   },
   {
     text: "Visitor Guide",
     href: "/guide.pdf",
     target: "_blank",
-    type: "big"
+    type: "da-primary"
   },
   {
     text: 'Linktree',
     href: LINKTREE_URL,
-    type: 'mail'
+    type: 'da-secondary'
   }
 ];
 

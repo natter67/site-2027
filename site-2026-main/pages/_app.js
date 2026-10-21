@@ -18,7 +18,8 @@ const doppioOne = Doppio_One({
   subsets: ['latin'],
 })
 
-// Direction A fonts. preload is off until a page uses them, so they cost nothing where unused.
+// Direction A fonts. Archivo is preloaded because the header uses it on every page;
+// the others stay off until more pages use them (they still load where used).
 const anton = Anton({
   weight: '400',
   variable: '--font-anton',
@@ -29,7 +30,6 @@ const anton = Anton({
 const archivo = Archivo({
   variable: '--font-archivo',
   subsets: ['latin'],
-  preload: false,
 })
 
 const jetbrainsMono = JetBrains_Mono({
