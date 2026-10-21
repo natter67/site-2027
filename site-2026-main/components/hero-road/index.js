@@ -73,7 +73,7 @@ export default function HeroRoad() {
         ))}
 
         <g className="da-drive__car" style={fast ? { animationDuration: "3.14s" } : undefined}>
-          {/* Drawn facing right, mirrored to face left (the way it drives); text is flipped back so it reads normally */}
+          {/* Trail: mirrored so it sits behind the car and drifts back as the car drives left (text flipped back) */}
           <g transform="scale(-1 1)">
           <g className="da-drive__trail">
             <text className="font-label fill-da-orange" x="80" y="-30" fontSize="16" fontWeight="700" transform="scale(-1 1)">π</text>
@@ -87,9 +87,10 @@ export default function HeroRoad() {
           <g className="da-drive__trail" style={{ animationDelay: "1.2s" }}>
             <text className="font-label fill-da-navy" x="82" y="-36" fontSize="14" fontWeight="700" transform="scale(-1 1)">Δ</text>
           </g>
+          </g>
 
           <g className="da-drive__chassis">
-            <polygon points="78,-30 150,-48 150,-6" fill="#FFE7A8" opacity=".35" />
+            <polygon points="-78,-30 -150,-48 -150,-6" fill="#FFE7A8" opacity=".35" />
             <path
               className="fill-white stroke-da-navy"
               strokeWidth="3"
@@ -98,14 +99,13 @@ export default function HeroRoad() {
             />
             <path className="fill-da-navy" d="M-18 -47 C-8 -57 10 -59 24 -56 C34 -53 42 -49 48 -46 L-18 -46 Z" />
             <line className="stroke-da-orange" x1="-70" y1="-26" x2="74" y2="-26" strokeWidth="3" />
-            <rect className="fill-da-orange" x="-78" y="-36" width="7" height="7" rx="2" />
-            <rect className="stroke-da-navy" x="72" y="-33" width="7" height="5" rx="2" fill="#FFE7A8" strokeWidth="1.5" />
+            <rect className="fill-da-orange" x="71" y="-36" width="7" height="7" rx="2" />
+            <rect className="stroke-da-navy" x="-79" y="-33" width="7" height="5" rx="2" fill="#FFE7A8" strokeWidth="1.5" />
             <rect className="fill-white stroke-da-navy" x="-14" y="-24" width="30" height="10" rx="2" strokeWidth="1.5" />
-            <text className="font-label fill-da-navy" x="-1" y="-16" textAnchor="middle" fontSize="8" fontWeight="700" transform="scale(-1 1)">2027</text>
+            <text className="font-label fill-da-navy" x="1" y="-16" textAnchor="middle" fontSize="8" fontWeight="700">2027</text>
           </g>
           <Wheel x={-46} />
           <Wheel x={48} />
-          </g>
         </g>
       </svg>
     </div>

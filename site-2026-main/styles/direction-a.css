@@ -118,7 +118,7 @@
 .da-drive__wheel {
   transform-box: fill-box;
   transform-origin: center;
-  animation: da-spin 0.5s linear infinite;
+  animation: da-spin 0.5s linear infinite reverse; /* counter-clockwise: the car drives left */
 }
 @keyframes da-spin { to { transform: rotate(360deg); } }
 .da-drive__chassis { animation: da-bob 0.35s ease-in-out infinite; }

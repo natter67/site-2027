@@ -342,7 +342,7 @@ It is mounted once in `pages/_app.js`.
 ## Follow-up changes (after the morning report)
 - **Accessibility & sensory guide page removed** (`070abdb`): EOH can't offer a sensory guide. Accommodations stay on `/accessibility`.
 - **MTD sponsor logo** no longer sticks out of its tile. Every sponsor logo now scales down to fit inside its tile (`object-contain`). MTD's file is a white 225 px square with the mark in the middle, so it gets a 16:9 crop of its white margins in CSS (`FIT_OVERRIDES` in `components/corporateSponsor`); the image file is unchanged.
-- **Home hero road animation:** the car now drives right to left, like the car in the official logo. Its animation runs in reverse, the car drawing is mirrored (text flipped back so "2027" reads normally), and the signpost pop timing matches the new direction. Everything else is the original animation: signposts, "Hit the gas", the trail, the road. A broader restyle I made first was reverted at the owner's request.
+- **Home hero road animation:** the car now drives right to left, like the car in the official logo. Its animation runs in reverse, and the car keeps its original body shape (long hood at the front) with the headlight and beam moved to the front and the taillight to the back. The trail sits behind it, the wheels turn the right way, and the signpost pop timing matches the new direction. Everything else is the original animation: signposts, "Hit the gas", the trail, the road. A broader restyle I made first was reverted at the owner's request.
 
 ---
 
