@@ -163,9 +163,9 @@ export function Schedule() {
   );
 
   const activeStyles =
-    'border-white bg-gradient-to-tr from-purple-800 via-purple-600 to-blue-700 text-white';
+    'border-2 border-b-0 border-da-navy bg-da-navy text-white';
   const inactiveStyles =
-    'border-black border-t-2 border-l-2 border-r-2 bg-transparent hover:bg-gradient-to-tr from-purple-200 via-purple-100 to-blue-200 text-black';
+    'border-2 border-b-0 border-da-navy bg-white text-da-navy hover:bg-da-peach';
 
   return (
     <>
@@ -177,7 +177,7 @@ export function Schedule() {
 
 <div className="flex justify-end px-6 mb-2">
                 <button
-                    className="bg-purple-700 text-white px-4 py-2 rounded-xl font-semibold hover:bg-purple-800"
+                    className="da-pill da-pill--sm da-pill--navy"
                     onClick={() => setShowItinerary(!showItinerary)}
                 >
                     {showItinerary ? "Hide My Itinerary" : "View My Itinerary"}
@@ -194,7 +194,7 @@ export function Schedule() {
                     ${onDayOne ? inactiveStyles : activeStyles}`}>Saturday, April 11th</button>
             </span>
             
-             <div className="max-h-128 overflow-x-hidden p-4 bg-gradient-to-tr from-pink-50 via-yellow-50 to-blue-100 rounded-xl flex flex-col">
+             <div className="max-h-128 overflow-x-hidden p-4 da-card flex flex-col">
                 <div className="flex flex-row gap-0">
                     <div className="flex flex-col">
                         <div className='h-24 flex items-end justify-center'>
