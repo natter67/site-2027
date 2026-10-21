@@ -15,6 +15,7 @@ import QuantumDay from "@layouts/QuantumDay/index.js"
 import SCC from "@layouts/SCC/index.js"
 import DownloadApp from "@layouts/DownloadApp/index.js"
 import Leaderboard from "@layouts/Leaderboard/index.js"
+import Ticker from "@/ticker"
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
 
       <main>
         <Title />
+        <Ticker />
         <div className="mt-24 sm:mt-16 md:mt-0"></div>
         <Section color="white" title="EOH 2026 Awards" id="awards">
           <Awards />

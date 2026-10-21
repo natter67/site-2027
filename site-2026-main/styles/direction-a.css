@@ -145,6 +145,25 @@
   100% { transform: scale(0.7); opacity: 0.45; }
 }
 
+/* ---------- Ticker (components/ticker) ---------- */
+.da-ticker {
+  overflow: hidden;
+  padding: 14px 0;
+  background: var(--da-orange);
+  border-top: 3px solid var(--da-navy);
+  border-bottom: 3px solid var(--da-navy);
+  color: var(--da-navy);
+}
+.da-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  animation: da-marquee 30s linear infinite;
+}
+.da-ticker__track > span { margin-right: 40px; }
+@keyframes da-marquee { to { transform: translateX(-50%); } }
+
 /* ---------- RoadDivider (components/road-divider) ---------- */
 .da-road {
   position: relative;
@@ -187,7 +206,8 @@
   .da-drive__car,
   .da-drive__wheel,
   .da-drive__chassis,
-  .da-drive__sign { animation: none; }
+  .da-drive__sign,
+  .da-ticker__track { animation: none; }
   .da-drive__trail,
   .da-drive__gas { display: none; }
 }
