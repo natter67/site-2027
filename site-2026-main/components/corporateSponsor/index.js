@@ -1,5 +1,12 @@
 import Image from "next/image"
 
+// Logos scale down to fit inside their tile (object-contain). A logo whose file has wide blank
+// margins gets its own fit here, so the mark itself is sized like the others (the file is untouched).
+const FIT = "h-full w-full object-contain"
+const FIT_OVERRIDES = {
+  "/assets/sponsors/MTD.png": "h-full w-auto max-w-full aspect-[16/9] object-cover", // square white file; the mark is ~16:9 in the middle
+}
+
 export default function CorporateSponsor() {
   const logos_medium = [
     "/assets/sponsors/Abbott.png",
@@ -29,6 +36,7 @@ export default function CorporateSponsor() {
             {/* Adjust width (w-36) and height (h-36) as needed */}
             <Image
               src={logo}
+              className={FIT_OVERRIDES[logo] || FIT}
               alt={`Sponsor Logo ${index + 1}`}
               width={300}
               height={300}
@@ -46,6 +54,7 @@ export default function CorporateSponsor() {
             {/* Adjust width (w-36) and height (h-36) as needed */}
             <Image
               src={logo}
+              className={FIT_OVERRIDES[logo] || FIT}
               alt={`Sponsor Logo ${index + 1}`}
               width={250}
               height={250}
@@ -63,6 +72,7 @@ export default function CorporateSponsor() {
             {/* Adjust width (w-36) and height (h-36) as needed */}
             <Image
               src={logo}
+              className={FIT_OVERRIDES[logo] || FIT}
               alt={`Sponsor Logo ${index + 1}`}
               width={200}
               height={200}
