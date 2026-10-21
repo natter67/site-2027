@@ -281,6 +281,65 @@ Content moved off the home page to new pages:
 
 **PLACEHOLDERS:** photo highlights, and the feedback form (no URL yet).
 
+## Launch intro
+
+### What was built
+A once-per-session title sequence ("launch sequence") that plays over the page the visitor lands on, then wipes away to reveal the real page. It lives in **`site-2026-main/components/LaunchIntro/`**:
+- `config.js`: `INTRO_ENABLED`, every timing, the easings, labels, field names and both trail paths
+- `script.js`: the small inline runtime
+- `index.js`: the React markup
+- `LaunchIntro.module.css`: the styles
+
+It is mounted once in `pages/_app.js`.
+
+**The sequence (about 3.5 s):**
+- **Frame:** the hairline grid fades in, the rules draw left to right, crop marks and mono labels appear, and the counter reads 000.
+- **Trails:** two orange light trails with a glow, a faint cool-white trail in the other lane, and a white-hot head. They draw along the lower band, then sweep up and off the right edge.
+- **Headline:** "DRIVEN BY" rises through a mask, then "DISCOVERY" rises as an orange outline and fills left to right (the fill is the same text stacked exactly on the outline).
+- **Readout:** "EXPLORING │ field" flips through the fields and lands on "Everything".
+- **Exit:** the headline, readout and trails ease up and fade.
+- **Handoff:** the panel wipes upward with a thin orange line riding its edge. The overlay then unmounts.
+
+**Texture:** film grain (SVG `feTurbulence` at 7%, stepped motion) and a soft vignette.
+
+**Style:** Anton for the headline and counter, JetBrains Mono 11 px uppercase at 0.18em for every label, all from the existing next/font setup.
+
+**Layout:** a strict grid: 120 px margins, top rule at 96 px, bottom rule 176 px from the bottom, crop marks 48 px in. On phones the margins drop to 24 px, the top-centre label is removed, the trail path is reshaped for portrait, and sizes use `clamp()` and `dvh`.
+
+**Behaviour:**
+- **Plays when:** it's the first page view in a browser session (`sessionStorage`), on any page.
+- **Replay:** `?intro=1` replays it.
+- **Never plays:** with JavaScript off, with reduced motion turned on, or on later views in the same session (no flash).
+- **Counter:** follows real loading: `document.fonts.ready`, priority images decoded (the hero logo), and window load. It eases 000→100 over 2.3 s, never goes backward, and holds the finished frame if the page isn't ready. Hand-off happens as soon as the page is ready, with a hard cap of 6 s.
+- **Skip:** the "Skip intro" button (the first Tab stop), Esc, or a click or tap anywhere goes straight to the wipe.
+- **Accessibility:** focus is never trapped. After the handoff, Tab reaches the skip link as normal. The visual layers are `aria-hidden`.
+- **Performance:** CSS-only motion plus inline SVG; no new dependencies, video, canvas or extra fonts. The page underneath is server-rendered and never waits on the intro.
+
+### How to replay or turn it off
+- **Replay:** add `?intro=1` to any URL.
+- **Turn off everywhere:** set `INTRO_ENABLED = false` in `components/LaunchIntro/config.js`, then rebuild and deploy.
+- **Remove:** delete `components/LaunchIntro/` and the two lines in `pages/_app.js` (the import and `<LaunchIntro />`).
+
+### Checks
+- `direction-a/scripts/introtest.js`: 22/22 pass at 1440 and 360 px. Covers first view, unmount, scroll restored, no replay on reload, `?intro=1`, Skip as first Tab stop, Esc, click, skip link reachable afterwards, no page or hydration errors, reduced motion and JavaScript off.
+- **Lighthouse home mobile with the intro playing:** performance **83**, accessibility **100**. FCP 2.3 s, LCP 4.3 s, CLS 0.011, TBT 30–50 ms (Phase 5 was 78).
+- This check also found a home-hero layout shift from the redesign: the facts line re-wrapped when the mono font loaded (CLS 0.21). Fixed in `81b6b89` by putting one fact per line on phones.
+
+### Decisions
+1. **The prototype file `launch-intro-reference.html` wasn't on this machine**, so the intro was built from the written spec (palette, type, grid, timings and easings exactly as listed). Compare against the prototype when it's available.
+2. **The "decide before first paint" script isn't in `<head>`.** The component renders it as the first element in `<body>`, so removing the feature stays one folder plus one mount. It still runs before any page content is parsed or painted.
+3. **The overlay is hidden by default**, and the script adds `li-play` to `<html>` when it should play. The brief described the reverse: a class added when the intro was already seen. This covers both "no flash on later views" and "never without JavaScript".
+4. **Playback logic is plain JavaScript in the inline script**, so the counter, skip and handoff work before React hydrates. That logic covers timing, readiness, skip and handoff. React only renders the markup and unmounts it on the `eoh-intro-done` event. The counter text is updated by the script (`suppressHydrationWarning`).
+5. **The counter is visible from the first frame** (no fade), so the first paint isn't held back by fade-ins. The frame, labels and grid fade in as specified.
+6. **Reduced motion means no intro at all**, rather than a crossfade.
+7. **Page scrolling is locked while the intro plays** and restored at the handoff.
+
+### TODOs
+- Check against the prototype file when it's available.
+- Test on real iOS Safari and Android Chrome (`dvh`, `clip-path`, `-webkit-text-stroke`).
+- **Your call:** the intro also plays when someone's first page is an event-day tool (`/vv`, `/judging/*`, `/volunteer`). That's what the brief asks for, but you may want to skip those pages; a judge or volunteer would see it once per session.
+- The labels ("No. 105", coordinates, "April 09 — 10, 2027", "Bardeen Quad · Urbana-Champaign, IL") are the brief's wording; confirm "No. 105" with the committee.
+
 ---
 
 ## Morning report
@@ -296,6 +355,8 @@ Content moved off the home page to new pages:
 | 5. Visitor Guide and Mom's Weekend as web pages | done | `e617837` |
 | 6. Lifecycle modes, event-day tab bar, Event Day Hub | done | `e3c66f5` |
 | Troubleshooting guide updated | done | `29eaaf3` |
+| Hero layout-shift fix (found while checking the intro) | done | `81b6b89` |
+| Launch intro (second brief) | done | `c8658aa` (see "Launch intro" above) |
 
 Everything is on the `nathan` branch. Nothing was pushed or deployed.
 
@@ -378,6 +439,7 @@ Content that moved off the home page is reached through in-browser hash redirect
 - Menus open and close by mouse, keyboard and Esc; the skip link is still first.
 - Lifecycle modes tested in pre, event and post.
 - Lighthouse accessibility is 100 on the new and templated pages checked. Phase 4 info pages are at least their baseline (most improved).
+- Lighthouse home mobile with the launch intro: performance 83 (Phase 5: 78), accessibility 100, CLS 0.011.
 
 ### How to review locally
 ```bash
@@ -385,6 +447,7 @@ cd ~/EOH-2027/site-2027/site-2026-main
 npm install              # first time only
 npm run dev              # http://localhost:3000
 ```
+- Launch intro: it plays on your first visit in a new tab or private window. To replay, open http://localhost:3000/?intro=1.
 - Event-day layout: open http://localhost:3000/?mode=event at phone width to see the tab bar. Post-event layout: http://localhost:3000/?mode=post.
 - Production build: `npm run build && npx next start -p 3123`, then http://localhost:3123.
 - New pages to look at:
