@@ -1,12 +1,15 @@
 import Link from "next/link";
-import { Mic } from "lucide-react";
+import { Mic, Swords } from "lucide-react";
 import { FEATURED_EVENTS } from "@layouts/EventList";
 import { KEYNOTES } from "@utilities/keynotes";
+import { GUIDE } from "@utilities/visitorGuide";
+import { slug } from "@utilities/slug";
 
 // Home page highlights: short teasers that link to the full pages. Text comes from the
-// featured events list (layouts/EventList) and utilities/keynotes.js, so it is never copied.
+// featured events list (layouts/EventList), utilities/keynotes.js and the Visitor Guide data, so it is never copied.
 const byTitle = (title) => FEATURED_EVENTS.find((e) => e.title === title);
 const event = (title, href) => ({ ...byTitle(title), href });
+const robobrawl = GUIDE.specialEvents.find((e) => e.name === "Robobrawl");
 
 const HIGHLIGHTS = [
   event("Tesla Coil Concert", "/explore/special-events"),
@@ -20,6 +23,7 @@ const HIGHLIGHTS = [
   event("Middle School Design Competition", "/msdc"),
   event("High School Design Competition", "/hsdc"),
   event("Startup Showcase", "/startup-showcase"),
+  { title: robobrawl.name, blurb: robobrawl.details, href: `/visit/guide#${slug(robobrawl.name)}`, icon: Swords },
 ];
 
 export default function Highlights() {

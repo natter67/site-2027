@@ -35,7 +35,7 @@ export const FEATURED_EVENTS = [
         "title": "EOH x Mom's Weekend",
         "subtitle": "",
         "blurb": "We would like to invite all Grainger Engineering Moms to explore the unique features of EOH that have been organized in celebration.",
-        "link": '/EOHxmoms.pdf',
+        "link": '/schools/moms-weekend',
         "icon": Heart
     },
     // Can add research showcase but don't habe a matching card image

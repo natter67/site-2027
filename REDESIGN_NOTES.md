@@ -213,3 +213,31 @@ Content moved off the home page to new pages:
 - "More in …" and "On this page"
 
 **PLACEHOLDER:** the sensory guide on `/visit/accessibility` (committee to provide).
+
+### Step 5: PDFs as web pages (done)
+- **`/visit/guide`**, the Visitor Guide web version, with the 44-page PDF still downloadable. It covers:
+  - visitor's information (visitor booth, food trucks, shirt colours)
+  - emergencies (severe weather, missing child, medical, hospitals, lost and found)
+  - the 27 buildings on the event map
+  - parking, pick-up/drop-off, street closures and shuttles
+  - all 33 special events (each has its own id, e.g. `#robobrawl`)
+  - "More in the PDF" links: the schedule, the directors' note, exhibits in the Event Day Hub, and the committee
+- The text is extracted word for word from `public/guide.pdf` (pages 3, 5, 6, 9, 10) into `utilities/visitorGuide.js`. Only PDF line breaks were joined; event names were split from their details.
+- **`/schools/moms-weekend`**: the EOH x Mom's Weekend web version (`utilities/momsWeekend.js`, from `public/EOHxmoms.pdf`), with the PDF download. The featured-events card now opens this page instead of the PDF.
+- Lighthouse accessibility: 100 on both pages.
+
+**Judgment calls:**
+- **The Visitor Guide PDF is the 2026 edition** (Friday April 10 / Saturday April 11, 2026). The web page says so ("This page matches the current PDF, the EOH 2026 edition…", DRAFT) until the 2027 guide replaces `public/guide.pdf` and `utilities/visitorGuide.js`.
+- The guide's exhibit list (pages 12–38), directors' note and committee pages are linked rather than repeated, because they already have canonical places (Event Day Hub, `/about/directors`, the committee page).
+- `public/showcase.pdf` is the **2025** Startup Showcase program. It was not turned into a page; it stays a PDF and `/startup-showcase` stays the menu target. Worth replacing when the 2027 program exists.
+- The Mom's Weekend PDF's "for moms with younger students" list has no extractable text (it's probably an image), so the page links to the PDF for it.
+- **Robobrawl added to Highlights** (6 teasers now). Its text comes from the guide's special events and it links to `/visit/guide#robobrawl`. This resolves the Step 3 gap.
+- The Sponsorship Packet PDF is unchanged; `/sponsor-us` already carries its content.
+
+**DRAFT copy:**
+- The guide's edition note
+- "Download the … (PDF)" labels
+- The "More in the PDF" sentences
+- "Featured events for everyone"
+- "Events for moms with younger students are listed in the PDF."
+- The extra "Visitor Guide and the Event Day Hub" sentence on `/explore/special-events`
