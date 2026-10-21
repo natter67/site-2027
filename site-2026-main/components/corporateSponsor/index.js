@@ -18,12 +18,12 @@ export default function CorporateSponsor() {
   ]
 
   return (
-    <div className="w-screen flex items-center flex-col ">
+    <div className="w-full flex items-center flex-col px-4">
       <div className="flex flex-wrap justify-center gap-5 p-5 max-w-5xl">
         {logos_large.map((logo, index) => (
           <div
             key={index}
-            className="flex items-center justify-center w-72 h-48"
+            className="flex items-center justify-center w-72 h-48 rounded-2xl border-2 border-da-navy bg-white p-5"
           >
             {" "}
             {/* Adjust width (w-36) and height (h-36) as needed */}
@@ -40,7 +40,7 @@ export default function CorporateSponsor() {
         {logos_medium.map((logo, index) => (
           <div
             key={index}
-            className="flex items-center justify-center w-52 h-32"
+            className="flex items-center justify-center w-52 h-32 rounded-2xl border-2 border-da-navy bg-white p-4"
           >
             {" "}
             {/* Adjust width (w-36) and height (h-36) as needed */}
@@ -57,7 +57,7 @@ export default function CorporateSponsor() {
         {logos_small.map((logo, index) => (
           <div
             key={index}
-            className="flex items-center justify-center w-36 h-20"
+            className="flex items-center justify-center w-36 h-20 rounded-2xl border-2 border-da-navy bg-white p-3"
           >
             {" "}
             {/* Adjust width (w-36) and height (h-36) as needed */}
