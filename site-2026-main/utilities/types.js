@@ -3,7 +3,7 @@ export function getStyles(type) {
   if (type === "normal" || typeof type === "undefined")
     return "text-black font-medium hover:text-theme-red";
   else if (type === "big")
-    return "border rounded-md text-white font-medium px-3 drop-shadow-md bg-[#ff5f05] hover:bg-[#ff5f05]";
+    return "da-pill da-pill--sm da-pill--primary"; // was white on orange (failed contrast)
   else if (type === "mail")
     return "border rounded-md font-medium text-white px-3 drop-shadow-md bg-[#707372] hover:bg-[#707372]";
   else if (type === "green")
