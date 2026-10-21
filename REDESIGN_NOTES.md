@@ -280,3 +280,117 @@ Content moved off the home page to new pages:
 - The `/schedule` Happening now explainer
 
 **PLACEHOLDERS:** photo highlights, and the feedback form (no URL yet).
+
+---
+
+## Morning report
+
+### Status
+| Step | Status | Commit |
+|---|---|---|
+| Phase 4 (finished before this run): info-page background and font, AA contrast fixes | done | `dc5781e`…`961d4c4` |
+| 1. Inventory and content-to-IA map | done | `7ad0958` |
+| 2. Header and footer | done | `93dc532` |
+| 3. Home page restructure, directors card and letter page, moved content | done | `e339fb1` |
+| 4. Landing pages and inner-page template | done | `2c77c40` |
+| 5. Visitor Guide and Mom's Weekend as web pages | done | `e617837` |
+| 6. Lifecycle modes, event-day tab bar, Event Day Hub | done | `e3c66f5` |
+| Troubleshooting guide updated | done | `29eaaf3` |
+
+Everything is on the `nathan` branch. Nothing was pushed or deployed.
+
+### Judgment calls
+Every call is listed under its step above. The main ones:
+1. "Visitor View" is labelled **Event Day Hub** in menus.
+2. Log in/Account moved to the utility bar.
+3. Linktree only appears in the footer, using the URL the footer already had (`linktr.ee/EOHuiuc`; the header used `linktr.ee/eoh2025`).
+4. The footer has 5 IA columns plus "Stay in touch", instead of 4.
+5. The hero keeps the "Driven by Discovery" capitalization from the logo. Its date line became the brief's facts line, and the interest form became a small pre-event link.
+6. Robobrawl's teaser uses the Visitor Guide's text, since there was no other Robobrawl content.
+7. The full directors' letter is unchanged apart from formatting. It is still the **2026 letter**.
+8. Menu links to Visitor View tabs (exhibits, map) point at `/vv` itself. `/vv` has no tab deep links, and adding them would change its logic.
+9. `/visit/map` reuses the Event Day Hub map component unchanged.
+10. The 2025 Startup Showcase PDF was not turned into a page.
+11. The Town Hall countdown only shows before the event.
+12. Pages for the event-day tools (`/vv`, `/volunteer`, `/login`, `/account`, `/admin`, `/judging/*`, `/live`) keep their own layouts and don't use the inner-page template.
+
+### Redirects added
+No server redirects were needed: **no existing route was moved or removed**. A re-crawl of every original route and static file returns the same status codes as the Phase 0 baseline.
+
+Content that moved off the home page is reached through in-browser hash redirects (`MOVED_ANCHORS` in `pages/index.js`):
+
+| Old link | Now goes to |
+|---|---|
+| `/#awards` | `/explore/awards` |
+| `/#keynote` | `/explore/keynotes` |
+| `/#visitors` | `/visit` |
+| `/#world-quantum-day` | `/explore/initiatives#world-quantum-day` |
+| `/#scc` | `/explore/initiatives#scc` |
+| `/#special-events` | `/explore/special-events` |
+
+`/#schedule`, `/#directors`, `/#sponsors`, `/#corporate-sponsors` and `/#featured-events` still exist on the home page.
+
+### Placeholders and draft copy for the committee
+**Placeholders:**
+- The sensory guide (`/visit/accessibility`)
+- Post-event photo highlights and the feedback form link (`layouts/PostEventLead`)
+
+**Draft copy:**
+- Every one-line summary and menu group heading in `utilities/navigation.js`
+- Home section titles "Start here" and "Highlights"
+- The audience card labels
+- Quick facts "Parking & shuttles"
+- "Exhibitors:"
+- The schedule-preview fallback
+- The landing-page extras ("Event essentials", "Download the … (PDF)", the exhibit sentence)
+- The sentences on `/visit/map`, `/visit/food`, `/visit/accessibility` and `/explore/special-events`
+- The Visitor Guide edition note and "More in the PDF"
+- The Mom's Weekend headings
+- All event-day and post-event block text
+- "More in …", "On this page", "Stay in touch", "Join the mailing list"
+
+**Needs confirmation:** the hours (9 AM–4 PM) and location (Bardeen & North Quad, Urbana) come from the brief and live in `utilities/eventConfig.js`.
+
+**2026 leftovers that still need 2027 content:**
+- Home `<title>` "EOH 2026"
+- The awards heading "EOH 2026 Awards"
+- Keynotes (2026 speakers and dates)
+- Featured-event dates
+- The directors' letter
+- The Visitor Guide and Mom's Weekend PDFs (2026)
+- `showcase.pdf` (2025)
+- The schedule widget's hard-coded 2026 days
+- The footer copyright
+
+### Skipped or left alone to avoid breaking features
+- `/vv` logic, the schedule widget's logic, forms and payment links are unchanged. The schedule's Strapi URL and its timezone fix were only moved into exported helpers so the home preview reuses them, and the widget behaves the same.
+- **Strapi is still unreachable** (TLS error on `loved-vitality-4672033e09.strapiapp.com`), so the schedule, the home preview and Happening now show their fallbacks. See `TROUBLESHOOTING.md`.
+- The map's floor-plan icon is an `<a>` without an `href`, so it can't be reached by keyboard. Fixing it would change `/vv` behaviour.
+- `/sponsor-us` still logs a React hydration warning (#418); this was already there before the redesign.
+- Four old pages are linked from nowhere but still work: `/events-list`, `/exhibitors`, `/independent-attend` (2023 content) and the 2025 `showcase.pdf`. Decide whether to keep, update or redirect them.
+- On the Contact page, every director's email link opens `eoh-advancement@…`, whatever address is shown. This was already the case before the redesign and was not fixed, because links can't change without approval.
+- `/#sponsors` is no longer linked from any menu; the Donate and Sponsor links go straight to their pages. The anchor itself still works.
+- Unused but left in place: `layouts/Visitors`, `components/ticker`, `components/mobile-menu`, `/direction-a-preview` (dev-only).
+
+### Checks run
+- `npm run build` passes at every commit.
+- Browser checks at 360, 768, 1024 and 1440 px: no horizontal page scroll, one h1 per page, no skipped heading levels on new pages.
+- Menus open and close by mouse, keyboard and Esc; the skip link is still first.
+- Lifecycle modes tested in pre, event and post.
+- Lighthouse accessibility is 100 on the new and templated pages checked. Phase 4 info pages are at least their baseline (most improved).
+
+### How to review locally
+```bash
+cd ~/EOH-2027/site-2027/site-2026-main
+npm install              # first time only
+npm run dev              # http://localhost:3000
+```
+- Event-day layout: open http://localhost:3000/?mode=event at phone width to see the tab bar. Post-event layout: http://localhost:3000/?mode=post.
+- Production build: `npm run build && npx next start -p 3123`, then http://localhost:3123.
+- New pages to look at:
+  - `/visit`, `/visit/getting-here`, `/visit/map`, `/visit/food`, `/visit/accessibility`, `/visit/guide`
+  - `/explore`, `/explore/special-events`, `/explore/keynotes`, `/explore/awards`, `/explore/initiatives`
+  - `/schedule`
+  - `/schools`, `/schools/moms-weekend`
+  - `/get-involved`
+  - `/about`, `/about/directors`
