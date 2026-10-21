@@ -61,8 +61,16 @@ const HEADER_ITEMS = [
   }
 ];
 
+// Pages that keep their own look instead of the Direction A page background and body font:
+// home draws its own sections, and the rest are event-day tools (plus every /judging/... page).
+const OWN_LOOK_PAGES = ['/', '/vv', '/volunteer', '/admin', '/login', '/account'];
+
 export default function BasicApp({ Component, pageProps }) {
   const router = useRouter()
+  const daPage = !OWN_LOOK_PAGES.includes(router.pathname) && !router.pathname.startsWith('/judging/');
+  // flow-root keeps a page's top margin inside the background; isolate keeps z-index:-1 images
+  // (the Sponsor Us photo) painted above it. da-ground lives in styles/direction-a.css.
+  const daClasses = daPage ? 'da-ground font-body text-da-navy flow-root isolate' : '';
   return (
     <Fragment>
       {(
@@ -73,7 +81,7 @@ export default function BasicApp({ Component, pageProps }) {
           <Header
             headerItems={HEADER_ITEMS}
           />
-          <div id="main-content" className="w-screen main-content" role="main">
+          <div id="main-content" className={`w-screen main-content ${daClasses}`} role="main">
             <Component {...pageProps} />
           </div>
           {router.pathname != '/vv' && <Footer socials={SOCIALS} />}

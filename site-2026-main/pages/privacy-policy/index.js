@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
         />
       </Head>
       <Content title="Privacy Policy" metaTitle="Privacy Policy | EOH 2026 App">
-        <div className="text-left font-montserrat space-y-8 max-w-3xl mx-auto pb-16">
+        <div className="text-left font-body space-y-8 max-w-3xl mx-auto pb-16">
           <p className="text-sm text-gray-600">
             Last updated: March 31, 2026
           </p>

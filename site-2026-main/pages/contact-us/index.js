@@ -63,14 +63,14 @@ export default function ContactUsPage() {
 		<Fragment>
 			<Content title="Contact Us">
 				<div className=" mb-10">
-					<p className="text-center font-montserrat">
+					<p className="text-center font-body">
 						If you have any questions or concerns regarding Engineering Open House 2026,
 						<br />
 						please contact the most appropriate director for your matter.
 						<br />
 						<br />
 						If you are not sure which director to contact, please email{' '}
-						<span className="font-montserrat text-[#13294b] hover:text-[#13294b] font-semibold">
+						<span className="font-body text-[#13294b] hover:text-[#13294b] font-semibold">
 							<a href="mailto:eoh@ec.illinois.edu">eoh@ec.illinois.edu</a>
 						</span>.
 					</p>
@@ -78,8 +78,8 @@ export default function ContactUsPage() {
 				<div className="mt-2 mb-10 flex flex-wrap justify-center gap-3 w-full">
 					{CONTACTS.map(c =>
 						<div className='md:p-4 text-sm md:text-base' key={c.email}>
-							<p className="font-montserrat font-bold mx-auto">{c.title}</p>
-							<a href="mailto:eoh-advancement@ec.illinois.edu" className='font-montserrat text-[#13294b] hover:text-[#13294b]'>{c.email}</a>
+							<p className="font-body font-bold mx-auto">{c.title}</p>
+							<a href="mailto:eoh-advancement@ec.illinois.edu" className='font-body text-[#13294b] hover:text-[#13294b]'>{c.email}</a>
 						</div>
 					)}
 				</div>

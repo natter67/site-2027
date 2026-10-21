@@ -13,7 +13,7 @@ export default function FieldTripsPage() {
           alt="Children illustration"
         />
         <div className="lg:col-span-3 mb-10 text-center">
-          <p className="font-montserrat text-lg">
+          <p className="font-body text-lg">
             In order to help us plan and streamline traffic managment this year, we are asking groups to let us know when they will be arriving on campus. Please reach out to (eoh-outreach@ec.illinois.edu) if you have any questions, comments, or concerns!
           </p>
           <Button
@@ -29,7 +29,7 @@ export default function FieldTripsPage() {
 
       <div className="text-center mx-auto max-w-3xl">
         <h1 className="title text-3xl font-bold mb-4">MSDC and HSDC</h1>
-        <p className="font-montserrat text-lg">
+        <p className="font-body text-lg">
           Our Middle School and High School Design Competitions (MSDC and HSDC)
           are engineering-focused competitions on <b>Friday, April 10</b>.
           Students work in teams of 3-5 to create a design and presentation that
@@ -63,27 +63,27 @@ export default function FieldTripsPage() {
         <h2 className="text-2xl font-bold mb-4">Bus Drop-Off & Parking</h2>
 
         <h3 className="text-lg font-semibold mb-2">For Field Trip Buses:</h3>
-        <p className="font-montserrat text-lg">
+        <p className="font-body text-lg">
           Buses should arrive via <b>Goodwin Avenue</b> and drop off students
           at lot <b>B-22</b>, following directions from EOH volunteers.
         </p>
-        <p className="font-montserrat text-lg mt-2">
+        <p className="font-body text-lg mt-2">
           After drop-off, buses will park in <b>Lot B22</b> (corner of Goodwin
           Street and University Street, east of the Parking Department
           building).
         </p>
-        <p className="font-montserrat text-lg mt-2">
+        <p className="font-body text-lg mt-2">
           At the end of the day, EOH will have <b>shuttles</b> running from campus
           to <b>B22</b> to bring students back to their buses for departure.
         </p>
 
         <h3 className="text-lg font-semibold mt-6 mb-2">For Visitors Arriving in Cars:</h3>
-        <p className="font-montserrat text-lg">
+        <p className="font-body text-lg">
           Parking is available in the <b>State Farm Center Lot E14, Lot B-4, and lot B-22</b>. A
           designated <b>EOH shuttle</b> will transport visitors to the main event
           area.
         </p>
-		<p className="font-montserrat text-lg mt-2">
+		<p className="font-body text-lg mt-2">
 		Visitors may also drop off near EOH and then proceed to park in <b>E14 or Lot B-4</b>.
 		</p>
 		</div>
@@ -212,7 +212,7 @@ function FaqCard({ question, answer }) {
         <h3 className="text-lg font-semibold">{question}</h3>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
-      {open && <div className="mt-3 text-sm font-montserrat">{answer}</div>}
+      {open && <div className="mt-3 text-sm font-body">{answer}</div>}
     </div>
   );
 }

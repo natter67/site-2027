@@ -10,7 +10,7 @@ export default function EventsList() {
   return (
     <Content title="Special Events">
         <div className="lg:col-span-3 mb-10">
-            <div className="font-montserrat col-span-5">
+            <div className="font-body col-span-5">
                 {/* <Event color="#edd4d3" description="Join us for our keynote speaker to kick off EOH 2023! Our keynote speaker this year is Todd Little who is the chief architect at Oracle and an Alumni of The Grainger College of Engineering. With more than 40 years of software architecture and development experience, he has also received two patents for methods allowing design patterns in a UML modeling tool to control the generation of software artifacts." title="Keynote Speaker" location="CIF 0027" dateTime="Friday 6-7 pm" icon="assets/icons/keynote.png"/>
                 <Event color="#e8c9c8" description="Just as dark falls, visit the Bardeen Quad to see an electrifying display of light and sound." title="Tesla Coil" location="Bardeen Quad" dateTime="Friday 8 pm" icon="assets/icons/tesla.png"/>
                 <Event color="#debcba" description="Build-a-Blinkie is an organization dedicated to the teaching of STEM. We are teaching people to solder one blinkie at a time. Come check out this interactive activity and take home your own soldered blinkie! The custom EOH Blinkies are sponsored by the Dyson Foundation, stop by their booth next to Build-a-Blinkie to learn more about their engineering innovation!" title="Build-A-Blinkie" location="CIF 0035" dateTime="Friday 1-4 pm, Saturday 9-4 pm" icon="assets/icons/blinkie.png"/>

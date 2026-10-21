@@ -19,10 +19,9 @@ export default function Button({
 	const [menuIsOpen, setMenuOpenTo] = useState(false);
 
 	const cursor = typeof href === 'undefined' ? 'cursor-default' : 'cursor-pointer';
-	const font = type?.startsWith('da-') ? 'font-body' : 'font-montserrat';
-	const styles = `relative transition delay-150 duration-200 ease-in-out inline-flex items-center py-2 ${getStyles(
-		type
-	)} ${cursor} ${className}`;
+	const typeStyles = getStyles(type);
+	const font = typeStyles?.includes('da-') ? 'font-body' : 'font-montserrat'; // Direction A styles use Archivo
+	const styles = `relative transition delay-150 duration-200 ease-in-out inline-flex items-center py-2 ${typeStyles} ${cursor} ${className}`;
 
 	return (
 		<div className={divClass}>

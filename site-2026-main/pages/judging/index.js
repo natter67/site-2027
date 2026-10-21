@@ -11,11 +11,11 @@ export default function Judging() {
       <div className="lg:col-span-3 mb-0 text-center">
 
         {/* Hook */}
-        <h2 className="font-montserrat text-3xl font-bold mb-2">
+        <h2 className="font-body text-3xl font-bold mb-2">
           Help Shape the Future of Engineering at EOH
         </h2>
 
-        <p className="font-montserrat text-lg max-w-3xl mx-auto mb-4">
+        <p className="font-body text-lg max-w-3xl mx-auto mb-4">
           Engineering Open House (EOH) is a flagship showcase of hands-on
           engineering projects. UIUC alumni, professors, and graduate students
           are invited to serve as judges and engage directly with student teams.
@@ -61,7 +61,7 @@ export default function Judging() {
         </div>
 
         {/* Contact */}
-        <div className="font-montserrat mb-2">
+        <div className="font-body mb-2">
           Questions? Reach out to{" "}
           <a
             href="mailto:eoh-judging@ec.illinois.edu"

@@ -11,7 +11,7 @@ export default function AccessibilityPage() {
         <meta name="description" content="Engineering Open House accessibility information and accommodation requests for events and programs." />
       </Head>
       <Content title="Event Accessibility">
-        <div className="text-left font-montserrat space-y-8 max-w-3xl mx-auto">
+        <div className="text-left font-body space-y-8 max-w-3xl mx-auto">
           <p className="text-lg">
             Engineering Open House is committed to ensuring our programs, courses, and events are accessible to all participants. We follow university accessibility guidelines for every event, symposium, and meeting.
           </p>
