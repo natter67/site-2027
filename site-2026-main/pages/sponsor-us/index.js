@@ -77,8 +77,8 @@ export default function SponsorUsPage() {
                         </div>
                         <div className="max-w-2xl mx-auto">
                             <div className="font-body font-white">
-                                <Collapsible trigger={[<p className="p-4">SPONSORSHIP PACKAGE</p>, <div className="mr-4"><BsChevronDown /></div>]} className='sponsorship-outer' openedClassName='sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#13294b] hover:bg-[#0d1d36] text-white">
-                                    <Collapsible trigger={[<p className="p-4">Silver Sponsorship Package - $3,000</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                <Collapsible contentElementId="sponsor-sponsorship-package" triggerElementProps={{ id: "sponsor-sponsorship-package-trigger" }} trigger={[<p key="label" className="p-4">SPONSORSHIP PACKAGE</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} className='sponsorship-outer' openedClassName='sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#13294b] hover:bg-[#0d1d36] text-white">
+                                    <Collapsible contentElementId="sponsor-silver-sponsorship-package-3-000" triggerElementProps={{ id: "sponsor-silver-sponsorship-package-3-000-trigger" }} trigger={[<p key="label" className="p-4">Silver Sponsorship Package - $3,000</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <span className="sponsor-package-describe py-3">
                                             <span className="text-lg font-bold italic p-10">Company Name and Logo Publicity</span> <br />
                                             <p className="text-base mt-3 mx-10">
@@ -117,7 +117,7 @@ export default function SponsorUsPage() {
                                             />
                                         </div>
                                     </ Collapsible>
-                                    <Collapsible trigger={[<p className="p-4">Gold Sponsorship Package - $5,000</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                    <Collapsible contentElementId="sponsor-gold-sponsorship-package-5-000" triggerElementProps={{ id: "sponsor-gold-sponsorship-package-5-000-trigger" }} trigger={[<p key="label" className="p-4">Gold Sponsorship Package - $5,000</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <span className="sponsor-package-describe py-3">
                                             <span className="text-lg font-bold italic p-10">Company Name and Logo Publicity</span> <br />
                                             <p className="text-base mt-3 mx-10">
@@ -161,7 +161,7 @@ export default function SponsorUsPage() {
                                             />
                                         </div>
                                     </ Collapsible>
-                                    <Collapsible trigger={[<p className="p-4">Platinum Sponsorship Package - $8,000</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                    <Collapsible contentElementId="sponsor-platinum-sponsorship-package-8-000" triggerElementProps={{ id: "sponsor-platinum-sponsorship-package-8-000-trigger" }} trigger={[<p key="label" className="p-4">Platinum Sponsorship Package - $8,000</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <span className="sponsor-package-describe py-3">
                                             <span className="text-lg font-bold italic p-10">Company Name and Logo Publicity</span> <br />
                                             <p className="text-base mt-3 mx-10">
@@ -218,8 +218,8 @@ export default function SponsorUsPage() {
                                     </div>
                                     {/* <img src='/assets/images/sponsorship_comparison.png' className="mx-auto object-contain h-64 my-5" /> */}
                                 </Collapsible>
-                                <Collapsible trigger={[<p className="p-4">FOCUS BUNDLE</p>, <div className="mr-4"><BsChevronDown /></div>]} className='focus-bundle-outer' openedClassName='focus-bundle-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ff5f05] hover:bg-[#ff8a4c] text-da-navy">
-                                    <Collapsible trigger={[<p className="p-4">Outreach Focus Bundle</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                <Collapsible contentElementId="sponsor-focus-bundle" triggerElementProps={{ id: "sponsor-focus-bundle-trigger" }} trigger={[<p key="label" className="p-4">FOCUS BUNDLE</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} className='focus-bundle-outer' openedClassName='focus-bundle-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ff5f05] hover:bg-[#ff8a4c] text-da-navy">
+                                    <Collapsible contentElementId="sponsor-outreach-focus-bundle" triggerElementProps={{ id: "sponsor-outreach-focus-bundle-trigger" }} trigger={[<p key="label" className="p-4">Outreach Focus Bundle</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <p className="text-lg text-left my-3 mx-10">
                                         You have the option of being the title sponsor of our 
                                         Illinois Engineering Challenge or the Discover EOH 
@@ -244,7 +244,7 @@ export default function SponsorUsPage() {
                                             />
                                         </div>
                                     </ Collapsible>
-                                    <Collapsible trigger={[<p className="p-4">Spotlight Focus Bundle</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                    <Collapsible contentElementId="sponsor-spotlight-focus-bundle" triggerElementProps={{ id: "sponsor-spotlight-focus-bundle-trigger" }} trigger={[<p key="label" className="p-4">Spotlight Focus Bundle</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <p className="text-lg text-left my-3 mx-10">
                                             Allows you to be the title sponsor of one of
                                             our flagship events, such as the Tesla Coil
@@ -266,8 +266,8 @@ export default function SponsorUsPage() {
                                             />
                                         </div>
                                     </ Collapsible>
-                                    <Collapsible trigger={[<p className="p-4">Competition Focus Bundle</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
-                                        <p className="text-lg text-left my-3 mx-10">
+                                    <Collapsible contentElementId="sponsor-competition-focus-bundle" triggerElementProps={{ id: "sponsor-competition-focus-bundle-trigger" }} trigger={[<p key="label" className="p-4">Competition Focus Bundle</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                        <div className="text-lg text-left my-3 mx-10">
                                             Become a title sponsor,
                                             provide a sponsored award,
                                             host a tech talk during EOH,
@@ -285,7 +285,7 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId2">- Middle School Design Competition</li>
                                                 <li key="uniqueId3">- Robotics Design Competition</li>
                                             </ul>
-                                        </p>
+                                        </div>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
                                                 <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
@@ -306,8 +306,8 @@ export default function SponsorUsPage() {
                                     </div>
                                     <span className="text-xl font-bold">All of our focused sponsorship bundles are valued at $2,500.</span>
                                 </Collapsible>
-                                <Collapsible trigger={[<p className="p-4">ITEMIZED SPONSORSHIP</p>, <div className="mr-4"><BsChevronDown /></div>]} className="itemized-sponsorship-outer" openedClassName='itemized-sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ffc7a6] hover:bg-[#ffb48a] text-da-navy">
-                                    <Collapsible trigger={[<p className="p-4">Advertisements</p>, <div className="mr-4"><BsChevronDown /></div>]} contentOuterClassName="opened-sub-content-content" triggerOpenedClassName="trigger-opened">
+                                <Collapsible contentElementId="sponsor-itemized-sponsorship" triggerElementProps={{ id: "sponsor-itemized-sponsorship-trigger" }} trigger={[<p key="label" className="p-4">ITEMIZED SPONSORSHIP</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} className="itemized-sponsorship-outer" openedClassName='itemized-sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ffc7a6] hover:bg-[#ffb48a] text-da-navy">
+                                    <Collapsible contentElementId="sponsor-advertisements" triggerElementProps={{ id: "sponsor-advertisements-trigger" }} trigger={[<p key="label" className="p-4">Advertisements</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} contentOuterClassName="opened-sub-content-content" triggerOpenedClassName="trigger-opened">
                                         <p className="font-bold text-xl mt-5">Display Vehicle Advertisement</p>
                                         <span className="italic">
                                             <ul key="total4">
@@ -422,7 +422,7 @@ export default function SponsorUsPage() {
                                             </ul>
                                         </span>
                                     </ Collapsible>
-                                    <Collapsible trigger={[<p className="p-4">Interactive</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                    <Collapsible contentElementId="sponsor-interactive" triggerElementProps={{ id: "sponsor-interactive-trigger" }} trigger={[<p key="label" className="p-4">Interactive</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <br />
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
