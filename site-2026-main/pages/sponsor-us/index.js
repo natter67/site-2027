@@ -21,13 +21,13 @@ export default function SponsorUsPage() {
                         />
                     </div>
                     <div className="w-3/4 h-full m-auto pt-20">
-                        <h1 className="font-lovelo text-center mt-3 font-bold text-5xl">
+                        <h1 className="font-display text-center mt-3 text-4xl md:text-5xl lg:text-6xl uppercase leading-none text-da-navy">
                             Sponsor Us
                         </h1>
                         <div className="h-10" />
                         <div className="col-span-3 lg:w-5/6 lg:mx-auto lg:grid lg:grid-cols-5 mb-10 block">
                             <div className="lg:col-span-3 mb-20">
-                                <p className="text-left font-montserrat text-sm">
+                                <p className="text-left font-body text-sm">
                                     <br />
                                     <br />
                                     Dear Potential Corporate Partner,
@@ -48,32 +48,32 @@ export default function SponsorUsPage() {
                                     <div className="flex-grow border-t border-gray-400"></div>
                                     <div className="flex-grow border-t border-gray-400"></div>
                                 </div>
-                                <div className="text-center font-montserrat font-bold">
+                                <div className="text-center font-body font-bold">
                                     <p>
                                         Roshni Matthew | Shiv Gohil | Archir Luhana
                                     </p>
                                 </div>
-                                <div className="text-center font-montserrat text-sm">eoh-corporate@ec.illinois.edu</div>
+                                <div className="text-center font-body text-sm">eoh-corporate@ec.illinois.edu</div>
                             </div>
                             <div className="hidden lg:block lg:col-span-2 text-center">
-                                <Bubble quantity="35,000+" quality="Attendees" color="#332526" />
-                                <Bubble quantity="250+" quality="Students Involved" color="#473335" />
-                                <Bubble quantity="130+" quality="Student-Run Exhibits" color="#6b4c4f" />
+                                <Bubble quantity="35,000+" quality="Attendees" color="#13294B" />
+                                <Bubble quantity="250+" quality="Students Involved" color="#3B4558" />
+                                <Bubble quantity="130+" quality="Student-Run Exhibits" color="#B23A00" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <Section color="white" title="Sponsorship Packages">
-                <div className="inline-block font-montserrat text-sm w-3/4 ml-auto mr-auto">
-                        <div className="font-montserrat mb-8">
+                <div className="inline-block font-body text-sm w-3/4 ml-auto mr-auto">
+                        <div className="font-body mb-8">
                             Our sponsorship offerings broadly fall into three key categories: choosing a tier in our <span className='italic'>Sponsorship Package</span> system,
                             selecting one of our <span className='italic'>Focus Bundles</span> to sponsor a particular aspect of EOH, or choosing to sponsor a <span className="italic">Specific Event
                                 and Student Exhibit</span>. Should you find that these options do not align with what you had in mind, please contact us,
                             and we will work with your representatives to build a sponsorship option that meets your liking.
                         </div>
                         <div className="max-w-2xl mx-auto">
-                            <div className="font-montserrat font-white">
-                                <Collapsible trigger={[<p className="p-4">SPONSORSHIP PACKAGE</p>, <div className="mr-4"><BsChevronDown /></div>]} className='sponsorship-outer' openedClassName='sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#a2d3c2] hover:bg-[#8bbfa3] text-white">
+                            <div className="font-body font-white">
+                                <Collapsible trigger={[<p className="p-4">SPONSORSHIP PACKAGE</p>, <div className="mr-4"><BsChevronDown /></div>]} className='sponsorship-outer' openedClassName='sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#13294b] hover:bg-[#0d1d36] text-white">
                                     <Collapsible trigger={[<p className="p-4">Silver Sponsorship Package - $3,000</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <span className="sponsor-package-describe py-3">
                                             <span className="text-lg font-bold italic p-10">Company Name and Logo Publicity</span> <br />
@@ -100,8 +100,8 @@ export default function SponsorUsPage() {
                                         </span>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55197/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55197/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                         </div>  
                                         <div className="mx-auto text-center mb-3 mt-5">
@@ -144,8 +144,8 @@ export default function SponsorUsPage() {
                                         </span>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55199/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55199/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                         </div>  
                                         <div className="mx-auto text-center mb-3 mt-5">
@@ -195,8 +195,8 @@ export default function SponsorUsPage() {
                                         </span>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55203/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55203/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                         </div>  
                                         <div className="mx-auto text-center mb-3 mt-5">
@@ -214,7 +214,7 @@ export default function SponsorUsPage() {
                                     </div>
                                     {/* <img src='/assets/images/sponsorship_comparison.png' className="mx-auto object-contain h-64 my-5" /> */}
                                 </Collapsible>
-                                <Collapsible trigger={[<p className="p-4">FOCUS BUNDLE</p>, <div className="mr-4"><BsChevronDown /></div>]} className='focus-bundle-outer' openedClassName='focus-bundle-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#c578d6] hover:bg-[#9e4fb8] text-white">
+                                <Collapsible trigger={[<p className="p-4">FOCUS BUNDLE</p>, <div className="mr-4"><BsChevronDown /></div>]} className='focus-bundle-outer' openedClassName='focus-bundle-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ff5f05] hover:bg-[#ff8a4c] text-da-navy">
                                     <Collapsible trigger={[<p className="p-4">Outreach Focus Bundle</p>, <div className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <p className="text-lg text-left my-3 mx-10">
                                         You have the option of being the title sponsor of our 
@@ -228,8 +228,8 @@ export default function SponsorUsPage() {
                                         </p>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                         </div>  
                                         <div className="mx-auto text-center mb-3 mt-5">
@@ -250,8 +250,8 @@ export default function SponsorUsPage() {
                                         </p>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                         </div>  
                                         <div className="mx-auto text-center mb-3 mt-5">
@@ -284,8 +284,8 @@ export default function SponsorUsPage() {
                                         </p>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=2500&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                         </div>  
                                         <div className="mx-auto text-center mb-3 mt-5">
@@ -302,7 +302,7 @@ export default function SponsorUsPage() {
                                     </div>
                                     <span className="text-xl font-bold">All of our focused sponsorship bundles are valued at $2,500.</span>
                                 </Collapsible>
-                                <Collapsible trigger={[<p className="p-4">ITEMIZED SPONSORSHIP</p>, <div className="mr-4"><BsChevronDown /></div>]} className="itemized-sponsorship-outer" openedClassName='itemized-sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ff8400] hover:bg-[#e67300] text-white">
+                                <Collapsible trigger={[<p className="p-4">ITEMIZED SPONSORSHIP</p>, <div className="mr-4"><BsChevronDown /></div>]} className="itemized-sponsorship-outer" openedClassName='itemized-sponsorship-outer' contentOuterClassName="opened-content" triggerOpenedClassName="trigger-bold" triggerClassName="bg-[#ffc7a6] hover:bg-[#ffb48a] text-da-navy">
                                     <Collapsible trigger={[<p className="p-4">Advertisements</p>, <div className="mr-4"><BsChevronDown /></div>]} contentOuterClassName="opened-sub-content-content" triggerOpenedClassName="trigger-opened">
                                         <p className="font-bold text-xl mt-5">Display Vehicle Advertisement</p>
                                         <span className="italic">
@@ -310,8 +310,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId4">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=500&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=500&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -323,8 +323,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId5">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=1500&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=1500&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -342,8 +342,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId6">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55293/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55293/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -356,8 +356,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId7">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href=" https://www.givecampus.com/campaigns/55295/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href=" https://www.givecampus.com/campaigns/55295/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -370,8 +370,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId8">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55296/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55296/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -390,8 +390,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId9">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55299/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55299/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -404,8 +404,8 @@ export default function SponsorUsPage() {
                                                 <li key="uniqueId10">&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55302/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55302/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                                     <SponsorCard
@@ -422,8 +422,8 @@ export default function SponsorUsPage() {
                                         <br />
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=800&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=800&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -433,8 +433,8 @@ export default function SponsorUsPage() {
                                             giftAmount1="800.00" /><br />
                                             <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=3000&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=3000&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -444,8 +444,8 @@ export default function SponsorUsPage() {
                                             giftAmount1="3,000.00" /><br />
                                             <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55588/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55588/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -455,8 +455,8 @@ export default function SponsorUsPage() {
                                             giftAmount1="450.00" /><br />
                                             <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=500&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=500&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -466,8 +466,8 @@ export default function SponsorUsPage() {
                                             giftAmount1="500.00" /><br />
                                             <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55623/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55623/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -477,8 +477,8 @@ export default function SponsorUsPage() {
                                             giftAmount1="460.00" /><br />
                                             <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55625/donations/new">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55625/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -488,8 +488,8 @@ export default function SponsorUsPage() {
                                             giftAmount1="450.00" /><br />
                                             <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-montserrat hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=800&">
-                                                    <span className="font-montserrat font-bold text-2xl">Donate</span>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=800&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
                                                 </div>  
                                         <SponsorCard
@@ -502,13 +502,13 @@ export default function SponsorUsPage() {
                                     
                                 </Collapsible>
                             </div>
-                            <p className="font-montserrat w-5/6 text-center mx-auto mt-5 mb-2 pt-7">
+                            <p className="font-body w-5/6 text-center mx-auto mt-5 mb-2 pt-7">
                                 To view sponsorship options as a PDF, see below.<br /><span className='font-bold'>Thanks for considering sponsoring EOH!</span>
                             </p>
                             <div className="mx-auto text-center mb-5">
-                                <Button type="big" className="px-4 rounded-none drop-shadow-md font-montserrat bg-[#c578d6] hover:bg-[#9e4fb8] text-white"
+                                <Button type="big" className="px-4 rounded-none drop-shadow-md font-body bg-[#c578d6] hover:bg-[#9e4fb8] text-white"
                                 onClick={() => window.open('/assets/sponsors/Sponsorship Packet 2024-2025.pptx.pdf', '_blank')}>
-                                    <span className="font-montserrat font-bold text-md">Corporate Sponsorship Packet</span>
+                                    <span className="font-body font-bold text-md">Corporate Sponsorship Packet</span>
                                 </Button>
                             </div>
                         </div>

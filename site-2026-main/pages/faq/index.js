@@ -8,7 +8,7 @@ export default function FaqPage() {
     return (
         <div className="flex flex-col">
             <Content>
-                <h2 className="text-2xl md:text-3xl font-bold mb-8 font-heading">
+                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl uppercase leading-none mb-8 text-da-navy">
                     Frequently Asked Questions (FAQs)
                 </h2>
                 <Faqs />
