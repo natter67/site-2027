@@ -28,8 +28,13 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | **Volunteer** sign-up, **admin**, **judging** | `utilities/firebase.js` | Firebase project **`eoh-volunteer`**, Google sign-in popup. Admin access is the email list in `utilities/admin.js`. |
 | `FirebaseError: permission-denied` | Firebase console → Firestore → Rules | Usually means the visitor isn't signed in or isn't on the allowed list |
 | Countdown dates wrong | `layouts/Title/index.js` | The `town_hall_dates` array at the top. Times use the visitor's own time zone. |
-| Hero text, date, or interest-form link | `layouts/Title/index.js` | |
-| Header links | `layouts/BasicApp.js` | The `HEADER_ITEMS` list. Button colors are in `utilities/types.js`. |
+| Hero text, date, interest-form link, or countdown layout | `layouts/Title/index.js` | Styles are in the "Hero" section of `styles/direction-a.css` |
+| Hero logo missing | `public/assets/logo/eoh2027-official-logo.jpg` | Served through Next.js image optimization (`/_next/image?url=…`). If only this image fails, check the image request in the browser's Network tab. |
+| Road animation, signposts, or "Hit the gas" | `components/hero-road/index.js` | Styles are in the "HeroRoad" section of `styles/direction-a.css`. The road path appears in **both** files and must match. |
+| Scrolling topics band under the hero | `components/ticker/index.js` | |
+| Animations don't play at all | none | Expected if the visitor's device has "reduce motion" turned on: everything is shown still on purpose. |
+| Header links | `layouts/BasicApp.js` | The `HEADER_ITEMS` list. Each item's `type` picks its style in `utilities/types.js`; the `da-*` pill styles live in `styles/direction-a.css`. |
+| New colors, fonts, buttons, or cards look wrong | `styles/direction-a.css` | The colors are named variables at the top of the file. Their Tailwind names (`bg-da-navy` etc.) are in `tailwind.config.js`; the fonts are set up in `pages/_app.js`. Run `npm run dev` and open `/direction-a-preview` to see every piece on one page. |
 | Footer links | `components/footer/index.js` | The `footerSections` list |
 | Order of the home-page sections | `pages/index.js` | One block per section; delete a block to hide that section |
 | Keynote time, bio, or photo | `pages/index.js` (text) and `layouts/Keynote/index.js` (layout) | |
@@ -70,5 +75,5 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | `components/` | Reusable pieces, one folder each with an `index.js` |
 | `utilities/` | Data connections (Strapi, Firebase) and helper lists (links, awards, admin emails) |
 | `providers/` | Login state shared across pages (`Auth.js`) |
-| `styles/` | Global CSS |
+| `styles/` | Global CSS. `direction-a.css` holds the 2027 redesign's colors, buttons, cards and animations, in sections named after the component that uses them. |
 | `public/` | Images, PDFs and JSON served as-is (`public/guide.pdf` → `/guide.pdf`) |
