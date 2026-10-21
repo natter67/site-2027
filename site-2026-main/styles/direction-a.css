@@ -351,3 +351,27 @@
   .da-lab-deck-car,
   .da-lab-zap { animation: none; }
 }
+
+/* ---------- Passport (layouts/Passport) ---------- */
+.da-passport-fuel {
+  position: relative;
+  transition: width 0.7s cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+.da-passport-slosh {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 200%;
+  height: 5px;
+  background-image: radial-gradient(circle, var(--da-peach) 2px, transparent 2.5px);
+  background-size: 12px 5px;
+  animation: da-passport-slosh 1.6s ease-in-out infinite;
+}
+@keyframes da-passport-slosh {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-24px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .da-passport-fuel { transition: none; }
+  .da-passport-slosh { animation: none; }
+}
