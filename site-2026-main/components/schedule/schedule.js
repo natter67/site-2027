@@ -31,6 +31,12 @@ const timeMs8Hrs = 1000 * 60 * 60 * 8.5;
 const dayOneMs = dayjs.tz('2026-04-10 00:00', 'America/Chicago').valueOf();
 const dayTwoMs = dayjs.tz('2026-04-11 00:00', 'America/Chicago').valueOf();
 
+// Shared with layouts/SchedulePreview (same SWR key, so the data is fetched once).
+export const SCHEDULE_EVENTS_URL = strapiUrl('/api/events?populate=occurences&pagination[pageSize]=40&populate=picture');
+
+// Strapi times were entered in European time; this turns one into Champaign time.
+export const toChampaignTime = (iso) => dayjs.utc(iso).tz('Europe/Vienna').tz('America/Chicago', true);
+
 const genTimeSlots = () => {
   const totalSlots = 26;
 
@@ -88,10 +94,7 @@ export function Schedule() {
     );
   };
 
-  const { data, error, isLoading } = useSWR(
-    strapiUrl('/api/events?populate=occurences&pagination[pageSize]=40&populate=picture'),
-    strapiSwrFetcher
-  );
+  const { data, error, isLoading } = useSWR(SCHEDULE_EVENTS_URL, strapiSwrFetcher);
 
   if (error) return 'An error has occurred.';
   if (isLoading) return 'Loading...';
@@ -106,8 +109,8 @@ export function Schedule() {
       .filter((occ) => occ?.startTime && occ?.endTime)
       .map((occ) => {
       // This is my fix because I entered the data in European timezone
-      const start = dayjs.utc(occ.startTime).tz('Europe/Vienna').tz('America/Chicago', true);
-      const end = dayjs.utc(occ.endTime).tz('Europe/Vienna').tz('America/Chicago', true);
+      const start = toChampaignTime(occ.startTime);
+      const end = toChampaignTime(occ.endTime);
       const date = start.date() === 10 ? DAY_ONE : DAY_TWO; // Change this line to reflect the day EOH is on!
       const duration = end.diff(start) / timeMsPerSlot;
       const rowIndex =

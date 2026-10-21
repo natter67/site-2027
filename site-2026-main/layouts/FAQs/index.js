@@ -43,7 +43,8 @@ const normalizeFaqs = (faqs) => {
 };
 
 
-const Faqs = () => {
+// `only` (optional): category names to show, e.g. ['Parking FAQs'] on /visit/getting-here
+const Faqs = ({ only }) => {
   // const fetcher = (url) => fetch(url).then((res) => res.json());
   const [expandedId, setExpandedId] = useState(null);
 
@@ -97,7 +98,7 @@ const Faqs = () => {
 
   return (
     <div className="mt-15 md:mt-18 flex flex-col justify-between">
-      {categoryOrder.map((category, idx) => {
+      {(only || categoryOrder).map((category, idx) => {
         const faqs = categories[category] || [];
         return (
           <div key={category} className="mb-8">

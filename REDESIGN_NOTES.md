@@ -105,3 +105,61 @@ Actions:
   - The footer copyright stays "Copyright EOH 2026" (existing copy).
 - Left in place but no longer used: `components/mobile-menu` (old mobile menu). `components/flyout-menu` is still used by `components/button`.
 - **DRAFT copy:** every `summary` in `utilities/navigation.js`, group headings ("Before you go", "On the day", "See and do", "Honors and initiatives", "Schools and students", "Design competitions"), the "Join the mailing list" label and "Stay in touch".
+
+### Step 3: home page restructure (done)
+Home page order:
+1. Hero
+2. Quick facts strip
+3. Start here (MILE 01)
+4. Highlights (MILE 02, keeps the `featured-events` id)
+5. Schedule preview (MILE 03, keeps `schedule`)
+6. Note from the Directors card (MILE 04, keeps `directors`)
+7. Corporate Sponsors (MILE 05, keeps `corporate-sponsors`) and Support Our Mission (MILE 06, keeps `sponsors`; same Stripe and UIF links)
+
+Then the footer. The home page is about 46% shorter at 1440 px.
+
+Content moved off the home page to new pages:
+- `/explore/awards`
+- `/explore/keynotes`
+- `/explore/initiatives` (`#world-quantum-day`, `#scc`)
+- `/explore/special-events` (the featured events cards)
+- `/schedule` (the full widget)
+- `/about/directors` (the full letter)
+- `/visit/getting-here` (the shuttle info and the Parking FAQs from `layouts/FAQs/faqs.json`)
+
+**Redirects added (in the browser, in `pages/index.js` `MOVED_ANCHORS`).** The `#` part of a URL never reaches the server, so these can't be server redirects:
+- `/#awards` → `/explore/awards`
+- `/#keynote` → `/explore/keynotes`
+- `/#visitors` → `/visit`
+- `/#world-quantum-day` → `/explore/initiatives#world-quantum-day`
+- `/#scc` → `/explore/initiatives#scc`
+- `/#special-events` → `/explore/special-events` (that anchor was already broken before the redesign)
+
+**Single sources (so text isn't copied):**
+- Event facts: `utilities/eventConfig.js` (hero, quick facts, Visit pages)
+- Keynote speakers: `utilities/keynotes.js` (moved verbatim out of `pages/index.js`)
+- Featured events: `FEATURED_EVENTS` exported from `layouts/EventList` (also used by Highlights)
+- Schedule: the Strapi URL and the European-to-Champaign time fix are exported from `components/schedule/schedule.js` (`SCHEDULE_EVENTS_URL`, `toChampaignTime`). The widget's behaviour is unchanged; the home preview reuses them.
+
+**Judgment calls:**
+- The hero keeps the official theme's capitalization, "Driven by Discovery", to match the logo; the brief wrote "Driven by discovery."
+- The hero's date line "April 9th & April 10th, 2027" became the brief's facts line: "April 9–10, 2027 · 9 AM–4 PM · Bardeen & North Quad, Urbana · Free".
+- The hero's interest-form button became a small "Exhibitors: EOH Exhibits Interest Form 2026-2027" link under the two new buttons (same URL and label). The decorative magnifier cursor and pulse animation that belonged to that button were removed.
+- The "Exhibit Countdown" (Town Hall dates) is unchanged; it counts to exhibitor town halls, not the event.
+- Highlights shows 5 teasers: Tesla Coil Concert, Keynotes, MSDC, HSDC and Startup Showcase. **Robobrawl was left out because no Robobrawl content exists anywhere on the site.** Add it to `FEATURED_EVENTS` and `layouts/Highlights` once the committee has text.
+- The directors card quotes the letter's first paragraph word for word. Photos come from `public/assets/headshots/{aparna,maddie}.jpg`; the initials "AK · MC" stand in for signatures.
+- The full letter is reformatted only: left-aligned instead of justified, 18 px text, about 70 characters per line. **The letter is still the 2026 letter ("Forging the Future", 104th EOH); the committee needs to supply the 2027 letter.**
+- Startup Showcase teaser and menu link go to the existing `/startup-showcase` page.
+
+**Left in place but no longer used:**
+- `layouts/Visitors` (its four buttons are covered by the Visit menu and pages)
+- `components/ticker` (draft scrolling ticker)
+- `layouts/Awards`, `layouts/Keynote`, `layouts/QuantumDay`, `layouts/SCC`, `layouts/Schedule`, `layouts/Directors` are still used, now on the new pages
+
+**DRAFT copy:**
+- Section titles "Start here" and "Highlights"
+- Start here card labels ("For families", "For schools & field trips", "For future students", "For exhibitors", "For sponsors & industry")
+- "Parking & shuttles" in the facts strip
+- "Exhibitors:" label
+- Schedule preview fallback "Schedule details for this day are coming soon."
+- "More special events, with times and places, are in the Event Day Hub."

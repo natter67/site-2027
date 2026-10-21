@@ -15,49 +15,50 @@ const EventCard = (e) => {
     )
 }
 
-export default function EventList() {
+// Also used by layouts/Highlights (home page teasers)
+export const FEATURED_EVENTS = [
+    {
+        "title": "Middle School Design Competition",
+        "subtitle": "April 10th at 11:30 AM",
+        "blurb": "Middle school students in teams of 3 or 4 compete around a central theme",
+        "link": '/msdc',
+        "icon": Ruler
+    },
+    {
+        "title": "High School Design Competition",
+        "subtitle": "April 10th at 11:00 AM",
+        "blurb": "High school students in teams of 3-5 members compete around a central theme",
+        "link": '/hsdc',
+        "icon": DraftingCompass
+    },
+    {
+        "title": "EOH x Mom's Weekend",
+        "subtitle": "",
+        "blurb": "We would like to invite all Grainger Engineering Moms to explore the unique features of EOH that have been organized in celebration.",
+        "link": '/EOHxmoms.pdf',
+        "icon": Heart
+    },
+    // Can add research showcase but don't habe a matching card image
+    {
+        "title": "Startup Showcase",
+        "subtitle": "April 10th at 11 AM, CIF",
+        "blurb": "Come visit startup booths and experience demos, giveaways, and much more!",
+        "link": '/showcase.pdf',
+        "icon": Rocket
+    },
+    {
+        "title": "Tesla Coil Concert",
+        "subtitle": "Sponsored by Chevron",
+        "blurb": "Just as dark falls, visit the Bardeen Quad to see an electrifying display of light and sound. Starts Friday at 8:30 PM",
+        "icon": Zap
+    },
+]
 
-    const events = [
-        {
-            "title": "Middle School Design Competition",
-            "subtitle": "April 10th at 11:30 AM",
-            "blurb": "Middle school students in teams of 3 or 4 compete around a central theme",
-            "link": '/msdc',
-            "icon": Ruler
-        },
-        {
-            "title": "High School Design Competition",
-            "subtitle": "April 10th at 11:00 AM",
-            "blurb": "High school students in teams of 3-5 members compete around a central theme",
-            "link": '/hsdc',
-            "icon": DraftingCompass
-        },
-        {
-            "title": "EOH x Mom's Weekend",
-            "subtitle": "",
-            "blurb": "We would like to invite all Grainger Engineering Moms to explore the unique features of EOH that have been organized in celebration.",
-            "link": '/EOHxmoms.pdf',
-            "icon": Heart
-        },
-        // Can add research showcase but don't habe a matching card image
-        {
-            "title": "Startup Showcase",
-            "subtitle": "April 10th at 11 AM, CIF",
-            "blurb": "Come visit startup booths and experience demos, giveaways, and much more!",
-            "link": '/showcase.pdf',
-            "icon": Rocket
-        },
-        {
-            "title": "Tesla Coil Concert",
-            "subtitle": "Sponsored by Chevron",
-            "blurb": "Just as dark falls, visit the Bardeen Quad to see an electrifying display of light and sound. Starts Friday at 8:30 PM",
-            "icon": Zap
-        },
-    ]
+export default function EventList() {
 
     return (
         <div className="mx-auto flex w-full max-w-6xl flex-wrap justify-center gap-6 px-4">
-            {events.map(e => EventCard(e))}
+            {FEATURED_EVENTS.map(e => EventCard(e))}
         </div>
     )
 }

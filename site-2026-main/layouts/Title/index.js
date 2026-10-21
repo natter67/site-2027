@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import Link from "next/link";
 import HeroRoad from "@/hero-road";
+import { EVENT_FACTS } from "@utilities/eventConfig";
+import { EXHIBIT_INTEREST_FORM_URL } from "@utilities/navigation";
 
 export default function HomeVideo() {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -171,34 +174,27 @@ export default function HomeVideo() {
             />
           </svg>
           <p className="mt-4 font-label text-sm font-bold uppercase tracking-[0.1em] sm:text-base">
-            April 9th &amp; April 10th, 2027
+            {EVENT_FACTS.dates} · {EVENT_FACTS.hours} · {EVENT_FACTS.location} · {EVENT_FACTS.cost}
           </p>
-          <div className="relative mt-6 inline-block">
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/visit" className="da-pill da-pill--primary text-base sm:text-lg">
+              Plan your visit
+            </Link>
+            <Link href="/vv" className="da-pill da-pill--secondary text-base sm:text-lg">
+              Explore exhibits
+            </Link>
+          </div>
+          <p className="mt-4 text-sm">
+            Exhibitors:{" "}
             <a
-              href="https://forms.gle/7kQJ5RA95zQcVbNf8"
+              href={EXHIBIT_INTEREST_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="pulse-cta da-pill da-pill--primary text-center text-base sm:text-lg"
+              className="font-semibold underline decoration-da-orange decoration-2 underline-offset-4"
             >
               EOH Exhibits Interest Form 2026-2027
             </a>
-            <img
-              src="/assets/ui/magnifying-glass-cursor.png"
-              alt=""
-              className="cursor-cta"
-              style={{
-                position: "absolute",
-                top: "-2rem",
-                right: "-2rem",
-                width: "10rem",
-                height: "10rem",
-                filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.4))",
-                pointerEvents: "none",
-                zIndex: 2,
-              }}
-              aria-hidden="true"
-            />
-          </div>
+          </p>
         </header>
 
         {/* Official 2027 logo (unaltered; its white background sits on a white card) + countdown */}
@@ -291,58 +287,6 @@ export default function HomeVideo() {
           }
           100% {
             transform: rotate(360deg);
-          }
-        }
-
-        @keyframes pulse-cta {
-          0%, 100% {
-            box-shadow: 0 0 0 0 rgba(255, 95, 5, 0.6);
-          }
-          50% {
-            box-shadow: 0 0 0 10px rgba(255, 95, 5, 0);
-          }
-        }
-
-        @keyframes cursor-cta {
-          0% {
-            opacity: 0;
-            transform: translate(55vw, 45vh) scale(1);
-          }
-          15% {
-            opacity: 1;
-            transform: translate(55vw, 45vh) scale(1);
-          }
-          45% {
-            opacity: 1;
-            transform: translate(0, 0) scale(1);
-          }
-          53% {
-            transform: translate(0, 0) scale(0.85);
-          }
-          61% {
-            transform: translate(0, 0) scale(1);
-          }
-          80% {
-            opacity: 1;
-            transform: translate(0, 0) scale(1);
-          }
-          95%, 100% {
-            opacity: 0;
-            transform: translate(55vw, 45vh) scale(1);
-          }
-        }
-        .cursor-cta {
-          animation: cursor-cta 8s ease-in-out infinite;
-        }
-        .pulse-cta {
-          animation: pulse-cta 1.8s ease-out infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .pulse-cta {
-            animation: none;
-          }
-          .cursor-cta {
-            display: none;
           }
         }
 
