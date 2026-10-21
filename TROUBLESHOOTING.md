@@ -32,7 +32,6 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | Hero logo missing | `public/assets/logo/eoh2027-official-logo.jpg` | Served through Next.js image optimization (`/_next/image?url=…`). If only this image fails, check the image request in the browser's Network tab. |
 | Road animation, signposts, or "Hit the gas" | `components/hero-road/index.js` | Styles are in the "HeroRoad" section of `styles/direction-a.css`. The road path appears in **both** files and must match. |
 | Scrolling topics band under the hero | `components/ticker/index.js` | |
-| Discovery Lab, Passport, or history timeline | `layouts/DiscoveryLab`, `layouts/Passport`, `layouts/Timeline` | The field list is in `utilities/discoveryFields.js`. These are draft demo sections; to hide one, delete its `<Section>` block in `pages/index.js`. The Passport doesn't save anything. |
 | Animations don't play at all | none | Expected if the visitor's device has "reduce motion" turned on: everything is shown still on purpose. |
 | Header links | `layouts/BasicApp.js` | The `HEADER_ITEMS` list. Each item's `type` picks its style in `utilities/types.js`; the `da-*` pill styles live in `styles/direction-a.css`. |
 | New colors, fonts, buttons, or cards look wrong | `styles/direction-a.css` | The colors are named variables at the top of the file. Their Tailwind names (`bg-da-navy` etc.) are in `tailwind.config.js`; the fonts are set up in `pages/_app.js`. Run `npm run dev` and open `/direction-a-preview` to see every piece on one page. |
