@@ -29,7 +29,6 @@ export const PRIMARY_NAV = [
         links: [
           { label: "Getting here, parking & shuttles", href: "/visit/getting-here", summary: "Parking, shuttle stops and directions to the engineering campus." },
           { label: "Visitor Guide", href: "/visit/guide", summary: "The official visitor guide as a web page, with the PDF to download." },
-          { label: "Accessibility & sensory guide", href: "/visit/accessibility", summary: "How to request accommodations, plus tips for a comfortable visit." },
           { label: "FAQ", href: "/faq", summary: "Answers about the event, parking, food and safety." },
         ],
       },

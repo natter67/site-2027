@@ -79,7 +79,7 @@ Actions:
 | URL | Purpose |
 |---|---|
 | `/visit` | Plan your visit: dates, hours, location, cost, plus links to every Visit page |
-| `/visit/getting-here`, `/visit/map`, `/visit/accessibility`, `/visit/food`, `/visit/guide` | Visit sub-pages |
+| `/visit/getting-here`, `/visit/map`, `/visit/food`, `/visit/guide` | Visit sub-pages |
 | `/explore` | Landing page linking exhibits, special events, keynotes, Startup Showcase, awards and initiatives |
 | `/explore/special-events`, `/explore/keynotes`, `/explore/awards`, `/explore/initiatives` | Explore sub-pages |
 | `/schedule` | Full schedule; "Happening now" during the event |
@@ -183,7 +183,7 @@ Content moved off the home page to new pages:
 **New Visit pages:**
 - `/visit/map`: the Event Day Hub map component, reused unchanged
 - `/visit/food`: Food FAQs from `faqs.json`
-- `/visit/accessibility`: links to the accommodations on `/accessibility`, plus a **placeholder** for the sensory guide
+- ~~`/visit/accessibility`~~ (Accessibility & sensory guide): **removed** on 2026-10-21 at the owner's request, because EOH can't offer a sensory guide. Accommodation requests stay on the existing `/accessibility` page (About EOH › Accessibility statement).
 
 **Template applied to:** every page that uses `components/content`. That includes FAQ and Future Dates (titles moved into the template), plus Sponsor Us and the committee page by hand.
 
@@ -209,10 +209,9 @@ Content moved off the home page to new pages:
 - "Event essentials" (screen-reader heading)
 - "Download the Visitor Guide (PDF)"
 - The Get Involved exhibit sentence
-- The sentences on `/visit/map`, `/visit/food` and `/visit/accessibility`
+- The sentences on `/visit/map` and `/visit/food`
 - "More in …" and "On this page"
 
-**PLACEHOLDER:** the sensory guide on `/visit/accessibility` (committee to provide).
 
 ### Step 5: PDFs as web pages (done)
 - **`/visit/guide`**, the Visitor Guide web version, with the 44-page PDF still downloadable. It covers:
@@ -374,6 +373,7 @@ Every call is listed under its step above. The main ones:
 10. The 2025 Startup Showcase PDF was not turned into a page.
 11. The Town Hall countdown only shows before the event.
 12. Pages for the event-day tools (`/vv`, `/volunteer`, `/login`, `/account`, `/admin`, `/judging/*`, `/live`) keep their own layouts and don't use the inner-page template.
+13. **Removed after review:** the "Accessibility & sensory guide" page (`/visit/accessibility`) and its Visit menu item, because EOH can't offer a sensory guide. Accommodation requests stay on the existing `/accessibility` page, under About EOH › Accessibility statement.
 
 ### Redirects added
 No server redirects were needed: **no existing route was moved or removed**. A re-crawl of every original route and static file returns the same status codes as the Phase 0 baseline.
@@ -393,7 +393,6 @@ Content that moved off the home page is reached through in-browser hash redirect
 
 ### Placeholders and draft copy for the committee
 **Placeholders:**
-- The sensory guide (`/visit/accessibility`)
 - Post-event photo highlights and the feedback form link (`layouts/PostEventLead`)
 
 **Draft copy:**
@@ -404,7 +403,7 @@ Content that moved off the home page is reached through in-browser hash redirect
 - "Exhibitors:"
 - The schedule-preview fallback
 - The landing-page extras ("Event essentials", "Download the … (PDF)", the exhibit sentence)
-- The sentences on `/visit/map`, `/visit/food`, `/visit/accessibility` and `/explore/special-events`
+- The sentences on `/visit/map`, `/visit/food` and `/explore/special-events`
 - The Visitor Guide edition note and "More in the PDF"
 - The Mom's Weekend headings
 - All event-day and post-event block text
@@ -451,7 +450,7 @@ npm run dev              # http://localhost:3000
 - Event-day layout: open http://localhost:3000/?mode=event at phone width to see the tab bar. Post-event layout: http://localhost:3000/?mode=post.
 - Production build: `npm run build && npx next start -p 3123`, then http://localhost:3123.
 - New pages to look at:
-  - `/visit`, `/visit/getting-here`, `/visit/map`, `/visit/food`, `/visit/accessibility`, `/visit/guide`
+  - `/visit`, `/visit/getting-here`, `/visit/map`, `/visit/food`, `/visit/guide`
   - `/explore`, `/explore/special-events`, `/explore/keynotes`, `/explore/awards`, `/explore/initiatives`
   - `/schedule`
   - `/schools`, `/schools/moms-weekend`
