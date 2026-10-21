@@ -37,6 +37,7 @@ Make sure whoever is on duty can log in to all of these: **Vercel**, **Strapi Cl
 | New colors, fonts, buttons, or cards look wrong | `styles/direction-a.css` | The colors are named variables at the top of the file. Their Tailwind names (`bg-da-navy` etc.) are in `tailwind.config.js`; the fonts are set up in `pages/_app.js`. Run `npm run dev` and open `/direction-a-preview` to see every piece on one page. |
 | Footer links | `components/footer/index.js` | The `footerSections` list |
 | Order of the home-page sections | `pages/index.js` | One block per section; delete a block to hide that section |
+| Home section heading or "MILE 0X" sign | `pages/index.js` (the `mile` text) and `components/section/Section.js` (`variant="road"` styling) | Other pages use `Section` without a variant and are unaffected |
 | Keynote time, bio, or photo | `pages/index.js` (text) and `layouts/Keynote/index.js` (layout) | |
 | Awards | `layouts/Awards/index.js` | The `awards` list |
 | Featured event cards (MSDC, HSDC, Mom's Weekend, Startup Showcase, Tesla Coil) | `layouts/EventList/index.js` | The `events` list |

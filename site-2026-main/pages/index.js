@@ -16,6 +16,7 @@ import SCC from "@layouts/SCC/index.js"
 import DownloadApp from "@layouts/DownloadApp/index.js"
 import Leaderboard from "@layouts/Leaderboard/index.js"
 import Ticker from "@/ticker"
+import RoadDivider from "@/road-divider"
 
 export default function Home() {
   return (
@@ -29,14 +30,16 @@ export default function Home() {
       <main>
         <Title />
         <Ticker />
-        <div className="mt-24 sm:mt-16 md:mt-0"></div>
-        <Section color="white" title="EOH 2026 Awards" id="awards">
+        <Section variant="road" mile="MILE 01 · AWARDS" color="white" title="EOH 2026 Awards" id="awards">
           <Awards />
         </Section>
-        <Section color="bg-white" title="Visitors Information" id="visitors">
+        <Section variant="road" mile="MILE 02 · VISITOR INFO" color="bg-white" title="Visitors Information" id="visitors">
           <Visitors />
         </Section>
+        <RoadDivider />
         <Section
+          variant="road"
+          mile="MILE 03 · KEYNOTES"
           color="bg-cover bg-center"
           id="keynote"
           title={
@@ -57,10 +60,10 @@ export default function Home() {
             description="Christina Ernst is a senior software engineer at Google and the fashioneering content creator behind shebuildsrobots.com. Her tech-fashion crossover work has been featured in CNN Style, Make: Magazine, Forbes, Entertainment Weekly, CBC, and Popular Science. She was a recurring engineering correspondent on Season 6 of the educational STEM show 'Mission Unstoppable with Miranda Cosgrove' and also served as the 2024 Maker-in-Residence at Chicago Public Library."
             imagePath="assets/images/keynote-headshot-christina.jpg"
             name="Christina Ernst"
-            backgroundNum="1"
             />
         </Section>
         <Section
+          variant="road"
           color="bg-cover bg-center"
           id="keynote"
           title={
@@ -81,10 +84,11 @@ export default function Home() {
             description="Dr. Aadeel Akhtar, CEO of PSYONIC, founded the company to create advanced, accessible bionic limbs after meeting a young girl missing a limb in Pakistan. PSYONIC's bionic Ability Hand is the fastest on the market, impact-resistant, and the first to provide a sense of touch. It is also covered by Medicare and is being used by humans and robotics companies globally, including NASA, Meta, Mercedes, and Google. Dr. Akhtar earned a Ph.D. in Neuroscience and an M.S. in Electrical & Computer Engineering from the University of Illinois, along with a B.S. in Biology and an M.S. in Computer Science from Loyola University Chicago. He’s been recognized by MIT Technology Review and Newsweek and secured a 3-shark deal on Shark Tank."
             imagePath="assets/images/keynote-headshot-aadeel.jpg"
             name="Dr. Aadeel Akhtar"
-            backgroundNum="2"
           />
         </Section>
         <Section
+          variant="road"
+          mile="MILE 04 · FEATURED EVENTS"
           title="Featured Events"
           color="bg-white"
           id="featured-events"
@@ -92,22 +96,26 @@ export default function Home() {
         >
           <EventList />
         </Section>
-        <Section color="bg-white" title="World Quantum Day" id="world-quantum-day">
+        <Section variant="road" mile="MILE 05 · QUANTUM DAY" color="bg-white" title="World Quantum Day" id="world-quantum-day">
           < QuantumDay/>
         </Section>
-        <Section color="bg-white" title="EOH x Sustainability" id="scc">
+        <Section variant="road" mile="MILE 06 · SUSTAINABILITY" color="bg-white" title="EOH x Sustainability" id="scc">
           < SCC/>
         </Section>
-        <Section title="Schedule" color="bg-white" id="schedule" wide>
+        <RoadDivider car="orange" />
+        <Section variant="road" mile="MILE 07 · SCHEDULE" title="Schedule" color="bg-white" id="schedule" wide>
           <ScheduleSection />
         </Section>
         <Section
           color="bg-white"
+          variant="road"
+          mile="MILE 08 · FROM THE DIRECTORS"
           title="Note from the Directors"
           id="directors"
         >
           <Directors />
         </Section>
+        <RoadDivider />
         {/*<Section color="white" title="Director's Note" id="about-us">
 					<AboutUs />
 				</Section>
@@ -118,6 +126,8 @@ export default function Home() {
 					<Exhibits />
       </Section>*/}
         <Section
+          variant="road"
+          mile="MILE 09 · SUPPORT"
           title="Support Our Mission"
           id="sponsors"
           color="bg-robot-banner bg-cover bg-left min-h-[550px]"
@@ -126,6 +136,9 @@ export default function Home() {
         </Section>
         <Section
           color="bg-white"
+          variant="road"
+          tone="navy"
+          mile="MILE 10 · FUELED BY OUR SPONSORS"
           title="Corporate Sponsors"
           id="corporate-sponsors"
         >
@@ -136,7 +149,6 @@ export default function Home() {
           <Awards />
         </Section> */}
         
-        <div className="h-12"></div>
       </main>
     </Fragment>
   )
