@@ -44,8 +44,7 @@ export const ShuttleInformation = () => {
                 />
             </Modal>
             <button onClick={() => setModalOpen(true)}
-                className="flex items-center justify-center gap-2 py-3 text-center text-white rounded-full text-xl font-semibold
-                          w-full sm:w-96 mx-auto my-3 bg-gradient-to-tr from-[#ff5f05] via-[#ff5f05] to-[#ff5f05] shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="da-pill da-pill--secondary w-full text-lg"
             >
                 <Icon icon="bxs:bus" className="text-2xl" />
                 <span>Shuttle Info</span>

@@ -164,6 +164,17 @@
 .da-ticker__track > span { margin-right: 40px; }
 @keyframes da-marquee { to { transform: translateX(-50%); } }
 
+/* ---------- Visitors compass (layouts/Visitors) ---------- */
+.da-compass-needle {
+  transform-box: view-box;
+  transform-origin: 40px 40px;
+  animation: da-compass 3s ease-in-out infinite;
+}
+@keyframes da-compass {
+  0%, 100% { transform: rotate(-18deg); }
+  50% { transform: rotate(22deg); }
+}
+
 /* ---------- RoadDivider (components/road-divider) ---------- */
 .da-road {
   position: relative;
@@ -207,7 +218,8 @@
   .da-drive__wheel,
   .da-drive__chassis,
   .da-drive__sign,
-  .da-ticker__track { animation: none; }
+  .da-ticker__track,
+  .da-compass-needle { animation: none; }
   .da-drive__trail,
   .da-drive__gas { display: none; }
 }
