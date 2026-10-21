@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
+import HeroRoad from "@/hero-road";
 
 export default function HomeVideo() {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -132,286 +134,125 @@ export default function HomeVideo() {
     : elements;
 
   return (
-<div className="relative flex flex-col-reverse md:flex-row min-h-screen items-center justify-between px-6 md:px-20 overflow-hidden text-white bg-gradient-to-br from-orange-100 via-orange-200 to-orange-300">
-      {/* === Animated Lava Gradient Triangle === */}
-      <div className="absolute inset-0">
-        <svg
-          viewBox="0 0 100 100"
-          className="w-full h-full"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            {/* Main animated lava gradient */}
-            <linearGradient id="leftGradient" x1="0%" y1="0%" x2="120%" y2="100%">
-              <stop offset="0%" stopColor="#fbbf24">
-                <animate
-                  attributeName="stop-color"
-                  values="#fbbf24;#f59e0b;#f97316;#fb923c;#fbbf24"
-                  dur="6s"
-                  repeatCount="indefinite"
-                />
-              </stop>
-              <stop offset="50%" stopColor="#f59e0b">
-                <animate
-                  attributeName="stop-color"
-                  values="#f59e0b;#f97316;#fb923c;#f59e0b"
-                  dur="6s"
-                  repeatCount="indefinite"
-                />
-              </stop>
-              <stop offset="100%" stopColor="#f97316">
-                <animate
-                  attributeName="stop-color"
-                  values="#f97316;#fb923c;#f59e0b;#f97316"
-                  dur="6s"
-                  repeatCount="indefinite"
-                />
-              </stop>
-            </linearGradient>
-
-            {/* Soft glow filter */}
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="1.2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-
-          {/* Triangular curved shape shifted left */}
-          <path
-            id="lavaPath"
-            d="M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z"
-            fill="url(#leftGradient)"
-          >
-            <animate
-              attributeName="d"
-              values="
-                M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z;
-                M 0,0 L 0,100 L 52,100 Q 52,50 37,0 Z;
-                M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z
-              "
-              dur="7s"
-              repeatCount="indefinite"
-            />
-          </path>
-
-          {/* Smooth flowing glowing border */}
-          <path
-            d="M 0,0 L 0,100 L 50,100 Q 50,50 35,0 Z"
-            fill="none"
-            stroke="url(#glowGradient)"
-            strokeWidth="1.5"
-            filter="url(#glow)"
-            opacity="0.9"
-          >
-            <animate
-              attributeName="stroke-width"
-              values="1.2;1.6;1.2"
-              dur="2s"
-              repeatCount="indefinite"
-            />
-            <animate
-              attributeName="opacity"
-              values="0.9;0.7;0.9"
-              dur="3s"
-              repeatCount="indefinite"
-            />
-          </path>
-        </svg>
-      </div>
-
-      {/* Scattered Elements */}
-      {/* {windowWidth > 0 && (<div className="scattered-elements">
-        {filteredElements.map((element, index) => (
-          <img
-            key={index}
-            src={element.src}
-            alt={`Decorative Element ${index + 1}`}
-            style={{
-              width: element.size,
-              height: "auto",
-              position: "absolute",
-              top: element.top,
-              left: element.left,
-              transform: element.transform || "translate(-50%, -50%)",
-              animation: element.animation,
-              zIndex: 1,
-              filter: "drop-shadow(0 8px 16px rgba(255, 192, 203, 0.4))",
-            }}
-          />
-        ))}
-      </div>)} */}
-
-      <div className="flex flex-col items-center z-10 mb-6 md:mb-0 w-full md:w-1/2">
-        <img
-          src="/assets/logo/eoh2026logo-orangeblue-notwrinkly.png"
-          className="w-[150%] md:w-[80%]"
-          alt="EOH Logo"
-        />
-        {/* <a
-          href="https://docs.google.com/forms/d/1NLvezecSIgMF66updgSD7W2sMc-xCw_-vK3yrsEiI-8/edit"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-center underline hover:opacity-80"
-          style={{
-            fontFamily: "'Norwester', sans-serif",
-            fontSize: "3rem",
-            fontWeight: "800",
-            color: "#333",
-            marginTop: "-2rem",
-          }}
-        >
-          Exhibit Countdown
-        </a> */}
-
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "2rem",
-            padding: "1rem 1.5rem",
-            border: "2px solid #13294b",
-            borderRadius: "0.75rem",
-            backgroundColor: "rgba(255, 255, 255, 0.5)",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
-          }}
-        >
-          <h2
-            style={{
-              fontFamily: "'Norwester', sans-serif",
-              fontSize: "1rem",
-              fontWeight: "800",
-              color: "#333",
-              marginBottom: "0.5rem",
-            }}
-          >
-            Exhibit Countdown
-          </h2>
-          <p
-            style={{
-              fontSize: "1.1rem",
-              fontWeight: "600",
-              color: "#666",
-              marginBottom: "0.5rem",
-            }}
-          >
-            Town Hall Dates
+    <div className="da-ground relative overflow-hidden font-body text-da-navy">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 pt-32 sm:px-6 md:flex-row md:gap-12">
+        {/* Title area */}
+        <header className="relative w-full md:w-1/2">
+          <h1 className="font-display text-3xl uppercase leading-none sm:text-4xl">
+            Engineering Open House
+          </h1>
+          <p className="mt-3 text-lg sm:text-xl">
+            at the <strong>University of Illinois Urbana-Champaign</strong> brings
           </p>
-          {town_hall_dates.map((th, index) => {
-            const t = timeleft[index];
-            if (!t) return null;
-            return (
-              <p key={th.label} style={{ fontSize: "1rem", color: "#333", margin: "0.25rem 0", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
-                <span>{th.label}:</span>
-                <span
-                  style={{
-                    backgroundColor: "#13294b",
-                    color: "#fff",
-                    borderRadius: "9999px",
-                    padding: "0.15rem 0.6rem",
-                    fontSize: "0.85rem",
-                    fontWeight: "700",
-                  }}
-                >
-                  {th.badge}
+          {/* Letters drop in one by one (.da-hero-drop); the aria-label keeps it one phrase for screen readers */}
+          <h2
+            aria-label="Driven by Discovery"
+            className="mt-4 font-display text-[clamp(3.25rem,8vw,7rem)] uppercase leading-[0.92]"
+          >
+            <span aria-hidden="true" className="block">
+              <span className="da-hero-drop">Driven</span>{" "}
+              <span className="da-hero-drop" style={{ animationDelay: "0.12s" }}>by</span>
+            </span>
+            <span aria-hidden="true" className="da-hero-outline block whitespace-nowrap">
+              {"Discovery".split("").map((letter, i) => (
+                <span key={i} className="da-hero-drop" style={{ animationDelay: `${0.3 + i * 0.06}s` }}>
+                  {letter}
                 </span>
-                <span>
-                  {t.passed ? "Happened!" : `${t.days}d ${t.hours}h ${t.minutes}m ${t.seconds}s`}
-                </span>
-              </p>
+              ))}
+            </span>
+          </h2>
+          <svg aria-hidden="true" viewBox="0 0 600 24" className="-mt-1 h-6 w-full max-w-[560px]">
+            <path
+              className="da-hero-underline stroke-da-orange"
+              d="M4 14 C 120 4, 220 22, 330 12 S 520 6, 596 14"
+              fill="none"
+              strokeWidth="6"
+              strokeLinecap="round"
+            />
+          </svg>
+          <p className="mt-4 font-label text-sm font-bold uppercase tracking-[0.1em] sm:text-base">
+            April 9th &amp; April 10th, 2027
+          </p>
+          <div className="relative mt-6 inline-block">
+            <a
+              href="https://forms.gle/7kQJ5RA95zQcVbNf8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pulse-cta da-pill da-pill--primary text-center text-base sm:text-lg"
+            >
+              EOH Exhibits Interest Form 2026-2027
+            </a>
+            <img
+              src="/assets/ui/magnifying-glass-cursor.png"
+              alt=""
+              className="cursor-cta"
+              style={{
+                position: "absolute",
+                top: "-2rem",
+                right: "-2rem",
+                width: "10rem",
+                height: "10rem",
+                filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.4))",
+                pointerEvents: "none",
+                zIndex: 2,
+              }}
+              aria-hidden="true"
+            />
+          </div>
+        </header>
 
-            );
-          })}
+        {/* Official 2027 logo (unaltered; its white background sits on a white card) + countdown */}
+        <div className="flex w-full flex-col items-center gap-6 md:w-1/2">
+          <div className="da-card w-full max-w-xl overflow-hidden p-2 sm:p-3">
+            <Image
+              src="/assets/logo/eoh2027-official-logo.jpg"
+              width={1582}
+              height={1234}
+              priority
+              sizes="(min-width: 1280px) 576px, (min-width: 768px) 46vw, 92vw"
+              alt="EOH 2027 logo: giant EOH letters and science icons above a white car with a 2027 license plate on a winding road, with the banner Driven by Discovery"
+            />
+          </div>
+
+          <div className="da-card w-full max-w-xl p-5 text-center">
+            <h2 className="font-display text-2xl uppercase">Exhibit Countdown</h2>
+            <p className="mt-1 font-label text-xs font-bold uppercase tracking-[0.1em] text-da-orange-text">
+              Town Hall Dates
+            </p>
+            {town_hall_dates.map((th, index) => {
+              const t = timeleft[index];
+              if (!t) return null;
+              return (
+                <p key={th.label} className="mt-3 flex flex-wrap items-center justify-center gap-2">
+                  <span className="font-semibold">{th.label}:</span>
+                  <span className="rounded-full bg-da-navy px-2.5 py-0.5 font-label text-xs font-bold text-white">
+                    {th.badge}
+                  </span>
+                  {t.passed ? (
+                    <span className="rounded-full border-2 border-da-navy px-3 py-0.5 font-label text-sm font-bold">
+                      Happened!
+                    </span>
+                  ) : (
+                    <span className="flex gap-1">
+                      {[[t.days, "d"], [t.hours, "h"], [t.minutes, "m"], [t.seconds, "s"]].map(([value, unit]) => (
+                        <span
+                          key={unit}
+                          className="inline-flex min-w-[2.75rem] items-baseline justify-center gap-0.5 rounded-md bg-da-navy px-1.5 py-1 font-label text-white"
+                        >
+                          <span className="text-base font-bold">{String(value).padStart(2, "0")}</span>
+                          <span className="text-xs text-da-orange-light">{unit}</span>
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </p>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Centered Title Area */}
-      <header
-        className="relative text-center z-0 px-4 md:px-0 w-full md:w-1/2 mt-20 md:mt-0"
-        style={{ padding: "2rem 1rem" }}
-      >
-
-        <h1
-          className="title"
-          style={{
-            fontFamily: "'Norwester', sans-serif",
-            fontSize: windowWidth < 768 ? "3rem" : "3rem",
-            fontWeight: "800",
-            color: "#333",
-            marginBottom: "1rem",
-          }}
-        >
-          Engineering Open House
-        </h1>
-        <p
-          className="subtitle"
-          style={{
-            fontSize: windowWidth < 768 ? "1rem" : "1.25rem",
-            color: "#666",
-            fontWeight: "500",
-            marginBottom: "1rem",
-          }}
-        >
-          at the <strong>University of Illinois Urbana-Champaign</strong> brings
-        </p>
-        <h2
-          className="highlight"
-          style={{
-            fontFamily: "'Iron Forge', san-serif",
-            fontSize: windowWidth < 768 ? "3rem" : "6rem",
-            // fontWeight: "700",
-            lineHeight: "100%",
-            color: "#13295b",
-            marginBottom: "1rem",
-          }}
-        >
-          Driven by Discovery
-        </h2>
-        <p
-          className="date"
-          style={{
-            fontSize: windowWidth < 768 ? "1rem" : "1.25rem",
-            color: "#333",
-            fontWeight: "600",
-            marginBottom: "1rem",
-          }}
-        >
-          April 9th & April 10th, 2027
-        </p>
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <a
-            href="https://forms.gle/7kQJ5RA95zQcVbNf8"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="pulse-cta inline-block border rounded-md text-white font-medium underline px-3 py-2 drop-shadow-md bg-[#ff5f05] hover:bg-[#ff5f05]"
-            style={{
-              fontSize: windowWidth < 768 ? "1rem" : "1.25rem",
-              marginTop: "0.75rem",
-              marginBottom: "1rem",
-            }}
-          >
-            EOH Exhibits Interest Form 2026-2027
-          </a>
-          <img
-            src="/assets/ui/magnifying-glass-cursor.png"
-            alt=""
-            className="cursor-cta"
-            style={{
-              position: "absolute",
-              top: "-2rem",
-              right: "-2rem",
-              width: "10rem",
-              height: "10rem",
-              filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.4))",
-              pointerEvents: "none",
-              zIndex: 2,
-            }}
-            aria-hidden="true"
-          />
-        </div>
-      </header>
-
+      <HeroRoad />
 
       {/* Inline Keyframes */}
       <style>{`
@@ -495,6 +336,14 @@ export default function HomeVideo() {
         }
         .pulse-cta {
           animation: pulse-cta 1.8s ease-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .pulse-cta {
+            animation: none;
+          }
+          .cursor-cta {
+            display: none;
+          }
         }
 
         @keyframes lavaFlowTriangle {

@@ -69,6 +69,82 @@
 .da-pill--navy { background: var(--da-navy); color: var(--da-white); }
 .da-pill--sm { padding: 0.5rem 1rem; font-size: 0.875rem; } /* header pills */
 
+/* ---------- Hero (layouts/Title) ---------- */
+.da-hero-drop {
+  display: inline-block;
+  animation: da-hero-drop 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+@keyframes da-hero-drop {
+  0% { opacity: 0; transform: translateY(-60px) rotate(-8deg); }
+  70% { opacity: 1; transform: translateY(6px) rotate(2deg); }
+  100% { opacity: 1; transform: none; }
+}
+/* Orange letters need the navy outline: orange on the light ground alone fails contrast */
+.da-hero-outline {
+  color: var(--da-orange);
+  -webkit-text-stroke: 2px var(--da-navy);
+}
+@media (min-width: 640px) {
+  .da-hero-outline { -webkit-text-stroke-width: 3px; }
+}
+.da-hero-underline {
+  stroke-dasharray: 700;
+  animation: da-draw-line 1.4s 1.1s ease-out both;
+}
+@keyframes da-draw-line {
+  from { stroke-dashoffset: 700; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ---------- HeroRoad (components/hero-road) ---------- */
+.da-drive {
+  display: block;
+  width: 100%;
+  height: clamp(140px, 17vw, 240px);
+}
+.da-drive__lane { animation: da-lanes 1.2s linear infinite; }
+@keyframes da-lanes { to { stroke-dashoffset: -100; } }
+/* Same path as ROAD in components/hero-road */
+.da-drive__car {
+  offset-path: path('M -140 160 C 200 160, 330 70, 620 95 S 1020 215, 1280 150 S 1480 80, 1620 90');
+  offset-rotate: auto;
+  offset-distance: 46%;
+  animation: da-drive 11s linear infinite;
+}
+@keyframes da-drive {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+.da-drive__wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: da-spin 0.5s linear infinite;
+}
+@keyframes da-spin { to { transform: rotate(360deg); } }
+.da-drive__chassis { animation: da-bob 0.35s ease-in-out infinite; }
+@keyframes da-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.da-drive__trail { animation: da-trail 1.6s ease-out infinite; }
+@keyframes da-trail {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-90px, -46px) scale(1.2); }
+}
+.da-drive__sign {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: da-sign-pop 11s linear infinite;
+}
+@keyframes da-sign-pop {
+  0% { transform: scale(0.7); opacity: 0.45; }
+  5% { transform: scale(1.25); opacity: 1; }
+  12% { transform: scale(1); }
+  70% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.7); opacity: 0.45; }
+}
+
 /* ---------- RoadDivider (components/road-divider) ---------- */
 .da-road {
   position: relative;
@@ -105,4 +181,13 @@
   .da-card--lift:hover,
   .da-pill:hover { transform: none; }
   .da-road__car { animation: none; left: 12%; }
+  .da-hero-drop,
+  .da-hero-underline,
+  .da-drive__lane,
+  .da-drive__car,
+  .da-drive__wheel,
+  .da-drive__chassis,
+  .da-drive__sign { animation: none; }
+  .da-drive__trail,
+  .da-drive__gas { display: none; }
 }
