@@ -29,7 +29,8 @@ export async function strapiSwrFetcher(url) {
       }
     });
   } catch (err) {
-    console.error(`[Strapi] Could not reach ${getStrapiBase()} (server down, blocked, or offline):`, err);
+    // Log a plain string: passing the Error object makes the Next.js dev overlay pop up on every page.
+    console.error(`[Strapi] Could not reach ${getStrapiBase()} (server down, blocked, or offline): ${err?.message || err}`);
     throw err;
   }
   if (!res.ok) {
