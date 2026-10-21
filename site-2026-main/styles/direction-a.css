@@ -100,7 +100,9 @@
 .da-drive {
   display: block;
   width: 100%;
-  height: clamp(140px, 17vw, 240px);
+  /* Above 1440px the strip keeps its 6:1 shape so the top of the drawing (the signs) isn't cropped off */
+  height: max(clamp(140px, 17vw, 240px), calc(100vw / 6));
+  overflow: visible; /* a sign popping near the top edge isn't clipped */
 }
 .da-drive__lane { animation: da-lanes 1.2s linear infinite; }
 @keyframes da-lanes { to { stroke-dashoffset: -100; } }

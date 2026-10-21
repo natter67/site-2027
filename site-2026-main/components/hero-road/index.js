@@ -9,12 +9,13 @@ import { useState } from "react";
 const ROAD = "M -140 160 C 200 160, 330 70, 620 95 S 1020 215, 1280 150 S 1480 80, 1620 90";
 
 // Draft labels (confirm with team). delay = -(position along road) x 11s, so each pops as the car arrives
-// (the car drives right to left, so it reaches Keynotes first).
+// (the car drives right to left, so it reaches Keynotes first). Signs sit at least 15 units below the top so the
+// pop (scaled 1.25x from the post foot) stays inside the strip; Exhibits and Shows posts still end at the road edge.
 const SIGNS = [
-  { x: 330, y: 8, width: 104, post: 64, label: "Exhibits", tone: "white", delay: "-2.9s" },
-  { x: 700, y: 4, width: 92, post: 70, label: "Shows", tone: "orange", delay: "-5.3s" },
+  { x: 330, y: 15, width: 104, post: 57, label: "Exhibits", tone: "white", delay: "-2.9s" },
+  { x: 700, y: 15, width: 92, post: 59, label: "Shows", tone: "orange", delay: "-5.3s" },
   { x: 1020, y: 40, width: 108, post: 80, label: "Startups", tone: "white", delay: "-7.4s" },
-  { x: 1330, y: 0, width: 116, post: 62, label: "Keynotes", tone: "navy", delay: "-9.3s" },
+  { x: 1330, y: 20, width: 116, post: 62, label: "Keynotes", tone: "navy", delay: "-9.3s" },
 ];
 
 const SIGN_TONES = {
