@@ -3,15 +3,6 @@ import { Modal } from '../../components/modal/index.js';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 
-const slotGradients = {
-  0: 'bg-gradient-to-tr from-[#ff5f05] via-[#13294b] to-[#ff5f05]',
-  1: 'bg-gradient-to-tr from-[#ff5f05] via-[#13294b] to-[#ff5f05]',
-  2: 'bg-gradient-to-tr from-[#ff5f05] via-[#13294b] to-[#ff5f05]',
-  3: 'bg-gradient-to-tr from-[#ff5f05] via-[#13294b] to-[#ff5f05]',
-  4: 'bg-gradient-to-tr from-[#ff5f05] via-[#13294b] to-[#ff5f05]',
-  5: 'bg-gradient-to-tr from-[#ff5f05] via-[#13294b] to-[#ff5f05]',
-}
-
 const awards = [
   {
     "title": "Visitor’s Favorite Award",
@@ -85,12 +76,12 @@ export default function () {
   const [award, setAward] = useState(null);
   return (
     <>
-      <p className='md:w-2/3 mx-5 md:mx-auto text-center mb-5'>
+      <p className='md:w-2/3 mx-5 md:mx-auto text-center mb-8 text-lg leading-relaxed'>
         The Awards Ceremony provides an opportunity to celebrate the hard work that our exhibitors have put into their exhibits.
         We look forward to highlighting outstanding exhibits that demonstrate creativity, innovation, and passion. <br />
         Congratulations to all of our EOH 2026 award winners!
       </p>
-      <div className="flex flex-row flex-wrap justify-center gap-5 mx-10">
+      <div className="flex flex-row flex-wrap justify-center gap-5 mx-4 md:mx-10">
         {
           award &&
           <Modal open={award != null} setOpen={_x => setAward(null)} title={award.title}>
@@ -123,12 +114,9 @@ export default function () {
             <button
   key={a.title ?? idx}
   onClick={() => setAward(a)}
-  className={`w-72 ${slotGradients[idx % Object.keys(slotGradients).length]} 
-            rounded-lg p-4 text-white 
-            flex items-center justify-center 
-            shadow-lg shadow-gray-600 hover:shadow-lg hover:rounded-xl duration-300`}
+  className="da-card da-card--lift w-72 p-5 flex items-center justify-center text-da-navy focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-da-orange"
 >
-  <h4 className='text-lg font-semibold text-center'>{a.title}</h4>
+  <h4 className='font-display text-xl uppercase leading-tight text-center'>{a.title}</h4>
 </button>
 
           )

@@ -19,19 +19,19 @@ export const Modal = ({ open, setOpen, title, children }) => {
 	if (!open) return null;
 	return (
 		<div
-			className="fixed top-0 right-0 w-screen h-screen bg-blue-400/40 z-30 flex items-center justify-center backdrop-blur-sm"
+			className="fixed top-0 right-0 w-screen h-screen bg-[rgba(19,41,75,0.45)] z-30 flex items-center justify-center backdrop-blur-sm"
 			onClick={() => setOpen(false)}
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby={MODAL_TITLE_ID}
 		>
 			<div
-				className="bg-white rounded-xl mx-5 w-full md:w-1/2 h-2/3 p-8 overflow-y-auto"
+				className="da-card mx-5 w-full md:w-1/2 h-2/3 p-8 overflow-y-auto font-body"
 				onClick={(e) => e.stopPropagation()}
 			>
 				<div className="flex flex-col gap-3">
 					<div className="flex flex-row justify-between">
-						<h2 id={MODAL_TITLE_ID} className="font-heading text-xl">{title}</h2>
+						<h2 id={MODAL_TITLE_ID} className="font-display text-2xl uppercase">{title}</h2>
 						<button
 							ref={closeButtonRef}
 							type="button"
