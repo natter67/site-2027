@@ -7,17 +7,18 @@ import { ShuttleInformation } from "@/shuttle";
 // (from layouts/FAQs/faqs.json, so the answers live in one place).
 export default function GettingHerePage() {
   return (
-    <Content title="Getting here, parking & shuttles">
+    <Content
+      title="Getting here, parking & shuttles"
+      onThisPage={[{ id: "shuttles", label: "Shuttles" }, { id: "parking-faqs", label: "Parking FAQs" }]}
+    >
       <Section title="Shuttles" id="shuttles">
         <div className="mx-auto w-full max-w-sm px-4">
           <ShuttleInformation />
         </div>
       </Section>
-      <Section title="Parking" id="parking">
-        <div className="px-4 text-left">
-          <Faqs only={["Parking FAQs"]} />
-        </div>
-      </Section>
+      <div className="px-4 text-left">
+        <Faqs only={["Parking FAQs"]} />
+      </div>
     </Content>
   );
 }

@@ -6,7 +6,11 @@ import SCC from "@layouts/SCC";
 // Moved from the home page (old links /#world-quantum-day and /#scc redirect here).
 export default function InitiativesPage() {
   return (
-    <Content title="Initiatives" wide>
+    <Content
+      title="Initiatives"
+      wide
+      onThisPage={[{ id: "world-quantum-day", label: "World Quantum Day" }, { id: "scc", label: "EOH x Sustainability" }]}
+    >
       <Section title="World Quantum Day" id="world-quantum-day">
         <QuantumDay />
       </Section>

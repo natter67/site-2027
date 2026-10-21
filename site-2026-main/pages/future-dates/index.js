@@ -14,19 +14,9 @@ export default function FutureDates() {
 
   return (
     <Fragment>
-      <Content className="pt-16 pb-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="text-center mb-16">
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase leading-none mt-6 text-da-navy">
-            Future Dates
-          </h1>
-          <p className="text-lg text-da-road mt-4 max-w-xl mx-auto">
-            Mark your calendars for the years ahead.
-          </p>
-          <div className="w-16 h-1 bg-da-orange mx-auto mt-6 rounded-full"></div>
-        </div>
-
+      <Content title="Future Dates" summary="Mark your calendars for the years ahead.">
         {/* Date Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {futureDates.map((item) => {
             const isUpcoming = item.year === upcomingYear;
 

@@ -163,3 +163,53 @@ Content moved off the home page to new pages:
 - "Exhibitors:" label
 - Schedule preview fallback "Schedule details for this day are coming soon."
 - "More special events, with times and places, are in the Event Day Hub."
+
+### Step 4: landing pages and inner-page template (done)
+**Template.** `components/content` (used by almost every info page) now renders:
+- `components/page-header`: breadcrumbs, the menu section as a mile-sign eyebrow, the title (h1), a one-line summary from `utilities/navigation.js`, and an optional "On this page" jump list.
+- The page content.
+- `components/related-links`: "More in <section>" cards linking the section's other pages.
+
+`components/link-cards` draws the cards; `layouts/Landing` builds a landing page from a menu section.
+
+**Landing pages:**
+- `/visit` (Plan your visit): When / Hours / Where / Cost cards with ids `when`, `hours`, `where`, `cost`, the PDF download, then all Visit pages
+- `/explore`
+- `/schools`
+- `/get-involved`: `#exhibit` block with the exhibits interest form
+- `/about`
+- `/schedule` is the Schedule landing page (the full schedule)
+
+**New Visit pages:**
+- `/visit/map`: the Event Day Hub map component, reused unchanged
+- `/visit/food`: Food FAQs from `faqs.json`
+- `/visit/accessibility`: links to the accommodations on `/accessibility`, plus a **placeholder** for the sensory guide
+
+**Template applied to:** every page that uses `components/content`. That includes FAQ and Future Dates (titles moved into the template), plus Sponsor Us and the committee page by hand.
+
+**Pages that keep their own layout (event-day tools):** `/vv`, `/volunteer`, `/login`, `/account`, `/admin`, `/judging/*`, `/live`, and the home page.
+
+**Accessibility fixes made along the way:**
+- FAQ categories are now h2 (with ids for the jump list) and questions h3. The FAQ page had no h1 before.
+- Field Trips' second h1 ("MSDC and HSDC") is now an h2.
+- The map's location names went from h4 to h3, and its zoom buttons and icon links got `aria-label`s. This also fixes them inside `/vv`.
+- Committee photos used a relative path, so they were broken on `/about-us/meet-the-committee` (they only worked on Contact Us). This was broken before the redesign and is now fixed.
+- Sponsor Us has a document title now.
+- Lighthouse accessibility scores 100 on `/visit`, `/explore`, `/get-involved`, `/visit/getting-here`, `/faq`, `/about-us/meet-the-committee`, `/sponsor-us`, `/future-dates`, `/field-trips` and `/about/directors`.
+
+**Judgment calls:**
+- The committee page's default export is now the page (template plus "Committee Members" section). Contact Us imports the same grid as the named export `CommitteeGrid`.
+- The directors' letter page relies on the "More in About EOH" links to reach the committee and history pages, instead of separate buttons.
+- Pages that aren't in the menus (`/privacy-policy`, `/events-list`, `/exhibitors`, `/independent-attend`) get breadcrumbs (Home › page) but no eyebrow or related links.
+- Sponsor Us keeps its pre-existing React hydration warning (#418); it was there before the redesign.
+- The map's floor-plan icon is an `<a>` without an `href`, so it isn't reachable by keyboard. It was left as is, since fixing it would change `/vv` behaviour.
+
+**DRAFT copy:**
+- All landing and page summaries (`utilities/navigation.js`)
+- "Event essentials" (screen-reader heading)
+- "Download the Visitor Guide (PDF)"
+- The Get Involved exhibit sentence
+- The sentences on `/visit/map`, `/visit/food` and `/visit/accessibility`
+- "More in …" and "On this page"
+
+**PLACEHOLDER:** the sensory guide on `/visit/accessibility` (committee to provide).

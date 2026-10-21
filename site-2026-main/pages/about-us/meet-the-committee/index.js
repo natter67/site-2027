@@ -1,5 +1,6 @@
 import Profile from "@/profile";
 import Content from "@/content";
+import Section from "@/section";
 
 // const csv = require('csvtojson');
 // const csvFilePath = "./pages/about-us/meet-the-committee/people.csv"
@@ -224,7 +225,18 @@ const COMMITTEE_HEADSHOTS = [
   },
 ];
 
-export default function MeetTheCommittee() {
+// The /about-us/meet-the-committee page. Contact Us shows the same grid (CommitteeGrid).
+export default function MeetTheCommitteePage() {
+  return (
+    <Content title="Committee" wide>
+      <Section title="Committee Members">
+        <CommitteeGrid />
+      </Section>
+    </Content>
+  );
+}
+
+export function CommitteeGrid() {
   return (
     <div className="flex flex-row flex-wrap justify-center w-10/12 mx-auto">
       {COMMITTEE_HEADSHOTS.map((c) => (

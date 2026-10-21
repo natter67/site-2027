@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Bubble from '@/bubble';
 import Button from '@/button';
 import SponsorCard from '@/sponsor-card';
-import MeetTheCommittee from 'pages/about-us/meet-the-committee';
+import { CommitteeGrid as MeetTheCommittee } from 'pages/about-us/meet-the-committee';
 import Section from '@/section';
 
 

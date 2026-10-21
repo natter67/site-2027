@@ -5,10 +5,16 @@ import { Fragment } from 'react';
 import Collapsible from 'react-collapsible';
 import { BsChevronDown } from 'react-icons/bs';
 import Section from '@/section';
+import PageHeader from '@/page-header';
+import Head from 'next/head';
+import RelatedLinks from '@/related-links';
 
 export default function SponsorUsPage() {
     return (
         <Fragment>̵̵̵
+            <Head>
+                <title>Sponsor Us</title>
+            </Head>
             <main>
                 <div className="min-h-screen">
                     <div>
@@ -20,10 +26,8 @@ export default function SponsorUsPage() {
                             width={1970}
                         />
                     </div>
-                    <div className="w-3/4 h-full m-auto pt-20">
-                        <h1 className="font-display text-center mt-3 text-4xl md:text-5xl lg:text-6xl uppercase leading-none text-da-navy">
-                            Sponsor Us
-                        </h1>
+                    <div className="w-3/4 h-full m-auto pt-24 lg:pt-[120px]">
+                        <PageHeader title="Sponsor Us" />
                         <div className="h-10" />
                         <div className="col-span-3 lg:w-5/6 lg:mx-auto lg:grid lg:grid-cols-5 mb-10 block">
                             <div className="lg:col-span-3 mb-20">
@@ -514,6 +518,7 @@ export default function SponsorUsPage() {
                         </div>
                     </div>
                 </Section>
+                <RelatedLinks />
             </main>
         </Fragment>
     );

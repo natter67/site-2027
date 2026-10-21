@@ -28,7 +28,7 @@ export default function FieldTripsPage() {
       </div>
 
       <div className="text-center mx-auto max-w-3xl">
-        <h1 className="title text-3xl font-bold mb-4">MSDC and HSDC</h1>
+        <h2 className="title text-3xl font-bold mb-4">MSDC and HSDC</h2>
         <p className="font-body text-lg">
           Our Middle School and High School Design Competitions (MSDC and HSDC)
           are engineering-focused competitions on <b>Friday, April 10</b>.

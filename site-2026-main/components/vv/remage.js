@@ -36,18 +36,21 @@ export const Remage = ({
               <button
                 className="p-2 rounded-md hover:bg-opacity-10 duration-200 bg-opacity-0 bg-white"
                 onClick={() => resetTransform()}
+                aria-label="Reset zoom"
               >
                 <Icon className="text-2xl" icon="system-uicons:zoom-reset" />
               </button>
               <button
                 className="p-2 rounded-md hover:bg-opacity-10 duration-200 bg-opacity-0 bg-white"
                 onClick={() => zoomIn()}
+                aria-label="Zoom in"
               >
                 <Icon className="text-2xl" icon="lucide:zoom-in" />
               </button>
               <button
                 className="p-2 rounded-md hover:bg-opacity-10 duration-200 bg-opacity-0 bg-white"
                 onClick={() => zoomOut()}
+                aria-label="Zoom out"
               >
                 <Icon className="text-2xl" icon="lucide:zoom-out" />
               </button>

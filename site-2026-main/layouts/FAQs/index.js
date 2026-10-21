@@ -101,8 +101,8 @@ const Faqs = ({ only }) => {
       {(only || categoryOrder).map((category, idx) => {
         const faqs = categories[category] || [];
         return (
-          <div key={category} className="mb-8">
-            <h3 className="font-display text-2xl uppercase mb-4">{category}</h3>
+          <div key={category} id={category.toLowerCase().replace(/\s+/g, "-")} className="mb-8 scroll-mt-24 lg:scroll-mt-32">
+            <h2 className="font-display text-2xl uppercase mb-4">{category}</h2>
             <div className="flex flex-col gap-4 ">
               {faqs.map((faq) => (
                 <button type="button" 
@@ -113,7 +113,7 @@ const Faqs = ({ only }) => {
                   id={`faq-question-${faq.id}`}
                   onClick={() => { if (expandedId == faq.id) { setExpandedId(null) } else setExpandedId(faq.id) }}
                   >
-                  <h4 className="font-semibold text-lg md:text-xl text-left">{faq.title}</h4>
+                  <h3 className="font-semibold text-lg md:text-xl text-left">{faq.title}</h3>
                   {expandedId == faq.id &&
                     <p className="text-sm text-left mt-2"
                       dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }}></p>
