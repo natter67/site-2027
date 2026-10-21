@@ -6,8 +6,10 @@ export default function Event({ description, title, color, icon, location, dateT
         style={{ backgroundColor: color }}
       >
         <thead className="">
-            <th className="w-40"></th>
-            <th className="pt-5 text-xl font-body">{title}</th>
+            <tr>
+              <th className="w-40"></th>
+              <th className="pt-5 text-xl font-body">{title}</th>
+            </tr>
         </thead>
         <tbody>
             <tr>
