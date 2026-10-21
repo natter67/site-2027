@@ -1,9 +1,10 @@
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 import { LOCATIONS } from "../../utilities/links.js";
 import { useEffect, useState } from "react";
 import { times } from "underscore";
 
-export const KeynoteSpeaker = ( {timeString, description, imagePath, name, backgroundNum} ) => {
+export const KeynoteSpeaker = ( {timeString, description, imagePath, name} ) => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -18,36 +19,27 @@ export const KeynoteSpeaker = ( {timeString, description, imagePath, name, backg
     }, []);
 
     return (
-        <div 
-            className="flex flex-col md:flex-row md:justify-center items-center gap-8 px-14 relative min-h-[500px] pb-40"
-            style={{
-                backgroundImage: `url('/assets/banners/robot_banner_${backgroundNum}.png')`,
-                backgroundSize: 'cover', // Ensures the image fits without cropping
-                backgroundPosition: 'center bottom -70px', // Moves the image further down
-                backgroundRepeat: 'no-repeat'
-            }}            
-        >
-            <div className="flex flex-col md:w-1/2 gap-3">
-                <div className="flex flex-col md:flex-row gap-5 text-lg -mt-10">
-                    <span className="flex flex-row gap-3 items-center">
-                        <Icon icon="mingcute:time-line" className="text-3xl" />
-                        <h3>{timeString}</h3>
-                    </span>
-                    <span className="flex flex-row gap-3 items-center">
-                        <Icon icon="mingcute:location-fill" className="text-3xl" />
-                        <h3>
-                            <a className="text-blue-600 hover:text-blue-500" href={LOCATIONS.CIF} target="_blank">CIF</a> Monumental Steps
-                        </h3>
-                    </span>
+        <div className="mx-auto w-full max-w-5xl px-4">
+            <div className="flex flex-col items-center gap-8 rounded-[18px] border-2 border-da-navy bg-da-navy p-6 text-left text-white md:flex-row md:p-10">
+                <div className="flex flex-col gap-4 md:w-2/3">
+                    <div className="flex flex-col gap-3 font-label text-sm font-bold uppercase tracking-[0.06em] md:flex-row md:gap-6">
+                        <span className="flex flex-row items-center gap-2">
+                            <Icon icon="mingcute:time-line" className="text-2xl text-da-orange-light" />
+                            <h3>{timeString}</h3>
+                        </span>
+                        <span className="flex flex-row items-center gap-2">
+                            <Icon icon="mingcute:location-fill" className="text-2xl text-da-orange-light" />
+                            <h3>
+                                <a className="text-da-orange-light underline underline-offset-4 hover:text-white" href={LOCATIONS.CIF} target="_blank">CIF</a> Monumental Steps
+                            </h3>
+                        </span>
+                    </div>
+                    <p className="leading-relaxed">{description}</p>
                 </div>
-                <p style={{backgroundColor: "rgba(255, 255, 255, 0.5)", borderRadius: "20px", marginTop: "20px"}}>{description}</p>
+                <div className="relative h-56 w-56 shrink-0 overflow-hidden rounded-full border-4 border-da-orange md:h-64 md:w-64">
+                    <Image src={`/${imagePath}`} alt={`picture of ${name}`} fill sizes="256px" className="object-cover object-top" />
+                </div>
             </div>
-            <img 
-                src={imagePath}
-                alt={`picture of ${name}`}
-                className="w-80 h-80 object-cover object-top rounded-full 
-                           ring-1 ring-black ring-offset-1 ring-offset-transparent" 
-            />
         </div>
     );
 };
