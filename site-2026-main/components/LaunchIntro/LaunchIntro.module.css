@@ -1,0 +1,358 @@
+/* Launch intro. Timings and easings come in as CSS variables from ./config.js (set on .root).
+   Playback state is a class on <html>, set by ./script.js: li-play, li-exit, li-skip, li-done. */
+
+.root {
+  display: none; /* shown only while <html> has li-play: never without JavaScript */
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  --m: 120px; /* side margins */
+  --rt: 96px; /* top rule */
+  --rb: 176px; /* bottom rule, from the bottom */
+  --crop: 48px; /* crop marks inset */
+  --ground: #070e1f;
+  --hair: #14213d;
+  --rule: #2a3b5e;
+  --muted: #8592ad;
+  --bright: #c9d2e6;
+  --type: #f2f4f8;
+  --orange: #ff5f05;
+  --orange-light: #ff8a4c;
+}
+:global(html.li-play) .root {
+  display: block;
+}
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    display: none !important;
+  }
+}
+
+.panel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ground);
+  color: var(--type);
+  clip-path: inset(0 0 0 0);
+}
+
+/* ---------- Frame: grid, rules, crop marks, labels (0–0.6s) ---------- */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--hair) 1px, transparent 1px), linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+  background-size: 80px 80px;
+  background-position: var(--m) var(--rt);
+  opacity: 0;
+  animation: fadeIn var(--frame-end) var(--ease-reveal) forwards;
+}
+.rule {
+  position: absolute;
+  left: var(--m);
+  right: var(--m);
+  height: 1px;
+  background: var(--rule);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: drawRule calc(var(--frame-end) - var(--rules-start)) var(--ease-reveal) var(--rules-start) forwards;
+}
+.ruleTop {
+  top: var(--rt);
+}
+.ruleBottom {
+  bottom: var(--rb);
+}
+.crop {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--rule);
+  opacity: 0;
+  animation: fadeIn 300ms var(--ease-reveal) 200ms forwards;
+}
+.cropTL { top: var(--crop); left: var(--crop); border-top-width: 1px; border-left-width: 1px; }
+.cropTR { top: var(--crop); right: var(--crop); border-top-width: 1px; border-right-width: 1px; }
+.cropBL { bottom: var(--crop); left: var(--crop); border-bottom-width: 1px; border-left-width: 1px; }
+.cropBR { bottom: var(--crop); right: var(--crop); border-bottom-width: 1px; border-right-width: 1px; }
+
+.label {
+  margin: 0;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: labelIn 350ms var(--ease-reveal) var(--labels-start) forwards;
+}
+.bright {
+  color: var(--bright);
+}
+.topLeft,
+.topCenter,
+.topRight {
+  position: absolute;
+  top: calc(var(--rt) - 26px);
+}
+.topLeft { left: var(--m); }
+.topCenter { left: 0; right: 0; text-align: center; }
+.topRight { right: var(--m); }
+.bottomRight {
+  position: absolute;
+  right: var(--m);
+  top: calc(100% - var(--rb) + 14px);
+  text-align: right;
+}
+
+.counter {
+  position: absolute;
+  left: var(--m);
+  top: calc(100% - var(--rb) + 12px);
+  margin: 0;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: clamp(56px, 11dvh, 120px);
+  line-height: 1;
+  color: var(--type);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.skip {
+  position: absolute;
+  z-index: 2;
+  right: var(--m);
+  top: calc(var(--rt) + 14px);
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bright);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  opacity: 0;
+  animation: labelIn 350ms var(--ease-reveal) var(--labels-start) forwards;
+}
+.skip:focus-visible {
+  outline: 2px solid var(--orange-light);
+  outline-offset: 4px;
+}
+:global(html.li-exit) .skip {
+  visibility: hidden;
+}
+
+/* ---------- Headline (0.85–1.85s) and readout (0.55–2.10s) ---------- */
+.headline {
+  position: absolute;
+  left: var(--m);
+  right: var(--m);
+  top: calc(var(--rt) + clamp(28px, 7dvh, 90px));
+  font-family: var(--font-anton), Impact, sans-serif;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+.mask {
+  display: block;
+  overflow: hidden;
+}
+.top,
+.bottom {
+  display: block;
+  white-space: nowrap;
+  transform: translateY(105%);
+  animation: rise var(--rise-dur) var(--ease-reveal) forwards;
+}
+.top {
+  font-size: clamp(40px, min(15.5vw, 16dvh), 150px);
+  color: var(--type);
+  animation-delay: var(--headline-top-start);
+}
+.bottom {
+  position: relative;
+  font-size: clamp(54px, min(21vw, 22dvh), 200px);
+  animation-delay: var(--headline-bottom-start);
+}
+.outline {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--orange);
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  color: var(--orange);
+  clip-path: inset(0 100% 0 0);
+  animation: fill calc(var(--fill-end) - var(--fill-start)) var(--ease-reveal) var(--fill-start) forwards;
+}
+.readout {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  margin: clamp(14px, 3dvh, 28px) 0 0;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  animation: fadeIn 300ms var(--ease-reveal) var(--readout-start) forwards;
+}
+.bar {
+  color: var(--rule);
+}
+.flip {
+  display: inline-block;
+  height: 16px;
+  overflow: hidden;
+  color: var(--bright);
+}
+.flipList {
+  display: flex;
+  flex-direction: column;
+  animation: flip calc(var(--readout-end) - var(--readout-start)) steps(var(--flip-steps), end) var(--readout-start) forwards;
+}
+.flipList > span {
+  height: 16px;
+}
+
+/* ---------- Light trails (0.30–2.05s) ---------- */
+.trails {
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--rb) + 8px);
+  width: 100%;
+  height: min(30dvh, 300px);
+  overflow: visible;
+}
+.trailsMobile {
+  display: none;
+}
+.trail,
+.trailCool {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1000 1000;
+  stroke-dashoffset: 1000;
+  animation: drawTrail calc(var(--trails-end) - var(--trails-start)) var(--ease-trail) var(--trails-start) forwards;
+}
+.trail {
+  stroke: var(--orange);
+  stroke-width: 2.5;
+}
+.trailSecond {
+  stroke: var(--orange-light);
+  stroke-width: 1.5;
+}
+.trailCool {
+  stroke: var(--bright);
+  stroke-opacity: 0.3;
+  stroke-width: 1.25;
+}
+.glow {
+  filter: drop-shadow(0 0 5px rgba(255, 95, 5, 0.85)) drop-shadow(0 0 16px rgba(255, 95, 5, 0.4));
+}
+.head {
+  fill: none;
+  stroke: #fff7ee;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 0.5 3000;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 14px var(--orange-light));
+  animation: head calc(var(--trails-end) - var(--trails-start)) var(--ease-trail) var(--trails-start) forwards;
+}
+
+/* ---------- Texture ---------- */
+.grain {
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+}
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+/* ---------- Exit (2.10–2.65s) and handoff wipe (2.55–3.50s) ---------- */
+:global(html.li-exit) .headline,
+:global(html.li-exit) .trails {
+  animation: leave var(--exit-dur) var(--ease-reveal) forwards;
+}
+:global(html.li-exit) .panel {
+  animation: wipe var(--handoff-dur) var(--ease-wipe) var(--handoff-delay) forwards;
+}
+.handoffLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: var(--orange);
+  box-shadow: 0 0 12px 1px rgba(255, 95, 5, 0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+:global(html.li-exit) .handoffLine {
+  animation: ride var(--handoff-dur) var(--ease-wipe) var(--handoff-delay) forwards;
+}
+:global(html.li-skip) .panel,
+:global(html.li-skip) .handoffLine {
+  animation-delay: 0ms;
+}
+
+/* ---------- Phones: 24px margins, no top-center label, portrait trail ---------- */
+@media (max-width: 767px) {
+  .root {
+    --m: 24px;
+    --rt: 72px;
+    --rb: 136px;
+    --crop: 12px;
+  }
+  .topCenter,
+  .trailsDesktop {
+    display: none;
+  }
+  .trailsMobile {
+    display: block;
+  }
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes drawRule { to { transform: scaleX(1); } }
+@keyframes labelIn { to { opacity: 1; transform: none; } }
+@keyframes rise { to { transform: translateY(0); } }
+@keyframes fill { to { clip-path: inset(0 0 0 0); } }
+@keyframes flip { to { transform: translateY(calc(var(--flip-steps) * -16px)); } }
+@keyframes drawTrail { to { stroke-dashoffset: 0; } }
+@keyframes head {
+  0% { opacity: 1; stroke-dashoffset: 0; }
+  100% { opacity: 1; stroke-dashoffset: -1000; }
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -4%); }
+  60% { transform: translate(-2%, 4%); }
+  80% { transform: translate(4%, 2%); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes leave { to { opacity: 0; transform: translateY(-24px); } }
+@keyframes wipe { to { clip-path: inset(0 0 100% 0); } }
+@keyframes ride {
+  0% { opacity: 1; transform: translateY(100dvh); }
+  100% { opacity: 1; transform: translateY(-2px); }
+}

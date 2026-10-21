@@ -2,6 +2,7 @@ import { Anton, Archivo, Doppio_One, JetBrains_Mono, Montserrat } from 'next/fon
 import { Fragment } from "react";
 import "tailwindcss/tailwind.css";
 import BasicApp from "../layouts/BasicApp";
+import LaunchIntro from "../components/LaunchIntro";
 import { AuthProvider } from "../providers/Auth";
 import "../styles/animations.css";
 import "../styles/index.css";
@@ -72,6 +73,7 @@ function EOHApp(props) {
         rel="stylesheet"
       ></link>
       <main className={`${montserrat.variable} ${doppioOne.variable} ${anton.variable} ${archivo.variable} ${jetbrainsMono.variable} font-sans`}>
+        <LaunchIntro />
         <AuthProvider>
           <BasicApp {...props} />
         </AuthProvider>
