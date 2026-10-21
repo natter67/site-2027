@@ -8,27 +8,27 @@ export const INTRO_ENABLED = true;
 export const SESSION_KEY = "eoh-intro-seen";
 export const REPLAY_PARAM = "intro";
 
-// Milliseconds from the moment the page starts loading. About 4.5 s in total; the finished frame
-// (headline filled, counter at 100) holds for about 0.8 s before the wipe.
+// Milliseconds from the moment the page starts loading. About 4 s in total; the finished frame
+// (headline filled, counter at 100) holds for about 0.55 s before the wipe.
 export const TIMING = {
-  frameEnd: 700, // grid fades in, rules draw, crop marks and labels appear (0–0.7s)
-  rulesStart: 60,
-  labelsStart: 300,
-  trailsStart: 350, // light trails draw 0.35–2.5s
-  trailsEnd: 2500,
-  readoutStart: 600, // "EXPLORING │ field" flips 0.6–2.75s
-  readoutEnd: 2750,
-  headlineTopStart: 900, // "DRIVEN BY" rises
-  headlineBottomStart: 1150, // "DISCOVERY" outline rises
-  riseDuration: 600,
-  fillStart: 1550, // "DISCOVERY" fills left to right 1.55–2.2s
-  fillEnd: 2200,
-  counterEnd: 2850, // counter 000 → 100 (ease-out), held until the page is ready
-  exitStart: 3050, // headline, readout and trails ease up and fade (3.05–3.65s)
-  exitDuration: 600,
-  handoffDelay: 450, // panel wipe starts 0.45s into the exit (3.5s) …
-  handoffDuration: 1000, // … and ends at 4.5s, then the overlay unmounts
-  hardCap: 7000, // never longer than this, even if the page isn't ready
+  frameEnd: 650, // grid fades in, rules draw, crop marks and labels appear (0–0.65s)
+  rulesStart: 55,
+  labelsStart: 275,
+  trailsStart: 325, // light trails draw 0.325–2.275s
+  trailsEnd: 2275,
+  readoutStart: 575, // "EXPLORING │ field" flips 0.575–2.425s
+  readoutEnd: 2425,
+  headlineTopStart: 875, // "DRIVEN BY" rises
+  headlineBottomStart: 1100, // "DISCOVERY" outline rises
+  riseDuration: 550,
+  fillStart: 1450, // "DISCOVERY" fills left to right 1.45–2.025s
+  fillEnd: 2025,
+  counterEnd: 2575, // counter 000 → 100 (ease-out), held until the page is ready
+  exitStart: 2575, // headline, readout and trails ease up and fade (2.575–3.15s)
+  exitDuration: 575,
+  handoffDelay: 450, // panel wipe starts 0.45s into the exit (3.025s) …
+  handoffDuration: 975, // … and ends at 4.0s, then the overlay unmounts
+  hardCap: 6500, // never longer than this, even if the page isn't ready
 };
 
 export const EASING = {
