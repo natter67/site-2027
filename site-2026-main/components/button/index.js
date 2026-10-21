@@ -39,12 +39,12 @@ export default function Button({
 				style={style}
 				onClick={onClick}
 			>
-				<h3
+				<span
 					className={`${font} ${multiline ? 'mx-auto' : 'whitespace-nowrap truncate'}`}
 					style={width ? { width: width } : {}}
 				>
 					{children}
-				</h3>
+				</span>
 				{type == "menu" && <img src="/assets/ui/caret-down.svg" alt="" className="inline-block float-right w-5 p-0" aria-hidden="true" />}
 				{/* {menuItems && <ArrowDropDownIcon />} */}
 			</a>
