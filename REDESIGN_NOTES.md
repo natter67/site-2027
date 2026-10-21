@@ -342,10 +342,7 @@ It is mounted once in `pages/_app.js`.
 ## Follow-up changes (after the morning report)
 - **Accessibility & sensory guide page removed** (`070abdb`): EOH can't offer a sensory guide. Accommodations stay on `/accessibility`.
 - **MTD sponsor logo** no longer sticks out of its tile. Every sponsor logo now scales down to fit inside its tile (`object-contain`). MTD's file is a white 225 px square with the mark in the middle, so it gets a 16:9 crop of its white margins in CSS (`FIT_OVERRIDES` in `components/corporateSponsor`); the image file is unchanged.
-- **Home hero road animation:**
-  - **Direction:** the car now drives right to left, the same direction as the car in the official logo. The lane markings no longer slide along with it (that made the car look like it was going backwards).
-  - **New car and road:** a cleaner, lower white sports car echoing the logo car (navy glass, orange taillight, soft shadow, slower and steady with no bounce), in the far lane. The road matches the logo: grey asphalt, navy and white edge lines, orange centre dashes.
-  - **Removed:** the floating math symbols, the popping "Exhibits / Shows / Startups / Keynotes" draft signposts and the "Hit the gas" button.
+- **Home hero road animation:** the car now drives right to left, like the car in the official logo. Its animation runs in reverse, the car drawing is mirrored (text flipped back so "2027" reads normally), and the signpost pop timing matches the new direction. Everything else is the original animation: signposts, "Hit the gas", the trail, the road. A broader restyle I made first was reverted at the owner's request.
 
 ---
 
