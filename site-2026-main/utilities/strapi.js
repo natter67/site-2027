@@ -19,11 +19,21 @@ export function strapiUrl(path) {
   return `${getStrapiBase()}${path}`;
 }
 
-/** SWR fetcher for the schedule and Visitor View lists. */
-export function strapiSwrFetcher(url) {
-  return fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_STRAPI_KEY}`
-    }
-  }).then((res) => res.json());
+/** SWR fetcher for the schedule and Visitor View lists. Failures are logged with a "[Strapi]" prefix. */
+export async function strapiSwrFetcher(url) {
+  let res;
+  try {
+    res = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_STRAPI_KEY}`
+      }
+    });
+  } catch (err) {
+    console.error(`[Strapi] Could not reach ${getStrapiBase()} (server down, blocked, or offline):`, err);
+    throw err;
+  }
+  if (!res.ok) {
+    console.error(`[Strapi] ${res.status} from ${url} (401/403 usually means NEXT_PUBLIC_STRAPI_KEY is missing or wrong)`);
+  }
+  return res.json();
 }
