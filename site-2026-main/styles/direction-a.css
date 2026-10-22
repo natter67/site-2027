@@ -199,7 +199,7 @@
   position: absolute;
   top: 2px;
   z-index: 1;
-  animation: da-road-drive 9s linear infinite;
+  animation: da-road-drive 9s linear infinite reverse; /* the car faces left, so it drives right to left */
 }
 @keyframes da-road-drive {
   from { left: -90px; }

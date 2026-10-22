@@ -79,7 +79,7 @@ export default function ContactUsPage() {
 					{CONTACTS.map(c =>
 						<div className='md:p-4 text-sm md:text-base' key={c.email}>
 							<p className="font-body font-bold mx-auto">{c.title}</p>
-							<a href="mailto:eoh-advancement@ec.illinois.edu" className='font-body text-[#13294b] hover:text-[#13294b]'>{c.email}</a>
+							<a href={`mailto:${c.email}`} className='font-body text-[#13294b] hover:text-[#13294b]'>{c.email}</a>
 						</div>
 					)}
 				</div>

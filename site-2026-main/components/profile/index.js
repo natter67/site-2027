@@ -9,6 +9,8 @@ export default function Profile({ img, Name, Position, Class, Major }) {
         className="w-40 h-44 shadow-md object-cover rounded-xl"
         width={160}
         height={176}
+        loading="lazy"
+        decoding="async"
         style={{}}
       />
       <h3 className="font-body font-bold text-md pt-2 pb-0">{Name}</h3>
