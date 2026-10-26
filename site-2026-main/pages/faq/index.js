@@ -9,7 +9,7 @@ export default function FaqPage() {
         <div className="flex flex-col">
             <Content
                 title="Frequently Asked Questions (FAQs)"
-                onThisPage={["Event FAQs", "Parking FAQs", "Food FAQs", "Emergency FAQs"].map((label) => ({ id: label.toLowerCase().replace(/\s+/g, "-"), label }))}
+                onThisPage={["Event FAQs", "Parking FAQs", "Food FAQs", "Field Trip FAQs", "Emergency FAQs", "Miscellaneous FAQs"].map((label) => ({ id: label.toLowerCase().replace(/\s+/g, "-"), label }))}
             >
                 <Faqs />
             </Content>

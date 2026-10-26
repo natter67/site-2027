@@ -1,27 +1,32 @@
 import Link from "next/link";
 import {
   PRIMARY_NAV,
-  ABOUT_NAV,
+  HISTORY_URL,
+  ENGINEERING_COUNCIL_URL,
   MAILING_LIST_URL,
   SOCIAL_LINKS,
   LINKTREE_URL,
   linkProps,
-  sectionLinks,
+  menuLinks,
 } from "@utilities/navigation";
 
-// Footer columns mirror the main menu (utilities/navigation.js); the Schedule links sit under Explore.
+// Footer columns mirror the main menu (utilities/navigation.js); History of EOH and Engineering Council
+// (other sites) are only here, under About Us.
 const byKey = Object.fromEntries(PRIMARY_NAV.map((s) => [s.key, s]));
 const column = (section, extra = []) => ({
   key: section.key,
   label: section.label,
-  links: [section.overview, ...sectionLinks(section), ...extra],
+  links: [...menuLinks(section), ...extra],
 });
 const COLUMNS = [
   column(byKey.visit),
-  column(byKey.explore, [byKey.schedule.overview, ...sectionLinks(byKey.schedule)]),
+  column(byKey.explore),
   column(byKey.schools),
   column(byKey["get-involved"]),
-  column(ABOUT_NAV),
+  column(byKey.about, [
+    { label: "History of EOH", href: HISTORY_URL },
+    { label: "Engineering Council", href: ENGINEERING_COUNCIL_URL },
+  ]),
 ];
 
 const LINK =

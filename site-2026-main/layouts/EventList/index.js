@@ -19,16 +19,16 @@ const EventCard = (e) => {
 export const FEATURED_EVENTS = [
     {
         "title": "Middle School Design Competition",
-        "subtitle": "April 10th at 11:30 AM",
+        "subtitle": "April 9th at 11:30 AM",
         "blurb": "Middle school students in teams of 3 or 4 compete around a central theme",
-        "link": '/msdc',
+        "link": '/schools/design-competitions#msdc',
         "icon": Ruler
     },
     {
         "title": "High School Design Competition",
-        "subtitle": "April 10th at 11:00 AM",
+        "subtitle": "April 9th at 11:00 AM",
         "blurb": "High school students in teams of 3-5 members compete around a central theme",
-        "link": '/hsdc',
+        "link": '/schools/design-competitions#hsdc',
         "icon": DraftingCompass
     },
     {
@@ -41,9 +41,9 @@ export const FEATURED_EVENTS = [
     // Can add research showcase but don't habe a matching card image
     {
         "title": "Startup Showcase",
-        "subtitle": "April 10th at 11 AM, CIF",
+        "subtitle": "April 9th at 11 AM, CIF",
         "blurb": "Come visit startup booths and experience demos, giveaways, and much more!",
-        "link": '/showcase.pdf',
+        "link": '/startup-showcase',
         "icon": Rocket
     },
     {

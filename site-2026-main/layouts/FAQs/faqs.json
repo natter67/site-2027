@@ -2,13 +2,13 @@
   {
     "id": "event-what-is-eoh",
     "Question": "What is EOH?",
-    "Answer": "EOH is an annual 2-day event that showcases engineering at UIUC, a tradition that has been evolving for over a century. As the largest student-run STEM fair in the country, EOH presents over 200 exhibits to approximately 35,000 visitors each year. Other key events include a Tesla Coil Concert, Build-a-Blinkie, a Keynote Speaker (past speakers include Yu Pan (YouTube, PayPal) and Todd Little (Oracle)), middle and high school design competitions, and more. Visit us on April 10 and 11, 2026!",
+    "Answer": "EOH is an annual 2-day event that showcases engineering at UIUC, a tradition that has been evolving for over a century. As the largest student-run STEM fair in the country, EOH presents over 200 exhibits to approximately 35,000 visitors each year. Other key events include a Tesla Coil Concert, Build-a-Blinkie, a Keynote Speaker (past speakers include Yu Pan (YouTube, PayPal) and Todd Little (Oracle)), middle and high school design competitions, and more. Visit us {dates}!",
     "Category": "Event"
   },
   {
     "id": "event-hours",
     "Question": "What are the event hours?",
-    "Answer": "The shuttle runs from 8:00 am to 5:30 pm on both Friday, April 10, and Saturday, April 11. Exhibits are open from 9:00 am to 4:00 pm unless otherwise noted due to weather.",
+    "Answer": "Exhibits are open {hours} on {dates}, unless otherwise noted due to weather. Shuttle hours are under <a href=\"/visit#getting-here\">Shuttles & parking</a>.",
     "Category": "Event"
   },
   {
@@ -44,7 +44,7 @@
   {
     "id": "event-exhibits",
     "Question": "Where can I find information about specific exhibits?",
-    "Answer": "Check out the Visitor’s Guide for a comprehensive list of all exhibits, locations, special events, parking, shuttle info, emergency details, and maps. A PDF is available on https://eohillinois.org or physical copies can be picked up at Visitor’s Booths.",
+    "Answer": "Browse every exhibit in the <a href=\"/vv\">Visitor Hub</a>. During EOH, printed Visitor Guides are also at the Visitor’s Booths.",
     "Category": "Event"
   },
   {
@@ -60,33 +60,33 @@
     "Category": "Food"
   },
   {
-    "id": "parking-friday",
-    "Question": "Where can I park on Friday?",
-    "Answer": "Lot E-14 (near State Farm Center) offers all-day parking with shuttle service. Lot B-4 (North Campus) offers all-day parking without a shuttle; visitors can walk to Bardeen Quad or use the nearest shuttle stop at B-22.",
-    "Category": "Parking"
+    "id": "field-trip-plan-day",
+    "Question": "What should our group plan on doing throughout the day?",
+    "Answer": "Schools’ schedules are flexible! We recommend checking out our <b>Recommended Events for K-12 Visitors</b> and planning your day around your group’s interests.\n\n<b>Example schedule:</b>\n• <b>8:00-9:00 AM</b> - Bus to EOH\n• <b>9:00-10:00 AM</b> - Explore student exhibits\n• <b>10:30-11:00 AM</b> - Watch Illinois Space Society’s Rocket Launch\n• <b>11:30 AM-12:00 PM</b> - Drive an Excavator with Caterpillar\n• <b>12:00-1:00 PM</b> - Lunch\n• <b>1:00-1:30 PM</b> - Learn to Solder\n• <b>1:30-2:00 PM</b> - Explore student exhibits\n• <b>2:00-2:15 PM</b> - Gather at bus loading zone\n• <b>2:15-3:15 PM</b> - Bus back to school",
+    "Category": "Field Trip"
   },
   {
-    "id": "parking-saturday",
-    "Question": "Where can I park on Saturday?",
-    "Answer": "Available lots include B1, B17, C09, D09, E14, F23, F28, B4, and F29 across campus.",
+    "id": "field-trip-lunch",
+    "Question": "What should our group plan on doing for lunch?",
+    "Answer": "There are a variety of restaurants and food trucks on campus during EOH! Guests are also welcome to pack lunch and eat around campus at our several designated outdoor areas. There will be tables and tents set up near our food trucks as well as grassy areas for groups to sit. Unfortunately, we cannot assign or guarantee specific locations to specific groups because of the large number of guests attending. There are also indoor eating spaces available in the basement of the Illini Union.\n\nSee the <a href=\"#food-faqs\">Food FAQs</a> for the food trucks at EOH.\n\n<b>Some Nearby Restaurants (within ~10 minute walk):</b>\n• Panda Express\n• Mia Za’s: Pizza, Sandwiches, Pasta\n• Shawarma Joint: Casual Mediterranean food, chipotle style\n• Subway\n• Jimmy Johns\n• Noodles & Co\n• Chipotle\n• Murphy’s: American style pub food\n• Thai Fusion: Casual Thai food\n• Atomic Wings: Chicken wings and sandwiches",
+    "Category": "Field Trip"
+  },
+  {
+    "id": "parking-where",
+    "Question": "Where can I park?",
+    "Answer": "Some lots are open both days, and more open on Saturday. Every lot, with a Google Maps link, is listed under <a href=\"/visit#getting-here\">Shuttles & parking</a>.",
     "Category": "Parking"
   },
   {
     "id": "parking-shuttle",
     "Question": "Is shuttle service available?",
-    "Answer": "Yes. Shuttles run from 8:00 am to 5:30 pm on both days, stopping at major parking lots and exhibit hubs such as ECEB, CIF, and Everitt Laboratory. Full routes are available in the Visitor’s Guide.",
-    "Category": "Parking"
-  },
-  {
-    "id": "parking-shuttle-stops",
-    "Question": "What are the shuttle stops?",
-    "Answer": "Stops include Lot E-14, Everitt Laboratory, Electrical and Computer Engineering Building (ECEB), Lot B-22, and Lot B-1.",
+    "Answer": "Yes. EOH shuttles loop between parking lots and the exhibit areas on both days. Hours, stops and the route map are under <a href=\"/visit#getting-here\">Shuttles & parking</a>.",
     "Category": "Parking"
   },
   {
     "id": "parking-buses",
     "Question": "Where do buses pick up and drop off?",
-    "Answer": "All buses must use Lot B-22. Visitors should walk or take the shuttle to B-22 for bus pickup at the end of the day.",
+    "Answer": "Drop-off, parking and pick-up directions for school buses are on the <a href=\"/field-trips\">Field trips</a> page.",
     "Category": "Parking"
   },
   {
@@ -110,7 +110,13 @@
   {
     "id": "emergency-hospitals",
     "Question": "Which hospitals are nearby?",
-    "Answer": "Nearby hospitals include Carle Foundation Hospital and OSF Presence Covenant Medical Center.",
+    "Answer": "Nearby hospitals include Carle Foundation Hospital and OSF HealthCare Sacred Heart Medical Center – Urbana.",
+    "Category": "Emergency"
+  },
+  {
+    "id": "emergency-other",
+    "Question": "What should I do in any other emergency?",
+    "Answer": "Approach any EOH volunteer in the Visitor’s Booth in the Campus Instructional Facility (CIF).",
     "Category": "Emergency"
   },
   {

@@ -24,8 +24,8 @@ const MOVED_ANCHORS = {
   "#awards": "/explore/awards",
   "#keynote": "/explore/keynotes",
   "#visitors": "/visit",
-  "#world-quantum-day": "/explore/initiatives#world-quantum-day",
-  "#scc": "/explore/initiatives#scc",
+  "#world-quantum-day": "/explore/awards#world-quantum-day",
+  "#scc": "/explore/awards#scc",
   "#special-events": "/explore/special-events",
 }
 

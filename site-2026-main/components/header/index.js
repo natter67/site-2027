@@ -5,12 +5,12 @@ import MegaMenu from "@/mega-menu"
 import MobileNav from "@/mobile-nav"
 import EventTabBar from "@/event-tab-bar"
 import { useEventMode } from "@utilities/useEventMode"
-import { UTILITY_NAV, DONATE_URL, linkProps } from "@utilities/navigation"
+import { VISITOR_HUB, DONATE_URL, linkProps } from "@utilities/navigation"
 import { useAuth } from "../../providers/Auth"
 
 // Site header. Menu links live in utilities/navigation.js.
-// Heights: 64px on mobile, 88px on desktop (28px utility bar + 60px main row). Page top offsets
-// in components/content, components/section, layouts/Title and pages/vv assume these heights.
+// Heights: 64px on mobile, 72px on desktop (one bar). Page top offsets in components/content,
+// components/section, layouts/Title and pages/vv leave room for these heights.
 
 const FOCUS = "focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-da-orange"
 
@@ -20,8 +20,8 @@ export default function Header() {
   const router = useRouter()
   const { user, loading } = useAuth()
   const mode = useEventMode()
-  // One primary action: "Plan your visit", or the Event Day Hub while EOH is on
-  const primary = mode === "event" ? { label: "Event Day Hub", href: "/vv" } : { label: "Plan your visit", href: "/visit" }
+  // Mobile's one primary action: "Plan your visit", or the Visitor Hub while EOH is on
+  const primary = mode === "event" ? VISITOR_HUB : { label: "Plan your visit", href: "/visit" }
   const accountLink = loading ? null : user ? { label: "Account", href: "/account" } : { label: "Log in", href: "/login" }
 
   useEffect(() => {
@@ -69,29 +69,25 @@ export default function Header() {
         <EventTabBar onMenu={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
       )}
 
-      {/* Desktop: utility bar, then logo + mega menu + primary action */}
-      <header className="fixed top-0 z-30 hidden h-[88px] w-screen border-b-2 border-da-navy bg-white font-body lg:block">
-        <div className="h-7 bg-da-navy text-white">
-          <div className="mx-auto flex h-full max-w-[1280px] items-center justify-end gap-5 px-6 text-xs">
-            {[...UTILITY_NAV, accountLink].filter(Boolean).map((link) => (
-              <Link key={link.href} href={link.href} className={`font-medium hover:underline hover:decoration-da-orange-light hover:underline-offset-4 ${FOCUS}`}>
-                {link.label}
-              </Link>
-            ))}
-            <a href={DONATE_URL} {...linkProps(DONATE_URL)} className={`rounded-full bg-da-orange px-3 py-0.5 font-bold text-da-navy hover:bg-da-orange-light ${FOCUS}`}>
-              Donate
-            </a>
-          </div>
-        </div>
-        <div className="mx-auto flex h-[58px] max-w-[1280px] items-stretch px-6">
+      {/* Desktop: one bar with the logo, mega menu, then Log in, Visitor Hub and Donate */}
+      <header className="fixed top-0 z-30 hidden h-[72px] w-screen border-b-2 border-da-navy bg-white font-body lg:block">
+        <div className="mx-auto flex h-full max-w-[1280px] items-stretch px-6">
           <Link href="/" aria-label="Engineering Open House home" className={`mr-4 flex shrink-0 items-center ${FOCUS}`}>
             <img src="/assets/logo/eohheader2027.svg" alt="Engineering Open House" className="h-10 w-auto" draggable={false} />
           </Link>
           <MegaMenu />
-          <div className="flex items-center">
-            <Link href={primary.href} className={`da-pill da-pill--sm da-pill--primary whitespace-nowrap ${FOCUS}`}>
-              {primary.label}
-            </Link>
+          <div className="flex items-center gap-2">
+            {[accountLink, VISITOR_HUB].filter(Boolean).map((link) => (
+              <Link key={link.href} href={link.href} className={`da-pill da-pill--sm da-pill--primary whitespace-nowrap ${FOCUS}`}>
+                {link.label}
+              </Link>
+            ))}
+            {/* Hidden below 1280px so the bar fits; Donate is also under Get Involved */}
+            <span className="hidden xl:flex">
+              <a href={DONATE_URL} {...linkProps(DONATE_URL)} className={`da-pill da-pill--sm da-pill--navy whitespace-nowrap ${FOCUS}`}>
+                Donate
+              </a>
+            </span>
           </div>
         </div>
       </header>

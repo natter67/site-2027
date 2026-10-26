@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
-import { PRIMARY_NAV, UTILITY_NAV, DONATE_URL, linkProps, sectionLinks } from "@utilities/navigation";
+import { PRIMARY_NAV, VISITOR_HUB, DONATE_URL, linkProps, menuLinks } from "@utilities/navigation";
 
-// Mobile menu (below lg): one accordion per primary section, then the utility links.
+// Mobile menu (below lg): one accordion per primary section, then the Visitor Hub, Log in and Donate.
 // Opened and closed by components/header (which also handles Esc and route changes).
 
 const FOCUS = "focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-2 focus-visible:outline-da-orange";
@@ -31,7 +31,7 @@ export default function MobileNav({ open, accountLink }) {
                 </svg>
               </button>
               <ul id={`mobile-nav-${section.key}`} hidden={!isOpen} className="m-0 list-none bg-[#F5F5F5] px-5 pb-3 pt-1">
-                {[section.overview, ...sectionLinks(section)].map((link) => (
+                {menuLinks(section).map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} {...linkProps(link.href)} className={`block rounded py-2.5 pl-3 text-base ${link === section.overview ? "font-bold" : ""} ${FOCUS}`}>
                       {link.label}
@@ -44,7 +44,7 @@ export default function MobileNav({ open, accountLink }) {
         })}
       </ul>
       <ul className="m-0 flex list-none flex-col gap-1 p-5">
-        {[...UTILITY_NAV, accountLink].filter(Boolean).map((link) => (
+        {[VISITOR_HUB, accountLink].filter(Boolean).map((link) => (
           <li key={link.href}>
             <Link href={link.href} className={`block rounded py-2 text-base underline decoration-da-orange decoration-2 underline-offset-4 ${FOCUS}`}>
               {link.label}

@@ -1,5 +1,6 @@
-// Visitor Guide web version (/visit/guide). Text extracted word for word from public/guide.pdf (the EOH 2026
-// guide, pages 3, 5, 6, 9 and 10); only line breaks were joined. Update this file when the 2027 guide is ready.
+// Text extracted word for word from public/guide.pdf (the EOH 2026 guide, pages 3, 5, 6, 9 and 10); only line
+// breaks were joined. The /visit/guide web copy was retired; `specialEvents` still feeds /explore/special-events
+// and the home Robobrawl teaser. Update this file when the 2027 guide is ready.
 // Generated once from the PDF; edit by hand from now on.
 export const GUIDE = {
   "visitorInfo": [
@@ -71,7 +72,7 @@ export const GUIDE = {
       "heading": "Local Hospitals",
       "list": [
         "Carle Foundation Hospital",
-        "Presence Covenant Medical Center"
+        "OSF HealthCare Sacred Heart Medical Center – Urbana"
       ]
     },
     {

@@ -13,8 +13,8 @@ dayjs.extend(timezone);
 
 
 // What days are EOH on
-const DAY_ONE = 10;
-const DAY_TWO = 11;
+const DAY_ONE = 9;
+const DAY_TWO = 10;
 
 const slotGradients = {
   0: 'bg-red-700',
@@ -28,8 +28,8 @@ const slotGradients = {
 const timeMsPerSlot = 1000 * 60 * 30;
 const timeMs8Hrs = 1000 * 60 * 60 * 8.5;
 // What days are EOH on
-const dayOneMs = dayjs.tz('2026-04-10 00:00', 'America/Chicago').valueOf();
-const dayTwoMs = dayjs.tz('2026-04-11 00:00', 'America/Chicago').valueOf();
+const dayOneMs = dayjs.tz('2027-04-09 00:00', 'America/Chicago').valueOf();
+const dayTwoMs = dayjs.tz('2027-04-10 00:00', 'America/Chicago').valueOf();
 
 // Shared with layouts/SchedulePreview (same SWR key, so the data is fetched once).
 export const SCHEDULE_EVENTS_URL = strapiUrl('/api/events?populate=occurences&pagination[pageSize]=40&populate=picture');
@@ -111,7 +111,7 @@ export function Schedule() {
       // This is my fix because I entered the data in European timezone
       const start = toChampaignTime(occ.startTime);
       const end = toChampaignTime(occ.endTime);
-      const date = start.date() === 10 ? DAY_ONE : DAY_TWO; // Change this line to reflect the day EOH is on!
+      const date = start.date() === DAY_ONE ? DAY_ONE : DAY_TWO; // Change this line to reflect the day EOH is on!
       const duration = end.diff(start) / timeMsPerSlot;
       const rowIndex =
         (start.valueOf() -
@@ -190,11 +190,11 @@ export function Schedule() {
                 <button
                     onClick={() => setDayOne(true)}
                     className={`p-3 md:p-5 px-5 md:px-7 font-bold font-montserrat rounded-t-xl
-                    ${onDayOne ? activeStyles : inactiveStyles}`}>Friday, April 10th</button>
+                    ${onDayOne ? activeStyles : inactiveStyles}`}>Friday, April 9th</button>
                 <button
                     onClick={() => setDayOne(false)}
                     className={`p-3 md:p-5 px-5 md:px-7 font-bold font-montserrat rounded-t-xl 
-                    ${onDayOne ? inactiveStyles : activeStyles}`}>Saturday, April 11th</button>
+                    ${onDayOne ? inactiveStyles : activeStyles}`}>Saturday, April 10th</button>
             </span>
             
              <div className="max-h-128 overflow-x-hidden p-4 da-card flex flex-col">

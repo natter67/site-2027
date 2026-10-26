@@ -57,7 +57,7 @@ export default function MegaMenu() {
                 aria-expanded={isOpen}
                 aria-controls={`mega-${section.key}`}
                 onClick={() => setOpen(isOpen ? null : section.key)}
-                className={`flex items-center gap-1.5 border-b-4 px-3 pt-1 font-body text-[15px] font-semibold text-da-navy xl:px-4 ${isOpen || current === section.key ? "border-da-orange" : "border-transparent hover:border-da-peach"} ${FOCUS}`}
+                className={`flex items-center gap-1.5 whitespace-nowrap border-b-4 px-2.5 pt-1 font-body text-[15px] font-semibold text-da-navy xl:px-4 ${isOpen || current === section.key ? "border-da-orange" : "border-transparent hover:border-da-peach"} ${FOCUS}`}
               >
                 {section.label}
                 <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}>
@@ -73,9 +73,11 @@ export default function MegaMenu() {
                   <div>
                     <p className="font-display text-3xl uppercase leading-none text-da-navy">{section.label}</p>
                     <p className="mt-3 text-sm leading-relaxed text-da-road">{section.summary}</p>
-                    <Link href={section.overview.href} className={`da-pill da-pill--sm da-pill--navy mt-5 ${FOCUS}`}>
-                      {section.overview.label} <span aria-hidden="true">→</span>
-                    </Link>
+                    {section.overview.inMenus !== false && (
+                      <Link href={section.overview.href} className={`da-pill da-pill--sm da-pill--navy mt-5 ${FOCUS}`}>
+                        {section.overview.label} <span aria-hidden="true">→</span>
+                      </Link>
+                    )}
                   </div>
                   {section.groups.map((group, i) => (
                     <div key={group.heading || i} className={section.groups.length === 1 ? "col-span-3" : ""}>

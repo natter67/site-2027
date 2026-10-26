@@ -4,7 +4,8 @@ import { SCHEDULE_EVENTS_URL } from "@/schedule/schedule";
 import { toScheduleItems } from "@utilities/scheduleItems";
 
 // "Happening now" and "Up next" (event days), from the same Strapi data as the schedule widget.
-// If Strapi is down, it says so and the page's links to the Event Day Hub still work.
+// `stacked` keeps the two lists in one column (the home hero's countdown spot).
+// If Strapi is down, it says so and the page's links to the Visitor Hub still work.
 const UP_NEXT = 4;
 
 function List({ title, items, empty }) {
@@ -30,17 +31,17 @@ function List({ title, items, empty }) {
   );
 }
 
-export default function HappeningNow() {
+export default function HappeningNow({ stacked = false }) {
   const { data, error, isLoading } = useSWR(SCHEDULE_EVENTS_URL, strapiSwrFetcher);
   const now = Date.now();
   const items = toScheduleItems(data);
   const current = items.filter((i) => i.start.valueOf() <= now && i.end && i.end.valueOf() > now);
   const next = items.filter((i) => i.start.valueOf() > now).slice(0, UP_NEXT);
   // DRAFT copy
-  const fallback = isLoading && !error ? "Loading the schedule…" : "Live times aren't available right now. The Event Day Hub lists every exhibit and special event.";
+  const fallback = isLoading && !error ? "Loading the schedule…" : "Live times aren't available right now. The Visitor Hub lists every exhibit and special event.";
 
   return (
-    <div aria-live="polite" className="grid w-full gap-4 md:grid-cols-2">
+    <div aria-live="polite" className={`grid w-full gap-4 ${stacked ? "" : "md:grid-cols-2"}`}>
       <List title="Happening now" items={current} empty={items.length ? "Nothing is scheduled at this moment." : fallback} />
       <List title="Up next" items={next} empty={items.length ? "That's everything for today." : fallback} />
     </div>

@@ -4,44 +4,51 @@ import { Modal } from "../modal/index.js"
 import Info from "../content/info.js"
 
 
+// Shuttle hours, stops and route map. Shown directly on /visit, and in a pop-up on the map.
+export const ShuttleDetails = () => (
+    <>
+        <div className="mb-5">
+            <div className="h-2"></div>
+            <Info>
+                EOH Shuttles are Peoria Charter buses, NOT the MTD public transit buses
+            </Info>
+            <div className="h-2"></div>
+            The shuttle will run from <b>8:00 AM to 5:30 PM</b> Friday and Saturday. Shuttle stops will
+            be:<br />
+            <ul className="ml-2">
+
+                <li>
+                    Lot E-14
+                </li>
+                <li>
+                    Everitt Laboratory
+                </li>
+                <li>
+                    Electrical and Computer Engineering (ECEB)
+                </li>
+                <li>
+                    Lot B-22
+                </li>
+                <li>
+                    Lot B-1
+                </li>
+            </ul>
+            and then will return to E-14 and repeat.
+        </div>
+        <img
+            alt="Map of EOH Shuttles"
+            src="/assets/images/shuttle.jpeg"
+        />
+    </>
+)
+
 export const ShuttleInformation = () => {
     const [modalOpen, setModalOpen] = useState(false)
 
     return (
         <>
             <Modal title="Shuttle Information" open={modalOpen} setOpen={setModalOpen}>
-                <div className="mb-5">
-                    <div className="h-2"></div>
-                    <Info>
-                        EOH Shuttles are Peoria Charter buses, NOT the MTD public transit buses
-                    </Info>
-                    <div className="h-2"></div>
-                    The shuttle will run from <b>8:00 AM to 5:30 PM</b> Friday and Saturday. Shuttle stops will
-                    be:<br />
-                    <ul className="ml-2">
-
-                        <li>
-                            Lot E-14
-                        </li>
-                        <li>
-                            Everitt Laboratory
-                        </li>
-                        <li>
-                            Electrical and Computer Engineering (ECEB)
-                        </li>
-                        <li>
-                            Lot B-22
-                        </li>
-                        <li>
-                            Lot B-1
-                        </li>
-                    </ul>
-                    and then will return to E-14 and repeat.
-                </div>
-                <img
-                    alt="Map of EOH Shuttles"
-                    src="assets/images/shuttle.jpeg"
-                />
+                <ShuttleDetails />
             </Modal>
             <button onClick={() => setModalOpen(true)}
                 className="da-pill da-pill--secondary w-full text-lg"

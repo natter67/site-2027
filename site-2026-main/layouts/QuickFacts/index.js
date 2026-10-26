@@ -7,7 +7,7 @@ const FACTS = [
   { label: "When", value: `${EVENT_FACTS.dates} · ${EVENT_FACTS.hours}`, href: "/visit#when" },
   { label: "Where", value: EVENT_FACTS.location, href: "/visit/map" },
   { label: "Cost", value: EVENT_FACTS.cost, href: "/visit#cost" },
-  { label: "Getting here", value: "Parking & shuttles", href: "/visit/getting-here" },
+  { label: "Getting here", value: "Parking & shuttles", href: "/visit#getting-here" },
 ];
 
 export default function QuickFacts() {

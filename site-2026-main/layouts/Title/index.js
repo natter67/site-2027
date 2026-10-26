@@ -3,8 +3,9 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
 import HeroRoad from "@/hero-road";
+import HappeningNow from "@layouts/HappeningNow";
 import { EVENT_FACTS } from "@utilities/eventConfig";
-import { EXHIBIT_INTEREST_FORM_URL } from "@utilities/navigation";
+import { EXHIBIT_APPLICATION_FORM_URL, EXHIBIT_INTEREST_FORM_URL } from "@utilities/navigation";
 
 export default function HomeVideo({ mode = "pre" }) {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -23,8 +24,9 @@ export default function HomeVideo({ mode = "pre" }) {
 
   const town_hall_dates = [
     {label: "Town Hall 1", date: new Date("2026-10-15T00:00:00"), badge: "OCT 15"},
-    {label: "Town Hall 2", date: new Date("2026-11-02T00:00:00"), badge: "NOV  2"},
-    {label: "Town Hall 3", date: new Date("2026-11-17T00:00:00"), badge: "NOV 17"},
+    // Champaign time (CST, UTC-6), so the countdown is right in any time zone
+    {label: "Town Hall 2", date: new Date("2026-11-02T19:00:00-06:00"), badge: "NOV  2 · 7 PM"},
+    {label: "Town Hall 3", date: new Date("2026-11-17T17:30:00-06:00"), badge: "NOV 17 · 5:30 PM"},
 
   ]
 
@@ -191,22 +193,37 @@ export default function HomeVideo({ mode = "pre" }) {
             </Link>
           </div>
           {mode === "pre" && (
-            <a
-              href={EXHIBIT_INTEREST_FORM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="da-pill da-pill--navy mt-3 max-w-full text-center text-base sm:text-lg"
-            >
-              <span>
-                <span className="font-normal text-da-orange-light">Exhibitors:</span> EOH Exhibits Interest Form 2026-2027
-              </span>
-              <span aria-hidden="true">↗</span>
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
+            <div className="mt-3 flex flex-col items-start gap-3">
+              <a
+                href={EXHIBIT_INTEREST_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="da-pill da-pill--navy max-w-full text-center text-base sm:text-lg"
+              >
+                <span>
+                  <span className="font-normal text-da-orange-light">Exhibitors:</span> EOH Exhibits Interest Form 2026-2027
+                </span>
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              <a
+                href={EXHIBIT_APPLICATION_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="da-pill da-pill--navy max-w-full text-center text-base sm:text-lg"
+              >
+                <span>
+                  <span className="font-normal text-da-orange-light">Exhibitors:</span> EOH Exhibit Application Form 2026-2027
+                </span>
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
           )}
         </header>
 
-        {/* Official 2027 logo (unaltered; its white background sits on a white card) + countdown */}
+        {/* Official 2027 logo (unaltered; its white background sits on a white card) + countdown,
+            or Happening now / Up next while EOH is on */}
         <div className="flex w-full flex-col items-center gap-6 md:w-1/2">
           <div className="da-card w-full max-w-xl overflow-hidden p-2 sm:p-3">
             <Image
@@ -254,6 +271,12 @@ export default function HomeVideo({ mode = "pre" }) {
               );
             })}
           </div>}
+          {mode === "event" && (
+            <div className="w-full max-w-xl">
+              <h2 className="sr-only">Live schedule</h2>
+              <HappeningNow stacked />
+            </div>
+          )}
         </div>
       </div>
 

@@ -32,7 +32,7 @@ export default function PostEventLead() {
             <li className="da-card p-5">
               <h3 className="text-xl font-bold">Save the date</h3>
               <p className="mt-2 text-lg font-semibold">EOH {next.year}: {next.month} {next.days}</p>
-              <Link href="/future-dates" className="mt-3 inline-block font-semibold underline decoration-da-orange decoration-2 underline-offset-4">Future dates</Link>
+              <Link href="/about#future-dates" className="mt-3 inline-block font-semibold underline decoration-da-orange decoration-2 underline-offset-4">Future dates</Link>
             </li>
           )}
         </ul>

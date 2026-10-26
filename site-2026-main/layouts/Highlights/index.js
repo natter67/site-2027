@@ -22,10 +22,10 @@ const HIGHLIGHTS = [
     href: "/explore/keynotes",
     icon: Mic,
   },
-  event("Middle School Design Competition", "/msdc"),
-  event("High School Design Competition", "/hsdc"),
+  event("Middle School Design Competition", "/schools/design-competitions#msdc"),
+  event("High School Design Competition", "/schools/design-competitions#hsdc"),
   event("Startup Showcase", "/startup-showcase"),
-  { title: robobrawl.name, blurb: robobrawl.details, href: `/visit/guide#${slug(robobrawl.name)}`, icon: Swords },
+  { title: robobrawl.name, blurb: robobrawl.details, href: `/explore/special-events#${slug(robobrawl.name)}`, icon: Swords },
 ];
 
 export default function Highlights() {

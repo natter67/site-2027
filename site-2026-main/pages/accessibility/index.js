@@ -7,7 +7,7 @@ export default function AccessibilityPage() {
   return (
     <Fragment>
       <Head>
-        <title>Event Accessibility | EOH 2026</title>
+        <title>Event Accessibility | EOH 2027</title>
         <meta name="description" content="Engineering Open House accessibility information and accommodation requests for events and programs." />
       </Head>
       <Content title="Event Accessibility">

@@ -1,10 +1,10 @@
 import React from 'react';
 import useSWR from 'swr';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
+import { EVENT_FACTS } from '@utilities/eventConfig';
 import rawFaqs from './faqs.json';
 
 const colors = ['bg-[#13294b] text-white', 'bg-[#ff5f05] text-da-navy'] // navy text on orange for contrast
@@ -20,6 +20,11 @@ const colors = ['bg-[#13294b] text-white', 'bg-[#ff5f05] text-da-navy'] // navy 
 //   </div>
 // )
 
+// Answers are HTML (links allowed) and can use {dates} and {hours}, filled from utilities/eventConfig.js
+// so the FAQ always shows the same dates as the rest of the site. Facts that a page owns (parking lots,
+// shuttle stops, bus directions) aren't repeated here: the answer links to that page instead.
+const fill = (str) => str.replace(/\{(dates|hours)\}/g, (_, key) => EVENT_FACTS[key]);
+
 const normalizeFaqs = (faqs) => {
   return faqs.reduce((acc, faq) => {
     const { id, Category, Question, Answer } = faq;
@@ -29,7 +34,7 @@ const normalizeFaqs = (faqs) => {
     const faqItem = {
       id,
       title: Question,
-      content: Answer,
+      content: fill(Answer),
     };
 
     if (!acc[categoryKey]) {
@@ -43,7 +48,7 @@ const normalizeFaqs = (faqs) => {
 };
 
 
-// `only` (optional): category names to show, e.g. ['Parking FAQs'] on /visit/getting-here
+// `only` (optional): category names to show, e.g. ['Parking FAQs']
 const Faqs = ({ only }) => {
   // const fetcher = (url) => fetch(url).then((res) => res.json());
   const [expandedId, setExpandedId] = useState(null);
@@ -53,12 +58,7 @@ const Faqs = ({ only }) => {
   //   fetcher
   // );
 
-  const [categories, setCategories] = useState({
-    'Event FAQs': [],
-    'Parking FAQs': [],
-    'Food FAQs': [],
-    'Emergency FAQs': [],
-  });
+  const categories = normalizeFaqs(rawFaqs);
 
 
   // This is the code when grabbing FAQs from Strapi
@@ -79,12 +79,7 @@ const Faqs = ({ only }) => {
   //   }
   // }, [data]);
 
-  useEffect(() => {
-    const groupedFaqs = normalizeFaqs(rawFaqs);
-    setCategories(groupedFaqs);
-  }, []);
-
-  const categoryOrder = ['Event FAQs', 'Parking FAQs', 'Food FAQs', 'Emergency FAQs'];
+  const categoryOrder = ['Event FAQs', 'Parking FAQs', 'Food FAQs', 'Field Trip FAQs', 'Emergency FAQs', 'Miscellaneous FAQs'];
 
   const replaceWithBr = (str) => {
     return str.replace(/\n/g, "<br />")
@@ -104,22 +99,28 @@ const Faqs = ({ only }) => {
           <div key={category} id={category.toLowerCase().replace(/\s+/g, "-")} className="mb-8 scroll-mt-24 lg:scroll-mt-32">
             <h2 className="font-display text-2xl uppercase mb-4">{category}</h2>
             <div className="flex flex-col gap-4 ">
-              {faqs.map((faq) => (
-                <button type="button" 
-                  key={faq.id} 
-                  className={`p-5 ${colors[idx % colors.length]} rounded-2xl border-2 border-da-navy hover:bg-opacity-80`}
-                  aria-expanded={expandedId === faq.id}
-                  aria-controls={`faq-answer-${faq.id}`}
-                  id={`faq-question-${faq.id}`}
-                  onClick={() => { if (expandedId == faq.id) { setExpandedId(null) } else setExpandedId(faq.id) }}
-                  >
-                  <h3 className="font-semibold text-lg md:text-xl text-left">{faq.title}</h3>
-                  {expandedId == faq.id &&
-                    <p className="text-sm text-left mt-2"
-                      dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }}></p>
-                  }
-                </button>
-              ))}
+              {faqs.map((faq) => {
+                const open = expandedId === faq.id;
+                // The question is the button; the answer sits outside it so it can hold links
+                return (
+                  <div key={faq.id} className={`${colors[idx % colors.length]} rounded-2xl border-2 border-da-navy`}>
+                    <h3 className="font-semibold text-lg md:text-xl text-left">
+                      <button type="button"
+                        className="w-full rounded-2xl p-5 text-left hover:underline"
+                        aria-expanded={open}
+                        aria-controls={`faq-answer-${faq.id}`}
+                        id={`faq-question-${faq.id}`}
+                        onClick={() => setExpandedId(open ? null : faq.id)}
+                      >
+                        {faq.title}
+                      </button>
+                    </h3>
+                    <div id={`faq-answer-${faq.id}`} hidden={!open}
+                      className="-mt-2 px-5 pb-5 text-sm text-left [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2"
+                      dangerouslySetInnerHTML={{ __html: replaceWithBr(faq.content) }}></div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         );

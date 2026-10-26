@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import Content from "@/content";
 import Head from "next/head";
 import Bubble from "@/bubble";
-import Button from "@/button";
 import SponsorCard from "@/sponsor-card";
 
 export default function Judging() {
@@ -24,7 +23,7 @@ export default function Judging() {
         {/* Event Details */}
         <div className="max-w-xl mx-auto mb-2 p-3 rounded-lg bg-gray-50">
           <p className="text-lg mb-1">
-            <span className="font-bold">📅 Date:</span> April 10th
+            <span className="font-bold">📅 Date:</span> April 9th
           </p>
           <p className="text-lg mb-1">
             <span className="font-bold">⏰ Time:</span> 8:00 AM – 5:00 PM
@@ -71,21 +70,17 @@ export default function Judging() {
           </a>
         </div>
 
-        {/* CTA */}
+        {/* CTA: greyed out until the 2027 form is ready. The 2026 form was
+            https://docs.google.com/forms/d/e/1FAIpQLSeNWz-dxvtHJQpYfBSIUCWy9fvQZsKtnxLHG_mC_BWMobvohw/viewform */}
         <div className="mx-auto">
-          <Button
-            type="big"
-            className="px-10 py-4 text-lg font-bold rounded-none
-                       bg-gradient-to-r from-[#ff5f05] to-[#ff5f05]
-                       hover:scale-105 transition-transform
-                       drop-shadow-lg"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSeNWz-dxvtHJQpYfBSIUCWy9fvQZsKtnxLHG_mC_BWMobvohw/viewform"
-            target="_blank"
+          <span
+            aria-disabled="true"
+            className="inline-flex cursor-not-allowed items-center bg-gray-300 px-10 py-4 font-montserrat text-lg font-bold text-gray-600"
           >
             Judging Interest Form
-          </Button>
-          <p className="mt-2 text-sm text-gray-500">
-            Takes less than 3 minutes
+          </span>
+          <p className="mt-2 text-sm text-gray-600">
+            The 2027 judging interest form opens in January.
           </p>
         </div>
 

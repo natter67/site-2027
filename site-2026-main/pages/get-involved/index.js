@@ -1,5 +1,5 @@
 import Landing from "@layouts/Landing";
-import { EXHIBIT_INTEREST_FORM_URL, PRIMARY_NAV } from "@utilities/navigation";
+import { EXHIBIT_APPLICATION_FORM_URL, EXHIBIT_INTEREST_FORM_URL, PRIMARY_NAV } from "@utilities/navigation";
 
 // Get Involved landing page. The #exhibit block carries the exhibits interest form
 // (it used to be the main button in the home page hero).
@@ -11,11 +11,17 @@ export default function GetInvolvedPage() {
       <section id="exhibit" aria-labelledby="exhibit-heading" className="da-card mx-auto mb-12 w-full max-w-3xl scroll-mt-24 p-6 text-left md:p-8 lg:scroll-mt-32">
         <h2 id="exhibit-heading" className="font-display text-3xl uppercase leading-none">Exhibit at EOH</h2>
         {/* DRAFT copy */}
-        <p className="mt-3 text-lg">Show your project at EOH: start with the exhibits interest form.</p>
-        <a href={EXHIBIT_INTEREST_FORM_URL} target="_blank" rel="noopener noreferrer" className="da-pill da-pill--primary mt-5">
-          EOH Exhibits Interest Form 2026-2027 <span aria-hidden="true">↗</span>
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
+        <p className="mt-3 text-lg">Show your project at EOH: fill out the exhibits interest form, then submit the exhibit application.</p>
+        <div className="mt-5 flex flex-col items-start gap-3">
+          <a href={EXHIBIT_INTEREST_FORM_URL} target="_blank" rel="noopener noreferrer" className="da-pill da-pill--primary">
+            EOH Exhibits Interest Form 2026-2027 <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <a href={EXHIBIT_APPLICATION_FORM_URL} target="_blank" rel="noopener noreferrer" className="da-pill da-pill--primary">
+            EOH Exhibit Application Form 2026-2027 <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </div>
       </section>
     </Landing>
   );

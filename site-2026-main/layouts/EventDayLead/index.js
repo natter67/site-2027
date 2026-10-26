@@ -1,8 +1,8 @@
 import Link from "next/link";
-import HappeningNow from "@layouts/HappeningNow";
 import { EVENT_FACTS } from "@utilities/eventConfig";
 
 // Top of the home page on event days (utilities/eventConfig.js decides the mode). Copy is DRAFT.
+// Happening now / Up next sits below, in the hero's countdown spot (layouts/Title).
 export default function EventDayLead() {
   return (
     <section aria-labelledby="event-day-heading" className="bg-da-navy pb-12 pt-24 font-body text-white lg:pt-[120px]">
@@ -14,12 +14,9 @@ export default function EventDayLead() {
           Today at EOH
         </h2>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/vv" className="da-pill da-pill--primary text-lg">Open the Event Day Hub</Link>
+          <Link href="/vv" className="da-pill da-pill--primary text-lg">Open the Visitor Hub</Link>
           <Link href="/visit/map" className="da-pill da-pill--secondary">Map</Link>
-          <Link href="/visit/getting-here" className="da-pill da-pill--secondary">Shuttles & parking</Link>
-        </div>
-        <div className="mt-8 text-da-navy">
-          <HappeningNow />
+          <Link href="/visit#getting-here" className="da-pill da-pill--secondary">Shuttles & parking</Link>
         </div>
       </div>
     </section>

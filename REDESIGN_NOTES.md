@@ -349,6 +349,48 @@ It is mounted once in `pages/_app.js`.
   - `/events-list`: the event table's header row was missing its `<tr>`.
   - `/volunteer`: the event list now loads only while someone is signed in, and reloads after sign-in. Before, a signed-out load hit the Firestore rules ("permission denied") and never retried, so a volunteer who then signed in saw no shifts until they refreshed.
 
+## Fall 2026 updates (2026-10-25; from visitor UX feedback)
+**Forms and content**
+- Exhibit application form (`EXHIBIT_APPLICATION_FORM_URL`) sits under the interest form in the home hero and on `/get-involved#exhibit`.
+- Town Hall 2 and 3 now count down to Nov 2 at 7 PM and Nov 17 at 5:30 PM Champaign time (Town Hall 1 unchanged).
+- `/merch` (new Merch tab): greyed-out "Preorder form coming soon" **placeholder** until the preorder form exists.
+- `/field-trips`: the 2026 registration form became the "EOH School Interest Form 2027"; a note says registration opens once T-shirt pricing is out.
+- `/judging`: the 2026 interest form button is greyed out (no link) with "The 2027 judging interest form opens in January." The old URL is in a code comment.
+
+**Navigation**
+- Desktop has one 72 px bar: Visit · Explore · Schools & Competitions · Get Involved · About Us · Merch, then Log in and Visitor Hub (same orange style) and Donate. Donate hides between 1024 and 1279 px so the bar fits; it's still under Get Involved and in the footer. "Plan your visit" left the desktop header (it's the Visit tab's overview and a hero button); the mobile header is unchanged.
+- "Event Day Hub" is now **Visitor Hub** everywhere.
+- The Schedule tab is gone: Schedule and Map are under Explore. About EOH and Contact moved from the old top bar into the About Us tab.
+- Happening now / Up next only appears during EOH: in the home hero where the Town Hall countdown was, and at the top of `/schedule` (the event tab bar's "Now"). The pre-event explainer and its menu link were removed.
+
+**Visitor info**
+- `/visit` shows shuttle hours, stops and route map directly (no pop-up), and every parking lot with a Google Maps link. Lot data lives in `utilities/parking.js`, taken from the 2026 Visitor Guide.
+- `/visit/getting-here` and `/visit/food` were removed; they redirect to `/visit#getting-here` and `/faq#food-faqs` (`next.config.js`).
+- The field trip FAQs moved to `/faq` ("Field Trip FAQs"). Its safety question was dropped because the Emergency FAQs already cover it. The Miscellaneous FAQs, which were in the data but never shown, now appear on `/faq`.
+- **FAQ as the one place for answers.** Answers in `layouts/FAQs/faqs.json` can use `{dates}` and `{hours}` (filled from `utilities/eventConfig.js`; this fixed "April 10 and 11, 2026") and HTML links. Facts a page owns aren't repeated: parking and shuttle answers link to `/visit#getting-here`, the bus answer to `/field-trips`, and the field-trip lunch answer to the Food FAQs. The Friday/Saturday parking questions became one "Where can I park?", and "What are the shuttle stops?" folded into the shuttle answer.
+- The FAQ accordion now makes only the question a button, with the answer below it (it used to sit inside the button, so it couldn't hold links and screen readers read it as the button's name). Questions and answers are in the server HTML instead of appearing after the page loads.
+- `/field-trips` no longer repeats car parking (its text listed B-22 for cars, which is bus-only); it links to `/visit#getting-here`. The E-14 and shuttle images went with it; the B-22 bus image stays.
+- **Visitor Guide web copy retired.** `/visit/guide` is now a short page: "The EOH 2027 Visitor Guide comes out in spring", link cards to the pages that hold each topic (Shuttles & parking, Map, Schedule, Special events, Visitor Hub, FAQ) and last year's PDF as an archive link. It left the Visit menu, and the "Download the Visitor Guide (PDF)" button left `/visit`; `/guide` now redirects to `/visit/guide` instead of straight to the 2026 PDF. The guide's special events list moved to `/explore/special-events` under "Special events at EOH 2026" (the home Robobrawl teaser links there); its "Other emergencies" line became an Emergency FAQ. Everything else was already on the site. `utilities/visitorGuide.js` stays as the source of the special events text.
+- **Spring:** replace `public/guide.pdf` with the 2027 guide, swap the notice on `/visit/guide` for a download button (the comment at the top of the page says how), keep the topic links, and replace the 2026 special events list with 2027's.
+- **2027 dates.** Event-day dates written for 2026 (Fri April 10 / Sat April 11) now use the same weekday in 2027 (Fri April 9 / Sat April 10): MSDC, HSDC, `/field-trips`, `/judging`, `/sponsor-us` (also "105th year"), the home Highlights subtitles (`layouts/EventList`; the times are still 2026's, so confirm them) and the schedule widget. This replaces the earlier "keep the schedule widget's dates for now": its day logic (`components/schedule/schedule.js`) now uses April 9–10, 2027, so 2027 Strapi events land on the right day. The 2026 keynote times stay (they're labelled as 2026).
+- **Hospital name** is now "OSF HealthCare Sacred Heart Medical Center – Urbana" (renamed from Heart of Mary in 2026; "Presence Covenant" was its pre-2018 name) in the FAQ and the web Visitor Guide.
+
+**Fewer pages (menu links 33 → 25)**
+- `/msdc` + `/hsdc` → `/schools/design-competitions` (shared description once, a card per competition with its form button). `/field-trips` links there instead of repeating the text.
+- `/explore/initiatives` merged into `/explore/awards` ("Awards & Initiatives").
+- `/future-dates` moved onto `/about` (`#future-dates`, after the page links).
+- The Explore, Schools & Competitions and Get Involved landing pages only repeat the menu, so they're out of the menus, footer and "More in…" links (`inMenus: false` in `utilities/navigation.js`; breadcrumbs still use them). Get Involved's exhibit block is still reached through "Exhibit at EOH".
+- Merch moved from its own tab into Get Involved until preorders open (5 tabs). History of EOH and Engineering Council (other sites) are footer-only.
+- Old 2023/2025 pages removed: `/events-list`, `/exhibitors`, `/independent-attend` and `public/showcase.pdf` (plus `components/event`, used only by `/events-list`).
+- Every removed URL redirects (`next.config.js`): `/msdc` and `/hsdc` → the design competitions sections, `/explore/initiatives` → `/explore/awards#world-quantum-day`, `/future-dates` → `/about#future-dates`, `/events-list` → `/explore/special-events`, `/exhibitors` → `/get-involved#exhibit`, `/independent-attend` → `/visit`, `/showcase.pdf` → `/startup-showcase`. The home page's old `/#world-quantum-day` and `/#scc` links now go to `/explore/awards`.
+- Also: the Startup Showcase card on `/explore/special-events` links to `/startup-showcase` (it opened the 2025 PDF), and the `/accessibility` browser tab says EOH 2027.
+
+**Still to do**
+- Merch preorder form link; field trip registration form.
+- Top-down map (needs a new map image; the clickable building spots must be re-placed on it).
+- Spring: refresh FAQs, Visitor Guide and parking lots (`utilities/parking.js`), exhibit maps, real registration forms, design competition details.
+- Click-check each Google Maps parking link once; they search by cross streets, not by exact lot pins.
+
 ---
 
 ## Morning report
