@@ -22,7 +22,8 @@ export const SOCIAL_LINKS = [
 
 // The primary menu items. `overview` is the section's landing page; `groups` fill the mega menu.
 // `inMenus: false` keeps a landing page that only repeats the menu out of the menus, footer and
-// "More in…" links (it still shows in breadcrumbs).
+// "More in…" links (it still shows in breadcrumbs). `directLink: true` makes the desktop header
+// item go straight to the landing page instead of opening a mega menu.
 export const PRIMARY_NAV = [
   {
     key: "visit",
@@ -79,6 +80,7 @@ export const PRIMARY_NAV = [
   {
     key: "get-involved",
     label: "Get Involved",
+    directLink: true,
     summary: "Exhibit, volunteer, judge, sponsor or donate.",
     overview: { label: "Get Involved overview", href: "/get-involved", summary: "Exhibit, volunteer, judge, sponsor or donate.", inMenus: false },
     groups: [

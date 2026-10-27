@@ -4,9 +4,11 @@ import { useRouter } from "next/router";
 import { PRIMARY_NAV, findNavEntry, linkProps } from "@utilities/navigation";
 
 // Desktop main menu (lg and up). Click a section to open its panel; click again, press Esc,
-// click outside or tab away to close. Links come from utilities/navigation.js.
+// click outside or tab away to close. Sections with `directLink` are plain links to their
+// landing page. Links come from utilities/navigation.js.
 
 const FOCUS = "focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-da-orange";
+const TAB = "flex items-center gap-1.5 whitespace-nowrap border-b-4 px-2.5 pt-1 font-body text-[15px] font-semibold text-da-navy xl:px-4";
 
 export default function MegaMenu() {
   const [open, setOpen] = useState(null);
@@ -49,6 +51,19 @@ export default function MegaMenu() {
       <ul className="m-0 flex h-full list-none items-stretch p-0">
         {PRIMARY_NAV.map((section) => {
           const isOpen = open === section.key;
+          if (section.directLink) {
+            return (
+              <li key={section.key} className="flex items-stretch">
+                <Link
+                  href={section.overview.href}
+                  onClick={() => setOpen(null)}
+                  className={`${TAB} ${current === section.key ? "border-da-orange" : "border-transparent hover:border-da-peach"} ${FOCUS}`}
+                >
+                  {section.label}
+                </Link>
+              </li>
+            );
+          }
           return (
             <li key={section.key} className="flex items-stretch">
               <button
@@ -57,7 +72,7 @@ export default function MegaMenu() {
                 aria-expanded={isOpen}
                 aria-controls={`mega-${section.key}`}
                 onClick={() => setOpen(isOpen ? null : section.key)}
-                className={`flex items-center gap-1.5 whitespace-nowrap border-b-4 px-2.5 pt-1 font-body text-[15px] font-semibold text-da-navy xl:px-4 ${isOpen || current === section.key ? "border-da-orange" : "border-transparent hover:border-da-peach"} ${FOCUS}`}
+                className={`${TAB} ${isOpen || current === section.key ? "border-da-orange" : "border-transparent hover:border-da-peach"} ${FOCUS}`}
               >
                 {section.label}
                 <svg aria-hidden="true" viewBox="0 0 12 12" className={`h-3 w-3 transition-transform motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`}>

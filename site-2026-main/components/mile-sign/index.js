@@ -16,7 +16,10 @@ export default function MileSign({ children, tone = "navy", className = "" }) {
           {children}
         </div>
       </div>
-      <div className="ml-6 h-[18px] w-1.5 bg-da-slate" />
+      <div className="flex justify-between self-stretch px-6">
+        <div className="h-[18px] w-1.5 bg-da-slate" />
+        <div className="h-[18px] w-1.5 bg-da-slate" />
+      </div>
     </div>
   );
 }

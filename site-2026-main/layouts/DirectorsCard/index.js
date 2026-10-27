@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Home page card for the Note from the Directors. The quote is the letter's first paragraph,
-// copied word for word from layouts/Directors (the full letter at /about/directors). If the
-// letter changes, update this quote too. Photos go through next/image (the originals are 3–6 MB).
+// copied word for word from layouts/Directors (the full letter at /about/directors), ending in
+// "…" because the letter continues. If the letter changes, update this quote too. Photos go through next/image (the originals are 3–6 MB).
 const DIRECTORS = [
   { name: "Aparna Kamath", initials: "AK", photo: "/assets/headshots/aparna.jpg" },
   { name: "Maddie Conrad", initials: "MC", photo: "/assets/headshots/maddie.jpg" },
@@ -29,7 +29,8 @@ export default function DirectorsCard() {
         <blockquote className="m-0">
           <p className="text-lg leading-relaxed md:text-xl">
             <span aria-hidden="true" className="font-display text-4xl leading-none text-da-orange-text">“</span>
-            Welcome to the 104th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.
+            Welcome to the 104th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.&nbsp;…
+            <span aria-hidden="true" className="relative top-[0.4em] ml-1 font-display text-4xl leading-[0] text-da-orange-text">”</span>
           </p>
         </blockquote>
       </div>

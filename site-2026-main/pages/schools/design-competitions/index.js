@@ -25,10 +25,10 @@ export default function DesignCompetitionsPage() {
             type="big"
             divClass="mt-6 flex justify-center"
             className="px-6 py-3 rounded-md drop-shadow-md text-lg font-semibold"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSekpeSFjM1RHXKDca-OCqi5ldS5q_Zxy296I5WThF-YjvewyA/viewform"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd2MLFX55p4wLpRVgdy1Yb6FnqQWRl8LBAV9uhGzLRXj41N3w/viewform"
             target="_blank"
           >
-            MSDC Registration Closed
+            MSDC 2027 Interest Form
           </Button>
         </section>
         <section id="hsdc" aria-labelledby="hsdc-heading" className="da-card scroll-mt-24 p-6 lg:scroll-mt-32">

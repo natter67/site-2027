@@ -13,7 +13,8 @@ const FACTS = [
 export default function QuickFacts() {
   return (
     <section aria-label="Quick facts" className="bg-da-navy font-body text-white">
-      <ul className="m-0 mx-auto grid max-w-7xl list-none grid-cols-1 p-0 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Desktop columns size to their text so "Bardeen & North Quad, Urbana →" stays on one line */}
+      <ul className="m-0 mx-auto grid max-w-7xl list-none grid-cols-1 p-0 sm:grid-cols-2 lg:grid-cols-[repeat(4,auto)]">
         {FACTS.map((fact) => (
           <li key={fact.label} className="border-b border-[rgba(255,255,255,0.15)] lg:border-b-0 lg:border-r lg:last:border-r-0">
             <Link
@@ -22,7 +23,7 @@ export default function QuickFacts() {
             >
               <span className="block font-label text-xs font-bold uppercase tracking-[0.12em] text-da-orange-light">{fact.label}</span>
               <span className="mt-1 block text-lg font-semibold">
-                {fact.value} <span aria-hidden="true">→</span>
+                {fact.value}&nbsp;<span aria-hidden="true">→</span>
               </span>
             </Link>
           </li>

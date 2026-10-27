@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -175,13 +175,17 @@ export default function HomeVideo({ mode = "pre" }) {
               strokeLinecap="round"
             />
           </svg>
-          {/* One fact per line on phones so the wrap doesn't change when the web font loads (layout shift) */}
-          <ul className="m-0 mt-4 list-none p-0 font-label text-sm font-bold uppercase tracking-[0.1em] sm:text-base md:flex md:flex-wrap md:gap-x-2">
+          {/* One fact per line on phones and tablets so the wrap doesn't change when the web font loads (layout shift) */}
+          <ul className="m-0 mt-4 list-none p-0 font-label text-sm font-bold uppercase tracking-[0.1em] sm:text-base lg:flex lg:flex-wrap lg:gap-x-2">
+            {/* Two lines on desktop: dates · hours, then location · cost (the location never gets a leading dot) */}
             {[EVENT_FACTS.dates, EVENT_FACTS.hours, EVENT_FACTS.location, EVENT_FACTS.cost].map((fact, i) => (
-              <li key={fact} className="md:whitespace-nowrap">
-                {i > 0 && <span aria-hidden="true" className="mr-2 hidden md:inline">·</span>}
-                {fact}
-              </li>
+              <Fragment key={fact}>
+                {i === 2 && <li aria-hidden="true" className="hidden lg:block lg:basis-full" />}
+                <li className="lg:whitespace-nowrap">
+                  {i % 2 === 1 && <span aria-hidden="true" className="mr-2 hidden lg:inline">·</span>}
+                  {fact}
+                </li>
+              </Fragment>
             ))}
           </ul>
           <div className="mt-6 flex flex-wrap gap-3">

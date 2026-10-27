@@ -200,12 +200,14 @@ export default function VolunteerPortalReserved() {
       <div className="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-900 p-4 mb-6 mx-4 w-11/12 md:w-7/12 rounded shadow-md space-y-3"> 
         <div> 
           <p className="font-semibold">📣 Required Sign Ups</p> 
-          <p className="text-sm mt-1">Please Slack, Text, or Email Hospitality Directors <strong>Divya</strong> (408-826-9656) or <strong>Mohannad</strong> (984-325-7002) with any questions!</p> 
+          <p className="text-sm mt-1">Please Slack or Email Hospitality Directors <strong>Divya</strong> or <strong>Mohannad</strong> with any questions!</p>
           {/* <p className="text-sm mt-1">You are <strong>required</strong> to sign up for at least one day slot, <strong>AND</strong> a set up or tear-down slot.</p>  */}
         </div> 
         <div> 
           <p className="font-semibold">📘 Volunteer Guide</p> 
-          <p className="text-sm mt-1"> Make sure to read the guide before your shift. <br /> <a href="https://docs.google.com/document/d/1kTTXVVkWIa97ATUofiHJ5s6RpGVXGTbLpIfqihlnYZo/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" > View Volunteer Guide → </a> </p> 
+          <p className="text-sm mt-1">More info coming soon.</p>
+          {/* Guide is off until the 2027 version is ready. Restore this line with the new doc link (this is the 2026 one): */}
+          {/* <p className="text-sm mt-1"> Make sure to read the guide before your shift. <br /> <a href="https://docs.google.com/document/d/1kTTXVVkWIa97ATUofiHJ5s6RpGVXGTbLpIfqihlnYZo/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" > View Volunteer Guide → </a> </p> */}
         </div> 
         <div> 
           <p className="font-semibold">💬 Join the Slack</p> 

@@ -1,13 +1,20 @@
 import Landing from "@layouts/Landing";
-import { EXHIBIT_APPLICATION_FORM_URL, EXHIBIT_INTEREST_FORM_URL, PRIMARY_NAV } from "@utilities/navigation";
+import { EXHIBIT_APPLICATION_FORM_URL, EXHIBIT_INTEREST_FORM_URL, PRIMARY_NAV, sectionLinks } from "@utilities/navigation";
 
 // Get Involved landing page. The #exhibit block carries the exhibits interest form
 // (it used to be the main button in the home page hero).
 const section = PRIMARY_NAV.find((s) => s.key === "get-involved");
+// The cards below it swap "Exhibit at EOH" (the #exhibit block already covers it) for Startup
+// Showcase (an Explore page, but startups apply from it). Menus and the footer are unchanged.
+const startupShowcase = PRIMARY_NAV.flatMap(sectionLinks).find((l) => l.href === "/startup-showcase");
+const cards = {
+  ...section,
+  groups: section.groups.map((g) => ({ ...g, links: g.links.map((l) => (l.href === "/get-involved#exhibit" ? startupShowcase : l)) })),
+};
 
 export default function GetInvolvedPage() {
   return (
-    <Landing section={section} title="Get Involved">
+    <Landing section={cards} title="Get Involved">
       <section id="exhibit" aria-labelledby="exhibit-heading" className="da-card mx-auto mb-12 w-full max-w-3xl scroll-mt-24 p-6 text-left md:p-8 lg:scroll-mt-32">
         <h2 id="exhibit-heading" className="font-display text-3xl uppercase leading-none">Exhibit at EOH</h2>
         {/* DRAFT copy */}
