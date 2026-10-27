@@ -11,7 +11,7 @@ export default function Content({ title, metaTitle, children, wide, summary, onT
     <Fragment>
       <Head>
         <title>{metaTitle || title}</title>
-        <link rel="icon" href="/eoh2026.ico" />
+        <link rel="icon" href="/eoh2027.ico" />
       </Head>
       <main className={`text-center flex flex-col justify-center w-10/12 ${wide ? "lg:max-w-7xl" : "lg:max-w-4xl"} mx-auto mt-24 lg:mt-[120px]`}>
         {title && <PageHeader title={title} summary={summary} onThisPage={onThisPage} />}

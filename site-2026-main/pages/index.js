@@ -41,7 +41,7 @@ export default function Home() {
     <Fragment>
       <Head>
         <title>EOH 2027</title>
-        <link rel="icon" href="/eoh2026.ico" />
+        <link rel="icon" href="/eoh2027.ico" />
         <meta name="google-site-verification" content="N_zq-IzUiNIJFGldY3CVIn-PDSYtHkdklYt2VuMSa4E" />
       </Head>
 
