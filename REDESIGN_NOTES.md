@@ -391,6 +391,30 @@ It is mounted once in `pages/_app.js`.
 - Spring: refresh FAQs, Visitor Guide and parking lots (`utilities/parking.js`), exhibit maps, real registration forms, design competition details.
 - Click-check each Google Maps parking link once; they search by cross streets, not by exact lot pins.
 
+## 2026-10-27 updates
+**Contact page (`pages/contact-us/index.js`), rebuilt from research** (report: `~/EOH-2027/reports/Contact page UX for role inboxes.md`)
+- Order: "Not sure who to contact?" card (eoh@ec.illinois.edu, reply time, Quick answers links to FAQ / Plan your visit / Campus map), then five topic groups, then "During EOH". The "On this page" pills jump to each group.
+- Contacts are grouped by topic, not job title. Each entry leads with what the inbox is for, then the role, then the full address (the link text) and a Copy button. Copy only appears once the browser has the Clipboard API (HTTPS or localhost), and its result is read out through one hidden status message.
+- "During EOH" shows the FAQ's own event-help, medical, lost-child, other-emergency and Lost & Found entries, read from `faqs.json`. To change them, edit the FAQ.
+- The committee headshot grid left this page. It is still on `/about-us/meet-the-committee`, linked under "More in About Us".
+- All 17 addresses are unchanged. Each mailto link opens its own address. The note below saying every link opened `eoh-advancement@` is out of date.
+- **DRAFT copy:**
+  - Group headings: Visiting EOH / Schools and competitions / Exhibits and judging / Volunteering, sponsorship and giving / Media and website.
+  - Every entry label, e.g. "Parking, shuttles and safety". **Confirm these four with their directors:** Advancement = "Donations and fundraising", Secretary/Treasurer = "Payments and reimbursements", Facilities = "Exhibit space and equipment", Technology = "Website and Visitor Hub".
+  - "We aim to reply to every email within 2 business days." (reply time set by the owner)
+  - "In a life-threatening emergency, call 911."
+  - The "Accessibility and accommodations" entry, which uses eoh@ just like `/accessibility` does.
+
+**Other changes**
+- MSDC button → "MSDC 2027 Interest Form" (new form URL).
+- Home hero facts: two lines on desktop (dates · hours / location · cost), one fact per line below 1024 px, so no line starts with "·".
+- Quick facts strip: desktop columns size to their text, and each arrow stays attached to its last word.
+- Mile signs have two posts.
+- Directors card quote ends with "…" and a closing quote mark.
+- `/volunteer`: the Hospitality directors' phone numbers are gone. The Volunteer Guide says "More info coming soon"; the 2026 link is kept in a code comment. Its Slack link still points to the 2026 workspace.
+- Desktop "Get Involved" links straight to `/get-involved` (`directLink: true` in `utilities/navigation.js`). The mobile menu still expands it.
+- `/get-involved` cards: Startup Showcase replaces "Exhibit at EOH" (the exhibit block above already covers it). Menus and footer are unchanged.
+
 ---
 
 ## Morning report
@@ -480,7 +504,7 @@ Content that moved off the home page is reached through in-browser hash redirect
 - The map's floor-plan icon is an `<a>` without an `href`, so it can't be reached by keyboard. Fixing it would change `/vv` behaviour.
 - `/sponsor-us` still logs a React hydration warning (#418); this was already there before the redesign.
 - Four old pages are linked from nowhere but still work: `/events-list`, `/exhibitors`, `/independent-attend` (2023 content) and the 2025 `showcase.pdf`. Decide whether to keep, update or redirect them.
-- On the Contact page, every director's email link opens `eoh-advancement@…`, whatever address is shown. This was already the case before the redesign and was not fixed, because links can't change without approval.
+- ~~On the Contact page, every director's email link opens `eoh-advancement@…`, whatever address is shown.~~ Fixed since: each link now opens its own address (checked 2026-10-27).
 - `/#sponsors` is no longer linked from any menu; the Donate and Sponsor links go straight to their pages. The anchor itself still works.
 - Unused but left in place: `layouts/Visitors`, `components/ticker`, `components/mobile-menu`, `/direction-a-preview` (dev-only).
 

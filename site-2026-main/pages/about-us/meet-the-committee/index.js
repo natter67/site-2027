@@ -225,7 +225,7 @@ const COMMITTEE_HEADSHOTS = [
   },
 ];
 
-// The /about-us/meet-the-committee page. Contact Us shows the same grid (CommitteeGrid).
+// The /about-us/meet-the-committee page. Contact Us used to show this grid too; it now links here.
 export default function MeetTheCommitteePage() {
   return (
     <Content title="Committee" wide>

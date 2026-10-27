@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import MileSign from '@/mile-sign';
 
 // variant="road": Direction A home-page section (halftone ground, mile sign above the title; tone="navy" for a dark band).
-// Without a variant it renders exactly as before (used by contact-us and sponsor-us).
+// Without a variant it renders exactly as before (used by sponsor-us).
 export default function Section({ color, title, wide, children, id, variant, mile, tone }) {
 	if (variant === 'road') {
 		const navy = tone === 'navy';
