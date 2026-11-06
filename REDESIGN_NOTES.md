@@ -148,7 +148,7 @@ Content moved off the home page to new pages:
 - The "Exhibit Countdown" (Town Hall dates) is unchanged; it counts to exhibitor town halls, not the event.
 - Highlights shows 5 teasers: Tesla Coil Concert, Keynotes, MSDC, HSDC and Startup Showcase. **Robobrawl was left out because no Robobrawl content exists anywhere on the site.** Add it to `FEATURED_EVENTS` and `layouts/Highlights` once the committee has text.
 - The directors card quotes the letter's first paragraph word for word. Photos come from `public/assets/headshots/{aparna,maddie}.jpg`; the initials "AK · MC" stand in for signatures.
-- The full letter is reformatted only: left-aligned instead of justified, 18 px text, about 70 characters per line. **The letter is still the 2026 letter ("Forging the Future", 104th EOH); the committee needs to supply the 2027 letter.**
+- The full letter is reformatted only: left-aligned instead of justified, 18 px text, about 70 characters per line. **The letter is still the 2026 letter ("Forging the Future"; its EOH number was changed to 107th on 2026-11-05); the committee needs to supply the 2027 letter.**
 - Startup Showcase teaser and menu link go to the existing `/startup-showcase` page.
 
 **Left in place but no longer used:**
@@ -337,7 +337,7 @@ It is mounted once in `pages/_app.js`.
 - Check against the prototype file when it's available.
 - Test on real iOS Safari and Android Chrome (`dvh`, `clip-path`, `-webkit-text-stroke`).
 - **Your call:** the intro also plays when someone's first page is an event-day tool (`/vv`, `/judging/*`, `/volunteer`). That's what the brief asks for, but you may want to skip those pages; a judge or volunteer would see it once per session.
-- The labels ("No. 105", coordinates, "April 09 — 10, 2027", "Bardeen Quad · Urbana-Champaign, IL") are the brief's wording; confirm "No. 105" with the committee.
+- The labels ("No. 105", coordinates, "April 09 — 10, 2027", "Bardeen Quad · Urbana-Champaign, IL") are the brief's wording. The owner set the number to 107 on 2026-11-05, so it now reads "No. 107".
 
 ## Follow-up changes (after the morning report)
 - **Accessibility & sensory guide page removed** (`070abdb`): EOH can't offer a sensory guide. Accommodations stay on `/accessibility`.
@@ -414,6 +414,27 @@ It is mounted once in `pages/_app.js`.
 - `/volunteer`: the Hospitality directors' phone numbers are gone. The Volunteer Guide says "More info coming soon"; the 2026 link is kept in a code comment. Its Slack link still points to the 2026 workspace.
 - Desktop "Get Involved" links straight to `/get-involved` (`directLink: true` in `utilities/navigation.js`). The mobile menu still expands it.
 - `/get-involved` cards: Startup Showcase replaces "Exhibit at EOH" (the exhibit block above already covers it). Menus and footer are unchanged.
+
+## 2026-11-05 updates: `/sponsor-us` matched to the 2026-2027 Sponsorship Packet
+**Content**
+- Letter and stats: 107th year (owner's number; the packet says 106th), 50,000+ attendees, 250+ student-run exhibits, 19 engineering majors. The old bubbles said 35,000+ / 250+ students involved / 130+ exhibits. The letter says EOH 2027.
+- Corporate directors: Trent Barma, Anjali Belur and Iris Niu (names from the owner; the packet's own letter omits Iris).
+- Outreach bundle follows the packet: Build-a-Blinkie removed, "fund a school field trip" added. Competition bundle no longer includes a tech talk.
+- Itemized now matches the packet: Advertisements, Interactive (Tech Talk, Resume Book, Booth with Demo) and a new Individual Sponsorships group (Startup Showcase, Additional Representative, Exhibitor Ceremonies). "Student Career Fair Booth" is removed because the packet doesn't list it.
+- Added the packet's 501(c)(3) sentence, since the packet sends readers to the website for the deductible amounts.
+- The packet button opens `public/assets/sponsors/Sponsorship Packet 2026-2027.pdf` and is now a real link. The 2024-2025 PDF is deleted; its URL redirects to `/sponsor-us`.
+
+**Payment bug fixed**
+- Four `SponsorCard`s shared `id="interactive-capstone-form"`, and each submit button finds its form by id, so all four submitted the first one (Resume Book, $500 gift). "Startup Showcase - $800" was sending $500. Keep each card's `id` unique on the page.
+- With unique ids, Additional Representative and the Booth with Demo would send only their gift part, so `nongiftAmount2` was added: $460 + $40 and $450 + $50. **Inferred from the page's own deductible text; Secretary/Treasurer to confirm.**
+- Every card payment button was tested with the payment site intercepted: each sends its own amount and the total equals the listed price. The GiveCampus "Donate" links were not changed or tested, apart from removing the Career Fair Booth's.
+
+**Still to resolve**
+- Packet PDF needs fixes from the corporate team: "106th year" and "106 years" should say 107, Iris Niu is missing from the letter (dangling "|"), plus "Becomeatitle sponsor" (Focused Bundles page) and "ADVERTISTMENTS" (Itemized page). Replace the file when corrected.
+- **EOH's number is 107 everywhere (owner, 2026-11-05):** `/sponsor-us`, the launch intro, and the directors' letter (`layouts/Directors` and the home `layouts/DirectorsCard`). The letter is still signed "Engineering Open House 2026" until the 2027 letter arrives. `layouts/AboutUs` says "101st in-person EOH" but no page uses it.
+- The FAQ `event-what-is-eoh` says "over 200 exhibits to approximately 35,000 visitors", the packet 250+ and 50,000.
+- `/about-us/meet-the-committee` still lists the previous corporate directors (needs headshots, majors and years for the new ones).
+- Deductible amounts are unchanged from the old page; the packet doesn't list them, so confirm they still apply.
 
 ---
 

@@ -29,7 +29,7 @@ export default function DirectorsCard() {
         <blockquote className="m-0">
           <p className="text-lg leading-relaxed md:text-xl">
             <span aria-hidden="true" className="font-display text-4xl leading-none text-da-orange-text">“</span>
-            Welcome to the 104th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.&nbsp;…
+            Welcome to the 107th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.&nbsp;…
             <span aria-hidden="true" className="relative top-[0.4em] ml-1 font-display text-4xl leading-[0] text-da-orange-text">”</span>
           </p>
         </blockquote>

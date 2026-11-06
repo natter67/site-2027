@@ -20,7 +20,7 @@ export default function Directors() {
             {/* Directors' note spans the width of the image */}
             <div className="da-card w-full max-w-[44rem] p-6 md:p-12">
                 <p className="mt-4">
-                    Welcome to the 104th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.                 </p>
+                    Welcome to the 107th Engineering Open House (EOH) at the University of Illinois Urbana–Champaign! Whether this is your first visit or your tenth, we are incredibly excited to welcome you all to the nation’s largest student-run STEM (Science, Technology, Engineering, and Math) fair and to showcase how the Grainger College of Engineering is <b>Forging the Future</b>.                 </p>
                 <p className="mt-4">
                     For EOH 2026, we chose the theme <b>Forging the Future</b> to highlight the central role that Grainger’s engineers hold in creating and shaping the technologies that will define tomorrow. With 210 exhibits, 19 special events, and 15 engineering startups, most of which were designed and built entirely by current students, we proudly display the creativity, innovation, and ambition of engineering students and faculty at UIUC. Through these efforts, we not only demonstrate the limitless possibilities within STEM, but also aim to inspire the next generation of engineers to imagine and build the future themselves.
                 </p>

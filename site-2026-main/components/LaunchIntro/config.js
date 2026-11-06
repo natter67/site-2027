@@ -39,7 +39,7 @@ export const EASING = {
 
 export const LABELS = {
   topLeft: "EOH — 2027",
-  topCenter: "Engineering Open House · No. 105",
+  topCenter: "Engineering Open House · No. 107",
   topRight: "40.112° N · 88.227° W",
   date: "April 09 — 10, 2027",
   place: "Bardeen Quad · Urbana-Champaign, IL",
