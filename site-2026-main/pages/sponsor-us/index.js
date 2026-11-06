@@ -37,10 +37,10 @@ export default function SponsorUsPage() {
                                     Dear Potential Corporate Partner,
                                     <br />
                                     <br />
-                                    Engineering Open House (EOH) is an annual showcase of engineering, science, technology, and student innovation held at the University of Illinois at Urbana-Champaign. Engineering Open House will be hosted this year from April 9th to April 10th 2027. Now, in its 105th year, EOH draws over 35,000 attendees and participants from across the United States, making it one of the largest student-run events of its kind.
+                                    Engineering Open House (EOH) is an annual showcase of engineering, science, technology, and student innovation held at the University of Illinois at Urbana-Champaign. Engineering Open House will be hosted this year from April 9th to April 10th 2027. Now, in its 107th year, EOH draws over 50,000 attendees and participants from across the United States, making it one of the largest student-run events of its kind.
                                     <br />
                                     <br />
-                                    As an entirely student-run event, EOH is mainly funded by corporate sponsorships. Your company’s contributions will directly benefit students, exhibitors, and educators working to inspire the next generation of engineers. We hope that you choose to join us and we look forward to working with you and your company in making EOH 2026 better than ever. Thank you for your time and interest, please don’t hesitate to contact us with any questions!
+                                    As an entirely student-run event, EOH is mainly funded by corporate sponsorships. Your company’s contributions will directly benefit students, exhibitors, and educators working to inspire the next generation of engineers. We hope that you choose to join us and we look forward to working with you and your company in making EOH 2027 better than ever. Thank you for your time and interest, please don’t hesitate to contact us with any questions!
                                     <br />
                                     <br />
                                     Sincerely,
@@ -54,15 +54,15 @@ export default function SponsorUsPage() {
                                 </div>
                                 <div className="text-center font-body font-bold">
                                     <p>
-                                        Roshni Matthew | Shiv Gohil | Archir Luhana
+                                        Trent Barma | Anjali Belur | Iris Niu
                                     </p>
                                 </div>
                                 <div className="text-center font-body text-sm">eoh-corporate@ec.illinois.edu</div>
                             </div>
                             <div className="hidden lg:block lg:col-span-2 text-center">
-                                <Bubble quantity="35,000+" quality="Attendees" color="#13294B" />
-                                <Bubble quantity="250+" quality="Students Involved" color="#3B4558" />
-                                <Bubble quantity="130+" quality="Student-Run Exhibits" color="#B23A00" />
+                                <Bubble quantity="50,000+" quality="Attendees" color="#13294B" />
+                                <Bubble quantity="250+" quality="Student-Run Exhibits" color="#3B4558" />
+                                <Bubble quantity="19" quality="Engineering Majors" color="#B23A00" />
                             </div>
                         </div>
                     </div>
@@ -74,6 +74,9 @@ export default function SponsorUsPage() {
                             selecting one of our <span className='italic'>Focus Bundles</span> to sponsor a particular aspect of EOH, or choosing to sponsor a <span className="italic">Specific Event
                                 and Student Exhibit</span>. Should you find that these options do not align with what you had in mind, please contact us,
                             and we will work with your representatives to build a sponsorship option that meets your liking.
+                        </div>
+                        <div className="font-body mb-8">
+                            Engineering Open House, as a part of our parent organization, Engineering Council, is a 501(c)(3) nonprofit, which makes portions of our packages tax deductible. The tax-deductible amount is listed with each option.
                         </div>
                         <div className="max-w-2xl mx-auto">
                             <div className="font-body font-white">
@@ -223,12 +226,9 @@ export default function SponsorUsPage() {
                                         <p className="text-lg text-left my-3 mx-10">
                                         You have the option of being the title sponsor of our 
                                         Illinois Engineering Challenge or the Discover EOH 
-                                        program for K-12 students which helps bring students 
-                                        to visit EOH, and are able to participate in a tech 
-                                        talk or panel of your choice. There is an additional 
-                                        option of sponsoring the Build-a-Blinkie Program which 
-                                        helps visitors learn how to solder, and each printed 
-                                        circuit board given out has the sponsor logo on the back.
+                                        program for K-12 students, and are able to participate 
+                                        in a tech talk or panel of your choice. You can also 
+                                        fund a school field trip to EOH.
                                         </p>
                                         <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
@@ -269,8 +269,7 @@ export default function SponsorUsPage() {
                                     <Collapsible contentElementId="sponsor-competition-focus-bundle" triggerElementProps={{ id: "sponsor-competition-focus-bundle-trigger" }} trigger={[<p key="label" className="p-4">Competition Focus Bundle</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
                                         <div className="text-lg text-left my-3 mx-10">
                                             Become a title sponsor,
-                                            provide a sponsored award,
-                                            host a tech talk during EOH,
+                                            provide a sponsored award
                                             and gain access to the
                                             exhibitor resume book for
                                             one of our EOH
@@ -429,79 +428,70 @@ export default function SponsorUsPage() {
                                                 <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=800&">
                                                     <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
-                                                </div>  
+                                        </div>
                                         <SponsorCard
-                                            text={"Host a Tech Talk or Panel - $800"}
+                                            text={"Host a Tech Talk - $800"}
                                             cost="$800"
                                             id="interactive-techtalk-bundle-form"
                                             giftAmount1="800.00" /><br />
-                                            <div className="mx-auto text-center mb-5">
-                                                <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=3000&">
-                                                    <span className="font-body font-bold text-2xl">Donate</span>
-                                                </Button>
-                                                </div>  
-                                        <SponsorCard
-                                            text={"Sponsor the Exhibitor Ceremonies - $3,000"}
-                                            cost="$3,000"
-                                            id="interactive-resumebook-form"
-                                            giftAmount1="3,000.00" /><br />
-                                            <div className="mx-auto text-center mb-5">
-                                                <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55588/donations/new">
-                                                    <span className="font-body font-bold text-2xl">Donate</span>
-                                                </Button>
-                                                </div>  
-                                        <SponsorCard
-                                            text={"Student Career Fair Booth - $500"}
-                                            cost="$500"
-                                            id="interactive-productdemo-form"
-                                            giftAmount1="450.00" /><br />
-                                            <div className="mx-auto text-center mb-5">
+                                        <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
                                                 <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=500&">
                                                     <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
-                                                </div>  
+                                        </div>
                                         <SponsorCard
-                                            text={"Exhibitor Resume Book - $500"}
+                                            text={"Access to Exhibitor Resume Book - $500"}
                                             cost="$500"
-                                            id="interactive-capstone-form"
+                                            id="interactive-resumebook-form"
                                             giftAmount1="500.00" /><br />
-                                            <div className="mx-auto text-center mb-5">
-                                                <p className="text-lg mb-2"></p>
-                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55623/donations/new">
-                                                    <span className="font-body font-bold text-2xl">Donate</span>
-                                                </Button>
-                                                </div>  
-                                        <SponsorCard
-                                            text={"Additional Representative - $500"}
-                                            cost="$500"
-                                            id="interactive-capstone-form"
-                                            giftAmount1="460.00" /><br />
-                                            <div className="mx-auto text-center mb-5">
+                                        <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
                                                 <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55625/donations/new">
                                                     <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
-                                                </div>  
+                                        </div>
                                         <SponsorCard
-                                            text={"Product/Project Demo - $500"}
+                                            text={"EOH Booth with a Product/Project Demo - $500"}
                                             cost="$500"
-                                            id="interactive-capstone-form"
-                                            giftAmount1="450.00" /><br />
-                                            <div className="mx-auto text-center mb-5">
+                                            id="interactive-productdemo-form"
+                                            giftAmount1="450.00" nongiftAmount2="50.00" /><br />
+                                    </ Collapsible>
+                                    <Collapsible contentElementId="sponsor-individual-sponsorships" triggerElementProps={{ id: "sponsor-individual-sponsorships-trigger" }} trigger={[<p key="label" className="p-4">Individual Sponsorships</p>, <div key="icon" className="mr-4"><BsChevronDown /></div>]} triggerOpenedClassName="trigger-opened" contentOuterClassName="opened-sub-content-content">
+                                        <br />
+                                        <div className="mx-auto text-center mb-5">
                                                 <p className="text-lg mb-2"></p>
                                                 <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=800&">
                                                     <span className="font-body font-bold text-2xl">Donate</span>
                                                 </Button>
-                                                </div>  
+                                        </div>
                                         <SponsorCard
-                                            text={"Startup Showcase - $800"}
+                                            text={"Sponsor the Startup Showcase - $800"}
                                             cost="$800"
-                                            id="interactive-capstone-form"
+                                            id="individual-startup-form"
                                             giftAmount1="800.00" /><br />
-                                            
+                                        <div className="mx-auto text-center mb-5">
+                                                <p className="text-lg mb-2"></p>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/55623/donations/new">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
+                                                </Button>
+                                        </div>
+                                        <SponsorCard
+                                            text={"Bring an Additional Company Representative - $500"}
+                                            cost="$500"
+                                            id="individual-representative-form"
+                                            giftAmount1="460.00" nongiftAmount2="40.00" /><br />
+                                        <div className="mx-auto text-center mb-5">
+                                                <p className="text-lg mb-2"></p>
+                                                <Button type='big' className="px-5 py-5 rounded-none drop-shadow-sm font-body hover:shadow-lg max-w-md" href="https://www.givecampus.com/campaigns/49636/donations/new?value=3000&">
+                                                    <span className="font-body font-bold text-2xl">Donate</span>
+                                                </Button>
+                                        </div>
+                                        <SponsorCard
+                                            text={"Sponsor Exhibitor Ceremonies (Awards, Breakfasts, etc.) - $3,000"}
+                                            cost="$3,000"
+                                            id="individual-ceremonies-form"
+                                            giftAmount1="3,000.00" /><br />
                                     </ Collapsible>
                                     
                                 </Collapsible>
@@ -511,7 +501,7 @@ export default function SponsorUsPage() {
                             </p>
                             <div className="mx-auto text-center mb-5">
                                 <Button type="big" className="px-4 rounded-none drop-shadow-md font-body bg-[#c578d6] hover:bg-[#9e4fb8] text-white"
-                                onClick={() => window.open('/assets/sponsors/Sponsorship Packet 2024-2025.pptx.pdf', '_blank')}>
+                                href="/assets/sponsors/Sponsorship%20Packet%202026-2027.pdf" target="_blank">
                                     <span className="font-body font-bold text-md">Corporate Sponsorship Packet</span>
                                 </Button>
                             </div>

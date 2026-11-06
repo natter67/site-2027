@@ -32,6 +32,7 @@ module.exports = {
       { source: '/exhibitors', destination: '/get-involved#exhibit', permanent: true },
       { source: '/independent-attend', destination: '/visit', permanent: true },
       { source: '/showcase.pdf', destination: '/startup-showcase', permanent: true },
+      { source: '/assets/sponsors/Sponsorship%20Packet%202024-2025.pptx.pdf', destination: '/sponsor-us', permanent: true },
     ]
   },
 }
