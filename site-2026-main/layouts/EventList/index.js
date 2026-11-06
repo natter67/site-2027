@@ -41,8 +41,8 @@ export const FEATURED_EVENTS = [
     // Can add research showcase but don't habe a matching card image
     {
         "title": "Startup Showcase",
-        "subtitle": "April 9th at 11 AM, CIF",
-        "blurb": "Come visit startup booths and experience demos, giveaways, and much more!",
+        "subtitle": "April 9–10, TEC Room in CIF",
+        "blurb": "Come visit startup booths and experience demos, giveaways, and much more! The pitch competition is on April 10.",
         "link": '/startup-showcase',
         "icon": Rocket
     },

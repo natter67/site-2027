@@ -37,7 +37,7 @@ export default function SponsorUsPage() {
                                     Dear Potential Corporate Partner,
                                     <br />
                                     <br />
-                                    Engineering Open House (EOH) is an annual showcase of engineering, science, technology, and student innovation held at the University of Illinois at Urbana-Champaign. Engineering Open House will be hosted this year from April 9th to April 10th 2027. Now, in its 107th year, EOH draws over 50,000 attendees and participants from across the United States, making it one of the largest student-run events of its kind.
+                                    Engineering Open House (EOH) is an annual showcase of engineering, science, technology, and student innovation held at the University of Illinois at Urbana-Champaign. Engineering Open House will be hosted this year from April 9th to April 10th 2027. Now, in its 107th year, EOH draws over 35,000 attendees and participants from across the United States, making it one of the largest student-run events of its kind.
                                     <br />
                                     <br />
                                     As an entirely student-run event, EOH is mainly funded by corporate sponsorships. Your company’s contributions will directly benefit students, exhibitors, and educators working to inspire the next generation of engineers. We hope that you choose to join us and we look forward to working with you and your company in making EOH 2027 better than ever. Thank you for your time and interest, please don’t hesitate to contact us with any questions!
@@ -60,7 +60,7 @@ export default function SponsorUsPage() {
                                 <div className="text-center font-body text-sm">eoh-corporate@ec.illinois.edu</div>
                             </div>
                             <div className="hidden lg:block lg:col-span-2 text-center">
-                                <Bubble quantity="50,000+" quality="Attendees" color="#13294B" />
+                                <Bubble quantity="35,000+" quality="Attendees" color="#13294B" />
                                 <Bubble quantity="250+" quality="Student-Run Exhibits" color="#3B4558" />
                                 <Bubble quantity="19" quality="Engineering Majors" color="#B23A00" />
                             </div>

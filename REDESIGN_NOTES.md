@@ -417,7 +417,7 @@ It is mounted once in `pages/_app.js`.
 
 ## 2026-11-05 updates: `/sponsor-us` matched to the 2026-2027 Sponsorship Packet
 **Content**
-- Letter and stats: 107th year (owner's number; the packet says 106th), 50,000+ attendees, 250+ student-run exhibits, 19 engineering majors. The old bubbles said 35,000+ / 250+ students involved / 130+ exhibits. The letter says EOH 2027.
+- Letter and stats: 107th year (owner's number; the packet says 106th), 35,000+ attendees (owner's number; the packet says 50,000), 250+ student-run exhibits, 19 engineering majors. The old bubbles said 35,000+ / 250+ students involved / 130+ exhibits. The letter says EOH 2027.
 - Corporate directors: Trent Barma, Anjali Belur and Iris Niu (names from the owner; the packet's own letter omits Iris).
 - Outreach bundle follows the packet: Build-a-Blinkie removed, "fund a school field trip" added. Competition bundle no longer includes a tech talk.
 - Itemized now matches the packet: Advertisements, Interactive (Tech Talk, Resume Book, Booth with Demo) and a new Individual Sponsorships group (Startup Showcase, Additional Representative, Exhibitor Ceremonies). "Student Career Fair Booth" is removed because the packet doesn't list it.
@@ -430,11 +430,17 @@ It is mounted once in `pages/_app.js`.
 - Every card payment button was tested with the payment site intercepted: each sends its own amount and the total equals the listed price. The GiveCampus "Donate" links were not changed or tested, apart from removing the Career Fair Booth's.
 
 **Still to resolve**
-- Packet PDF needs fixes from the corporate team: "106th year" and "106 years" should say 107, Iris Niu is missing from the letter (dangling "|"), plus "Becomeatitle sponsor" (Focused Bundles page) and "ADVERTISTMENTS" (Itemized page). Replace the file when corrected.
+- Packet PDF needs fixes from the corporate team: "106th year" and "106 years" should say 107, the 50,000 attendance figures should say 35,000+, Iris Niu is missing from the letter (dangling "|"), plus "Becomeatitle sponsor" (Focused Bundles page) and "ADVERTISTMENTS" (Itemized page). Replace the file when corrected.
 - **EOH's number is 107 everywhere (owner, 2026-11-05):** `/sponsor-us`, the launch intro, and the directors' letter (`layouts/Directors` and the home `layouts/DirectorsCard`). The letter is still signed "Engineering Open House 2026" until the 2027 letter arrives. `layouts/AboutUs` says "101st in-person EOH" but no page uses it.
-- The FAQ `event-what-is-eoh` says "over 200 exhibits to approximately 35,000 visitors", the packet 250+ and 50,000.
+- **Visitor count is 35,000+ everywhere (owner, 2026-11-05):** `/sponsor-us`, `/startup-showcase` and the FAQ. The exhibit counts still differ: "over 200" in the FAQ, 250+ on `/sponsor-us` and in the packet.
 - `/about-us/meet-the-committee` still lists the previous corporate directors (needs headshots, majors and years for the new ones).
 - Deductible amounts are unchanged from the old page; the packet doesn't list them, so confirm they still apply.
+
+## 2026-11-05 updates: `/startup-showcase`
+- New description from the Startup Showcase team (cash prize instead of "up to $750"; adds visitors from across the country and Venture Capitalist events). The form button now links the 2027 application form.
+- Deadline is March 1 (owner). The page uses the form's wording, "reviewed on a rolling basis until March 1st", instead of the December 9th in the team's draft.
+- The Highlights and special-events card (`layouts/EventList`) now says April 9–10 in the TEC Room in CIF, with the pitch competition on April 10 (confirmed by the owner). This replaces the 2026 time.
+- The team's draft said "upwards of 45,000 visitors"; the page says 35,000+ to match the rest of the site.
 
 ---
 

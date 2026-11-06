@@ -10,17 +10,17 @@ export default function StartupShowcasePage() {
     <Content title="Startup Showcase">
         <div className="lg:col-span-3 mb-10">
         <div className="font-body col-span-5">
-        EOH Startup Showcase is a subset of the exhibits dedicated to celebrating student startups. You can expect opportunities to be in a pitch competition for prizes up to <span className="font-bold">$750</span>, a chance to give startup talks to visitors, and exposure to our corporate sponsors. We are looking to host around 10 startup businesses from UIUC for EOH, and we are very excited about the awesome ventures that come out of Startup Showcase each year. EOH receives upwards of <span className="font-bold">45,000 visitors</span> every year, so the selected teams stand to gain a lot from participation in this event.
+        EOH Startup Showcase is a subset of the exhibits dedicated to celebrating entrepreneurship at Illinois. You can expect opportunities to be in a pitch competition for a cash prize, a chance to talk to visitors from all across the country about your startup, exposure to Venture Capitalists through dedicated events, and exposure to EOH’s corporate sponsors. We are looking to host around 10 startups from UIUC for EOH, and we are very excited about the awesome ventures that come out of Startup Showcase each year. EOH receives <span className="font-bold">35,000+ visitors</span> every year, so the selected teams stand to gain a lot of traction from participating in this event.
           </div>
           <br/>
           <br/>
           <p className="text-center font-body font-bold">
-          Applications close <span className="text-theme-red font-black">December 9th</span>, and next semester we will begin info sessions for the selected candidates to finalize your level of involvement. EOH seems far away, but if you expect to have a prototype or anything tangible come spring, fill out the form!
+          Applications are reviewed on a rolling basis until <span className="text-theme-red font-black">March 1st</span>, and next semester we will begin info sessions for the selected candidates to finalize your level of involvement. EOH seems far away, but if you expect to have a prototype or anything tangible come spring, fill out the form!
             
             <br/>
         </p>
         <div className="flex align-center justify-center mt-10">
-            <Button type="mail" className="px-2 rounded-none drop-shadow-md inline-block" href="https://forms.gle/dCFFtqyNkED5cZwPA">
+            <Button type="mail" className="px-2 rounded-none drop-shadow-md inline-block" href="https://docs.google.com/forms/d/e/1FAIpQLSdMZkrcqtVlomWrQuFC295SA7oxNDOWH9z-q2tt_I87ld8eBw/viewform?usp=send_form">
                 Startup Showcase Form
             </Button>
         </div>

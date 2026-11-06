@@ -2,7 +2,7 @@
   {
     "id": "event-what-is-eoh",
     "Question": "What is EOH?",
-    "Answer": "EOH is an annual 2-day event that showcases engineering at UIUC, a tradition that has been evolving for over a century. As the largest student-run STEM fair in the country, EOH presents over 200 exhibits to approximately 35,000 visitors each year. Other key events include a Tesla Coil Concert, Build-a-Blinkie, a Keynote Speaker (past speakers include Yu Pan (YouTube, PayPal) and Todd Little (Oracle)), middle and high school design competitions, and more. Visit us {dates}!",
+    "Answer": "EOH is an annual 2-day event that showcases engineering at UIUC, a tradition that has been evolving for over a century. As the largest student-run STEM fair in the country, EOH presents over 200 exhibits to 35,000+ visitors each year. Other key events include a Tesla Coil Concert, Build-a-Blinkie, a Keynote Speaker (past speakers include Yu Pan (YouTube, PayPal) and Todd Little (Oracle)), middle and high school design competitions, and more. Visit us {dates}!",
     "Category": "Event"
   },
   {
